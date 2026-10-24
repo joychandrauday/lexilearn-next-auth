@@ -74,6 +74,10 @@ export default function Navbar() {
       label: <Link href="/panic-sheet">পরীক্ষার রিভিশন শিট</Link>,
     },
     {
+      key: 'admin-panel',
+      label: <Link href="/admin">অ্যাডমিন কন্ট্রোল সেন্টার</Link>,
+    },
+    {
       key: 'admin-importer',
       label: <Link href="/admin/importer">AI প্রশ্ন ইম্পোর্টার</Link>,
     },
