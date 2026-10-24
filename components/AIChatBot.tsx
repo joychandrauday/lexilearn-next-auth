@@ -275,7 +275,7 @@ export default function AIChatBot() {
               />
             </div>
             <div className="flex justify-between items-center text-[10px] text-gray-400 pt-1.5 px-1">
-              <span>Groq ও Gemini এআই দ্বারা পরিচালিত</span>
+              <span>স্মার্ট এআই লার্নিং অ্যাসিস্ট্যান্ট</span>
               <span>Enter চেপে পাঠান</span>
             </div>
           </div>

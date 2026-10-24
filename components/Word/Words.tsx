@@ -662,15 +662,15 @@ const Words: React.FC = () => {
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-xs font-black uppercase tracking-wider text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full">
-                  কোর প্রোডাক্ট
+                  বিসিএস ও ব্যাংক প্রস্তুতি
                 </span>
                 <span className="text-xs text-gray-400">•</span>
                 <span className="text-xs font-bold text-gray-500">
-                  মাল্টি-ইউজার রিইউজ ও ভেরিফিকেশন ইঞ্জিন
+                  বিগত পরীক্ষার প্রশ্নভিত্তিক শব্দকোষ
                 </span>
               </div>
               <h1 className="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight flex items-center gap-2 m-0">
-                ভোকাবুলারি ব্যাংক ও এক্সাম ডাটাবেস
+                ভোকাবুলারি কোষ ও অনুশীলন
               </h1>
             </div>
 
