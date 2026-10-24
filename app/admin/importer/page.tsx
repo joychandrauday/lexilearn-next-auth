@@ -96,7 +96,10 @@ Ans: (B) An absurd tale. ব্যাখ্যা: আজগুবি গল্�
         <span className="bg-indigo-500/30 text-indigo-200 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block border border-indigo-400/30">
           মাল্টি-এলএলএম কনটেন্ট ইঞ্জিন • Admin Importer
         </span>
-        <h1 className="text-3xl md:text-4xl font-black mb-1">বিগত প্রশ্ন ইম্পোর্টার 🚀</h1>
+        <h1 className="text-3xl md:text-4xl font-black mb-1 flex items-center gap-3">
+          <ThunderboltOutlined className="text-amber-400" />
+          বিগত প্রশ্ন ইম্পোর্টার
+        </h1>
         <p className="text-indigo-200/80 text-sm max-w-xl font-normal leading-relaxed">
           যেকোনো বিসিএস বা ব্যাংক পরীক্ষার কাঁচা প্রশ্ন পেস্ট করুন। <strong>Groq & Gemini AI</strong>{' '}
           মুহূর্তের মধ্যে অপশন, সঠিক উত্তর, ব্যাখ্যা ও টপিক আলাদা করে ডাটাবেজ তৈরি করে দেবে।

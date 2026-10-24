@@ -27,18 +27,43 @@ export async function POST(req: NextRequest) {
     if (saveDirectly) {
       await connectDb();
       for (const q of parsedQuestions) {
-        // If question looks like a vocabulary question
-        const cleanWord = q.question.replace(/[^a-zA-Z\s]/g, '').trim().split(' ')[0]?.toLowerCase();
-        if (cleanWord && cleanWord.length > 2) {
-          const exists = await Word.findOne({ word: cleanWord });
-          if (!exists) {
+        // Smart word extraction from question (e.g., 'Competent', "Benevolent", synonym of X)
+        let candidateWord = '';
+        const quoteMatch = q.question.match(/['"“]([a-zA-Z\s\-]{2,30})['"”]/);
+        if (quoteMatch) {
+          candidateWord = quoteMatch[1].trim().toLowerCase();
+        } else {
+          const patternMatch = q.question.match(/(?:synonym|antonym|meaning|definition|spelling)\s+of\s+([a-zA-Z\-]+)/i);
+          if (patternMatch) {
+            candidateWord = patternMatch[1].trim().toLowerCase();
+          }
+        }
+
+        if (candidateWord && candidateWord.length > 2) {
+          const examTag = exam.toUpperCase();
+          const existing = await Word.findOne({ word: candidateWord });
+          if (existing) {
+            const currentTags = existing.examTags || [];
+            const newTags = currentTags.includes(examTag) ? currentTags : [...currentTags, examTag];
+            await Word.findByIdAndUpdate(existing._id, {
+              $set: { examTags: newTags },
+              $inc: { frequencyCount: 1, savedCount: 1, verificationScore: 2 },
+            });
+            savedCount += 1;
+          } else {
             await Word.create({
               userEmail,
-              word: cleanWord,
+              word: candidateWord,
               meaning: q.correctAnswer,
               bangla: q.explanation || q.correctAnswer,
               exam: exam.toLowerCase(),
+              examTags: [examTag],
               intensity: 'medium',
+              savedBy: [userEmail],
+              savedCount: 1,
+              frequencyCount: 1,
+              verificationScore: 85,
+              verificationStatus: 'verified',
             });
             savedCount += 1;
           }

@@ -34,96 +34,136 @@ export interface ChatMessage {
 }
 
 // -------------------------------------------------------------
-// 1. Groq API Call (Primary Engine)
+// Helper: Clean and safely extract JSON from LLM outputs
 // -------------------------------------------------------------
+export function cleanJsonString(raw: string): string {
+  if (!raw) return '';
+  // Strip code block markers
+  let text = raw.replace(/```(?:json)?/gi, '').replace(/```/g, '').trim();
+  const firstBrace = text.indexOf('{');
+  const lastBrace = text.lastIndexOf('}');
+  if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+    return text.substring(firstBrace, lastBrace + 1);
+  }
+  const firstBracket = text.indexOf('[');
+  const lastBracket = text.lastIndexOf(']');
+  if (firstBracket !== -1 && lastBracket !== -1 && lastBracket > firstBracket) {
+    return text.substring(firstBracket, lastBracket + 1);
+  }
+  return text;
+}
+
+// -------------------------------------------------------------
+// 1. Groq API Call (Primary Engine with Model Fallbacks)
+// -------------------------------------------------------------
+const GROQ_CANDIDATE_MODELS = [
+  'qwen/qwen3.8-27b',
+  'openai/gpt-oss-120b',
+  'openai/gpt-oss-20b',
+];
+
 async function callGroqChat(
   messages: Array<{ role: string; content: string }>,
-  jsonMode = false
+  jsonMode = false,
+  maxTokens = 1500
 ): Promise<string | null> {
   const groqKey = process.env.GROQ_API_KEY;
   if (!groqKey) return null;
 
-  try {
-    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${groqKey}`,
-      },
-      body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
-        messages,
-        temperature: 0.3,
-        max_tokens: 1200,
-        response_format: jsonMode ? { type: 'json_object' } : undefined,
-      }),
-    });
+  for (const model of GROQ_CANDIDATE_MODELS) {
+    try {
+      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${groqKey}`,
+        },
+        body: JSON.stringify({
+          model,
+          messages,
+          temperature: 0.3,
+          max_tokens: maxTokens,
+          response_format: jsonMode ? { type: 'json_object' } : undefined,
+        }),
+      });
 
-    if (!res.ok) {
-      console.warn(`Groq API responded with status ${res.status}, falling back...`);
-      return null;
+      if (!res.ok) {
+        console.warn(`Groq model ${model} responded with status ${res.status}, checking next candidate...`);
+        continue;
+      }
+
+      const data = await res.json();
+      const content = data?.choices?.[0]?.message?.content;
+      if (content) return content;
+    } catch (err) {
+      console.warn(`Groq call error with model ${model}:`, err);
     }
-
-    const data = await res.json();
-    return data?.choices?.[0]?.message?.content || null;
-  } catch (err) {
-    console.warn('Groq API call error, triggering fallback:', err);
-    return null;
   }
+
+  return null;
 }
 
 // -------------------------------------------------------------
 // 2. Google Gemini API Call (Secondary Fallback Engine)
 // -------------------------------------------------------------
+const GEMINI_CANDIDATE_MODELS = [
+  'gemini-3.5-flash',
+  'gemini-3.5-flash-lite',
+  'gemini-3.8-flash',
+];
+
 async function callGeminiChat(
   messages: Array<{ role: string; content: string }>,
-  jsonMode = false
+  jsonMode = false,
+  maxTokens = 1500
 ): Promise<string | null> {
   const geminiKey = process.env.GEMINI_API_KEY;
   if (!geminiKey) return null;
 
-  try {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`;
-    
-    // Map messages to Gemini contents format
-    const contents = messages
-      .filter((m) => m.role !== 'system')
-      .map((m) => ({
-        role: m.role === 'assistant' ? 'model' : 'user',
-        parts: [{ text: m.content }],
-      }));
+  // Map messages to Gemini contents format
+  const contents = messages
+    .filter((m) => m.role !== 'system')
+    .map((m) => ({
+      role: m.role === 'assistant' ? 'model' : 'user',
+      parts: [{ text: m.content }],
+    }));
 
-    // Prepend system prompt if exists
-    const systemMsg = messages.find((m) => m.role === 'system');
-    const systemInstruction = systemMsg
-      ? { parts: [{ text: systemMsg.content }] }
-      : undefined;
+  const systemMsg = messages.find((m) => m.role === 'system');
+  const systemInstruction = systemMsg
+    ? { parts: [{ text: systemMsg.content }] }
+    : undefined;
 
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents,
-        systemInstruction,
-        generationConfig: {
-          temperature: 0.3,
-          maxOutputTokens: 1200,
-          responseMimeType: jsonMode ? 'application/json' : 'text/plain',
-        },
-      }),
-    });
+  for (const model of GEMINI_CANDIDATE_MODELS) {
+    try {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiKey}`;
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents,
+          systemInstruction,
+          generationConfig: {
+            temperature: 0.3,
+            maxOutputTokens: maxTokens,
+            responseMimeType: jsonMode ? 'application/json' : 'text/plain',
+          },
+        }),
+      });
 
-    if (!res.ok) {
-      console.warn(`Gemini API responded with status ${res.status}`);
-      return null;
+      if (!res.ok) {
+        console.warn(`Gemini model ${model} status ${res.status}`);
+        continue;
+      }
+
+      const json = await res.json();
+      const text = json?.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (text) return text;
+    } catch (err) {
+      console.warn(`Gemini call error with model ${model}:`, err);
     }
-
-    const json = await res.json();
-    return json?.candidates?.[0]?.content?.parts?.[0]?.text || null;
-  } catch (err) {
-    console.warn('Gemini API call error:', err);
-    return null;
   }
+
+  return null;
 }
 
 // -------------------------------------------------------------
@@ -198,22 +238,24 @@ Output strictly a JSON object with this exact schema:
     { role: 'user', content: prompt },
   ];
 
-  // 1. Try Groq (Llama 3.3 70B)
-  const groqRes = await callGroqChat(messages, true);
+  // 1. Try Groq Primary
+  const groqRes = await callGroqChat(messages, true, 1500);
   if (groqRes) {
     try {
-      const parsed = JSON.parse(groqRes);
+      const cleaned = cleanJsonString(groqRes);
+      const parsed = JSON.parse(cleaned);
       if (parsed.bengaliMeaning && parsed.word) return parsed as AIEnrichedWord;
     } catch {
       // fallback
     }
   }
 
-  // 2. Try Gemini Flash
-  const geminiRes = await callGeminiChat(messages, true);
+  // 2. Try Gemini Secondary Fallback
+  const geminiRes = await callGeminiChat(messages, true, 1500);
   if (geminiRes) {
     try {
-      const parsed = JSON.parse(geminiRes);
+      const cleaned = cleanJsonString(geminiRes);
+      const parsed = JSON.parse(cleaned);
       if (parsed.bengaliMeaning && parsed.word) return parsed as AIEnrichedWord;
     } catch {
       // fallback
@@ -221,6 +263,76 @@ Output strictly a JSON object with this exact schema:
   }
 
   return null;
+}
+
+// -------------------------------------------------------------
+// Helper: Regex-based fallback parser for past-paper questions
+// -------------------------------------------------------------
+export function parseQuestionsWithRegex(
+  rawText: string,
+  examName = '45th BCS Preliminary'
+): AIParsedExamQuestion[] {
+  const questions: AIParsedExamQuestion[] = [];
+  // Split into chunks by question numbers (e.g. 1., 2., ১., ২.) or blank lines
+  const blocks = rawText.split(/(?=\n\s*(?:\d+|[০-৯]+)[\.\)])/);
+
+  for (const block of blocks) {
+    const trimmed = block.trim();
+    if (!trimmed) continue;
+
+    const lines = trimmed.split('\n').map((l) => l.trim()).filter(Boolean);
+    if (lines.length < 2) continue;
+
+    const questionLine = lines[0].replace(/^(?:\d+|[০-৯]+)[\.\)]\s*/, '');
+    const options: string[] = [];
+    let correctAnswer = '';
+    let explanation = '';
+
+    for (const line of lines.slice(1)) {
+      const optMatch = line.match(/^[\(\[]?([A-Da-dক-ঘ1-4])[\)\]\.\s]+(.+)$/);
+      const ansMatch = line.match(/(?:Ans|Answer|উত্তর)[\s:\-]+([^\.\n]+)(?:[\.\s]+(?:ব্যাখ্যা|Explanation)[\s:\-]+(.+))?/i);
+
+      if (ansMatch) {
+        correctAnswer = ansMatch[1].trim();
+        if (ansMatch[2]) {
+          explanation = ansMatch[2].trim();
+        }
+      } else if (optMatch) {
+        options.push(optMatch[2].trim());
+      } else if (
+        line.toLowerCase().startsWith('ব্যাখ্যা') ||
+        line.toLowerCase().startsWith('explanation')
+      ) {
+        explanation = line.replace(/^(?:ব্যাখ্যা|explanation)[\s:\-]+/i, '').trim();
+      }
+    }
+
+    if (options.length > 0) {
+      // Clean up answer if it has "(A) Capable"
+      const optLetter = correctAnswer.match(/^[A-Da-dক-ঘ]/);
+      if (optLetter) {
+        const letter = optLetter[0].toUpperCase();
+        const idx = letter.charCodeAt(0) - 65; // 'A' -> 0
+        if (idx >= 0 && idx < options.length) {
+          correctAnswer = options[idx];
+        }
+      }
+      if (!correctAnswer) {
+        correctAnswer = options[0];
+      }
+
+      questions.push({
+        question: questionLine,
+        options: options.slice(0, 4),
+        correctAnswer,
+        explanation: explanation || 'বিগত বিসিএস/ব্যাংক পরীক্ষার প্রমিত প্রশ্নব্যাখ্যা।',
+        exam: examName,
+        topic: 'English Past Paper',
+      });
+    }
+  }
+
+  return questions;
 }
 
 // -------------------------------------------------------------
@@ -262,21 +374,27 @@ Output strictly a JSON object matching this schema:
     { role: 'user', content: prompt },
   ];
 
-  let raw = await callGroqChat(messages, true);
+  // 1. Try Groq (Primary Engine) with generous maxTokens for multiple MCQs
+  let raw = await callGroqChat(messages, true, 3000);
+
+  // 2. Fallback to Gemini Flash
   if (!raw) {
-    raw = await callGeminiChat(messages, true);
+    raw = await callGeminiChat(messages, true, 3000);
   }
 
   if (raw) {
     try {
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed.questions)) {
+      const cleaned = cleanJsonString(raw);
+      const parsed = JSON.parse(cleaned);
+      if (Array.isArray(parsed.questions) && parsed.questions.length > 0) {
         return parsed.questions;
       }
-    } catch {
-      // fallback
+    } catch (parseErr) {
+      console.warn('JSON parse error from LLM response, attempting regex fallback:', parseErr);
     }
   }
 
-  return [];
+  // 3. Fallback: Parse directly via pattern matching
+  const fallbackQuestions = parseQuestionsWithRegex(rawText, examName);
+  return fallbackQuestions;
 }
