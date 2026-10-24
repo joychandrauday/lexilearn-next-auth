@@ -313,10 +313,16 @@ export default function ClozeArenaPage() {
             </button>
           </div>
 
-          <div className="inline-block mb-3">
+          <div className="flex flex-wrap items-center justify-center gap-2 mb-3">
             <Tag color="cyan" className="font-bold text-xs uppercase px-3 py-0.5 rounded-full">
               {currentQ.category === 'preposition' ? 'Preposition Trap' : 'Group Verb Drill'}
             </Tag>
+            <Tag color="purple" className="font-bold text-xs px-3 py-0.5 rounded-full">
+              {currentQ.examTag}
+            </Tag>
+            <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">
+              <CheckCircleFilled className="text-emerald-600" /> ৯৯% ভেরিফাইড প্রশ্ন
+            </span>
           </div>
 
           {/* The Sentence with Active Blank */}

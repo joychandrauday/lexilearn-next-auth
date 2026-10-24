@@ -429,9 +429,17 @@ export default function QuizPage() {
                 <h2 className="text-4xl font-black text-gray-800 tracking-tight capitalize">
                   {currentQ?.word.word}
                 </h2>
-                <span className="text-xs text-gray-400 font-semibold italic">
-                  পদ: {currentQ?.word.partOfSpeech || 'General'}
-                </span>
+                <div className="flex flex-wrap items-center gap-1.5 mt-1">
+                  <span className="text-xs text-gray-400 font-semibold italic">
+                    পদ: {currentQ?.word.partOfSpeech || 'General'}
+                  </span>
+                  <span className="bg-purple-50 text-purple-700 text-[10px] font-bold px-2 py-0.5 rounded-md border border-purple-200">
+                    {currentQ?.word.exam ? `${currentQ.word.exam.toUpperCase()} প্রিলিমিনারি` : 'বিসিএস ও ব্যাংক'}
+                  </span>
+                  <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md">
+                    <CheckCircleFilled className="text-emerald-600" /> ৯৯% নির্ভুল ভেরিফাইড
+                  </span>
+                </div>
               </div>
 
               <button

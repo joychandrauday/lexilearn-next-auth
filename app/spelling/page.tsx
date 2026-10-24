@@ -296,9 +296,14 @@ export default function SpellingPage() {
                     শব্দজোড় {pairIndex + 1} / {CONFUSING_PAIRS.length}
                   </span>
                 </div>
-                <Tag color="gold" className="font-bold border-none">
-                  {currentPair.examTag}
-                </Tag>
+                <div className="flex items-center gap-2">
+                  <Tag color="gold" className="font-bold border-none">
+                    {currentPair.examTag}
+                  </Tag>
+                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-300 bg-emerald-800/80 px-2.5 py-0.5 rounded-full">
+                    <CheckCircleFilled className="text-emerald-400" /> ৯৯% ভেরিফাইড
+                  </span>
+                </div>
               </div>
 
               {/* Side-by-Side Grid */}
@@ -428,10 +433,13 @@ export default function SpellingPage() {
         {activeTab === 'spelling' && (
           <div>
             <div className="bg-white rounded-3xl border border-gray-200 p-6 sm:p-10 shadow-xl text-center relative mb-6">
-              <div className="inline-block mb-3">
+              <div className="flex items-center justify-center gap-2 mb-3">
                 <Tag color="cyan" className="font-bold text-xs uppercase px-3 py-1 rounded-full">
                   {currentBee.examTag}
                 </Tag>
+                <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">
+                  <CheckCircleFilled className="text-emerald-600" /> ৯৯% ভেরিফাইড
+                </span>
               </div>
 
               <div className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-2">

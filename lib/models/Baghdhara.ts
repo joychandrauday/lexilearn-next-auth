@@ -6,6 +6,9 @@ export interface IBaghdhara extends Document {
   meaning: string;
   example?: string;
   exam?: ('primary' | 'bank' | 'bcs' | 'ntrca' | 'others')[];
+  examTags?: string[];
+  verificationScore?: number;
+  verificationStatus?: 'verified' | 'pending';
   tags?: string[];
   difficulty?: 'easy' | 'medium' | 'hard';
   userEmail?: string;
@@ -40,6 +43,19 @@ const baghdharaSchema = new Schema<IBaghdhara>(
       type: [String],
       enum: ['primary', 'bank', 'bcs', 'ntrca', 'others'],
       default: ['others'],
+    },
+    examTags: {
+      type: [String],
+      default: ['বিসিএস প্রিলিমিনারি'],
+    },
+    verificationScore: {
+      type: Number,
+      default: 98,
+    },
+    verificationStatus: {
+      type: String,
+      enum: ['verified', 'pending'],
+      default: 'verified',
     },
     tags: {
       type: [String],

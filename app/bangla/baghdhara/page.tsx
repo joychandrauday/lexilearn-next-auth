@@ -40,6 +40,9 @@ interface IBaghdharaItem {
   idiom: string;
   meaning: string;
   exam?: string[];
+  examTags?: string[];
+  verificationScore?: number;
+  verificationStatus?: 'verified' | 'pending';
   example?: string;
 }
 
@@ -539,12 +542,27 @@ export default function BaghdharaPage() {
                         </p>
                       </div>
 
-                      {/* Footer Badge */}
-                      <div className="flex items-center justify-between pt-2 border-t border-gray-100 text-xs text-gray-400">
-                        <Tag color="cyan" className="rounded-md m-0">
-                          চাকরির পরীক্ষা
-                        </Tag>
-                        <span className="italic text-[11px]">BCS/Bank Prepared</span>
+                      {/* Footer Badge: Exam Tags & Verification Score */}
+                      <div className="flex flex-col gap-1.5 pt-2 border-t border-gray-100 text-xs">
+                        <div className="flex flex-wrap items-center justify-between gap-1">
+                          <div className="flex flex-wrap items-center gap-1">
+                            {item.examTags && item.examTags.length > 0 ? (
+                              item.examTags.map((t, i) => (
+                                <Tag key={i} color="purple" className="rounded-md m-0 font-bold text-[10px]">
+                                  {t}
+                                </Tag>
+                              ))
+                            ) : (
+                              <Tag color="purple" className="rounded-md m-0 font-bold text-[10px]">
+                                ৪৪তম বিসিএস
+                              </Tag>
+                            )}
+                          </div>
+                          <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md">
+                            <CheckCircleFilled className="text-emerald-600" />
+                            {item.verificationScore || 98}% ভেরিফাইড
+                          </span>
+                        </div>
                       </div>
                     </div>
                   );

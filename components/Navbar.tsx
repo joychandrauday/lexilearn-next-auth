@@ -65,6 +65,11 @@ export default function Navbar() {
     },
     { type: 'divider' },
     {
+      key: 'profile',
+      label: <Link href="/profile">আমার প্রোফাইল (My Profile)</Link>,
+      icon: <UserOutlined />,
+    },
+    {
       key: 'notebook',
       label: <Link href="/notebook">প্রস্তুতি নোটবুক (Saved Topics)</Link>,
       icon: <BookOutlined />,
@@ -263,6 +268,15 @@ export default function Navbar() {
                     <p className="text-[11px] text-gray-500 m-0 truncate font-mono">{session.user.email}</p>
                   </div>
                 </div>
+                <Link href="/profile" onClick={toggleDrawer} className="block">
+                  <Button
+                    block
+                    icon={<UserOutlined />}
+                    className="rounded-xl font-bold text-xs"
+                  >
+                    আমার প্রোফাইল
+                  </Button>
+                </Link>
                 <Button
                   danger
                   block

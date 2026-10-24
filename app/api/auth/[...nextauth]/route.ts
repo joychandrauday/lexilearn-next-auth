@@ -13,7 +13,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
   // ERROR HANDLING - This catches ALL errors
   callbacks: {
-    async jwt({ token, account, profile, trigger, session }) {
+    async jwt({ token, user, account, profile, trigger, session }: any) {
+      if (user) {
+        token.name = user.name || profile?.name || token.name
+        token.email = user.email || profile?.email || token.email
+        token.picture = user.image || profile?.picture || token.picture
+      }
+
       if (trigger === "update" && session) {
         token.name = session.user?.name
         token.email = session.user?.email
@@ -27,7 +33,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return token
     },
 
-    async session({ session, token }) {
+    async session({ session, token }: any) {
       if (token) {
         session.user.id = token.sub
         session.user.name = token.name
@@ -38,10 +44,50 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
   },
 
-  // CRITICAL: Global error handler (use logger.error instead of unsupported events.error)
+  // Auto-sync UserProfile & Leads on login
   events: {
-    async signIn({ account, profile, user, isNewUser }) {
-      console.log("✅ SignIn Success:", { account, isNewUser })
+    async signIn({ account, profile, user, isNewUser }: any) {
+      console.log("✅ Google SignIn Success:", { email: user?.email, name: user?.name, isNewUser })
+      if (user?.email) {
+        try {
+          const { connectDb } = await import("../../../../lib/db");
+          const UserProfile = (await import("../../../../lib/models/UserProfile")).default;
+          const SubscriberLead = (await import("../../../../lib/models/SubscriberLead")).default;
+          await connectDb();
+          const cleanEmail = user.email.toLowerCase().trim();
+          const fullName = user.name || profile?.name || cleanEmail.split('@')[0];
+          const avatar = user.image || profile?.picture || '';
+
+          await UserProfile.findOneAndUpdate(
+            { email: cleanEmail },
+            {
+              $set: {
+                name: fullName,
+                image: avatar,
+              },
+              $setOnInsert: {
+                targetExam: 'বিসিএস প্রিলিমিনারি (BCS)',
+                preparationStage: 'প্রিলিমিনারি',
+                dailyGoal: 20,
+                bio: 'লক্ষ্য: বিসিএস ও প্রথম শ্রেণির সরকারি চাকরি',
+              },
+            },
+            { upsert: true, new: true }
+          );
+
+          await SubscriberLead.findOneAndUpdate(
+            { email: cleanEmail },
+            {
+              $set: {
+                source: 'Google OAuth Login',
+              },
+            },
+            { upsert: true }
+          );
+        } catch (e) {
+          console.error("Error auto-syncing UserProfile on login:", e);
+        }
+      }
     },
   },
 
