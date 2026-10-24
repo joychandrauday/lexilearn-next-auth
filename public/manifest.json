@@ -1,0 +1,17 @@
+{
+  "name": "LexiLearn BD - বিসিএস ও ব্যাংক ইংলিশ প্রস্তুতি",
+  "short_name": "LexiLearn",
+  "description": "Gamified Spaced Repetition Vocabulary & Job Prep Platform for Bangladeshi Aspirants",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#064e3b",
+  "theme_color": "#059669",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}

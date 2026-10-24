@@ -18,6 +18,7 @@ import {
 import { motion } from 'framer-motion';
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
+import ShareableScoreCard from '../../components/ShareableScoreCard';
 
 interface IWordItem {
   _id: string;
@@ -204,12 +205,21 @@ export default function QuizPage() {
       setStreak(0);
       toast.error(negativeMarking ? 'ভুল উত্তর! (-০.২৫ নম্বর কাটা হলো)' : 'ভুল উত্তর!');
 
-      // Auto-sync failed word into user's spaced repetition review queue!
+      // Auto-sync failed word into user's spaced repetition review queue & Mistake Vault!
       if (session?.user?.email) {
         axios.post('/api/words/review', {
           wordId: targetWord._id,
           rating: 'again',
           userEmail: session.user.email,
+        }).catch(() => {});
+
+        axios.post('/api/user/mistakes', {
+          userEmail: session.user.email,
+          wordOrTitle: targetWord.word,
+          correctMeaning: targetWord.bangla || targetWord.meaning,
+          userFailedAnswer: option,
+          exam: targetWord.exam || 'bcs',
+          itemType: 'word',
         }).catch(() => {});
       }
     }
@@ -317,7 +327,7 @@ export default function QuizPage() {
           <h2 className="text-3xl font-black text-gray-800 mb-1">কুইজ সমাপ্ত! 🎉</h2>
           <p className="text-gray-500 text-sm mb-6">আপনার আজকের পারফরম্যান্স সামারি</p>
 
-          <div className="bg-emerald-50/70 rounded-2xl p-6 mb-6 border border-emerald-100">
+          <div className="bg-emerald-50/70 rounded-2xl p-6 mb-4 border border-emerald-100">
             <span className="text-xs uppercase font-extrabold tracking-wider text-emerald-700 block mb-1">
               প্রাপ্ত নেট নম্বর (Net Score)
             </span>
@@ -340,6 +350,17 @@ export default function QuizPage() {
                 : 'নেগেটিভ মার্কিংয়ের কারণে নম্বর কমে গেছে। নিয়মিত ফ্ল্যাশ কার্ড রিভিশন দিন 💪'}
             </p>
           </div>
+
+          {/* Facebook Group Shareable Score Card */}
+          <ShareableScoreCard
+            score={netScore}
+            total={questions.length}
+            correct={correctCount}
+            wrong={wrongCount}
+            penalty={wrongCount * 0.25}
+            exam={examCategory}
+            userName={session?.user?.name || 'বিসিএস পরীক্ষার্থী'}
+          />
 
           <div className="flex gap-3">
             <Button

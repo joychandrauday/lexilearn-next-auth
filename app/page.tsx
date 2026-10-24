@@ -38,24 +38,42 @@ export default function Home() {
           </p>
 
           <div className="flex flex-wrap gap-3">
-            <Link href="/flashcards">
+            <Link href="/campaign">
               <Button
                 type="primary"
                 size="large"
-                icon={<ThunderboltOutlined />}
-                className="bg-amber-400 hover:!bg-amber-300 !text-slate-950 font-black rounded-xl h-12 px-6 shadow-md border-0 text-sm"
+                icon={<FireOutlined />}
+                className="bg-amber-400 hover:!bg-amber-300 !text-slate-950 font-black rounded-xl h-12 px-6 shadow-md border-0 text-sm animate-pulse"
               >
-                ফ্ল্যাশ কার্ডে রিভিশন দিন ⚡
+                বিসিএস সার্ভাইভার খেলুন ⚔️
               </Button>
             </Link>
 
-            <Link href="/quiz">
+            <Link href="/cloze">
               <Button
                 size="large"
-                icon={<TrophyOutlined />}
                 className="bg-white/10 hover:!bg-white/20 !text-white font-bold rounded-xl h-12 px-5 border-white/30 backdrop-blur-sm text-sm"
               >
-                নেগেটিভ মার্কিং কুইজ 🎯
+                ক্লজ টেস্ট ও প্রিপজিশন 🎯
+              </Button>
+            </Link>
+
+            <Link href="/spelling">
+              <Button
+                size="large"
+                className="bg-white/10 hover:!bg-white/20 !text-white font-bold rounded-xl h-12 px-5 border-white/30 backdrop-blur-sm text-sm"
+              >
+                স্পেলিং বি 🐝
+              </Button>
+            </Link>
+
+            <Link href="/flashcards">
+              <Button
+                size="large"
+                icon={<ThunderboltOutlined />}
+                className="bg-white/10 hover:!bg-white/20 !text-white font-bold rounded-xl h-12 px-5 border-white/30 backdrop-blur-sm text-sm"
+              >
+                রিভিশন কার্ড ⚡
               </Button>
             </Link>
 
@@ -65,7 +83,7 @@ export default function Home() {
                 icon={<BookOutlined />}
                 className="bg-white/10 hover:!bg-white/20 !text-white font-bold rounded-xl h-12 px-5 border-white/30 backdrop-blur-sm text-sm"
               >
-                বাগধারা কোষ (৬৪১+) 📖
+                বাগধারা কোষ (৬৪১+)
               </Button>
             </Link>
           </div>
@@ -192,6 +210,90 @@ export default function Home() {
             </div>
             <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-blue-600">
               <span>উৎপত্তি দেখুন</span>
+              <span>➔</span>
+            </div>
+          </div>
+        </Link>
+
+        {/* Module 5: BCS Survivor */}
+        <Link href="/campaign" className="group">
+          <div className="bg-gradient-to-br from-slate-900 to-gray-800 text-white p-6 rounded-2xl border border-gray-700 shadow-sm hover:shadow-xl hover:border-amber-400 transition-all h-full flex flex-col justify-between">
+            <div>
+              <div className="w-12 h-12 bg-amber-500/20 text-amber-400 rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+                <FireOutlined />
+              </div>
+              <h3 className="text-xl font-black text-white mb-2 group-hover:text-amber-400 transition">
+                বিসিএস সার্ভাইভার ⚔️
+              </h3>
+              <p className="text-gray-300 text-xs leading-relaxed">
+                উপজেলা লাইব্রেরি থেকে বাংলাদেশ সচিবালয় পর্যন্ত—ধাপে ধাপে ইংলিশ মিশন জিতে ক্যাডার পদে নিজের উত্তরণ ঘটান।
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-gray-700 flex items-center justify-between text-xs font-bold text-amber-400">
+              <span>ক্যাম্পেইন খেলুন</span>
+              <span>➔</span>
+            </div>
+          </div>
+        </Link>
+
+        {/* Module 6: Cloze Arena */}
+        <Link href="/cloze" className="group">
+          <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-emerald-500 transition-all h-full flex flex-col justify-between">
+            <div>
+              <div className="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+                <CompassOutlined />
+              </div>
+              <h3 className="text-xl font-black text-gray-800 mb-2 group-hover:text-emerald-700 transition">
+                ক্লজ টেস্ট ও প্রিপজিশন
+              </h3>
+              <p className="text-gray-500 text-xs leading-relaxed">
+                বিসিএস ও ব্যাংকের মারাত্মক Preposition ও Group Verb ট্র্যাপ শূন্যস্থান পূরণের মাধ্যমে আয়ত্ত করুন।
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-emerald-600">
+              <span>শূন্যস্থান অনুশীলন</span>
+              <span>➔</span>
+            </div>
+          </div>
+        </Link>
+
+        {/* Module 7: Spelling Bee & Confusing Pairs */}
+        <Link href="/spelling" className="group">
+          <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-teal-500 transition-all h-full flex flex-col justify-between">
+            <div>
+              <div className="w-12 h-12 bg-teal-50 text-teal-600 rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+                <StarFilled />
+              </div>
+              <h3 className="text-xl font-black text-gray-800 mb-2 group-hover:text-teal-700 transition">
+                বানান ও কনফিউজিং শব্দজোড়
+              </h3>
+              <p className="text-gray-500 text-xs leading-relaxed">
+                Stationary বনাম Stationery এর মতো বিভ্রান্তিকর শব্দজোড় ও বিসিএসের কুখ্যাত ট্রিকি বানান।
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-teal-600">
+              <span>স্পেলিং বি ড্রিল</span>
+              <span>➔</span>
+            </div>
+          </div>
+        </Link>
+
+        {/* Module 8: Panic Sheet */}
+        <Link href="/panic-sheet" className="group">
+          <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-rose-500 transition-all h-full flex flex-col justify-between">
+            <div>
+              <div className="w-12 h-12 bg-rose-50 text-rose-600 rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+                <TrophyOutlined />
+              </div>
+              <h3 className="text-xl font-black text-gray-800 mb-2 group-hover:text-rose-700 transition">
+                পরীক্ষার আগের প্যানিক শিট
+              </h3>
+              <p className="text-gray-500 text-xs leading-relaxed">
+                পরীক্ষার আগের রাতের জন্য আপনার সক্রিয় ভুল, হাই-ফ্রিকোয়েন্সি শব্দ ও বাগধারার প্রিন্ট-রেডি রিভিশন শিট।
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-rose-600">
+              <span>রিভিশন শিট দেখুন</span>
               <span>➔</span>
             </div>
           </div>
