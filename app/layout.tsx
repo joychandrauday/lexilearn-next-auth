@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import BottomNav from '../components/BottomNav';
 import PwaRegister from '../components/PwaRegister';
 import AIChatBot from '../components/AIChatBot';
+import SmartAuthPrompt from '../components/Auth/SmartAuthPrompt';
 import { Hind_Siliguri } from 'next/font/google';
 import { Toaster } from 'sonner';
 
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <Navbar />
           <main className="flex-1 pb-20 md:pb-6">{children}</main>
           <AIChatBot />
+          <SmartAuthPrompt />
           <BottomNav />
           <Toaster richColors expand={true} position="top-center" />
         </Providers>

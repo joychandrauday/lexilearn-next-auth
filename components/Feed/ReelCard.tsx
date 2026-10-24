@@ -128,11 +128,20 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
   // Save to Deck handler
   const handleSaveToDeck = async () => {
     if (!post.vocabData?.word) return;
+
+    // Check if user has an email captured
+    const savedEmail = typeof window !== 'undefined' ? localStorage.getItem('lexi_user_email') : null;
+    const effectiveEmail = savedEmail || userEmail;
+
+    if (!savedEmail && typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('lexi:request_auth'));
+    }
+
     setSavingDeck(true);
     try {
       const res = await axios.post(`/api/feed/${post._id}/react`, {
         action: 'save_to_deck',
-        userEmail,
+        userEmail: effectiveEmail,
       });
       if (res.data.success) {
         setSavedToDeck(true);
