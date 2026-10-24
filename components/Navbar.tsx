@@ -40,11 +40,11 @@ export default function Navbar() {
 
   const navLinks = [
     { label: 'হোম', href: '/' },
-    { label: 'ভোকাবুলারি', href: '/words' },
-    { label: 'ফ্ল্যাশ কার্ড ⚡', href: '/flashcards' },
+    { label: 'ভোকাবুলারি ব্যাংক', href: '/words' },
+    { label: 'রিভিশন কার্ড ⚡', href: '/flashcards' },
     { label: 'বাংলা হাব', href: '/bangla' },
     { label: 'বাগধারা', href: '/bangla/baghdhara' },
-    { label: 'কুইজ', href: '/quiz' },
+    { label: 'মডেল টেস্ট', href: '/quiz' },
   ];
 
   const userMenuItems: MenuProps['items'] = [
@@ -52,7 +52,7 @@ export default function Navbar() {
       key: 'user-info',
       label: (
         <div className="py-1">
-          <p className="font-bold text-gray-800 m-0">{session?.user?.name || 'Aspirant'}</p>
+          <p className="font-bold text-gray-800 m-0">{session?.user?.name || 'শিক্ষার্থী'}</p>
           <p className="text-xs text-gray-500 truncate m-0">{session?.user?.email}</p>
         </div>
       ),
@@ -61,11 +61,11 @@ export default function Navbar() {
     { type: 'divider' },
     {
       key: 'my-words',
-      label: <Link href="/my-words">আমার সংরক্ষিত শব্দ</Link>,
+      label: <Link href="/my-words">আমার সেভ করা শব্দ</Link>,
     },
     {
       key: 'add-word',
-      label: <Link href="/add">+ নতুন শব্দ যোগ</Link>,
+      label: <Link href="/add">+ নতুন শব্দ যুক্ত করুন</Link>,
     },
     { type: 'divider' },
     {

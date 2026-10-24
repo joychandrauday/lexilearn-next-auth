@@ -11,7 +11,7 @@ import {
   CheckCircleOutlined,
   ThunderboltOutlined,
   SwapOutlined,
-  BookOutlined,
+  BulbOutlined,
 } from '@ant-design/icons';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSession } from 'next-auth/react';
@@ -99,12 +99,12 @@ export default function FlashCards() {
 
         const feedbackMsg =
           rating === 'easy'
-            ? '🔥 সহজ! ব্যবধান বাড়ানো হয়েছে (+15 XP)'
+            ? '🔥 একদম সহজ! ব্যবধান বাড়ানো হলো (+15 XP)'
             : rating === 'good'
-            ? '👍 চমৎকার! যথারীতি পুনরাবৃত্তি (+10 XP)'
+            ? '👍 মনে পড়েছে! নির্ধারিত সময়ে আবার আসবে (+10 XP)'
             : rating === 'hard'
-            ? '⚠️ একটু কঠিন! শীঘ্রই আবার দেখানো হবে (+8 XP)'
-            : '🔄 আবার রিভিশন দেওয়া হবে (+5 XP)';
+            ? '⚠️ একটু কঠিন লেগেছে! দ্রুত আবার দেখানো হবে (+8 XP)'
+            : '🔄 মনে পড়েনি! কাল আবার আসবে (+5 XP)';
 
         toast.success(feedbackMsg);
 
@@ -149,7 +149,7 @@ export default function FlashCards() {
     return (
       <div className="flex flex-col justify-center items-center min-h-[60vh] gap-3">
         <Spin size="large" />
-        <span className="text-gray-500 font-semibold text-sm">কার্ড তৈরি করা হচ্ছে...</span>
+        <span className="text-gray-500 font-semibold text-sm">রিভিশন কার্ড লোড হচ্ছে...</span>
       </div>
     );
   }
@@ -160,10 +160,10 @@ export default function FlashCards() {
       <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
         <div>
           <span className="text-xs uppercase font-extrabold tracking-wider text-emerald-600 block">
-            Spaced Repetition (SM-2)
+            স্পেসড রিপিটেশন (SM-2)
           </span>
           <h1 className="text-2xl font-black text-gray-800 flex items-center gap-2 m-0">
-            স্মার্ট ফ্ল্যাশ কার্ড <ThunderboltOutlined className="text-amber-500" />
+            স্মার্ট রিভিশন কার্ড <ThunderboltOutlined className="text-amber-500" />
           </h1>
         </div>
 
@@ -174,10 +174,10 @@ export default function FlashCards() {
             className="w-36 rounded-xl"
             options={[
               { label: 'সকল পরীক্ষা', value: 'all' },
-              { label: 'BCS স্পেশাল', value: 'bcs' },
-              { label: 'Bank স্পেশাল', value: 'bank' },
-              { label: 'Primary শিক্ষক', value: 'primary' },
-              { label: 'NTRCA', value: 'ntrca' },
+              { label: 'বিসিএস (BCS)', value: 'bcs' },
+              { label: 'ব্যাংক (Bank)', value: 'bank' },
+              { label: 'প্রাইমারি শিক্ষক', value: 'primary' },
+              { label: 'নিবন্ধন (NTRCA)', value: 'ntrca' },
             ]}
           />
 
@@ -198,10 +198,10 @@ export default function FlashCards() {
           <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-4xl shadow-inner">
             <TrophyOutlined />
           </div>
-          <h2 className="text-3xl font-black text-gray-800 mb-2">আজকের সেশন সম্পন্ন! 🎉</h2>
-          <p className="text-gray-600 mb-6 text-sm">
-            আপনি সফলভাবে <strong className="text-emerald-700 font-bold">{words.length}টি শব্দ</strong>{' '}
-            অনুশীলন করেছেন এবং আপনার স্মৃতি ব্যবধান (SRS) আপডেট হয়েছে।
+          <h2 className="text-3xl font-black text-gray-800 mb-2">আজকের রিভিশন সম্পন্ন! 🎉</h2>
+          <p className="text-gray-600 mb-6 text-sm leading-relaxed">
+            দারুণ! আপনি সফলভাবে <strong className="text-emerald-700 font-bold">{words.length}টি শব্দ</strong>{' '}
+            রিভিউ করেছেন। ভুলে যাওয়ার আগেই অ্যালগরিদম এগুলো আবার যথাসময়ে আপনার সামনে আনবে।
           </p>
 
           <div className="bg-emerald-50 rounded-2xl p-5 mb-6 text-left border border-emerald-100">
@@ -210,8 +210,8 @@ export default function FlashCards() {
               <span className="text-lg font-black text-emerald-700">+{sessionXP} XP</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-sm font-bold text-emerald-900">স্মরণশক্তি স্তর:</span>
-              <span className="text-sm font-bold text-emerald-800">সক্রিয় রিকল সক্রিয় 🔥</span>
+              <span className="text-sm font-bold text-emerald-900">ধারাবাহিকতা:</span>
+              <span className="text-sm font-bold text-emerald-800">আজকের টার্গেট পূর্ণ 🔥</span>
             </div>
           </div>
 
@@ -224,15 +224,10 @@ export default function FlashCards() {
               onClick={fetchDueWords}
               className="bg-emerald-600 hover:!bg-emerald-700 font-bold rounded-xl h-12"
             >
-              পরবর্তী ব্যাচ আনুন
+              আরও অনুশীলন করুন
             </Button>
-            <Button
-              size="large"
-              block
-              href="/words"
-              className="rounded-xl h-12"
-            >
-              সকল শব্দ দেখুন
+            <Button size="large" block href="/words" className="rounded-xl h-12">
+              ভোকাবুলারি ব্যাংকে যান
             </Button>
           </div>
         </motion.div>
@@ -242,15 +237,15 @@ export default function FlashCards() {
           <CheckCircleOutlined className="text-5xl text-emerald-500 mb-3" />
           <h3 className="text-2xl font-black text-gray-800 mb-1">কোনো কার্ড বাকি নেই!</h3>
           <p className="text-gray-500 text-sm mb-6 max-w-sm mx-auto">
-            আজকের রিভিশন কিউ খালি। আপনি নতুন শব্দ যোগ করতে পারেন অথবা পূর্ববর্তী শব্দসমূহ পুনরায়
-            রিভিউ করতে পারেন।
+            আজকের রিভিশন কিউ সম্পূর্ণ খালি। নতুন কোনো শব্দ যোগ করুন অথবা পূর্ববর্তী শব্দসমূহ পুনরায়
+            অনুশীলন করুন।
           </p>
           <div className="flex justify-center gap-3">
-            <Button type="primary" href="/add" className="bg-emerald-600 rounded-xl">
+            <Button type="primary" href="/add" className="bg-emerald-600 rounded-xl font-bold">
               নতুন শব্দ যোগ করুন
             </Button>
-            <Button onClick={fetchDueWords} className="rounded-xl">
-              পুনরায় চেক করুন
+            <Button onClick={fetchDueWords} className="rounded-xl font-bold">
+              আবার দেখুন
             </Button>
           </div>
         </div>
@@ -263,7 +258,7 @@ export default function FlashCards() {
               <span>
                 শব্দ {currentIndex + 1} / {words.length}
               </span>
-              <span>ব্যবধান: {currentWord?.interval || 0} দিন</span>
+              <span>পরবর্তী রিভিশন: {currentWord?.interval ? `${currentWord.interval} দিন পর` : 'প্রথমবার'}</span>
             </div>
             <Progress
               percent={Math.round(((currentIndex + 1) / words.length) * 100)}
@@ -289,7 +284,7 @@ export default function FlashCards() {
                   animate={{ rotateY: 0, opacity: 1 }}
                   exit={{ rotateY: -90, opacity: 0 }}
                   transition={{ duration: 0.3 }}
-                  className="w-full min-h-[380px] bg-gradient-to-br from-emerald-600 via-teal-700 to-emerald-800 rounded-3xl shadow-xl p-8 flex flex-col justify-between text-white border-4 border-emerald-400/20 relative"
+                  className="w-full min-h-[380px] bg-gradient-to-br from-emerald-700 via-teal-800 to-slate-900 rounded-3xl shadow-xl p-8 flex flex-col justify-between text-white border-4 border-emerald-400/20 relative"
                 >
                   {/* Top Badges */}
                   <div className="flex justify-between items-center">
@@ -322,13 +317,13 @@ export default function FlashCards() {
                       {currentWord.word}
                     </h2>
                     <span className="bg-white/10 text-emerald-100 text-xs px-4 py-2 rounded-full inline-flex items-center gap-2 backdrop-blur-sm">
-                      <SwapOutlined /> অর্থ দেখতে কার্ডে চাপুন (বা Spacebar)
+                      <SwapOutlined /> অর্থ ও ট্রিক দেখতে ট্যাপ করুন (বা Spacebar চাপুন)
                     </span>
                   </div>
 
                   {/* Card Bottom Hint */}
                   <div className="text-center text-xs text-emerald-200/80">
-                    পূর্ববর্তী রিভিশন: {currentWord.reviewCount || 0} বার
+                    পূর্বে পড়া হয়েছে: {currentWord.reviewCount || 0} বার
                   </div>
                 </motion.div>
               ) : (
@@ -348,7 +343,7 @@ export default function FlashCards() {
                         {currentWord.word}
                       </span>
                       <span className="text-xs text-gray-400 font-semibold italic">
-                        ({currentWord.partOfSpeech || 'n.'})
+                        ({currentWord.partOfSpeech || 'Part of Speech'})
                       </span>
                     </div>
 
@@ -364,29 +359,40 @@ export default function FlashCards() {
                   </div>
 
                   {/* Body Details */}
-                  <div className="my-auto py-4 space-y-4">
-                    {/* Meaning */}
+                  <div className="my-auto py-4 space-y-3.5">
+                    {/* Bengali Meaning */}
+                    {currentWord.bangla && (
+                      <div className="bg-emerald-50/80 p-3 rounded-xl border border-emerald-100">
+                        <span className="text-xs font-bold text-emerald-800 block mb-1">
+                          সহজ বাংলা অর্থ:
+                        </span>
+                        <p className="text-lg font-black text-emerald-900 m-0">
+                          {currentWord.bangla}
+                        </p>
+                      </div>
+                    )}
+
+                    {/* English Meaning */}
                     <div>
                       <span className="text-xs font-bold text-gray-400 block mb-1 uppercase tracking-wider">
-                        English Meaning
+                        ইংরেজি সংজ্ঞা (Definition):
                       </span>
-                      <p className="text-lg font-bold text-gray-800 leading-snug">
+                      <p className="text-sm font-semibold text-gray-700 leading-snug m-0">
                         {currentWord.meaning || 'No definition available'}
                       </p>
                     </div>
 
-                    {/* Bengali Meaning */}
-                    {currentWord.bangla && (
-                      <div className="bg-emerald-50/70 p-3 rounded-xl border border-emerald-100">
-                        <span className="text-xs font-bold text-emerald-800 block mb-1">
-                          বাংলা অর্থ:
-                        </span>
-                        <div className="flex flex-wrap gap-1.5">
-                          {currentWord.bangla.split(',').map((b, i) => (
-                            <Tag key={i} color="emerald" className="font-bold text-sm py-0.5">
-                              {b.trim()}
-                            </Tag>
-                          ))}
+                    {/* Desi Mnemonic if available */}
+                    {currentWord.mnemonic && (
+                      <div className="bg-amber-50 p-2.5 rounded-xl border border-amber-200 flex items-start gap-2">
+                        <BulbOutlined className="text-amber-500 mt-0.5 text-base" />
+                        <div>
+                          <span className="text-[11px] font-bold text-amber-800 block">
+                            মনে রাখার ট্রিক (Mnemonic):
+                          </span>
+                          <span className="text-xs font-bold text-amber-950">
+                            {currentWord.mnemonic}
+                          </span>
                         </div>
                       </div>
                     )}
@@ -394,10 +400,10 @@ export default function FlashCards() {
                     {/* Example Sentence */}
                     {currentWord.example && (
                       <div>
-                        <span className="text-xs font-bold text-gray-400 block mb-1 uppercase tracking-wider">
-                          Example
+                        <span className="text-xs font-bold text-gray-400 block mb-1">
+                          বাক্যে ব্যবহার:
                         </span>
-                        <p className="text-sm text-gray-600 italic bg-gray-50 p-2.5 rounded-lg border border-gray-100">
+                        <p className="text-xs text-gray-600 italic bg-gray-50 p-2 rounded-lg border border-gray-100 m-0">
                           "{currentWord.example}"
                         </p>
                       </div>
@@ -420,7 +426,7 @@ export default function FlashCards() {
 
                   {/* Rate Hint */}
                   <div className="text-center text-xs text-gray-400 border-t border-gray-100 pt-3">
-                    নিচের যে কোনো একটি রেটিং নির্বাচন করুন (বা ১, ২, ৩, ৪ কি প্রেস করুন)
+                    শব্দটি আপনার কেমন মনে ছিল? নিচের যে কোনো একটিতে ট্যাপ করুন (বা ১, ২, ৩, ৪ কি চাপুন)
                   </div>
                 </motion.div>
               )}
@@ -430,62 +436,62 @@ export default function FlashCards() {
           {/* SM-2 Recall Rating Buttons */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {/* AGAIN */}
-            <Tooltip title="মনে ছিল না (ব্যবধান রিসেট হবে ১ দিনে)">
+            <Tooltip title="মনে পড়েনি (আগামীকাল আবার রিভিশন আসবে)">
               <button
                 onClick={() => handleRate('again')}
                 disabled={submittingRating}
-                className="bg-white hover:bg-rose-50 border-2 border-rose-200 hover:border-rose-500 rounded-2xl p-3 text-center transition flex flex-col items-center justify-center group shadow-sm"
+                className="bg-white hover:bg-rose-50 border-2 border-rose-200 hover:border-rose-500 rounded-2xl p-3 text-center transition flex flex-col items-center justify-center group shadow-xs"
               >
                 <span className="text-xs font-extrabold text-rose-500 uppercase tracking-wider">
-                  [1] আবার দেখুন
+                  [1] মনে পড়েনি
                 </span>
                 <span className="text-base font-black text-rose-700">Again</span>
-                <span className="text-[11px] text-gray-400">&lt; ১ দিন</span>
+                <span className="text-[11px] text-gray-400">&lt; ১ দিন পর</span>
               </button>
             </Tooltip>
 
             {/* HARD */}
-            <Tooltip title="মনে করতে কষ্ট হয়েছে (ব্যবধান অল্প বাড়বে)">
+            <Tooltip title="মনে করতে কষ্ট হয়েছে (স্বল্প বিরতিতে আসবে)">
               <button
                 onClick={() => handleRate('hard')}
                 disabled={submittingRating}
-                className="bg-white hover:bg-amber-50 border-2 border-amber-200 hover:border-amber-500 rounded-2xl p-3 text-center transition flex flex-col items-center justify-center group shadow-sm"
+                className="bg-white hover:bg-amber-50 border-2 border-amber-200 hover:border-amber-500 rounded-2xl p-3 text-center transition flex flex-col items-center justify-center group shadow-xs"
               >
                 <span className="text-xs font-extrabold text-amber-500 uppercase tracking-wider">
-                  [2] কঠিন
+                  [2] কঠিন লেগেছে
                 </span>
                 <span className="text-base font-black text-amber-700">Hard</span>
-                <span className="text-[11px] text-gray-400">~২ দিন</span>
+                <span className="text-[11px] text-gray-400">~২ দিন পর</span>
               </button>
             </Tooltip>
 
             {/* GOOD */}
-            <Tooltip title="স্বাভাবিকভাবে মনে পড়েছে (স্ট্যান্ডার্ড বিরতি)">
+            <Tooltip title="মনে পড়েছে (স্ট্যান্ডার্ড বিরতি পাবে)">
               <button
                 onClick={() => handleRate('good')}
                 disabled={submittingRating}
-                className="bg-white hover:bg-sky-50 border-2 border-sky-200 hover:border-sky-500 rounded-2xl p-3 text-center transition flex flex-col items-center justify-center group shadow-sm"
+                className="bg-white hover:bg-sky-50 border-2 border-sky-200 hover:border-sky-500 rounded-2xl p-3 text-center transition flex flex-col items-center justify-center group shadow-xs"
               >
                 <span className="text-xs font-extrabold text-sky-500 uppercase tracking-wider">
-                  [3] ভালো
+                  [3] মনে পড়েছে
                 </span>
                 <span className="text-base font-black text-sky-700">Good</span>
-                <span className="text-[11px] text-gray-400">~৪ দিন</span>
+                <span className="text-[11px] text-gray-400">~৪ দিন পর</span>
               </button>
             </Tooltip>
 
             {/* EASY */}
-            <Tooltip title="মুহূর্তেই মনে পড়েছে (দীর্ঘ বিরতি পাবে)">
+            <Tooltip title="একদম সহজ (দীর্ঘ বিরতিতে আসবে)">
               <button
                 onClick={() => handleRate('easy')}
                 disabled={submittingRating}
-                className="bg-white hover:bg-emerald-50 border-2 border-emerald-200 hover:border-emerald-500 rounded-2xl p-3 text-center transition flex flex-col items-center justify-center group shadow-sm"
+                className="bg-white hover:bg-emerald-50 border-2 border-emerald-200 hover:border-emerald-500 rounded-2xl p-3 text-center transition flex flex-col items-center justify-center group shadow-xs"
               >
                 <span className="text-xs font-extrabold text-emerald-500 uppercase tracking-wider">
-                  [4] সহজ
+                  [4] একদম সহজ
                 </span>
                 <span className="text-base font-black text-emerald-700">Easy</span>
-                <span className="text-[11px] text-gray-400">~৭ দিন</span>
+                <span className="text-[11px] text-gray-400">~৭ দিন পর</span>
               </button>
             </Tooltip>
           </div>

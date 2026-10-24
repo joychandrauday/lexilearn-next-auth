@@ -14,9 +14,9 @@ import {
 const navItems = [
   { label: 'হোম', href: '/', icon: HomeOutlined },
   { label: 'ভোকাবুলারি', href: '/words', icon: ReadOutlined },
-  { label: 'ফ্ল্যাশ কার্ড', href: '/flashcards', icon: ThunderboltOutlined },
-  { label: 'বাংলা', href: '/bangla', icon: BookOutlined },
-  { label: 'কুইজ', href: '/quiz', icon: TrophyOutlined },
+  { label: 'রিভিশন কার্ড', href: '/flashcards', icon: ThunderboltOutlined },
+  { label: 'বাংলা হাব', href: '/bangla', icon: BookOutlined },
+  { label: 'মডেল টেস্ট', href: '/quiz', icon: TrophyOutlined },
 ];
 
 export default function BottomNav() {

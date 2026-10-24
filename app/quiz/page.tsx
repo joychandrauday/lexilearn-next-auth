@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import axios from 'axios';
-import { Button, Tag, Progress, Spin, Select } from 'antd';
+import { Button, Progress, Spin, Select, Switch } from 'antd';
 import {
   SoundOutlined,
   ReloadOutlined,
@@ -13,8 +13,9 @@ import {
   ClockCircleOutlined,
   ArrowRightOutlined,
   ThunderboltOutlined,
+  WarningOutlined,
 } from '@ant-design/icons';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
 
@@ -43,7 +44,11 @@ export default function QuizPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isAnswered, setIsAnswered] = useState(false);
-  const [score, setScore] = useState(0);
+
+  // Scoring
+  const [correctCount, setCorrectCount] = useState(0);
+  const [wrongCount, setWrongCount] = useState(0);
+  const [negativeMarking, setNegativeMarking] = useState(true); // Default ON for realistic exam prep
   const [streak, setStreak] = useState(0);
   const [bestStreak, setBestStreak] = useState(0);
   const [timeLeft, setTimeLeft] = useState(15);
@@ -98,7 +103,7 @@ export default function QuizPage() {
   // Generate Questions from word pool
   const generateQuiz = () => {
     if (allWords.length < 4) {
-      toast.error('কুইজ তৈরির জন্য অন্তত ৪টি শব্দ প্রয়োজন। কিছু শব্দ যোগ করুন।');
+      toast.error('কুইজ তৈরির জন্য অন্তত ৪টি শব্দ প্রয়োজন।');
       return;
     }
 
@@ -124,14 +129,10 @@ export default function QuizPage() {
       }
     }
 
-    if (newQuestions.length === 0) {
-      toast.error('পর্যাপ্ত বিকল্প তৈরি করা যায়নি');
-      return;
-    }
-
     setQuestions(newQuestions);
     setCurrentIndex(0);
-    setScore(0);
+    setCorrectCount(0);
+    setWrongCount(0);
     setStreak(0);
     setBestStreak(0);
     setSelectedOption(null);
@@ -161,8 +162,9 @@ export default function QuizPage() {
     if (isAnswered) return;
     setIsAnswered(true);
     setSelectedOption('__TIME_UP__');
+    setWrongCount((w) => w + 1);
     setStreak(0);
-    toast.error('সময় শেষ! পরবর্তী প্রশ্নে যান');
+    toast.error('সময় শেষ! পরবর্তী প্রশ্নে যান (-০.২৫)');
   };
 
   useEffect(() => {
@@ -180,12 +182,14 @@ export default function QuizPage() {
     setSelectedOption(option);
 
     const isCorrect = option === questions[currentIndex].correctAnswer;
+    const targetWord = questions[currentIndex].word;
+
     if (isCorrect) {
-      setScore((s) => s + 1);
+      setCorrectCount((c) => c + 1);
       const newStreak = streak + 1;
       setStreak(newStreak);
       if (newStreak > bestStreak) setBestStreak(newStreak);
-      toast.success('সঠিক উত্তর! চমৎকার 🔥 (+20 XP)');
+      toast.success('সঠিক উত্তর! (+১.০ নম্বর, +২০ XP)');
 
       // Record XP to user progress if logged in
       if (session?.user?.email) {
@@ -196,8 +200,18 @@ export default function QuizPage() {
         }).catch(() => {});
       }
     } else {
+      setWrongCount((w) => w + 1);
       setStreak(0);
-      toast.error('ভুল উত্তর! সঠিক উত্তরটি নিচে দেখে নিন');
+      toast.error(negativeMarking ? 'ভুল উত্তর! (-০.২৫ নম্বর কাটা হলো)' : 'ভুল উত্তর!');
+
+      // Auto-sync failed word into user's spaced repetition review queue!
+      if (session?.user?.email) {
+        axios.post('/api/words/review', {
+          wordId: targetWord._id,
+          rating: 'again',
+          userEmail: session.user.email,
+        }).catch(() => {});
+      }
     }
   };
 
@@ -214,36 +228,52 @@ export default function QuizPage() {
     }
   };
 
+  // Net score calculation
+  const netScore = negativeMarking
+    ? Number((correctCount - wrongCount * 0.25).toFixed(2))
+    : correctCount;
+
   const currentQ = questions[currentIndex];
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-8 font-sans">
-      {/* Quiz Header Banner */}
-      <div className="bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-700 rounded-3xl p-8 mb-6 text-white shadow-xl flex flex-wrap items-center justify-between gap-4">
+      {/* Header Banner */}
+      <div className="bg-gradient-to-r from-emerald-700 via-teal-800 to-slate-900 rounded-3xl p-8 mb-6 text-white shadow-xl flex flex-wrap items-center justify-between gap-4">
         <div>
-          <span className="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block">
-            ভোকাবুলারি কুইজ অ্যারিনা
+          <span className="bg-emerald-500/20 text-emerald-300 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block border border-emerald-400/20">
+            বিসিএস ও ব্যাংক মডেল টেস্ট
           </span>
-          <h1 className="text-3xl md:text-4xl font-black mb-1">শব্দ যুদ্ধ ⚡</h1>
-          <p className="text-emerald-100 text-sm max-w-md">
-            বিসিএস ও ব্যাংক পরীক্ষার স্টাইলে চার বিকল্পের লাইভ কুইজ খেলে ভোকাবুলারি যাচাই করুন।
+          <h1 className="text-3xl md:text-4xl font-black mb-1">নেগেটিভ মার্কিং কুইজ 🎯</h1>
+          <p className="text-emerald-100/80 text-sm max-w-md font-normal">
+            আসল পরীক্ষার আদলে প্রস্তুতি নিন। প্রতিটি সঠিক উত্তরে +১.০ এবং ভুল উত্তরে -০.২৫ নম্বর
+            কাটা হবে।
           </p>
         </div>
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2.5">
           <Select
             value={examCategory}
             onChange={(val) => setExamCategory(val)}
-            className="w-40 rounded-xl"
+            className="w-44 rounded-xl"
             disabled={quizStarted && !quizFinished}
             options={[
               { label: 'সকল পরীক্ষা', value: 'all' },
-              { label: 'BCS স্পেশাল', value: 'bcs' },
-              { label: 'Bank স্পেশাল', value: 'bank' },
-              { label: 'Primary শিক্ষক', value: 'primary' },
-              { label: 'NTRCA', value: 'ntrca' },
+              { label: 'বিসিএস (BCS)', value: 'bcs' },
+              { label: 'ব্যাংক (Bank)', value: 'bank' },
+              { label: 'প্রাইমারি শিক্ষক', value: 'primary' },
+              { label: 'নিবন্ধন (NTRCA)', value: 'ntrca' },
             ]}
           />
+
+          <div className="flex items-center justify-between bg-white/10 px-3 py-1.5 rounded-xl text-xs">
+            <span className="text-emerald-200 font-semibold">নেগেটিভ মার্কিং (-০.২৫)</span>
+            <Switch
+              size="small"
+              checked={negativeMarking}
+              onChange={(c) => setNegativeMarking(c)}
+              disabled={quizStarted && !quizFinished}
+            />
+          </div>
         </div>
       </div>
 
@@ -254,13 +284,13 @@ export default function QuizPage() {
       ) : !quizStarted ? (
         /* Pre-quiz Start Card */
         <div className="bg-white rounded-3xl p-8 text-center shadow-md border border-gray-100 max-w-md mx-auto">
-          <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-4xl shadow-inner">
+          <div className="w-20 h-20 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-4xl shadow-inner">
             <TrophyOutlined />
           </div>
           <h2 className="text-2xl font-black text-gray-800 mb-2">কুইজ শুরু করতে প্রস্তুত?</h2>
-          <p className="text-gray-500 text-sm mb-6">
-            প্রতি প্রশ্নে থাকবে <strong className="text-emerald-700">১৫ সেকেন্ড সময়</strong>। ভুল হলে
-            স্ট্রিক রিসেট হয়ে যাবে!
+          <p className="text-gray-500 text-sm mb-6 leading-relaxed">
+            ১০টি প্রশ্নে প্রতিটির জন্য থাকবে <strong className="text-emerald-700">১৫ সেকেন্ড সময়</strong>।
+            ভুল হলে -০.২৫ কাটা যাবে এবং শব্দটি স্বয়ংক্রিয়ভাবে কালকের রিভিশন কার্ডে চলে যাবে।
           </p>
 
           <Button
@@ -281,23 +311,34 @@ export default function QuizPage() {
           animate={{ scale: 1, opacity: 1 }}
           className="bg-white rounded-3xl p-8 text-center shadow-xl border border-gray-100 max-w-md mx-auto"
         >
-          <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-4xl shadow-inner">
+          <div className="w-20 h-20 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-4xl shadow-inner">
             <TrophyOutlined />
           </div>
           <h2 className="text-3xl font-black text-gray-800 mb-1">কুইজ সমাপ্ত! 🎉</h2>
-          <p className="text-gray-500 text-sm mb-6">আপনার স্কোর ও পারফরম্যান্স রিপোর্ট</p>
+          <p className="text-gray-500 text-sm mb-6">আপনার আজকের পারফরম্যান্স সামারি</p>
 
-          <div className="bg-emerald-50 rounded-2xl p-6 mb-6 border border-emerald-100">
-            <div className="text-5xl font-black text-emerald-700 mb-1">
-              {score} / {questions.length}
+          <div className="bg-emerald-50/70 rounded-2xl p-6 mb-6 border border-emerald-100">
+            <span className="text-xs uppercase font-extrabold tracking-wider text-emerald-700 block mb-1">
+              প্রাপ্ত নেট নম্বর (Net Score)
+            </span>
+            <div className="text-5xl font-black text-emerald-800 mb-2">
+              {netScore} <span className="text-lg font-bold text-gray-400">/ {questions.length}</span>
             </div>
-            <p className="text-xs font-bold text-emerald-800 mb-3">
-              সঠিক উত্তরের হার: {Math.round((score / questions.length) * 100)}%
+
+            <div className="grid grid-cols-2 gap-2 text-xs font-bold pt-2 border-t border-emerald-100">
+              <span className="text-emerald-700">সঠিক: {correctCount} টি (+{correctCount})</span>
+              <span className="text-rose-600">
+                ভুল: {wrongCount} টি ({negativeMarking ? `-${(wrongCount * 0.25).toFixed(2)}` : '০'})
+              </span>
+            </div>
+
+            <p className="text-xs text-gray-600 mt-3 pt-2 border-t border-emerald-100 leading-relaxed font-semibold">
+              {netScore >= 8
+                ? 'চমৎকার প্রস্তুতি! আপনি প্রিলি পাস করার অবস্থানে আছেন 🔥'
+                : netScore >= 5
+                ? 'মোটামুটি ভালো হয়েছে। নেগেটিভ মার্কিং এড়াতে কনফিউজড প্রশ্নে সতর্কতা দরকার 👍'
+                : 'নেগেটিভ মার্কিংয়ের কারণে নম্বর কমে গেছে। নিয়মিত ফ্ল্যাশ কার্ড রিভিশন দিন 💪'}
             </p>
-            <div className="flex justify-center gap-4 text-xs font-bold text-gray-600">
-              <span>সর্বোচ্চ স্ট্রিক: 🔥 {bestStreak}</span>
-              <span>পয়েন্ট: 🪙 +{score * 20} XP</span>
-            </div>
           </div>
 
           <div className="flex gap-3">
@@ -309,22 +350,17 @@ export default function QuizPage() {
               onClick={generateQuiz}
               className="bg-emerald-600 hover:!bg-emerald-700 font-bold rounded-xl h-12"
             >
-              আবার খেলুন
+              আবার পরীক্ষা দিন
             </Button>
-            <Button
-              size="large"
-              block
-              href="/flashcards"
-              className="rounded-xl h-12 font-bold"
-            >
-              ফ্ল্যাশ কার্ডে যান
+            <Button size="large" block href="/flashcards" className="rounded-xl h-12 font-bold">
+              ফ্ল্যাশ কার্ডে রিভিশন দিন
             </Button>
           </div>
         </motion.div>
       ) : (
         /* Active Question Display */
         <div className="w-full">
-          {/* Top Indicators: Progress, Streak & Timer */}
+          {/* Top Indicators */}
           <div className="flex justify-between items-center mb-3 px-2">
             <div className="flex items-center gap-2">
               <span className="text-xs font-bold text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
@@ -348,8 +384,8 @@ export default function QuizPage() {
                 <ClockCircleOutlined />
                 <span>{timeLeft}s</span>
               </div>
-              <span className="text-sm font-black text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full">
-                স্কোর: {score}
+              <span className="text-xs font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
+                স্কোর: {netScore}
               </span>
             </div>
           </div>
@@ -366,14 +402,14 @@ export default function QuizPage() {
           <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100 mb-6 relative">
             <div className="flex justify-between items-start mb-4">
               <div>
-                <span className="text-xs font-extrabold text-emerald-600 uppercase tracking-wider block mb-1">
-                  What is the closest meaning of:
+                <span className="text-xs font-bold text-emerald-700 uppercase tracking-wider block mb-1">
+                  সঠিক অর্থ বা প্রতিশব্দ (Synonym) নির্বাচন করুন:
                 </span>
                 <h2 className="text-4xl font-black text-gray-800 tracking-tight capitalize">
                   {currentQ?.word.word}
                 </h2>
                 <span className="text-xs text-gray-400 font-semibold italic">
-                  Part of Speech: {currentQ?.word.partOfSpeech || 'General'}
+                  পদ: {currentQ?.word.partOfSpeech || 'General'}
                 </span>
               </div>
 
@@ -430,7 +466,7 @@ export default function QuizPage() {
               >
                 <div>
                   <span className="text-xs font-bold text-emerald-800 uppercase block mb-1">
-                    শব্দার্থ ও প্রেক্ষাপট:
+                    ব্যাখ্যা ও শব্দার্থ:
                   </span>
                   <p className="text-sm font-bold text-gray-800 m-0">
                     {currentQ.word.word}:{' '}

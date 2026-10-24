@@ -321,8 +321,8 @@ export default function BaghdharaPage() {
                 বাংলা বাগধারা কোষ
               </h1>
               <p className="text-emerald-100 text-base md:text-lg max-w-xl">
-                বিসিএস ও সরকারি চাকরির জন্য গুরুত্বপূর্ণ ৬৪১+ বাগধারা অর্থসহ মুখস্থ করুন,
-                ফ্ল্যাশ কার্ডে রিভিশন দিন এবং কুইজে অংশ নিন।
+                বিসিএস, ব্যাংক ও সরকারি চাকরির বিগত পরীক্ষার গুরুত্বপূর্ণ ৬৪১+ বাগধারা অর্থসহ শিখুন,
+                ফ্ল্যাশ কার্ডে ঝালাই করে নিন এবং কুইজে অংশ নিয়ে প্রস্তুতি যাচাই করুন।
               </p>
             </div>
             <div className="flex gap-3">
@@ -333,7 +333,7 @@ export default function BaghdharaPage() {
                 onClick={() => setIsAddModalOpen(true)}
                 className="bg-white text-emerald-800 font-bold hover:!bg-emerald-50 shadow-md border-0"
               >
-                নতুন বাগধারা যোগ
+                নতুন বাগধারা যুক্ত করুন
               </Button>
             </div>
           </div>
@@ -350,7 +350,7 @@ export default function BaghdharaPage() {
               : 'text-gray-600 hover:bg-gray-100'
           }`}
         >
-          <BookOutlined /> তালিকা ও অনুসন্ধান ({total})
+          <BookOutlined /> বাগধারা তালিকা ({total})
         </button>
 
         <button
@@ -361,7 +361,7 @@ export default function BaghdharaPage() {
               : 'text-gray-600 hover:bg-gray-100'
           }`}
         >
-          <ThunderboltOutlined /> ফ্ল্যাশ কার্ড মোড ⚡
+          <ThunderboltOutlined /> ফ্ল্যাশ কার্ড ⚡
         </button>
 
         <button
@@ -372,7 +372,7 @@ export default function BaghdharaPage() {
               : 'text-gray-600 hover:bg-gray-100'
           }`}
         >
-          <TrophyOutlined /> কুইজ যুদ্ধ 🏆
+          <TrophyOutlined /> মডেল টেস্ট কুইজ 🎯
         </button>
       </div>
 
@@ -386,7 +386,7 @@ export default function BaghdharaPage() {
                 <Input
                   size="large"
                   prefix={<SearchOutlined className="text-gray-400" />}
-                  placeholder="বাগধারা বা অর্থ দিয়ে খুঁজুন..."
+                  placeholder="বাগধারা বা অর্থ লিখে খুঁজুন..."
                   value={search}
                   onChange={(e) => handleSearchChange(e.target.value)}
                   allowClear
@@ -402,7 +402,7 @@ export default function BaghdharaPage() {
                   }`}
                   icon={showOnlyFavs ? <StarFilled className="text-amber-500" /> : <StarOutlined />}
                 >
-                  পছন্দের বাগধারা ({favorites.length})
+                  বুকমার্ক করা ({favorites.length})
                 </Button>
                 <Button
                   icon={<ReloadOutlined />}
