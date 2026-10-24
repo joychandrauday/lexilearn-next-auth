@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { connectDb } from '../../../../lib/db';
-import FeedPost from '../../../../lib/models/FeedPost';
-import Word from '../../../../lib/models/Word';
+import { connectDb } from '../../../../../lib/db';
+import FeedPost from '../../../../../lib/models/FeedPost';
+import Word from '../../../../../lib/models/Word';
 
 export async function POST(
   req: NextRequest,
