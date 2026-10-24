@@ -57,6 +57,19 @@ export default function AIChatBot() {
     }
   }, [messages, isOpen]);
 
+  useEffect(() => {
+    const handleAskEvent = (e: any) => {
+      if (e.detail?.prompt) {
+        setIsOpen(true);
+        setTimeout(() => {
+          handleSend(e.detail.prompt);
+        }, 150);
+      }
+    };
+    window.addEventListener('lexibot:ask', handleAskEvent);
+    return () => window.removeEventListener('lexibot:ask', handleAskEvent);
+  }, []);
+
   const handleSend = async (customPrompt?: string) => {
     const textToSend = customPrompt || input.trim();
     if (!textToSend || loading) return;

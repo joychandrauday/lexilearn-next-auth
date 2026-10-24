@@ -1,359 +1,439 @@
 'use client';
 
-import React from 'react';
-import Link from 'next/link';
-import { Card, Row, Col, Button } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Button, Tag, Spin, Empty } from 'antd';
 import {
-  ReadOutlined,
-  ThunderboltOutlined,
-  TrophyOutlined,
-  BookOutlined,
-  FireOutlined,
-  CheckCircleFilled,
-  GlobalOutlined,
   CompassOutlined,
+  ThunderboltFilled,
+  PlusOutlined,
+  ReloadOutlined,
+  FireOutlined,
+  ReadOutlined,
+  TrophyOutlined,
   StarFilled,
+  BookOutlined,
+  FilterOutlined,
+  CheckCircleFilled,
 } from '@ant-design/icons';
+import Link from 'next/link';
+import axios from 'axios';
+import { toast } from 'sonner';
+import ReelCard, { IReelPost } from '../components/Feed/ReelCard';
+import InterestModal from '../components/Feed/InterestModal';
+import CreatePostModal from '../components/Feed/CreatePostModal';
 
-export default function Home() {
+export default function HomePage() {
+  const [posts, setPosts] = useState<IReelPost[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState<'for_you' | 'bcs' | 'bank' | 'grammar' | 'vocab' | 'community'>('for_you');
+  const [selectedInterests, setSelectedInterests] = useState<string[]>(['bcs', 'grammar', 'vocab']);
+  const [isInterestModalOpen, setIsInterestModalOpen] = useState(false);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [generatingDaily, setGeneratingDaily] = useState(false);
+
+  const userEmail = 'student@lexilearn.com';
+  const userName = 'বিসিএস পরীক্ষার্থী';
+
+  // Load saved user interests from localStorage
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('lexi_user_interests');
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setSelectedInterests(parsed);
+          }
+        } catch {
+          // fallback
+        }
+      }
+    }
+  }, []);
+
+  // Fetch feed posts
+  const fetchFeed = async (category = activeTab, interests = selectedInterests) => {
+    setLoading(true);
+    try {
+      const res = await axios.get('/api/feed', {
+        params: {
+          category,
+          interests: interests.join(','),
+          userEmail,
+          page: 1,
+          limit: 30,
+        },
+      });
+
+      if (res.data.success) {
+        setPosts(res.data.posts || []);
+      }
+    } catch {
+      toast.error('ফিড লোড করতে সমস্যা হয়েছে');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchFeed(activeTab, selectedInterests);
+  }, [activeTab]);
+
+  // Save interest updates
+  const handleSaveInterests = (newInterests: string[]) => {
+    setSelectedInterests(newInterests);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('lexi_user_interests', JSON.stringify(newInterests));
+    }
+    toast.success('আপনার প্রস্তুতির আগ্রহ আপডেট করা হয়েছে!');
+    fetchFeed(activeTab, newInterests);
+  };
+
+  // Generate / pull daily preparation pills
+  const handlePullDailyPill = async () => {
+    setGeneratingDaily(true);
+    try {
+      const res = await axios.post('/api/feed/daily-pill');
+      if (res.data.success) {
+        toast.success(res.data.message || 'আজকের নতুন ৩টি রিল যোগ হয়েছে!');
+        fetchFeed(activeTab, selectedInterests);
+      }
+    } catch {
+      toast.error('দৈনিক রিল তৈরি করতে সমস্যা হয়েছে');
+    } finally {
+      setGeneratingDaily(false);
+    }
+  };
+
+  // AI chat invocation handler
+  const handleAskAI = (prompt: string) => {
+    // Dispatch custom event to globally open LexiBot
+    if (typeof window !== 'undefined') {
+      const event = new CustomEvent('lexibot:ask', { detail: { prompt } });
+      window.dispatchEvent(event);
+    }
+  };
+
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8 font-sans">
-      {/* Hero Section */}
-      <div className="bg-gradient-to-r from-emerald-700 via-teal-700 to-slate-900 rounded-3xl p-8 md:p-12 text-white shadow-xl relative overflow-hidden mb-12">
-        <div className="relative z-10 max-w-2xl">
-          <div className="inline-flex items-center gap-2 bg-emerald-500/20 border border-emerald-400/30 backdrop-blur-md px-3.5 py-1 rounded-full text-xs font-bold text-emerald-200 mb-4">
-            <FireOutlined className="text-amber-400" />
-            <span>বিসিএস, ব্যাংক ও সরকারি চাকরি পরীক্ষার প্রস্তুতি</span>
-          </div>
-
-          <h1 className="text-3xl md:text-5xl font-black mb-4 tracking-tight leading-tight">
-            ভোকাবুলারি পড়ে ভুলে যান? <br />
-            <span className="text-emerald-300">আর মুখস্থ নয়, স্থায়ী হোক স্মৃতিতে।</span>
-          </h1>
-
-          <p className="text-emerald-100/90 text-base md:text-lg mb-8 leading-relaxed font-normal">
-            হাজার পাতার গাইড মুখস্থ করে ভুলে যাওয়ার দিন শেষ। বৈজ্ঞানিক স্পেসড রিপিটেশন (SM-2)
-            ফ্ল্যাশ কার্ড, দেশি ট্রিকস এবং নেগেটিভ মার্কিং কুইজের মাধ্যমে আত্মবিশ্বাসের সাথে
-            প্রস্তুতি নিন।
-          </p>
-
-          <div className="flex flex-wrap gap-3">
-            <Link href="/campaign">
-              <Button
-                type="primary"
-                size="large"
-                icon={<FireOutlined />}
-                className="bg-amber-400 hover:!bg-amber-300 !text-slate-950 font-black rounded-xl h-12 px-6 shadow-md border-0 text-sm animate-pulse"
-              >
-                বিসিএস সার্ভাইভার ক্যাম্পেইন
-              </Button>
-            </Link>
-
-            <Link href="/cloze">
-              <Button
-                size="large"
-                icon={<CompassOutlined />}
-                className="bg-white/10 hover:!bg-white/20 !text-white font-bold rounded-xl h-12 px-5 border-white/30 backdrop-blur-sm text-sm"
-              >
-                ক্লজ টেস্ট ও প্রিপজিশন
-              </Button>
-            </Link>
-
-            <Link href="/spelling">
-              <Button
-                size="large"
-                icon={<StarFilled />}
-                className="bg-white/10 hover:!bg-white/20 !text-white font-bold rounded-xl h-12 px-5 border-white/30 backdrop-blur-sm text-sm"
-              >
-                বানান শুদ্ধিকরণ
-              </Button>
-            </Link>
-
-            <Link href="/flashcards">
-              <Button
-                size="large"
-                icon={<ThunderboltOutlined />}
-                className="bg-white/10 hover:!bg-white/20 !text-white font-bold rounded-xl h-12 px-5 border-white/30 backdrop-blur-sm text-sm"
-              >
-                রিভিশন কার্ড
-              </Button>
-            </Link>
-
-            <Link href="/bangla/baghdhara">
-              <Button
-                size="large"
-                icon={<BookOutlined />}
-                className="bg-white/10 hover:!bg-white/20 !text-white font-bold rounded-xl h-12 px-5 border-white/30 backdrop-blur-sm text-sm"
-              >
-                বাগধারা কোষ (৬৪১+)
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* Ranks & Level Roadmap */}
-      <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm mb-12">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
+    <div className="max-w-5xl mx-auto px-4 py-6 font-sans">
+      {/* Top Banner / Feed Headline */}
+      <div className="bg-gradient-to-r from-slate-900 via-emerald-950 to-slate-900 text-white p-6 md:p-8 rounded-3xl shadow-xl mb-6 relative overflow-hidden">
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 block">
-              ক্যারিয়ার রোডম্যাপ • Gamified Progression
-            </span>
-            <h3 className="text-lg font-black text-gray-800 m-0">
-              নিয়মিত অনুশীলনে আপনার র্যাংক বাড়বে
-            </h3>
-          </div>
-          <span className="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full font-semibold">
-            প্রতিটি সঠিক উত্তরে XP অর্জন করুন
-          </span>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 pt-2">
-          {[
-            { rank: 'লেভেল ১', title: 'ফ্রেশার', color: 'bg-gray-100 text-gray-700' },
-            { rank: 'লেভেল ২', title: 'লাইব্রেরি তপস্বী', color: 'bg-blue-50 text-blue-700' },
-            { rank: 'লেভেল ৩', title: 'প্রিলি ক্র্যাকার', color: 'bg-teal-50 text-teal-700' },
-            { rank: 'লেভেল ৪', title: 'রিটেন ফাইটার', color: 'bg-amber-50 text-amber-700' },
-            { rank: 'লেভেল ৫', title: 'ক্যাডার / এডি', color: 'bg-emerald-50 text-emerald-800 font-black' },
-          ].map((lvl, i) => (
-            <div key={i} className={`p-3 rounded-xl border border-gray-100 text-center ${lvl.color}`}>
-              <span className="text-[11px] font-bold block opacity-70">{lvl.rank}</span>
-              <span className="text-sm font-bold block">{lvl.title}</span>
+            <div className="inline-flex items-center gap-2 bg-emerald-500/20 border border-emerald-400/30 backdrop-blur-md px-3.5 py-1 rounded-full text-xs font-bold text-emerald-200 mb-2">
+              <ThunderboltFilled className="text-amber-400" />
+              <span>স্মার্ট প্রিপারেশন ফিড • Reels-Style Micro Learning</span>
             </div>
-          ))}
+            <h1 className="text-2xl md:text-4xl font-black mb-1 tracking-tight">
+              আজকের প্রস্তুতি রিলস
+            </h1>
+            <p className="text-emerald-100/80 text-xs md:text-sm font-normal max-w-xl m-0 leading-relaxed">
+              প্রতিদিন জাতীয় পত্রিকার সম্পাদকীয় শব্দ, বিগত বিসিএস/ব্যাংক ট্রিকি MCQ ও ১ মিনিটের গ্রামার ট্র্যাপ এক নজরে আয়ত্ত করুন।
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Button
+              icon={<PlusOutlined />}
+              onClick={() => setIsCreateModalOpen(true)}
+              className="bg-emerald-600 hover:!bg-emerald-500 !text-white font-black border-0 rounded-xl h-11 px-4 shadow-md text-xs"
+            >
+              পোস্ট করুন
+            </Button>
+            <Button
+              icon={<ReloadOutlined spin={generatingDaily} />}
+              loading={generatingDaily}
+              onClick={handlePullDailyPill}
+              className="bg-white/10 hover:!bg-white/20 !text-white border-white/20 rounded-xl h-11 px-3.5 backdrop-blur-sm text-xs font-bold"
+            >
+              দৈনিক ক্যাপসুল
+            </Button>
+          </div>
         </div>
       </div>
 
-      {/* Main Core Modules Grid */}
-      <h2 className="text-2xl font-black text-gray-800 mb-6 flex items-center gap-2">
-        প্রস্তুতির মূল বিষয়সমূহ <span className="text-emerald-600 text-sm font-bold">/ সিলেবাস</span>
-      </h2>
+      {/* Main Grid: Feed + Quick Preparation Sidebar */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Left Column: Feed Stream */}
+        <div className="lg:col-span-2">
+          {/* Feed Filter Tabs */}
+          <div className="bg-white p-2 rounded-2xl border border-gray-100 shadow-xs mb-4 flex items-center justify-between overflow-x-auto gap-1">
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => setActiveTab('for_you')}
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+                  activeTab === 'for_you'
+                    ? 'bg-emerald-600 text-white shadow-xs'
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+              >
+                ব্যক্তিগত ফিড
+              </button>
+              <button
+                onClick={() => setActiveTab('bcs')}
+                className={`px-3 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+                  activeTab === 'bcs'
+                    ? 'bg-emerald-600 text-white shadow-xs'
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+              >
+                বিসিএস
+              </button>
+              <button
+                onClick={() => setActiveTab('bank')}
+                className={`px-3 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+                  activeTab === 'bank'
+                    ? 'bg-emerald-600 text-white shadow-xs'
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+              >
+                ব্যাংক জবস
+              </button>
+              <button
+                onClick={() => setActiveTab('grammar')}
+                className={`px-3 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+                  activeTab === 'grammar'
+                    ? 'bg-emerald-600 text-white shadow-xs'
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+              >
+                গ্রামার ট্র্যাপ
+              </button>
+              <button
+                onClick={() => setActiveTab('vocab')}
+                className={`px-3 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+                  activeTab === 'vocab'
+                    ? 'bg-emerald-600 text-white shadow-xs'
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+              >
+                ভোকাব রিল
+              </button>
+              <button
+                onClick={() => setActiveTab('community')}
+                className={`px-3 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+                  activeTab === 'community'
+                    ? 'bg-emerald-600 text-white shadow-xs'
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+              >
+                কমিউনিটি
+              </button>
+            </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-14">
-        {/* Module 1: Vocabulary */}
-        <Link href="/words" className="group">
-          <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-emerald-500 transition-all h-full flex flex-col justify-between">
-            <div>
-              <div className="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
-                <ReadOutlined />
-              </div>
-              <h3 className="text-xl font-black text-gray-800 mb-2 group-hover:text-emerald-700 transition">
-                ভোকাবুলারি ব্যাংক
-              </h3>
-              <p className="text-gray-500 text-xs leading-relaxed">
-                বিসিএস, ব্যাংক ও প্রাথমিক শিক্ষক নিয়োগের বিগত বছরের গুরুত্বপূর্ণ ইংরেজি শব্দের সহজ
-                বাংলা অর্থ, সিনোনিম ও অ্যান্টোনিম।
-              </p>
-            </div>
-            <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-emerald-600">
-              <span>শব্দভাণ্ডার দেখুন</span>
-              <span>➔</span>
-            </div>
+            <Button
+              size="small"
+              icon={<FilterOutlined />}
+              onClick={() => setIsInterestModalOpen(true)}
+              className="text-xs font-bold text-emerald-800 bg-emerald-50 border-emerald-200 rounded-xl"
+            >
+              আগ্রহ ({selectedInterests.length})
+            </Button>
           </div>
-        </Link>
 
-        {/* Module 2: Spaced Repetition Flashcards */}
-        <Link href="/flashcards" className="group">
-          <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-amber-500 transition-all h-full flex flex-col justify-between">
-            <div>
-              <div className="w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
-                <ThunderboltOutlined />
-              </div>
-              <h3 className="text-xl font-black text-gray-800 mb-2 group-hover:text-amber-700 transition">
-                স্পেসড রিভিশন কার্ড
-              </h3>
-              <p className="text-gray-500 text-xs leading-relaxed">
-                যা আজ পড়বেন, ভুলে যাওয়ার আগেই তা পুনরায় চোখের সামনে আসবে। বৈজ্ঞানিক SM-2 পদ্ধতিতে
-                রিভিশন দিন।
-              </p>
-            </div>
-            <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-amber-600">
-              <span>কার্ডে রিভিশন দিন</span>
-              <span>➔</span>
-            </div>
+          {/* Active Interest Chips */}
+          <div className="flex items-center gap-1.5 mb-4 px-1 overflow-x-auto text-xs text-gray-400">
+            <span className="font-bold text-gray-500 text-[11px]">আপনার পছন্দ:</span>
+            {selectedInterests.map((t, idx) => (
+              <span
+                key={idx}
+                className="bg-emerald-50 border border-emerald-200 text-emerald-800 font-bold px-2 py-0.5 rounded-md text-[10px]"
+              >
+                #{t}
+              </span>
+            ))}
+            <button
+              onClick={() => setIsInterestModalOpen(true)}
+              className="text-emerald-600 font-bold hover:underline ml-1 text-[11px]"
+            >
+              পরিবর্তন করুন
+            </button>
           </div>
-        </Link>
 
-        {/* Module 3: Bangla Baghdhara */}
-        <Link href="/bangla/baghdhara" className="group">
-          <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-teal-500 transition-all h-full flex flex-col justify-between">
-            <div>
-              <div className="w-12 h-12 bg-teal-50 text-teal-600 rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
-                <BookOutlined />
+          {/* Reel Feed Content */}
+          {loading ? (
+            <div className="py-20 text-center bg-white rounded-3xl border border-gray-100">
+              <Spin size="large" />
+              <p className="mt-3 text-gray-400 font-bold text-xs">প্রাসঙ্গিক রিলস প্রস্তুত হচ্ছে...</p>
+            </div>
+          ) : posts.length === 0 ? (
+            <div className="bg-white rounded-3xl border border-gray-100 p-12 text-center">
+              <Empty description="এই ক্যাটাগরিতে এখনো কোনো রিল নেই" />
+              <div className="mt-4 flex justify-center gap-2">
+                <Button
+                  type="primary"
+                  icon={<PlusOutlined />}
+                  onClick={() => setIsCreateModalOpen(true)}
+                  className="bg-emerald-600 rounded-xl font-bold"
+                >
+                  প্রথম রিল পোস্ট করুন
+                </Button>
+                <Button
+                  icon={<ReloadOutlined />}
+                  onClick={handlePullDailyPill}
+                  className="rounded-xl font-bold"
+                >
+                  দৈনিক ক্যাপসুল লোড করুন
+                </Button>
               </div>
-              <h3 className="text-xl font-black text-gray-800 mb-2 group-hover:text-teal-700 transition">
-                বাংলা বাগধারা (৬৪১+)
-              </h3>
-              <p className="text-gray-500 text-xs leading-relaxed">
-                বিসিএস ও চাকরির পরীক্ষায় সচরাচর আসা সকল বাগধারা বর্ণানুক্রমিক তালিকা, অডিও উচ্চারণ ও
-                কুইজসহ।
-              </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-teal-600">
-              <span>বাগধারা শিখুন</span>
-              <span>➔</span>
-            </div>
-          </div>
-        </Link>
-
-        {/* Module 4: Bangla Word Origin */}
-        <Link href="/bangla/shobdo" className="group">
-          <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-blue-500 transition-all h-full flex flex-col justify-between">
+          ) : (
             <div>
-              <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
-                <GlobalOutlined />
-              </div>
-              <h3 className="text-xl font-black text-gray-800 mb-2 group-hover:text-blue-700 transition">
-                শব্দের উৎপত্তি ও ব্যাকরণ
-              </h3>
-              <p className="text-gray-500 text-xs leading-relaxed">
-                তৎসম, তদ্ভব, দেশি ও বিদেশি শব্দের উৎস নির্ণয়ের সহজ গাইড ও বিগত বছরের প্রশ্ন।
-              </p>
+              {posts.map((post) => (
+                <ReelCard
+                  key={post._id}
+                  post={post}
+                  userEmail={userEmail}
+                  onTagClick={(tag) => {
+                    if (!selectedInterests.includes(tag)) {
+                      handleSaveInterests([...selectedInterests, tag]);
+                    }
+                  }}
+                  onAskAI={handleAskAI}
+                />
+              ))}
             </div>
-            <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-blue-600">
-              <span>উৎপত্তি দেখুন</span>
-              <span>➔</span>
-            </div>
-          </div>
-        </Link>
-
-        {/* Module 5: BCS Survivor */}
-        <Link href="/campaign" className="group">
-          <div className="bg-gradient-to-br from-slate-900 to-gray-800 text-white p-6 rounded-2xl border border-gray-700 shadow-sm hover:shadow-xl hover:border-amber-400 transition-all h-full flex flex-col justify-between">
-            <div>
-              <div className="w-12 h-12 bg-amber-500/20 text-amber-400 rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
-                <FireOutlined />
-              </div>
-              <h3 className="text-xl font-black text-white mb-2 group-hover:text-amber-400 transition">
-                বিসিএস সার্ভাইভার
-              </h3>
-              <p className="text-gray-300 text-xs leading-relaxed">
-                উপজেলা লাইব্রেরি থেকে বাংলাদেশ সচিবালয় পর্যন্ত—ধাপে ধাপে ইংলিশ মিশন জিতে ক্যাডার পদে নিজের উত্তরণ ঘটান।
-              </p>
-            </div>
-            <div className="mt-4 pt-3 border-t border-gray-700 flex items-center justify-between text-xs font-bold text-amber-400">
-              <span>ক্যাম্পেইন খেলুন</span>
-              <span>➔</span>
-            </div>
-          </div>
-        </Link>
-
-        {/* Module 6: Cloze Arena */}
-        <Link href="/cloze" className="group">
-          <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-emerald-500 transition-all h-full flex flex-col justify-between">
-            <div>
-              <div className="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
-                <CompassOutlined />
-              </div>
-              <h3 className="text-xl font-black text-gray-800 mb-2 group-hover:text-emerald-700 transition">
-                ক্লজ টেস্ট ও প্রিপজিশন
-              </h3>
-              <p className="text-gray-500 text-xs leading-relaxed">
-                বিসিএস ও ব্যাংকের মারাত্মক Preposition ও Group Verb ট্র্যাপ শূন্যস্থান পূরণের মাধ্যমে আয়ত্ত করুন।
-              </p>
-            </div>
-            <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-emerald-600">
-              <span>শূন্যস্থান অনুশীলন</span>
-              <span>➔</span>
-            </div>
-          </div>
-        </Link>
-
-        {/* Module 7: Spelling Bee & Confusing Pairs */}
-        <Link href="/spelling" className="group">
-          <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-teal-500 transition-all h-full flex flex-col justify-between">
-            <div>
-              <div className="w-12 h-12 bg-teal-50 text-teal-600 rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
-                <StarFilled />
-              </div>
-              <h3 className="text-xl font-black text-gray-800 mb-2 group-hover:text-teal-700 transition">
-                বানান ও কনফিউজিং শব্দজোড়
-              </h3>
-              <p className="text-gray-500 text-xs leading-relaxed">
-                Stationary বনাম Stationery এর মতো বিভ্রান্তিকর শব্দজোড় ও বিসিএসের কুখ্যাত ট্রিকি বানান।
-              </p>
-            </div>
-            <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-teal-600">
-              <span>স্পেলিং বি ড্রিল</span>
-              <span>➔</span>
-            </div>
-          </div>
-        </Link>
-
-        {/* Module 8: Panic Sheet */}
-        <Link href="/panic-sheet" className="group">
-          <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-rose-500 transition-all h-full flex flex-col justify-between">
-            <div>
-              <div className="w-12 h-12 bg-rose-50 text-rose-600 rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
-                <TrophyOutlined />
-              </div>
-              <h3 className="text-xl font-black text-gray-800 mb-2 group-hover:text-rose-700 transition">
-                পরীক্ষার আগের প্যানিক শিট
-              </h3>
-              <p className="text-gray-500 text-xs leading-relaxed">
-                পরীক্ষার আগের রাতের জন্য আপনার সক্রিয় ভুল, হাই-ফ্রিকোয়েন্সি শব্দ ও বাগধারার প্রিন্ট-রেডি রিভিশন শিট।
-              </p>
-            </div>
-            <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-rose-600">
-              <span>রিভিশন শিট দেখুন</span>
-              <span>➔</span>
-            </div>
-          </div>
-        </Link>
-      </div>
-
-      {/* Why LexiLearn Section */}
-      <div className="bg-emerald-50/50 rounded-3xl p-8 md:p-10 border border-emerald-100">
-        <div className="text-center max-w-xl mx-auto mb-8">
-          <span className="text-xs font-black uppercase tracking-wider text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full">
-            আমাদের বিশেষত্ব
-          </span>
-          <h2 className="text-2xl md:text-3xl font-black text-gray-800 mt-2">
-            পড়াশোনা হোক আনন্দদায়ক ও ফলাফলমুখী
-          </h2>
+          )}
         </div>
 
-        <Row gutter={[20, 20]}>
-          <Col xs={24} md={8}>
-            <div className="bg-white p-6 rounded-2xl shadow-xs border border-gray-100 h-full">
-              <div className="w-10 h-10 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center text-xl mb-3">
-                <FireOutlined />
-              </div>
-              <h3 className="text-base font-bold text-gray-800 mb-2">প্রতিদিনের ধারাবাহিকতা (Streak)</h3>
-              <p className="text-gray-500 text-xs leading-relaxed">
-                প্রতিদিন মাত্র ৫-১০ মিনিট সময় দিন। নিয়মিত প্র্যাকটিসে আপনার স্ট্রিক অক্ষুণ্ণ থাকবে
-                এবং পড়াশোনায় কখনো একঘেয়েমি আসবে না।
-              </p>
-            </div>
-          </Col>
+        {/* Right Column: Quick Prep Navigation & Daily Telemetry */}
+        <div className="space-y-4">
+          {/* Quick Study Navigation Card */}
+          <div className="bg-white p-5 rounded-3xl border border-gray-100 shadow-xs">
+            <h4 className="font-black text-sm text-gray-900 mb-3 flex items-center gap-2">
+              <CompassOutlined className="text-emerald-600 text-base" />
+              <span>দ্রুত প্র্যাকটিস জোন</span>
+            </h4>
+            <div className="space-y-2">
+              <Link href="/campaign" className="block">
+                <div className="p-3 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200/60 hover:shadow-xs transition-all flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <FireOutlined className="text-amber-600 text-lg" />
+                    <div>
+                      <span className="font-black text-xs text-amber-950 block">
+                        সার্ভাইভার ক্যাম্পেইন
+                      </span>
+                      <span className="text-[10px] text-amber-700/80">নেগেটিভ মার্কিং যুদ্ধ</span>
+                    </div>
+                  </div>
+                  <Tag color="gold" className="text-[10px] font-bold rounded-md m-0">
+                    লাইভ
+                  </Tag>
+                </div>
+              </Link>
 
-          <Col xs={24} md={8}>
-            <div className="bg-white p-6 rounded-2xl shadow-xs border border-gray-100 h-full">
-              <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center text-xl mb-3">
-                <CheckCircleFilled />
-              </div>
-              <h3 className="text-base font-bold text-gray-800 mb-2">স্মার্ট স্পেসড রিপিটেশন</h3>
-              <p className="text-gray-500 text-xs leading-relaxed">
-                যে শব্দগুলো আপনার বেশি কঠিন লাগে, সেগুলো অ্যাপ নিজ থেকেই বেশি বেশি রিভিশনে আনবে। ফলে
-                স্মৃতিশক্তি হবে দীর্ঘস্থায়ী।
-              </p>
-            </div>
-          </Col>
+              <Link href="/flashcards" className="block">
+                <div className="p-3 rounded-2xl bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200/60 hover:shadow-xs transition-all flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <ThunderboltFilled className="text-emerald-600 text-lg" />
+                    <div>
+                      <span className="font-black text-xs text-emerald-950 block">
+                        SM-2 রিভিশন কার্ড
+                      </span>
+                      <span className="text-[10px] text-emerald-700/80">স্মৃতিশক্তি দীর্ঘস্থায়ী করুন</span>
+                    </div>
+                  </div>
+                  <Tag color="green" className="text-[10px] font-bold rounded-md m-0">
+                    স্পেসড
+                  </Tag>
+                </div>
+              </Link>
 
-          <Col xs={24} md={8}>
-            <div className="bg-white p-6 rounded-2xl shadow-xs border border-gray-100 h-full">
-              <div className="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center text-xl mb-3">
-                <TrophyOutlined />
-              </div>
-              <h3 className="text-base font-bold text-gray-800 mb-2">নেগেটিভ মার্কিং কুইজ</h3>
-              <p className="text-gray-500 text-xs leading-relaxed">
-                ১৫ সেকেন্ডের দ্রুত কুইজে ভুল উত্তরের জন্য -০.২৫ নম্বর কাটার বাস্তব অভিজ্ঞতা নিন, যা
-                আসল পরীক্ষার ভয় দূর করবে।
-              </p>
+              <Link href="/cloze" className="block">
+                <div className="p-3 rounded-2xl bg-slate-50 border border-gray-200 hover:shadow-xs transition-all flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <ReadOutlined className="text-slate-700 text-lg" />
+                    <div>
+                      <span className="font-black text-xs text-slate-900 block">
+                        ক্লজ টেস্ট ও প্যাসেজ
+                      </span>
+                      <span className="text-[10px] text-gray-500">ব্যাংক ও বিসিএস প্যাটার্ন</span>
+                    </div>
+                  </div>
+                  <Tag color="default" className="text-[10px] font-bold rounded-md m-0">
+                    প্র্যাকটিস
+                  </Tag>
+                </div>
+              </Link>
+
+              <Link href="/spelling" className="block">
+                <div className="p-3 rounded-2xl bg-indigo-50/60 border border-indigo-200/60 hover:shadow-xs transition-all flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <StarFilled className="text-indigo-600 text-lg" />
+                    <div>
+                      <span className="font-black text-xs text-indigo-950 block">
+                        বানান শুদ্ধিকরণ
+                      </span>
+                      <span className="text-[10px] text-indigo-700/80">ভুল বানানের ফাঁদ</span>
+                    </div>
+                  </div>
+                  <Tag color="purple" className="text-[10px] font-bold rounded-md m-0">
+                    চ্যালেঞ্জ
+                  </Tag>
+                </div>
+              </Link>
+
+              <Link href="/bangla/baghdhara" className="block">
+                <div className="p-3 rounded-2xl bg-rose-50/50 border border-rose-200/60 hover:shadow-xs transition-all flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <BookOutlined className="text-rose-600 text-lg" />
+                    <div>
+                      <span className="font-black text-xs text-rose-950 block">
+                        বাগধারা কোষ (৬৪১+)
+                      </span>
+                      <span className="text-[10px] text-rose-700/80">বাংলা ভাষা ও সাহিত্য</span>
+                    </div>
+                  </div>
+                  <Tag color="volcano" className="text-[10px] font-bold rounded-md m-0">
+                    বিসিএস
+                  </Tag>
+                </div>
+              </Link>
             </div>
-          </Col>
-        </Row>
+          </div>
+
+          {/* Daily Streak & Mastery Tracker */}
+          <div className="bg-gradient-to-br from-slate-900 to-indigo-950 text-white p-5 rounded-3xl shadow-xs">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs font-bold text-indigo-300">আজকের রিভিশন স্ট্যাটাস</span>
+              <span className="bg-amber-400 text-slate-950 font-black text-[10px] px-2 py-0.5 rounded-full">
+                DAY 14
+              </span>
+            </div>
+            <h3 className="text-xl font-black text-white m-0 mb-1">৩৮টি শব্দ আয়ত্ত</h3>
+            <p className="text-xs text-indigo-200/70 mb-4 font-normal">
+              দৈনিক লক্ষ্য ৫০টি শব্দের মধ্যে আর ১২টি বাকি।
+            </p>
+            <div className="w-full bg-white/10 rounded-full h-2 mb-3 overflow-hidden">
+              <div className="bg-emerald-400 h-2 rounded-full" style={{ width: '76%' }} />
+            </div>
+            <Link href="/words">
+              <Button
+                block
+                className="bg-white/10 hover:!bg-white/20 !text-white border-white/20 font-bold rounded-xl text-xs h-9"
+              >
+                সম্পূর্ণ শব্দভাণ্ডার দেখুন
+              </Button>
+            </Link>
+          </div>
+        </div>
       </div>
+
+      {/* Modals */}
+      <InterestModal
+        open={isInterestModalOpen}
+        onClose={() => setIsInterestModalOpen(false)}
+        selectedInterests={selectedInterests}
+        onSave={handleSaveInterests}
+      />
+
+      <CreatePostModal
+        open={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+        userEmail={userEmail}
+        userName={userName}
+        onPostCreated={() => fetchFeed(activeTab, selectedInterests)}
+      />
     </div>
   );
 }
