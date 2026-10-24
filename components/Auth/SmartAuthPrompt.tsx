@@ -41,7 +41,7 @@ export default function SmartAuthPrompt() {
 
       // Also listen to any custom trigger event (e.g. user clicks save to deck without email)
       const handleTriggerEvent = () => {
-        if (!localStorage.getItem('lexi_user_email') && status !== 'authenticated') {
+        if (!localStorage.getItem('lexi_user_email')) {
           setOpen(true);
         }
       };
