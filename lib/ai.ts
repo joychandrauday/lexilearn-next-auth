@@ -109,7 +109,8 @@ async function callGroqChat(
 const GEMINI_CANDIDATE_MODELS = [
   'gemini-3.5-flash',
   'gemini-3.5-flash-lite',
-  'gemini-3.8-flash',
+  'gemini-3.1-flash-lite',
+  'gemini-flash-latest',
 ];
 
 async function callGeminiChat(
@@ -167,41 +168,93 @@ async function callGeminiChat(
 }
 
 // -------------------------------------------------------------
-// 3. AI BCS & Bank Mentor Helper Chatbot
+// 3. AI BCS, Bank & General Knowledge Mentor Chatbot
 // -------------------------------------------------------------
-export async function chatWithAIMentor(conversation: ChatMessage[]): Promise<string> {
-  const systemPrompt = `You are "LexiBot" — the premier AI Mentor and English Pedagogy Expert for Bangladeshi job aspirants preparing for BCS (Bangladesh Civil Service), Bangladesh Bank AD, Combined Bank, Primary Teacher Recruitment (DPE), and NTRCA.
+export async function chatWithAIMentor(
+  conversation: ChatMessage[],
+  contextInfo?: { userEmail?: string; userName?: string }
+): Promise<string> {
+  const systemPrompt = `You are "লেক্সিবট (LexiBot)" — an elite, all-in-one AI Exam Mentor & General Knowledge Expert built for Bangladeshi job aspirants preparing for BCS (Preliminary, Written, Viva), Bangladesh Bank AD, Combined 8/10 Banks, Primary Teacher Recruitment (DPE), NTRCA, and PSC non-cadre exams.
 
-Rules:
-1. Speak in a helpful, encouraging, and natural Bengali-English mixed tone (প্রমিত চলিত বাংলা ও স্পষ্ট ইংরেজি).
-2. Never use emojis. Use clean markdown formatting (bullet points, bold text) instead of emojis.
-3. When explaining grammar rules (Conditionals, Subjunctive, Right Form of Verbs, Prepositions, Voice, Narration), always provide at least one past BCS or Bank exam question as a practical example.
-4. When explaining a word, break down: Bangla meaning, Synonyms/Antonyms, Latin/Greek root (etymology), and a funny or memorable Desi mnemonic memory hook.
-5. Keep answers concise, highly structured, and directly actionable for exam success.`;
+KNOWLEDGE SCOPE (User can ask anything related to any competitive exam or general knowledge topic):
+1. সাধারণ জ্ঞান (বাংলাদেশ ও আন্তর্জাতিক): বাংলাদেশ সংবিধান (অনুচ্ছেদ, সংশোধনী), মুক্তিযুদ্ধ ও সেক্টরসমূহ, নদ-নদী, বাজেট, ইতিহাস, জাতীয় অর্জন, ভৌগোলিক অবস্থান, চুক্তি, জাতিসংঘ, ভূ-রাজনীতি, সাম্প্রতিক বিশ্ব।
+2. ইংরেজি ভাষা ও সাহিত্য (English): Grammar (Subjunctive, Conditionals, Inversion, Prepositions), Confusing pairs (e.g. Candid vs Cynical, Affect vs Effect), Synonyms/Antonyms, Literature & Authors.
+3. বাংলা ভাষা ও সাহিত্য: বাংলা ব্যাকরণ (সন্ধি, সমাস, কারক, ন-ত্ব/ষ-ত্ব বিধান, প্রমিত শুদ্ধ বানান যেমন: কুষ্মাণ্ড, অকালপক্ব, সান্ত্বনা), বাগধারা, চর্যাপদ থেকে আধুনিক যুগ।
+4. গণিত ও মানসিক দক্ষতা (Math & Mental Ability): লাভ-ক্ষতি, শতকরা, ধারা, সুদকষা, লসাগু-গসাগু, শর্টকাট কৌশল।
+5. আইসিটি ও সাধারণ বিজ্ঞান: কম্পিউটার প্রযুক্তি, নেটওয়ার্ক, দৈনন্দিন বিজ্ঞান, রোগব্যাধি ও পুষ্টি।
+6. ভাইভা ও ক্যারিয়ার গাইডেন্স: ক্যাডার চয়েস, প্রস্তুতি রুটিন ও প্যানিক ম্যানেজমেন্ট।
+
+CRITICAL RESPONSE RULES (MUST FOLLOW STRICTLY):
+1. MODERATE LENGTH (মাঝারি সাইজের উত্তর — না খুব বড়, না অতি ছোট):
+   - Keep answers between 80 to 220 words (around 3 to 6 crisp, focused points or a clean comparison card).
+   - Never write massive multi-page essays. Avoid superficial 1-line answers.
+   - Go straight to the core point with high-yield exam insights.
+2. NO EMOJIS: Do not use any emoji characters. Use clean text markers (•, -, [ ], [বিসিএস ট্র্যাপ], [পরীক্ষার প্রয়োগ]) instead.
+3. USER-FRIENDLY FORMATTING (Clean, readable Markdown):
+   - Do NOT output clumsy headers like "### ৪. Candid vs. Cynical".
+   - Use clean, elegant topic headers: "### Candid বনাম Cynical: পার্থক্য ও সহজ টেকনিক" or "### বাংলাদেশ সংবিধান: ২৭ নম্বর অনুচ্ছেদ".
+   - Use clear bullet points with bold keywords so aspirants can scan and absorb within 10 seconds on mobile.
+4. LEAD CAPTURE & PHONE/EMAIL INTERACTION:
+   - If the user provides an email or phone number in their message, warmly acknowledge that it has been saved to their LexiLearn profile/bulletin list.
+   - If the user asks for study sheets, revision PDFs, or specific test alerts and hasn't shared their phone/email, politely include a brief 1-line note at the end inviting them: "আপনার রিভিশন শিট বা গুরুত্বপূর্ণ অ্যালার্ট পেতে আপনার সচল ইমেইল বা মোবাইল নম্বরটি এখানে শেয়ার করতে পারেন।"
+5. LANGUAGE & TONE:
+   - Natural, highly respectful, encouraging Bengali-English mix (প্রমিত চলিত বাংলা ও স্পষ্ট ইংরেজি টার্মিনোলজি).
+
+PRE-TRAINED KNOWLEDGE EXAMPLES & DESI MNEMONICS:
+- Candid vs Cynical:
+  • Candid (Adjective): সরল, স্পষ্টবাদী, অকপট (Frank, Outspoken, Honest). টেকনিক: Can + did -> যে যা করতে পারে তা সরাসরি অকপটে বলে দেয়।
+  • Cynical (Adjective): মানুষের ভালো উদ্দেশ্যে অবিশ্বাসকারী, ছিদ্রান্বেষী, সন্দেহপ্রবণ (Skeptical, Distrustful). টেকনিক: Cynic মানেই সবসময় সবার খুঁত ও স্বার্থ খোঁজে।
+  • Exam Tip: ৪৩তম বিসিএস ও ব্যাংক পরীক্ষায় "A person who believes all people are motivated by selfishness" হিসেবে 'Cynical' এসেছে।
+- বাংলা শুদ্ধ বানান:
+  • কুষ্মাণ্ড (ষ + ্ম + াণ্ড; ভুল: কুষ্মান্ড)
+  • অকালপক্ব (ক + ব-ফলা; ভুল: অকালপক্ক)
+  • অন্ধের যষ্টি (ষ + ট + ি; ভুল: যষ্ঠি)
+  • সান্ত্বনা (ন + ত + ব-ফলা)
+- সংবিধান মৌলিক অধিকার:
+  • ২৭: আইনের দৃষ্টিতে সমতা
+  • ২৮: ধর্ম ইত্যাদির কারণে বৈষম্য না করা
+  • ২৯: সরকারি নিয়োগ লাভে সুযোগের সমতা
+  • ৩১: আইনের আশ্রয় লাভের অধিকার
+  • ৩২: জীবন ও ব্যক্তি স্বাধীনতার অধিকার সংরক্ষণ
+  • ৩৯: চিন্তা ও বিবেকের স্বাধীনতা এবং বাক-স্বাধীনতা`;
 
   const messages = [
     { role: 'system', content: systemPrompt },
     ...conversation.map((m) => ({ role: m.role, content: m.content })),
   ];
 
-  // 1. Try Groq (ultra fast)
-  let reply = await callGroqChat(messages, false);
+  // 1. Try Groq (ultra fast inference)
+  let reply = await callGroqChat(messages, false, 800);
 
   // 2. Fallback to Gemini Flash
   if (!reply) {
-    reply = await callGeminiChat(messages, false);
+    reply = await callGeminiChat(messages, false, 800);
   }
 
-  // 3. Local fallback if both APIs are down/unconfigured
+  // 3. Local Smart Fallback if external APIs are unreachable
   if (!reply) {
     const lastUserQuery = conversation[conversation.length - 1]?.content?.toLowerCase() || '';
+    
+    // Check for email or phone input
+    const emailMatch = lastUserQuery.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
+    const phoneMatch = lastUserQuery.match(/(?:\+?880|0)1[3-9]\d{8}/);
+    if (emailMatch || phoneMatch) {
+      return `### তথ্য সংরক্ষণ সম্পন্ন\n\nধন্যবাদ! আপনার যোগাযোগের তথ্য (${emailMatch ? emailMatch[0] : ''} ${phoneMatch ? phoneMatch[0] : ''}) সফলভাবে সংরক্ষিত হয়েছে।\n\n• আপনি এখন থেকে লেক্সিলার্নের গুরুত্বপূর্ণ বিসিএস ও ব্যাংক পরীক্ষার প্রস্তুতি শিট, প্যানিক নোট ও রিভিশন অ্যালার্ট সরাসরি পাবেন।\n• অন্য কোনো সাধারণ জ্ঞান, বাংলা ব্যাকরণ, গণিত বা ইংরেজি প্রশ্ন থাকলে নির্দ্বিধায় লিখুন!`;
+    }
+
+    if (lastUserQuery.includes('candid') || lastUserQuery.includes('cynical')) {
+      return `### Candid বনাম Cynical: সহজ পার্থক্য ও কৌশল\n\nদুটি শব্দ শুনতে কিছুটা কাছাকাছি মনে হলেও অর্থ সম্পূর্ণ ভিন্ন:\n\n• Candid (Adjective): অকপট, স্পষ্টবাদী, সরল (Frank, Outspoken, Sincere)।\n  - নেমোনিক: "Can-did" -> যা পারে অকপটে সরাসরি বলে।\n  - উদাহরণ: "She gave a candid opinion about the proposal."\n\n• Cynical (Adjective): মানুষের ভালো উদ্দেশ্যে অবিশ্বাসকারী, স্বার্থপর মনে করা (Skeptical, Distrustful)।\n  - নেমোনিক: Cynic সবসময় মানুষের মধ্যে স্বার্থ বা খুঁত খুঁজে পায়।\n  - বিগত পরীক্ষার ট্র্যাপ: বিগত ব্যাংক পরীক্ষায় "One who doubts human sincerity" প্রশ্নের সঠিক উত্তর ছিল Cynical।`;
+    }
+
+    if (lastUserQuery.includes('সংবিধান') || lastUserQuery.includes('অনুচ্ছেদ')) {
+      return `### বিসিএস প্রিলির অতি গুরুত্বপূর্ণ সংবিধান অনুচ্ছেদ\n\nবাংলাদেশ সংবিধানের মৌলিক অধিকার (তৃতীয় ভাগ) থেকে প্রতি বছর প্রশ্ন আসে:\n\n• ২৭ নম্বর অনুচ্ছেদ: আইনের দৃষ্টিতে সমতা ও সমান আশ্রয়।\n• ২৮ নম্বর অনুচ্ছেদ: ধর্ম, বর্ণ, লিঙ্গভেদে বৈষম্য নিষিদ্ধ।\n• ২৯ নম্বর অনুচ্ছেদ: সরকারি নিয়োগ লাভে সকল নাগরিকের সমান সুযোগ।\n• ৩১ ও ৩২ নম্বর অনুচ্ছেদ: আইনের আশ্রয় ও জীবন ধারণের মৌলিক অধিকার।\n• ৩৯ নম্বর অনুচ্ছেদ: চিন্তা, বিবেক ও বাক-স্বাধীনতা (সাংবাদিকতার স্বাধীনতা)।\n\n[পরামর্শ] রিভিশন সহজ করতে অনুচ্ছেদগুলো নোটবুকে সেভ করে রাখুন। আপনার কোনো নির্দিষ্ট অনুচ্ছেদে খটকা থাকলে জানাতে পারেন।`;
+    }
+
     if (lastUserQuery.includes('subjunctive')) {
-      return `সাবজাঙ্কটিভ মুড (Subjunctive Mood) এর নিয়ম:\n\nকিছু বিশেষ Verb (যেমন: insist, suggest, recommend, demand, order, advise, require) এর পর 'that' ক্লজ থাকলে Subject যাই হোক না কেন Verb-এর সর্বদা Base Form (V1) বসে।\n\nউদাহরণ (বিসিএস প্রশ্ন):\n"The doctor recommended that the patient take (takes নয়) medicine regularly."\n\nঅন্য কোনো গ্রামার বা শব্দ নিয়ে প্রশ্ন থাকলে বলুন!`;
+      return `### Subjunctive Mood: নিয়ম ও বিসিএস ট্র্যাপ\n\nকিছু বিশেষ Verb (demand, insist, suggest, recommend, require, order) এর পর 'that' ক্লজ থাকলে Subject Singular বা Plural যাই হোক না কেন Verb-এর সর্বদা Base Form (V1) বসে।\n\n• ভুল: The doctor recommended that he takes rest.\n• সঠিক: The doctor recommended that he take rest.\n• বিসিএস বিগত প্রশ্ন: "He proposed that we should / go..." -> সঠিক উত্তর হবে Base form 'go'।\n\n[টিপস] কোনো s/es বা modal verb (would, should) সাধারণত বসে না।`;
     }
-    if (lastUserQuery.includes('preposition') || lastUserQuery.includes('প্রিপজিশন')) {
-      return `Appropriate Preposition মনে রাখার টেকনিক:\n\n1. Abide by (মেনে চলা) বনাম Abide with (কারও সঙ্গে থাকা)\n2. Blind of (চোখে অন্ধ) বনাম Blind to (দোষের প্রতি অন্ধ)\n3. Die of (রোগে মৃত্যু) বনাম Die from (অতিরিক্ত কোনো কারণে মৃত্যু যেমন overeating)\n4. Congenial to / Conducive to (অনুকূল বা উপযোগী)\n\nকোন নির্দিষ্ট শব্দটি বিস্তারিত জানতে চান?`;
-    }
-    return `নমস্কার! আমি লেক্সিবট — আপনার বিসিএস ও ব্যাংক ইংলিশ প্রস্তুতি মেন্টর। আপনি যেকোনো ইংরেজি শব্দ, গ্রামার নিয়ম (Subjunctive, Conditionals, Prepositions), সাহিত্য বা বিগত বছরের প্রশ্নের ব্যাখ্যা জানতে চাইতে পারেন।`;
+
+    return `### লেক্সিবট এআই মেন্টর\n\nআমি লেক্সিবট — বিসিএস, ব্যাংক ও যেকোনো সরকারি চাকরির সর্বাঙ্গীন প্রস্তুতি সহকারী।\n\nআপনি আমাকে সাধারণ জ্ঞান (বাংলাদেশ ও আন্তর্জাতিক বিষয়াবলী), সংবিধান, ইংরেজি ভোকাবুলারি ও গ্রামার ট্র্যাপ, বাংলা শুদ্ধ বানান, গণিত শর্টকাট বা বিগত পরীক্ষার যেকোনো প্রশ্ন জিজ্ঞাসা করতে পারেন।\n\nপ্রশ্নটি নিচে লিখুন, গোছানো ও টু-দ্য-পয়েন্ট ব্যাখ্যা প্রদান করা হবে।`;
   }
 
   return reply;

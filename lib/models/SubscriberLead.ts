@@ -2,6 +2,8 @@ import mongoose, { Schema, Document, Model } from 'mongoose';
 
 export interface ISubscriberLead extends Document {
   email: string;
+  phone?: string;
+  name?: string;
   source: string;
   targetExam?: string;
   createdAt: Date;
@@ -17,6 +19,16 @@ const SubscriberLeadSchema = new Schema<ISubscriberLead>(
       trim: true,
       lowercase: true,
       index: true,
+    },
+    phone: {
+      type: String,
+      trim: true,
+      default: '',
+    },
+    name: {
+      type: String,
+      trim: true,
+      default: '',
     },
     source: {
       type: String,
