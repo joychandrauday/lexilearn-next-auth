@@ -42,6 +42,7 @@ export default function Navbar() {
 
   const navLinks = [
     { label: 'হোম ফিড', href: '/' },
+    { label: 'প্রস্তুতি নোটবুক', href: '/notebook' },
     { label: 'ক্যাম্পেইন', href: '/campaign' },
     { label: 'ভোকাবুলারি', href: '/words' },
     { label: 'ক্লজ টেস্ট', href: '/cloze' },
@@ -63,6 +64,11 @@ export default function Navbar() {
       disabled: true,
     },
     { type: 'divider' },
+    {
+      key: 'notebook',
+      label: <Link href="/notebook">প্রস্তুতি নোটবুক (Saved Topics)</Link>,
+      icon: <BookOutlined />,
+    },
     {
       key: 'my-words',
       label: <Link href="/my-words">আমার সংরক্ষিত শব্দ</Link>,

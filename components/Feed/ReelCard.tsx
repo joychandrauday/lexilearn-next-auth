@@ -18,6 +18,7 @@ import {
   UserOutlined,
   FireOutlined,
   CheckOutlined,
+  PlusOutlined,
 } from '@ant-design/icons';
 import { Button, Tag, Progress } from 'antd';
 import { toast } from 'sonner';
@@ -89,7 +90,57 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
   const [showExplanation, setShowExplanation] = useState(false);
   const [savingDeck, setSavingDeck] = useState(false);
   const [savedToDeck, setSavedToDeck] = useState(false);
+  const [savedToNotebook, setSavedToNotebook] = useState(false);
+  const [savingNotebook, setSavingNotebook] = useState(false);
   const [speaking, setSpeaking] = useState(false);
+
+  // Save to Notebook handler
+  const handleSaveToNotebook = async () => {
+    const savedEmail = typeof window !== 'undefined' ? localStorage.getItem('lexi_user_email') : null;
+    const isAuthed = !!(session?.user?.email || savedEmail);
+
+    if (!isAuthed) {
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('lexi:request_auth'));
+      }
+      toast.error('নোটবুকে সংরক্ষণ করতে অনুগ্রহ করে সাইন ইন বা রেজিস্টার করুন');
+      return;
+    }
+
+    const effectiveEmail = session?.user?.email || savedEmail || userEmail;
+    setSavingNotebook(true);
+
+    try {
+      const res = await axios.post('/api/user/notebook', {
+        userEmail: effectiveEmail,
+        title: post.vocabData?.word || post.title,
+        itemType:
+          post.type === 'vocab_card'
+            ? 'word'
+            : post.type === 'micro_lesson'
+            ? 'rule'
+            : post.type === 'exam_mcq'
+            ? 'question'
+            : 'topic',
+        subject: post.category === 'bcs' || post.category === 'bank' ? 'english' : 'general',
+        content: post.vocabData?.meaning || post.mcqData?.explanation || post.content || '',
+        secondaryText: post.vocabData?.bangla || '',
+        mnemonic: post.vocabData?.mnemonic || '',
+        tags: post.tags || [post.category],
+        targetExam: post.category?.toUpperCase() || 'BCS',
+        priority: 'high',
+      });
+
+      if (res.data.success) {
+        setSavedToNotebook(true);
+        toast.success('প্রস্তুতি নোটবুকে যুক্ত হয়েছে!');
+      }
+    } catch {
+      toast.error('নোটবুকে যুক্ত করতে সমস্যা হয়েছে');
+    } finally {
+      setSavingNotebook(false);
+    }
+  };
 
   // Like handler
   const handleLike = async () => {
@@ -589,10 +640,25 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
           />
         </div>
 
-        {/* Ask AI Explanation */}
-        <Button
-          size="small"
-          icon={<RobotOutlined className="text-indigo-600" />}
+        <div className="flex items-center gap-1.5">
+          <Button
+            size="small"
+            icon={savedToNotebook ? <CheckOutlined /> : <PlusOutlined />}
+            loading={savingNotebook}
+            onClick={handleSaveToNotebook}
+            className={`text-xs font-bold rounded-xl ${
+              savedToNotebook
+                ? 'bg-emerald-50 text-emerald-800 border-emerald-300'
+                : 'bg-slate-50 text-gray-700 border-gray-200 hover:border-emerald-500'
+            }`}
+          >
+            {savedToNotebook ? 'নোটবুকে আছে' : 'নোটবুকে সেভ'}
+          </Button>
+
+          {/* Ask AI Explanation */}
+          <Button
+            size="small"
+            icon={<RobotOutlined className="text-indigo-600" />}
           onClick={() => {
             const prompt = post.vocabData?.word
               ? `"${post.vocabData.word}" শব্দটির ব্যবহার, বিগত বিসিএস/ব্যাংক পরীক্ষার উদাহরণ এবং সিনোনিম বুঝিয়ে বলুন।`
@@ -607,5 +673,6 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
         </Button>
       </div>
     </div>
-  );
+  </div>
+);
 }

@@ -339,6 +339,22 @@ export default function HomePage() {
               <span>দ্রুত প্র্যাকটিস জোন</span>
             </h4>
             <div className="space-y-2">
+              <Link href="/notebook" className="block">
+                <div className="p-3 rounded-2xl bg-gradient-to-r from-teal-50 to-emerald-50 border border-teal-200/80 hover:shadow-xs transition-all flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <BookOutlined className="text-teal-700 text-lg" />
+                    <div>
+                      <span className="font-black text-xs text-teal-950 block">
+                        প্রস্তুতি নোটবুক (Saved Topics)
+                      </span>
+                      <span className="text-[10px] text-teal-700/80">শব্দ, রুল ও কনফিউজিং টপিক হাব</span>
+                    </div>
+                  </div>
+                  <Tag color="cyan" className="text-[10px] font-bold rounded-md m-0">
+                    নতুন
+                  </Tag>
+                </div>
+              </Link>
               <Link href="/campaign" className="block">
                 <div className="p-3 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200/60 hover:shadow-xs transition-all flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
