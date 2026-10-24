@@ -108,7 +108,7 @@ export async function POST(
           bangla: v.bangla,
           mnemonic: v.mnemonic,
           exam: post.category || 'bcs',
-          examTags: v.examTags || ['Community Reel'],
+          examTags: v.examTags || ['Community Card'],
           savedBy: [userEmail],
           savedCount: 1,
           frequencyCount: 1,
@@ -117,7 +117,7 @@ export async function POST(
         });
       }
 
-      // Also bookmark this reel
+      // Also bookmark this post
       if (!post.bookmarkedBy?.includes(userEmail)) {
         post.bookmarkedBy = [...(post.bookmarkedBy || []), userEmail];
         post.bookmarks = (post.bookmarks || 0) + 1;

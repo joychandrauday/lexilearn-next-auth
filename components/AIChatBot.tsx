@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
+import { useSession } from 'next-auth/react';
 import {
   RobotOutlined,
   SendOutlined,
@@ -13,6 +14,7 @@ import {
   FireOutlined,
   UserOutlined,
   SyncOutlined,
+  LockOutlined,
 } from '@ant-design/icons';
 import { Button, Input, Spin, Tag } from 'antd';
 
@@ -33,6 +35,7 @@ const QUICK_PROMPTS = [
 ];
 
 export default function AIChatBot() {
+  const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -73,6 +76,25 @@ export default function AIChatBot() {
   const handleSend = async (customPrompt?: string) => {
     const textToSend = customPrompt || input.trim();
     if (!textToSend || loading) return;
+
+    // Strict Auth Gate: User must be signed in or registered with email
+    const savedEmail = typeof window !== 'undefined' ? localStorage.getItem('lexi_user_email') : null;
+    const isAuthed = !!(session?.user?.email || savedEmail);
+
+    if (!isAuthed) {
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('lexi:request_auth'));
+      }
+      const gateMessage: Message = {
+        id: Date.now().toString(),
+        role: 'assistant',
+        content:
+          'AI মেন্টরের সাথে প্রশ্নোত্তর ও গভীর আলোচনার জন্য অনুগ্রহ করে আপনার ইমেইল প্রদান করে সাইন ইন বা রেজিস্টার করুন।',
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      };
+      setMessages((prev) => [...prev, gateMessage]);
+      return;
+    }
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -130,90 +152,82 @@ export default function AIChatBot() {
 
   return (
     <>
-      {/* Floating Trigger Button */}
-      <div className="fixed bottom-20 md:bottom-6 right-4 md:right-6 z-40">
-        {!isOpen && (
-          <button
-            onClick={() => setIsOpen(true)}
-            className="flex items-center gap-2 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 text-white px-4 py-3 rounded-full shadow-2xl hover:scale-105 transition-all border border-emerald-400/40 group cursor-pointer"
-            title="এআই মেন্টরের সাহায্য নিন"
-          >
-            <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-lg">
-              <RobotOutlined className="text-white group-hover:rotate-12 transition-transform" />
-            </div>
-            <span className="font-black text-sm tracking-tight pr-1 hidden sm:inline">
-              এআই মেন্টর
-            </span>
-            <span className="w-2.5 h-2.5 bg-emerald-300 rounded-full animate-ping" />
-          </button>
-        )}
-      </div>
+      {/* Floating Action Button */}
+      {!isOpen && (
+        <button
+          onClick={() => setIsOpen(true)}
+          className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 bg-gradient-to-r from-emerald-600 to-teal-700 text-white px-4 py-3 rounded-full shadow-2xl hover:shadow-emerald-900/30 hover:scale-105 active:scale-95 transition-all duration-300 font-bold border border-emerald-400/30"
+        >
+          <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
+            <RobotOutlined className="text-white text-sm" />
+          </div>
+          <span className="text-sm font-black tracking-wide">LexiBot AI</span>
+          <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
+        </button>
+      )}
 
-      {/* Slide-Up Chat Window */}
+      {/* Floating Chat Modal */}
       {isOpen && (
-        <div className="fixed bottom-20 md:bottom-6 right-4 md:right-6 z-50 w-[92vw] sm:w-[420px] max-h-[85vh] h-[600px] bg-white rounded-3xl shadow-2xl border border-gray-200/90 flex flex-col overflow-hidden font-sans animate-fadeIn">
+        <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[94vw] sm:w-[420px] h-[580px] max-h-[85vh] bg-white rounded-3xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-300">
           {/* Header */}
-          <div className="bg-gradient-to-r from-emerald-800 via-teal-800 to-slate-900 text-white px-5 py-4 flex items-center justify-between border-b border-emerald-900 shadow-sm">
+          <div className="p-4 bg-gradient-to-r from-slate-900 via-emerald-950 to-slate-900 text-white flex items-center justify-between shadow-md">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-xl text-emerald-300 shadow-inner">
-                <RobotOutlined />
+              <div className="w-9 h-9 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-400 shadow-inner">
+                <RobotOutlined className="text-lg" />
               </div>
               <div>
-                <div className="flex items-center gap-2">
-                  <h3 className="text-base font-black text-white m-0 tracking-tight leading-tight">
-                    লেক্সিবট এআই
-                  </h3>
-                  <Tag color="success" className="font-bold text-[10px] m-0 border-none px-1.5 py-0">
-                    অনলাইন
+                <div className="flex items-center gap-1.5">
+                  <h3 className="font-black text-sm text-white m-0">LexiBot AI Mentor</h3>
+                  <Tag color="cyan" className="text-[10px] m-0 border-0 font-bold">
+                    BCS / Bank
                   </Tag>
                 </div>
-                <span className="text-[11px] text-emerald-200/90 font-medium block">
-                  বিসিএস ও ব্যাংক ইংলিশ মেন্টর
-                </span>
+                <div className="flex items-center gap-1.5 text-[11px] text-emerald-300/80 font-medium">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>অনলাইন • প্রস্তুতি মেন্টর</span>
+                </div>
               </div>
             </div>
 
-            <button
+            <Button
+              type="text"
+              icon={<CloseOutlined className="text-white text-base hover:text-emerald-300" />}
               onClick={() => setIsOpen(false)}
-              className="p-1.5 text-gray-300 hover:text-white rounded-xl hover:bg-white/10 transition"
-              title="বন্ধ করুন"
-            >
-              <CloseOutlined className="text-base" />
-            </button>
+              className="hover:!bg-white/10 rounded-xl"
+            />
           </div>
 
-          {/* Quick Prompt Chips */}
-          <div className="bg-gray-50 border-b border-gray-100 px-3 py-2 flex items-center gap-1.5 overflow-x-auto scrollbar-none">
-            {QUICK_PROMPTS.map((qp, idx) => {
-              const Icon = qp.icon;
-              return (
-                <button
-                  key={idx}
-                  onClick={() => handleSend(qp.prompt)}
-                  disabled={loading}
-                  className="flex items-center gap-1 bg-white hover:bg-emerald-50 text-gray-700 hover:text-emerald-800 border border-gray-200 hover:border-emerald-300 px-2.5 py-1 rounded-xl text-xs font-bold whitespace-nowrap transition shadow-2xs shrink-0"
-                >
-                  <Icon className="text-emerald-600 text-[11px]" />
-                  <span>{qp.label}</span>
-                </button>
-              );
-            })}
+          {/* Quick Prompts Bar */}
+          <div className="px-3 py-2 bg-slate-50 border-b border-gray-100 flex items-center gap-2 overflow-x-auto no-scrollbar">
+            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider shrink-0">
+              দ্রুত প্রশ্ন:
+            </span>
+            {QUICK_PROMPTS.map((item, idx) => (
+              <button
+                key={idx}
+                onClick={() => handleSend(item.prompt)}
+                className="shrink-0 bg-white border border-gray-200 hover:border-emerald-500 hover:text-emerald-700 px-2.5 py-1 rounded-xl text-[11px] font-bold text-gray-600 transition shadow-xs flex items-center gap-1"
+              >
+                <item.icon className="text-emerald-600" />
+                <span>{item.label}</span>
+              </button>
+            ))}
           </div>
 
-          {/* Chat Messages Body */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50/50">
+          {/* Messages Body */}
+          <div className="flex-1 p-4 overflow-y-auto space-y-3.5 bg-slate-50/50">
             {messages.map((msg) => {
               const isUser = msg.role === 'user';
               return (
                 <div
                   key={msg.id}
-                  className={`flex items-start gap-2.5 ${isUser ? 'flex-row-reverse' : ''}`}
+                  className={`flex gap-2.5 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}
                 >
                   <div
-                    className={`w-7 h-7 rounded-xl flex items-center justify-center text-xs shrink-0 shadow-xs ${
+                    className={`w-7 h-7 rounded-xl flex items-center justify-center shrink-0 text-xs font-bold shadow-xs ${
                       isUser
                         ? 'bg-emerald-600 text-white'
-                        : 'bg-slate-800 text-emerald-300'
+                        : 'bg-gradient-to-tr from-slate-800 to-slate-900 text-emerald-400'
                     }`}
                   >
                     {isUser ? <UserOutlined /> : <RobotOutlined />}

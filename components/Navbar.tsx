@@ -9,11 +9,13 @@ import {
   MenuOutlined,
   CloseOutlined,
   FireOutlined,
-  ThunderboltOutlined,
+  ThunderboltFilled,
   BookOutlined,
   PlusOutlined,
   UserOutlined,
   LogoutOutlined,
+  ReadOutlined,
+  CheckCircleFilled,
 } from '@ant-design/icons';
 
 export default function Navbar() {
@@ -39,7 +41,7 @@ export default function Navbar() {
   }, [session]);
 
   const navLinks = [
-    { label: 'হোম', href: '/' },
+    { label: 'হোম ফিড', href: '/' },
     { label: 'ক্যাম্পেইন', href: '/campaign' },
     { label: 'ভোকাবুলারি', href: '/words' },
     { label: 'ক্লজ টেস্ট', href: '/cloze' },
@@ -53,9 +55,9 @@ export default function Navbar() {
     {
       key: 'user-info',
       label: (
-        <div className="py-1">
-          <p className="font-bold text-gray-800 m-0">{session?.user?.name || 'শিক্ষার্থী'}</p>
-          <p className="text-xs text-gray-500 truncate m-0">{session?.user?.email}</p>
+        <div className="py-1 px-1">
+          <p className="font-bold text-gray-900 m-0 text-sm">{session?.user?.name || 'শিক্ষার্থী'}</p>
+          <p className="text-xs text-gray-500 truncate m-0 font-mono">{session?.user?.email}</p>
         </div>
       ),
       disabled: true,
@@ -64,18 +66,22 @@ export default function Navbar() {
     {
       key: 'my-words',
       label: <Link href="/my-words">আমার সংরক্ষিত শব্দ</Link>,
+      icon: <BookOutlined />,
     },
     {
       key: 'mistakes',
       label: <Link href="/mistakes">ভুলের খাতা (Mistake Vault)</Link>,
+      icon: <ReadOutlined />,
     },
     {
       key: 'panic-sheet',
       label: <Link href="/panic-sheet">পরীক্ষার রিভিশন শিট</Link>,
+      icon: <ThunderboltFilled />,
     },
     {
       key: 'add-word',
       label: <Link href="/add">নতুন শব্দ যোগ করুন</Link>,
+      icon: <PlusOutlined />,
     },
     { type: 'divider' },
     {
@@ -90,26 +96,26 @@ export default function Navbar() {
   return (
     <>
       {/* Top Navbar */}
-      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
+      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-xs transition-all">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-          {/* Left: Mobile hamburger & Logo */}
+          {/* Left: Mobile hamburger & Brand */}
           <div className="flex items-center gap-3">
             <Button
               type="text"
-              icon={<MenuOutlined className="text-xl text-gray-700" />}
+              icon={<MenuOutlined className="text-lg text-gray-700" />}
               onClick={toggleDrawer}
               className="md:hidden flex items-center justify-center p-2 rounded-xl"
             />
 
-            <Link href="/" className="flex items-center gap-2 group">
-              <div className="w-9 h-9 bg-gradient-to-tr from-emerald-600 to-teal-500 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-md group-hover:scale-105 transition">
+            <Link href="/" className="flex items-center gap-2.5 group">
+              <div className="w-9 h-9 bg-gradient-to-tr from-emerald-600 to-teal-500 rounded-xl flex items-center justify-center text-white font-black text-lg shadow-sm group-hover:scale-105 transition-transform">
                 L
               </div>
               <div className="flex flex-col">
-                <span className="font-black text-xl text-gray-800 tracking-tight leading-none group-hover:text-emerald-700 transition">
+                <span className="font-black text-lg text-gray-900 tracking-tight leading-none group-hover:text-emerald-700 transition-colors">
                   Lexi<span className="text-emerald-600">Learn</span>
                 </span>
-                <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">
+                <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider mt-0.5">
                   বিসিএস ও ব্যাংক প্রস্তুতি
                 </span>
               </div>
@@ -117,7 +123,7 @@ export default function Navbar() {
           </div>
 
           {/* Center: Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-1 lg:gap-2">
+          <nav className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => {
               const isActive =
                 link.href === '/'
@@ -128,10 +134,10 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`px-3.5 py-1.5 rounded-xl text-sm font-bold transition-all ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
                     isActive
-                      ? 'bg-emerald-50 text-emerald-700 shadow-xs'
-                      : 'text-gray-600 hover:text-emerald-600 hover:bg-gray-50'
+                      ? 'bg-emerald-50 text-emerald-700 font-black shadow-xs'
+                      : 'text-gray-600 hover:text-emerald-700 hover:bg-gray-50'
                   }`}
                 >
                   {link.label}
@@ -141,13 +147,13 @@ export default function Navbar() {
           </nav>
 
           {/* Right: Quick Add + Streak + Profile */}
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2">
             {/* Quick Add Word Button */}
             <Link href="/add" className="hidden sm:inline-block">
               <Button
                 type="primary"
                 icon={<PlusOutlined />}
-                className="bg-emerald-600 hover:!bg-emerald-700 rounded-xl font-bold shadow-sm"
+                className="bg-emerald-600 hover:!bg-emerald-700 rounded-xl font-bold shadow-xs text-xs h-9"
               >
                 শব্দ যোগ
               </Button>
@@ -155,16 +161,16 @@ export default function Navbar() {
 
             {/* Daily Streak Badge */}
             {streak !== null && streak > 0 && (
-              <div className="flex items-center gap-1 bg-amber-50 text-amber-700 px-3 py-1 rounded-xl text-xs font-black border border-amber-200 shadow-xs">
-                <FireOutlined className="text-amber-500 text-sm animate-pulse" />
+              <div className="flex items-center gap-1 bg-amber-50 text-amber-700 px-2.5 py-1 rounded-xl text-xs font-black border border-amber-200 shadow-xs">
+                <FireOutlined className="text-amber-500 text-xs animate-pulse" />
                 <span>{streak} দিন</span>
               </div>
             )}
 
-            {/* Auth Dropdown */}
+            {/* Auth Dropdown or Login Button */}
             {session?.user ? (
               <Dropdown menu={{ items: userMenuItems }} placement="bottomRight" arrow>
-                <div className="cursor-pointer p-1 rounded-full hover:ring-2 hover:ring-emerald-500 transition">
+                <div className="cursor-pointer p-0.5 rounded-full hover:ring-2 hover:ring-emerald-500 transition">
                   {session.user.image ? (
                     <img
                       src={session.user.image}
@@ -172,15 +178,16 @@ export default function Navbar() {
                       className="w-8 h-8 rounded-full border border-gray-200"
                     />
                   ) : (
-                    <Avatar icon={<UserOutlined />} className="bg-emerald-600" />
+                    <Avatar icon={<UserOutlined />} className="bg-emerald-600" size={32} />
                   )}
                 </div>
               </Dropdown>
             ) : (
               <Button
                 type="default"
+                icon={<UserOutlined />}
                 onClick={() => signIn('google')}
-                className="rounded-xl font-bold border-gray-300 hover:!border-emerald-500 hover:!text-emerald-600"
+                className="rounded-xl font-bold text-xs h-9 border-gray-300 hover:!border-emerald-500 hover:!text-emerald-600"
               >
                 লগইন
               </Button>
@@ -196,7 +203,7 @@ export default function Navbar() {
             <div className="w-7 h-7 bg-emerald-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
               L
             </div>
-            <span className="text-xl font-black text-gray-800">LexiLearn</span>
+            <span className="text-lg font-black text-gray-900">LexiLearn</span>
           </div>
         }
         placement="left"
@@ -218,9 +225,9 @@ export default function Navbar() {
                   key={item.href}
                   href={item.href}
                   onClick={toggleDrawer}
-                  className={`px-4 py-2.5 rounded-xl text-sm font-bold transition-all ${
+                  className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${
                     isActive
-                      ? 'bg-emerald-600 text-white shadow-sm'
+                      ? 'bg-emerald-600 text-white shadow-xs'
                       : 'text-gray-700 hover:bg-gray-100'
                   }`}
                 >
@@ -238,23 +245,24 @@ export default function Navbar() {
                     <img
                       src={session.user.image}
                       alt="Avatar"
-                      className="w-10 h-10 rounded-full"
+                      className="w-9 h-9 rounded-full"
                     />
                   ) : (
                     <Avatar icon={<UserOutlined />} className="bg-emerald-600" />
                   )}
                   <div className="truncate">
-                    <p className="font-bold text-sm text-gray-800 m-0 truncate">
+                    <p className="font-bold text-xs text-gray-900 m-0 truncate">
                       {session.user.name}
                     </p>
-                    <p className="text-xs text-gray-500 m-0 truncate">{session.user.email}</p>
+                    <p className="text-[11px] text-gray-500 m-0 truncate font-mono">{session.user.email}</p>
                   </div>
                 </div>
                 <Button
                   danger
                   block
+                  icon={<LogoutOutlined />}
                   onClick={() => signOut()}
-                  className="rounded-xl font-bold"
+                  className="rounded-xl font-bold text-xs"
                 >
                   সাইন আউট
                 </Button>
@@ -263,8 +271,9 @@ export default function Navbar() {
               <Button
                 type="primary"
                 block
+                icon={<UserOutlined />}
                 onClick={() => signIn('google')}
-                className="bg-emerald-600 rounded-xl font-bold h-11"
+                className="bg-emerald-600 rounded-xl font-bold h-10 text-xs"
               >
                 গুগল দিয়ে লগইন
               </Button>

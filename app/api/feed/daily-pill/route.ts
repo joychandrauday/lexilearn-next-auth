@@ -159,7 +159,7 @@ Strict requirements:
       success: true,
       count: postsToInsert.length,
       posts: postsToInsert,
-      message: `${postsToInsert.length}টি নতুন দৈনিক রিল যুক্ত হয়েছে!`,
+      message: `${postsToInsert.length}টি নতুন দৈনিক প্রস্তুতি ক্যাপসুল যুক্ত হয়েছে!`,
     });
   } catch (error: any) {
     console.error('POST /api/feed/daily-pill error:', error);

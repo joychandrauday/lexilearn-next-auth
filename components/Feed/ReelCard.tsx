@@ -22,6 +22,7 @@ import {
 import { Button, Tag, Progress } from 'antd';
 import { toast } from 'sonner';
 import axios from 'axios';
+import { useSession } from 'next-auth/react';
 
 export interface IReelPost {
   _id: string;
@@ -79,6 +80,7 @@ interface ReelCardProps {
 }
 
 export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelCardProps) {
+  const { data: session } = useSession();
   const [likes, setLikes] = useState(post.likes || 0);
   const [isLiked, setIsLiked] = useState(!!post.isLiked);
   const [bookmarks, setBookmarks] = useState(post.bookmarks || 0);
@@ -98,7 +100,7 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
     try {
       await axios.post(`/api/feed/${post._id}/react`, {
         action: 'like',
-        userEmail,
+        userEmail: session?.user?.email || userEmail,
       });
     } catch {
       // rollback
@@ -109,6 +111,18 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
 
   // Bookmark handler
   const handleBookmark = async () => {
+    const savedEmail = typeof window !== 'undefined' ? localStorage.getItem('lexi_user_email') : null;
+    const isAuthed = !!(session?.user?.email || savedEmail);
+
+    if (!isAuthed) {
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('lexi:request_auth'));
+      }
+      toast.error('বুকমার্ক করতে অনুগ্রহ করে সাইন ইন বা রেজিস্টার করুন');
+      return;
+    }
+
+    const effectiveEmail = session?.user?.email || savedEmail || userEmail;
     const nextState = !isBookmarked;
     setIsBookmarked(nextState);
     setBookmarks((prev) => (nextState ? prev + 1 : Math.max(0, prev - 1)));
@@ -116,9 +130,9 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
     try {
       await axios.post(`/api/feed/${post._id}/react`, {
         action: 'bookmark',
-        userEmail,
+        userEmail: effectiveEmail,
       });
-      toast.success(nextState ? 'রিলটি বুকমার্কে সংরক্ষিত হয়েছে' : 'বুকমার্ক সরানো হয়েছে');
+      toast.success(nextState ? 'কার্ডটি বুকমার্কে সংরক্ষিত হয়েছে' : 'বুকমার্ক সরানো হয়েছে');
     } catch {
       setIsBookmarked(!nextState);
       setBookmarks((prev) => (!nextState ? prev + 1 : Math.max(0, prev - 1)));
@@ -129,13 +143,19 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
   const handleSaveToDeck = async () => {
     if (!post.vocabData?.word) return;
 
-    // Check if user has an email captured
+    // Strict Auth Gate
     const savedEmail = typeof window !== 'undefined' ? localStorage.getItem('lexi_user_email') : null;
-    const effectiveEmail = savedEmail || userEmail;
+    const isAuthed = !!(session?.user?.email || savedEmail);
 
-    if (!savedEmail && typeof window !== 'undefined') {
-      window.dispatchEvent(new CustomEvent('lexi:request_auth'));
+    if (!isAuthed) {
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('lexi:request_auth'));
+      }
+      toast.error('শব্দটি ডেক-এ সংরক্ষণ করতে অনুগ্রহ করে সাইন ইন বা রেজিস্টার করুন');
+      return;
     }
+
+    const effectiveEmail = session?.user?.email || savedEmail || userEmail;
 
     setSavingDeck(true);
     try {
@@ -179,7 +199,7 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
       await axios.post(`/api/feed/${post._id}/react`, {
         action: 'vote',
         optionIndex: idx,
-        userEmail,
+        userEmail: session?.user?.email || userEmail,
       });
     } catch {
       // silent
@@ -213,20 +233,20 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
       {post.isPinned && (
         <div className="bg-gradient-to-r from-amber-500 to-amber-600 text-white text-[11px] font-black px-4 py-1 flex items-center gap-1.5 uppercase tracking-wider">
           <ThunderboltFilled />
-          <span>আজকের স্পেশাল পিন্ড রিল</span>
+          <span>আজকের স্পেশাল পিন্ড ক্যাপসুল</span>
         </div>
       )}
 
       {post.type === 'daily_editorial' && !post.isPinned && (
         <div className="bg-gradient-to-r from-indigo-900 to-slate-800 text-white text-[11px] font-bold px-4 py-1 flex items-center justify-between">
           <span className="flex items-center gap-1">
-            <BulbOutlined className="text-amber-300" /> জাতীয় সম্পাদকীয় ভোকাবুলারি রিল
+            <BulbOutlined className="text-amber-300" /> জাতীয় সম্পাদকীয় ভোকাবুলারি ক্যাপসুল
           </span>
           <span className="text-[10px] text-indigo-200">Daily Spotlight</span>
         </div>
       )}
 
-      {/* Reel Header */}
+      {/* Capsule Header */}
       <div className="p-5 pb-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div
@@ -264,7 +284,7 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
         <div className="flex items-center gap-1.5">
           <Tag color="cyan" className="font-bold text-[11px] rounded-lg m-0 border-0">
             {post.type === 'vocab_card'
-              ? 'ভোকাব রিল'
+              ? 'ভোকাব কার্ড'
               : post.type === 'exam_mcq'
               ? 'MCQ চ্যালেঞ্জ'
               : post.type === 'micro_lesson'
@@ -276,7 +296,7 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
         </div>
       </div>
 
-      {/* Reel Body */}
+      {/* Capsule Body */}
       <div className="px-5 py-2">
         <h3 className="font-black text-lg text-gray-900 mb-2 leading-snug">{post.title}</h3>
 
@@ -301,119 +321,136 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
               />
             </div>
 
-            {/* Bengali Meaning */}
-            <div className="bg-white p-3 rounded-xl border border-emerald-100 mb-3 shadow-xs">
-              <span className="text-xs text-gray-400 font-bold block mb-0.5">বাংলা অর্থ:</span>
-              <p className="text-base font-black text-emerald-900 m-0">{post.vocabData.bangla}</p>
+            <div className="space-y-2 text-sm text-gray-700">
+              <div className="flex items-baseline gap-2">
+                <span className="font-bold text-gray-900 text-base">বাংলা অর্থ:</span>
+                <span className="font-black text-emerald-800 text-lg">{post.vocabData.bangla}</span>
+              </div>
+
               {post.vocabData.meaning && (
-                <p className="text-xs text-gray-600 font-medium mt-1 m-0">
-                  {post.vocabData.meaning}
-                </p>
+                <div>
+                  <span className="font-bold text-gray-500 text-xs block">ইংরেজি অর্থ:</span>
+                  <p className="font-medium text-gray-800 m-0 text-xs md:text-sm">
+                    {post.vocabData.meaning}
+                  </p>
+                </div>
+              )}
+
+              {post.vocabData.mnemonic && (
+                <div className="bg-amber-50/80 border border-amber-200/80 p-3 rounded-xl mt-3 flex items-start gap-2">
+                  <BulbOutlined className="text-amber-600 text-base mt-0.5" />
+                  <div>
+                    <span className="font-bold text-amber-950 text-xs block">দেশি স্মৃতিসূত্র:</span>
+                    <p className="text-xs text-amber-900 font-medium m-0 leading-relaxed">
+                      {post.vocabData.mnemonic}
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {post.vocabData.exampleSentence && (
+                <div className="bg-white/80 p-3 rounded-xl border border-gray-100 mt-2 text-xs text-gray-600 italic">
+                  &ldquo;{post.vocabData.exampleSentence}&rdquo;
+                </div>
+              )}
+
+              {post.vocabData.examTags && post.vocabData.examTags.length > 0 && (
+                <div className="flex flex-wrap items-center gap-1.5 pt-2">
+                  <span className="text-[11px] font-bold text-gray-400">বিগত পরীক্ষা:</span>
+                  {post.vocabData.examTags.map((et, idx) => (
+                    <Tag key={idx} color="purple" className="text-[10px] font-bold rounded-md m-0">
+                      {et}
+                    </Tag>
+                  ))}
+                </div>
               )}
             </div>
 
-            {/* Desi Mnemonic Memory Hook */}
-            {post.vocabData.mnemonic && (
-              <div className="bg-amber-50/80 p-3 rounded-xl border border-amber-200/80 mb-3">
-                <div className="flex items-center gap-1.5 text-xs font-black text-amber-900 mb-1">
-                  <BulbOutlined className="text-amber-600" />
-                  <span>দেশি ট্রিক ও মনে রাখার কৌশল (Mnemonic):</span>
-                </div>
-                <p className="text-xs text-amber-950 font-bold m-0 leading-relaxed">
-                  {post.vocabData.mnemonic}
-                </p>
-              </div>
-            )}
-
-            {/* Example sentence */}
-            {post.vocabData.exampleSentence && (
-              <div className="text-xs text-gray-600 italic bg-white/70 p-2.5 rounded-lg border border-gray-100 mb-3">
-                &ldquo;{post.vocabData.exampleSentence}&rdquo;
-              </div>
-            )}
-
-            {/* Exam appearances */}
-            {post.vocabData.examTags && post.vocabData.examTags.length > 0 && (
-              <div className="flex flex-wrap items-center gap-1.5 mb-3">
-                <span className="text-[11px] font-bold text-gray-400">পরীক্ষায় এসেছে:</span>
-                {post.vocabData.examTags.map((et, i) => (
-                  <Tag key={i} color="gold" className="text-[10px] font-bold rounded-md m-0">
-                    {et}
-                  </Tag>
-                ))}
-              </div>
-            )}
-
-            {/* 1-Click Save to Deck */}
-            <Button
-              type="primary"
-              icon={savedToDeck ? <CheckOutlined /> : <BookOutlined />}
-              loading={savingDeck}
-              onClick={handleSaveToDeck}
-              className={`w-full font-bold rounded-xl h-10 ${
-                savedToDeck
-                  ? 'bg-emerald-700 hover:!bg-emerald-800'
-                  : 'bg-emerald-600 hover:!bg-emerald-500'
-              }`}
-            >
-              {savedToDeck ? 'ডেকে সংরক্ষিত হয়েছে!' : 'আমার রিভিশন ডেকে যুক্ত করুন'}
-            </Button>
+            {/* Quick Action: Save to Revision Deck */}
+            <div className="mt-4 pt-3 border-t border-emerald-100 flex items-center justify-between">
+              <span className="text-xs text-gray-500 font-medium">ব্যক্তিগত রিভিশন ডেকে যুক্ত করবেন?</span>
+              <Button
+                size="small"
+                type="primary"
+                icon={savedToDeck ? <CheckOutlined /> : <BookOutlined />}
+                loading={savingDeck}
+                onClick={handleSaveToDeck}
+                disabled={savedToDeck}
+                className={
+                  savedToDeck
+                    ? 'bg-slate-700 font-bold rounded-xl text-xs'
+                    : 'bg-emerald-600 hover:!bg-emerald-500 font-bold rounded-xl text-xs'
+                }
+              >
+                {savedToDeck ? 'ডেকে সংরক্ষিত' : 'ডেকে সেভ করুন'}
+              </Button>
+            </div>
           </div>
         )}
 
-        {/* 2. EXAM MCQ CHALLENGE TYPE */}
+        {/* 2. MCQ CHALLENGE TYPE */}
         {post.mcqData && (
-          <div className="bg-slate-50 p-4 rounded-2xl border border-gray-100 my-3">
-            <p className="text-sm md:text-base font-bold text-gray-900 mb-4 leading-relaxed">
-              {post.mcqData.question}
-            </p>
+          <div className="bg-slate-50/80 p-5 rounded-2xl border border-gray-200/80 my-3">
+            <div className="flex items-start gap-2 mb-3">
+              <span className="bg-indigo-600 text-white text-xs font-black px-2 py-0.5 rounded-lg shrink-0">
+                MCQ
+              </span>
+              <h4 className="font-bold text-sm sm:text-base text-gray-900 m-0 leading-snug">
+                {post.mcqData.question}
+              </h4>
+            </div>
 
-            <div className="space-y-2 mb-3">
-              {post.mcqData.options?.map((opt, idx) => {
+            {/* Options list */}
+            <div className="space-y-2 mt-3">
+              {post.mcqData.options.map((opt, idx) => {
                 const isSelected = selectedOption === idx;
-                const isCorrect = opt === post.mcqData?.correctAnswer;
-                let btnStyle = 'border-gray-200 bg-white text-gray-800';
+                const isCorrect = opt.trim() === post.mcqData?.correctAnswer?.trim();
+                const answered = selectedOption !== null;
+                const percent = getVotePercent(idx);
 
-                if (selectedOption !== null) {
+                let btnStyle = 'bg-white border-gray-200 text-gray-800 hover:border-emerald-500';
+                if (answered) {
                   if (isCorrect) {
-                    btnStyle = 'border-emerald-500 bg-emerald-50 text-emerald-900 font-bold';
+                    btnStyle = 'bg-emerald-50 border-emerald-500 text-emerald-950 font-bold';
                   } else if (isSelected && !isCorrect) {
-                    btnStyle = 'border-rose-400 bg-rose-50 text-rose-900 font-bold';
+                    btnStyle = 'bg-rose-50 border-rose-400 text-rose-950 font-bold';
+                  } else {
+                    btnStyle = 'bg-gray-50 border-gray-200 text-gray-400 opacity-70';
                   }
                 }
 
                 return (
                   <button
                     key={idx}
+                    disabled={answered}
                     onClick={() => handleSelectOption(idx)}
-                    disabled={selectedOption !== null}
-                    className={`w-full p-3 rounded-xl border text-left text-xs md:text-sm font-medium transition-all flex items-center justify-between relative overflow-hidden ${btnStyle}`}
+                    className={`w-full text-left p-3 rounded-xl border text-xs sm:text-sm transition-all duration-200 relative overflow-hidden flex items-center justify-between ${btnStyle}`}
                   >
                     <span className="relative z-10 flex items-center gap-2">
-                      <span className="w-5 h-5 rounded-full border border-gray-300 flex items-center justify-center text-[10px] font-bold">
+                      <span className="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-[10px] font-bold text-gray-600">
                         {String.fromCharCode(65 + idx)}
                       </span>
                       <span>{opt}</span>
                     </span>
 
-                    {selectedOption !== null && (
-                      <span className="relative z-10 flex items-center gap-2 font-bold text-xs">
-                        {isCorrect && <CheckCircleFilled className="text-emerald-600 text-sm" />}
-                        {isSelected && !isCorrect && (
-                          <CloseCircleFilled className="text-rose-600 text-sm" />
-                        )}
-                        <span className="text-gray-400 font-mono text-[11px]">
-                          {getVotePercent(idx)}%
-                        </span>
-                      </span>
+                    {answered && (
+                      <div className="relative z-10 flex items-center gap-2 text-xs font-bold">
+                        <span>{percent}%</span>
+                        {isCorrect ? (
+                          <CheckCircleFilled className="text-emerald-600 text-base" />
+                        ) : isSelected ? (
+                          <CloseCircleFilled className="text-rose-500 text-base" />
+                        ) : null}
+                      </div>
                     )}
 
-                    {selectedOption !== null && (
+                    {/* Background vote percentage fill */}
+                    {answered && (
                       <div
-                        className={`absolute left-0 top-0 bottom-0 opacity-15 ${
-                          isCorrect ? 'bg-emerald-600' : 'bg-gray-400'
+                        className={`absolute left-0 top-0 bottom-0 ${
+                          isCorrect ? 'bg-emerald-100/50' : isSelected ? 'bg-rose-100/40' : 'bg-gray-100/60'
                         }`}
-                        style={{ width: `${getVotePercent(idx)}%` }}
+                        style={{ width: `${percent}%` }}
                       />
                     )}
                   </button>
@@ -423,63 +460,69 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
 
             {/* Explanation reveal */}
             {showExplanation && post.mcqData.explanation && (
-              <div className="bg-emerald-50/80 p-3.5 rounded-xl border border-emerald-200 text-xs text-emerald-950 leading-relaxed mt-3">
-                <span className="font-bold text-emerald-900 block mb-1">
-                  নিয়ম ও ব্যাখ্যা (Explanation):
-                </span>
-                <p className="m-0 whitespace-pre-line">{post.mcqData.explanation}</p>
+              <div className="mt-4 p-3.5 bg-emerald-50/70 border border-emerald-200 rounded-xl animate-in fade-in duration-300">
+                <span className="font-bold text-xs text-emerald-900 block mb-1">সঠিক উত্তরের ব্যাখ্যা:</span>
+                <p className="text-xs text-emerald-950 leading-relaxed m-0 font-medium">
+                  {post.mcqData.explanation}
+                </p>
               </div>
             )}
           </div>
         )}
 
-        {/* 3. MICRO-LESSON / TEXT CONTENT */}
-        {post.content && !post.vocabData && !post.mcqData && !post.progressData && (
-          <div className="bg-gray-50/80 p-4 rounded-2xl border border-gray-100 my-3 text-sm text-gray-800 leading-relaxed whitespace-pre-line font-medium">
-            {post.content}
+        {/* 3. MICRO-LESSON / RULE TYPE */}
+        {post.type === 'micro_lesson' && (
+          <div className="bg-amber-50/40 border border-amber-200/60 p-4 rounded-2xl my-3">
+            <div className="flex items-center gap-2 text-amber-800 text-xs font-bold mb-2">
+              <BulbOutlined />
+              <span>১ মিনিটের গুরুত্বপূর্ণ ব্যাকরণ রুল</span>
+            </div>
+            <p className="text-xs sm:text-sm text-gray-800 leading-relaxed font-normal m-0 whitespace-pre-wrap">
+              {post.content}
+            </p>
           </div>
         )}
 
-        {/* 4. USER PROGRESS ACHIEVED CARD */}
+        {/* 4. USER PROGRESS ACHIEVER TYPE */}
         {post.progressData && (
-          <div className="bg-gradient-to-r from-emerald-900 via-teal-900 to-slate-900 text-white p-5 rounded-2xl shadow-sm my-3">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-2xl bg-amber-400/20 border border-amber-300/30 flex items-center justify-center text-amber-300">
-                <TrophyOutlined className="text-2xl" />
+          <div className="bg-gradient-to-r from-emerald-500 to-teal-700 text-white p-5 rounded-2xl my-3 shadow-sm">
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <TrophyOutlined className="text-amber-300 text-2xl" />
+                <div>
+                  <span className="text-[10px] text-emerald-200 uppercase font-black tracking-wider block">
+                    স্টাডি মাইলস্টোন
+                  </span>
+                  <span className="font-black text-base text-white">
+                    {post.progressData.badgeTitle || 'সফল প্রস্তুতি অর্জন'}
+                  </span>
+                </div>
               </div>
-              <div>
-                <h4 className="text-base font-black text-amber-300 m-0">
-                  {post.progressData.badgeTitle || 'লিজেন্ডারি প্রগ্রেস!'}
-                </h4>
-                <p className="text-xs text-emerald-200/80 m-0">
-                  একটানা প্রস্তুতি ও নিয়মিত রিভিশন মাইলস্টোন
-                </p>
-              </div>
+              {post.progressData.streakDays && (
+                <div className="flex items-center gap-1 bg-white/20 backdrop-blur-sm px-2.5 py-1 rounded-xl text-xs font-black">
+                  <FireOutlined className="text-amber-300" />
+                  <span>{post.progressData.streakDays} দিন স্ট্রিক</span>
+                </div>
+              )}
             </div>
 
-            <div className="grid grid-cols-3 gap-2 text-center bg-white/10 p-3 rounded-xl backdrop-blur-xs mb-3">
+            <div className="grid grid-cols-2 gap-2 bg-white/10 backdrop-blur-sm p-3 rounded-xl text-center">
               <div>
-                <span className="text-xl font-black text-white block">
-                  {post.progressData.wordsLearned || 50}
+                <span className="text-2xl font-black block text-amber-300">
+                  {post.progressData.wordsLearned || 35}+
                 </span>
-                <span className="text-[10px] text-emerald-200 font-bold uppercase">শব্দ আয়ত্ত</span>
+                <span className="text-[10px] text-emerald-100 font-medium">শব্দ আয়ত্ত</span>
               </div>
               <div>
-                <span className="text-xl font-black text-amber-300 block">
-                  {post.progressData.accuracy || 95}%
+                <span className="text-2xl font-black block text-emerald-200">
+                  {post.progressData.accuracy || 92}%
                 </span>
-                <span className="text-[10px] text-emerald-200 font-bold uppercase">একুরেসি</span>
-              </div>
-              <div>
-                <span className="text-xl font-black text-emerald-300 block">
-                  {post.progressData.streakDays || 7} দিন
-                </span>
-                <span className="text-[10px] text-emerald-200 font-bold uppercase">স্ট্রিক</span>
+                <span className="text-[10px] text-emerald-100 font-medium">কুইজ নির্ভুলতা</span>
               </div>
             </div>
 
             {post.content && (
-              <p className="text-xs text-emerald-100/90 leading-relaxed m-0 italic">
+              <p className="text-xs text-emerald-100/90 leading-relaxed m-0 italic mt-3">
                 &ldquo;{post.content}&rdquo;
               </p>
             )}
@@ -502,7 +545,7 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
         )}
       </div>
 
-      {/* Reel Footer: Action Bar */}
+      {/* Action Bar */}
       <div className="px-5 py-3 border-t border-gray-100 flex items-center justify-between mt-2">
         <div className="flex items-center gap-2">
           {/* Like button */}

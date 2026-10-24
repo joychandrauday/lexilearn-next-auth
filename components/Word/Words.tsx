@@ -231,16 +231,20 @@ const Words: React.FC = () => {
   const handleToggleSave = async (word: any, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
 
-    if (!session?.user?.email) {
-      message.info('আপনার ব্যক্তিগত ডেকে সেভ করতে অনুগ্রহ করে লগইন করুন');
-      signIn('google');
+    const storedEmail = typeof window !== 'undefined' ? localStorage.getItem('lexi_user_email') : null;
+    const effectiveEmail = session?.user?.email || storedEmail;
+    if (!effectiveEmail) {
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('lexi:request_auth'));
+      }
+      message.info('আপনার ব্যক্তিগত ডেকে সেভ করতে অনুগ্রহ করে লগইন বা রেজিস্টার করুন');
       return;
     }
 
     try {
       const res = await axios.post(`/api/words/${word._id}/verify`, {
         action: 'toggle-save',
-        userEmail: session.user.email,
+        userEmail: effectiveEmail,
       });
 
       if (res.data.success) {
@@ -252,8 +256,8 @@ const Words: React.FC = () => {
               const currentSaved = Array.isArray(w.savedBy) ? w.savedBy : [];
               const isNowSaved = res.data.isSaved;
               const newSaved = isNowSaved
-                ? [...currentSaved, session.user!.email!]
-                : currentSaved.filter((email) => email !== session.user!.email);
+                ? [...currentSaved, effectiveEmail]
+                : currentSaved.filter((email) => email !== effectiveEmail);
               return { ...w, savedBy: newSaved, savedCount: newSaved.length };
             }
             return w;
@@ -263,8 +267,8 @@ const Words: React.FC = () => {
           const currentSaved = Array.isArray(selectedWord.savedBy) ? selectedWord.savedBy : [];
           const isNowSaved = res.data.isSaved;
           const newSaved = isNowSaved
-            ? [...currentSaved, session.user!.email!]
-            : currentSaved.filter((email) => email !== session.user!.email);
+            ? [...currentSaved, effectiveEmail]
+            : currentSaved.filter((email) => email !== effectiveEmail);
           setSelectedWord({ ...selectedWord, savedBy: newSaved, savedCount: newSaved.length });
         }
       }

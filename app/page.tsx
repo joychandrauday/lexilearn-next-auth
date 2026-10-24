@@ -18,11 +18,13 @@ import {
 import Link from 'next/link';
 import axios from 'axios';
 import { toast } from 'sonner';
+import { useSession } from 'next-auth/react';
 import ReelCard, { IReelPost } from '../components/Feed/ReelCard';
 import InterestModal from '../components/Feed/InterestModal';
 import CreatePostModal from '../components/Feed/CreatePostModal';
 
 export default function HomePage() {
+  const { data: session } = useSession();
   const [posts, setPosts] = useState<IReelPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'for_you' | 'bcs' | 'bank' | 'grammar' | 'vocab' | 'community'>('for_you');
@@ -31,8 +33,18 @@ export default function HomePage() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [generatingDaily, setGeneratingDaily] = useState(false);
 
-  const userEmail = 'student@lexilearn.com';
-  const userName = 'বিসিএস পরীক্ষার্থী';
+  // Active user data
+  const [storedEmail, setStoredEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const email = localStorage.getItem('lexi_user_email');
+      if (email) setStoredEmail(email);
+    }
+  }, []);
+
+  const activeEmail = session?.user?.email || storedEmail || '';
+  const activeName = session?.user?.name || (storedEmail ? storedEmail.split('@')[0] : 'বিসিএস পরীক্ষার্থী');
 
   // Load saved user interests from localStorage
   useEffect(() => {
@@ -59,7 +71,7 @@ export default function HomePage() {
         params: {
           category,
           interests: interests.join(','),
-          userEmail,
+          userEmail: activeEmail || 'learner@lexilearn.com',
           page: 1,
           limit: 30,
         },
@@ -95,19 +107,41 @@ export default function HomePage() {
     try {
       const res = await axios.post('/api/feed/daily-pill');
       if (res.data.success) {
-        toast.success(res.data.message || 'আজকের নতুন ৩টি রিল যোগ হয়েছে!');
+        toast.success(res.data.message || 'আজকের নতুন ৩টি প্রস্তুতি ক্যাপসুল যোগ হয়েছে!');
         fetchFeed(activeTab, selectedInterests);
       }
     } catch {
-      toast.error('দৈনিক রিল তৈরি করতে সমস্যা হয়েছে');
+      toast.error('দৈনিক ক্যাপসুল তৈরি করতে সমস্যা হয়েছে');
     } finally {
       setGeneratingDaily(false);
     }
   };
 
+  // Gate for creating a post
+  const handleOpenCreateModal = () => {
+    const isAuthed = !!(session?.user?.email || (typeof window !== 'undefined' && localStorage.getItem('lexi_user_email')));
+    if (!isAuthed) {
+      toast.error('কমিউনিটিতে পোস্ট করতে অনুগ্রহ করে সাইন ইন বা রেজিস্টার করুন');
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('lexi:request_auth'));
+      }
+      return;
+    }
+    setIsCreateModalOpen(true);
+  };
+
   // AI chat invocation handler
   const handleAskAI = (prompt: string) => {
-    // Dispatch custom event to globally open LexiBot
+    // Check auth before asking AI
+    const isAuthed = !!(session?.user?.email || (typeof window !== 'undefined' && localStorage.getItem('lexi_user_email')));
+    if (!isAuthed) {
+      toast.error('AI মেন্টর ব্যবহার করতে অনুগ্রহ করে সাইন ইন বা রেজিস্টার করুন');
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('lexi:request_auth'));
+      }
+      return;
+    }
+
     if (typeof window !== 'undefined') {
       const event = new CustomEvent('lexibot:ask', { detail: { prompt } });
       window.dispatchEvent(event);
@@ -122,10 +156,10 @@ export default function HomePage() {
           <div>
             <div className="inline-flex items-center gap-2 bg-emerald-500/20 border border-emerald-400/30 backdrop-blur-md px-3.5 py-1 rounded-full text-xs font-bold text-emerald-200 mb-2">
               <ThunderboltFilled className="text-amber-400" />
-              <span>স্মার্ট প্রিপারেশন ফিড • Reels-Style Micro Learning</span>
+              <span>স্মার্ট প্রিপারেশন ফিড • ১ মিনিটের মাইক্রো-লার্নিং</span>
             </div>
             <h1 className="text-2xl md:text-4xl font-black mb-1 tracking-tight">
-              আজকের প্রস্তুতি রিলস
+              আজকের প্রস্তুতি ক্যাপসুল
             </h1>
             <p className="text-emerald-100/80 text-xs md:text-sm font-normal max-w-xl m-0 leading-relaxed">
               প্রতিদিন জাতীয় পত্রিকার সম্পাদকীয় শব্দ, বিগত বিসিএস/ব্যাংক ট্রিকি MCQ ও ১ মিনিটের গ্রামার ট্র্যাপ এক নজরে আয়ত্ত করুন।
@@ -135,7 +169,7 @@ export default function HomePage() {
           <div className="flex items-center gap-2">
             <Button
               icon={<PlusOutlined />}
-              onClick={() => setIsCreateModalOpen(true)}
+              onClick={handleOpenCreateModal}
               className="bg-emerald-600 hover:!bg-emerald-500 !text-white font-black border-0 rounded-xl h-11 px-4 shadow-md text-xs"
             >
               পোস্ট করুন
@@ -207,7 +241,7 @@ export default function HomePage() {
                     : 'text-gray-600 hover:bg-gray-100'
                 }`}
               >
-                ভোকাব রিল
+                ভোকাব কার্ড
               </button>
               <button
                 onClick={() => setActiveTab('community')}
@@ -250,23 +284,23 @@ export default function HomePage() {
             </button>
           </div>
 
-          {/* Reel Feed Content */}
+          {/* Feed Content */}
           {loading ? (
             <div className="py-20 text-center bg-white rounded-3xl border border-gray-100">
               <Spin size="large" />
-              <p className="mt-3 text-gray-400 font-bold text-xs">প্রাসঙ্গিক রিলস প্রস্তুত হচ্ছে...</p>
+              <p className="mt-3 text-gray-400 font-bold text-xs">প্রাসঙ্গিক প্রস্তুতি কার্ড লোড হচ্ছে...</p>
             </div>
           ) : posts.length === 0 ? (
             <div className="bg-white rounded-3xl border border-gray-100 p-12 text-center">
-              <Empty description="এই ক্যাটাগরিতে এখনো কোনো রিল নেই" />
+              <Empty description="এই ক্যাটাগরিতে এখনো কোনো প্রস্তুতি কার্ড নেই" />
               <div className="mt-4 flex justify-center gap-2">
                 <Button
                   type="primary"
                   icon={<PlusOutlined />}
-                  onClick={() => setIsCreateModalOpen(true)}
+                  onClick={handleOpenCreateModal}
                   className="bg-emerald-600 rounded-xl font-bold"
                 >
-                  প্রথম রিল পোস্ট করুন
+                  প্রথম প্রস্তুতি কার্ড পোস্ট করুন
                 </Button>
                 <Button
                   icon={<ReloadOutlined />}
@@ -283,7 +317,7 @@ export default function HomePage() {
                 <ReelCard
                   key={post._id}
                   post={post}
-                  userEmail={userEmail}
+                  userEmail={activeEmail}
                   onTagClick={(tag) => {
                     if (!selectedInterests.includes(tag)) {
                       handleSaveInterests([...selectedInterests, tag]);
@@ -430,8 +464,8 @@ export default function HomePage() {
       <CreatePostModal
         open={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
-        userEmail={userEmail}
-        userName={userName}
+        userEmail={activeEmail}
+        userName={activeName}
         onPostCreated={() => fetchFeed(activeTab, selectedInterests)}
       />
     </div>
