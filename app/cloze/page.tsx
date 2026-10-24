@@ -231,7 +231,7 @@ export default function ClozeArenaPage() {
         <div className="text-center mb-8">
           <h1 className="text-3xl sm:text-4xl font-black text-gray-900 tracking-tight flex items-center justify-center gap-2">
             <span>ক্লজ টেস্ট ও প্রিপজিশন অ্যারেনা</span>
-            <span className="text-2xl">🎯</span>
+            <CompassOutlined className="text-2xl text-emerald-600" />
           </h1>
           <p className="text-sm text-gray-600 mt-2 max-w-lg mx-auto">
             বিসিএস ও ব্যাংক প্রিলিমিনারির সবচেয়ে ঝুঁকিপূর্ণ Appropriate Preposition ও Group Verbs

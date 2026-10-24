@@ -258,7 +258,7 @@ export default function BaghdharaPage() {
       const newStreak = quizStreak + 1;
       setQuizStreak(newStreak);
       if (newStreak > bestStreak) setBestStreak(newStreak);
-      toast.success('সঠিক উত্তর! চমৎকার 🔥');
+      toast.success('সঠিক উত্তর! চমৎকার');
     } else {
       setQuizStreak(0);
       toast.error('ভুল উত্তর! সঠিক উত্তর দেখে নিন');
@@ -361,7 +361,7 @@ export default function BaghdharaPage() {
               : 'text-gray-600 hover:bg-gray-100'
           }`}
         >
-          <ThunderboltOutlined /> ফ্ল্যাশ কার্ড ⚡
+          <ThunderboltOutlined /> ফ্ল্যাশ কার্ড
         </button>
 
         <button
@@ -372,7 +372,7 @@ export default function BaghdharaPage() {
               : 'text-gray-600 hover:bg-gray-100'
           }`}
         >
-          <TrophyOutlined /> মডেল টেস্ট কুইজ 🎯
+          <TrophyOutlined /> মডেল টেস্ট কুইজ
         </button>
       </div>
 

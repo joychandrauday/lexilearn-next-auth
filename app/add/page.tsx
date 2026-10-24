@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { Form, AutoComplete, Select, Button, Card, Typography, Spin } from 'antd';
+import { Form, AutoComplete, Select, Button, Card, Typography, Spin, Input } from 'antd';
 import { PlusOutlined, ClearOutlined, BookOutlined } from '@ant-design/icons';
 import { toast } from 'sonner';
 
@@ -38,7 +38,13 @@ export default function AddPage() {
     }
   };
 
-  const onFinish = async (values: { word: string; intensity: string; exam: string }) => {
+  const onFinish = async (values: {
+    word: string;
+    intensity: string;
+    exam: string;
+    examTag?: string;
+    mnemonic?: string;
+  }) => {
     if (!session?.user?.email) {
       toast.warning('শব্দ যোগ করতে প্রথমে সাইন ইন করুন');
       router.push('/login');
@@ -51,11 +57,17 @@ export default function AddPage() {
         word: values.word.trim(),
         intensity: values.intensity,
         exam: values.exam,
+        examTag: values.examTag?.trim() || undefined,
+        mnemonic: values.mnemonic?.trim() || undefined,
         userEmail: session.user.email,
       });
 
       if (res.data?.success) {
-        toast.success(`"${values.word}" সফলভাবে সংরক্ষিত হয়েছে!`);
+        if (res.data.reused) {
+          toast.success(`"${values.word}" শব্দটি পূর্বে সংরক্ষিত ছিল। আপনার ডেক ও পরীক্ষার ট্যাগ আপডেট করা হয়েছে!`);
+        } else {
+          toast.success(`"${values.word}" সফলভাবে AI ভেরিফিকেশনসহ সংরক্ষিত হয়েছে!`);
+        }
         router.push('/words');
       } else {
         toast.error('শব্দটি সংরক্ষণ করতে সমস্যা হয়েছে');
@@ -125,6 +137,22 @@ export default function AddPage() {
               </Select>
             </Form.Item>
           </div>
+
+          <Form.Item
+            label={<span className="font-bold text-gray-700">নির্দিষ্ট পরীক্ষার নাম ও সাল (ঐচ্ছিক)</span>}
+            name="examTag"
+            tooltip="যেমন: ৪৩তম বিসিএস, BB AD 2022"
+          >
+            <Input size="large" placeholder="যেমন: ৪৩তম বিসিএস, কম্বাইন্ড ৮ ব্যাংক ২০২৩" className="rounded-xl" />
+          </Form.Item>
+
+          <Form.Item
+            label={<span className="font-bold text-gray-700">মনে রাখার দেশি ট্রিক (ঐচ্ছিক)</span>}
+            name="mnemonic"
+            tooltip="খালি রাখলে Groq / Gemini AI স্বয়ংক্রিয়ভাবে তৈরি করবে"
+          >
+            <Input size="large" placeholder="যেমন: Bene = ভালো, সুতরাং Benevolent = দয়ালু" className="rounded-xl" />
+          </Form.Item>
 
           <Form.Item className="mt-4 mb-0">
             <div className="flex justify-end gap-3">

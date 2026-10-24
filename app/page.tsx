@@ -45,25 +45,27 @@ export default function Home() {
                 icon={<FireOutlined />}
                 className="bg-amber-400 hover:!bg-amber-300 !text-slate-950 font-black rounded-xl h-12 px-6 shadow-md border-0 text-sm animate-pulse"
               >
-                বিসিএস সার্ভাইভার খেলুন ⚔️
+                বিসিএস সার্ভাইভার ক্যাম্পেইন
               </Button>
             </Link>
 
             <Link href="/cloze">
               <Button
                 size="large"
+                icon={<CompassOutlined />}
                 className="bg-white/10 hover:!bg-white/20 !text-white font-bold rounded-xl h-12 px-5 border-white/30 backdrop-blur-sm text-sm"
               >
-                ক্লজ টেস্ট ও প্রিপজিশন 🎯
+                ক্লজ টেস্ট ও প্রিপজিশন
               </Button>
             </Link>
 
             <Link href="/spelling">
               <Button
                 size="large"
+                icon={<StarFilled />}
                 className="bg-white/10 hover:!bg-white/20 !text-white font-bold rounded-xl h-12 px-5 border-white/30 backdrop-blur-sm text-sm"
               >
-                স্পেলিং বি 🐝
+                বানান শুদ্ধিকরণ
               </Button>
             </Link>
 
@@ -73,7 +75,7 @@ export default function Home() {
                 icon={<ThunderboltOutlined />}
                 className="bg-white/10 hover:!bg-white/20 !text-white font-bold rounded-xl h-12 px-5 border-white/30 backdrop-blur-sm text-sm"
               >
-                রিভিশন কার্ড ⚡
+                রিভিশন কার্ড
               </Button>
             </Link>
 
@@ -223,7 +225,7 @@ export default function Home() {
                 <FireOutlined />
               </div>
               <h3 className="text-xl font-black text-white mb-2 group-hover:text-amber-400 transition">
-                বিসিএস সার্ভাইভার ⚔️
+                বিসিএস সার্ভাইভার
               </h3>
               <p className="text-gray-300 text-xs leading-relaxed">
                 উপজেলা লাইব্রেরি থেকে বাংলাদেশ সচিবালয় পর্যন্ত—ধাপে ধাপে ইংলিশ মিশন জিতে ক্যাডার পদে নিজের উত্তরণ ঘটান।

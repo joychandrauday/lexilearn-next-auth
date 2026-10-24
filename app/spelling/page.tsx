@@ -12,6 +12,7 @@ import {
   SwapOutlined,
   SafetyCertificateOutlined,
   BookOutlined,
+  StarFilled,
 } from '@ant-design/icons';
 import { Button, Tag, Tabs } from 'antd';
 
@@ -249,7 +250,7 @@ export default function SpellingPage() {
         <div className="text-center mb-8">
           <h1 className="text-3xl sm:text-4xl font-black text-gray-900 tracking-tight flex items-center justify-center gap-2">
             <span>বানান শুদ্ধিকরণ ও কনফিউজিং শব্দজোড়</span>
-            <span className="text-2xl">🐝</span>
+            <StarFilled className="text-2xl text-teal-600" />
           </h1>
           <p className="text-sm text-gray-600 mt-2 max-w-lg mx-auto">
             বিসিএস ও ব্যাংকে বারবার আসা বিভ্রান্তিকর বানানের ফাঁদ এবং হোমোফোন শব্দজোড় মজার ট্রিক
@@ -397,10 +398,18 @@ export default function SpellingPage() {
 
               {isPairAnswered && (
                 <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
-                  <span className="text-sm font-bold text-emerald-800">
-                    {selectedPairWord?.toLowerCase() === currentPair.correctWord.toLowerCase()
-                      ? '🎉 অভিনন্দন! সঠিক নির্বাচন!'
-                      : '❌ দুঃখিত! নিয়মটি পুনরায় লক্ষ্য করুন।'}
+                  <span className="text-sm font-bold text-emerald-800 flex items-center gap-1.5">
+                    {selectedPairWord?.toLowerCase() === currentPair.correctWord.toLowerCase() ? (
+                      <>
+                        <CheckCircleFilled className="text-emerald-600" />
+                        <span>অভিনন্দন! সঠিক নির্বাচন!</span>
+                      </>
+                    ) : (
+                      <>
+                        <CloseCircleFilled className="text-rose-500" />
+                        <span>দুঃখিত! নিয়মটি পুনরায় লক্ষ্য করুন।</span>
+                      </>
+                    )}
                   </span>
                   <Button
                     type="primary"
@@ -480,8 +489,9 @@ export default function SpellingPage() {
                     <CheckCircleFilled className="text-emerald-600 text-lg" />
                     <span>সঠিক বানান: {currentBee.correctSpelling}</span>
                   </div>
-                  <p className="text-xs sm:text-sm text-emerald-800 font-bold m-0 mt-2">
-                    💡 মনে রাখার কৌশল: {currentBee.mnemonicBangla}
+                  <p className="text-xs sm:text-sm text-emerald-800 font-bold m-0 mt-2 flex items-center gap-1.5">
+                    <BulbOutlined className="text-amber-500" />
+                    <span>মনে রাখার কৌশল: {currentBee.mnemonicBangla}</span>
                   </p>
                   <div className="mt-4 flex justify-end">
                     <Button

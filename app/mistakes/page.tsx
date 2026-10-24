@@ -94,7 +94,7 @@ export default function MistakeVaultPage() {
           <span className="bg-rose-500/20 text-rose-200 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block border border-rose-400/30">
             স্মার্ট এরর ব্যাংক • Mistake Vault
           </span>
-          <h1 className="text-3xl md:text-4xl font-black mb-1">ভুল ব্যাংক 🛡️</h1>
+          <h1 className="text-3xl md:text-4xl font-black mb-1">ভুল ব্যাংক</h1>
           <p className="text-rose-100/90 text-sm max-w-lg leading-relaxed font-normal">
             কুইজ ও ফ্ল্যাশ কার্ডে যে শব্দ বা প্রশ্নগুলো ভুল করেছেন, সেগুলো এখানে সংরক্ষিত থাকে।
             পরীক্ষার আগে এগুলো রিভিশন দিয়ে শতভাগ প্রস্তুতি নিশ্চিত করুন।

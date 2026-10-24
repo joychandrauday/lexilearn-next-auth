@@ -33,21 +33,21 @@ export default function ShareableScoreCard({
   const [copied, setCopied] = useState(false);
 
   const getRankTitle = () => {
-    if (score >= total * 0.8) return 'প্রিলি ক্র্যাকার 🔥';
-    if (score >= total * 0.5) return 'লাইব্রেরি তপস্বী 📚';
-    return 'ফ্রেশার ফাইটার 💪';
+    if (score >= total * 0.8) return 'প্রিলি ক্র্যাকার';
+    if (score >= total * 0.5) return 'লাইব্রেরি তপস্বী';
+    return 'ফ্রেশার ফাইটার';
   };
 
   const copyFacebookText = () => {
-    const text = `🎯 বিসিএস ও ব্যাংক ভোকাবুলারি টেস্ট সম্পন্ন করলাম!
+    const text = `[LexiLearn BD] বিসিএস ও ব্যাংক ভোকাবুলারি টেস্ট সম্পন্ন করলাম!
 ━━━━━━━━━━━━━━━━━━━━
-👤 পরীক্ষার্থী: ${userName}
-📝 নেট স্কোর: ${score} / ${total}
-✅ সঠিক উত্তর: ${correct} টি
-❌ ভুল উত্তর: ${wrong} টি (নেগেটিভ মার্ক: -${penalty.toFixed(2)})
-🏆 বর্তমান স্ট্যাটাস: ${getRankTitle()}
+পরীক্ষার্থী: ${userName}
+নেট স্কোর: ${score} / ${total}
+সঠিক উত্তর: ${correct} টি
+ভুল উত্তর: ${wrong} টি (নেগেটিভ মার্ক: -${penalty.toFixed(2)})
+বর্তমান স্ট্যাটাস: ${getRankTitle()}
 ━━━━━━━━━━━━━━━━━━━━
-💡 বিনামূল্যে স্পেসড রিপিটেশন ও কুইজ দিন:
+বিনামূল্যে স্পেসড রিপিটেশন ও কুইজ দিন:
 https://lexilearn-rust.vercel.app #BCS #BankJobs #LexiLearn`;
 
     navigator.clipboard.writeText(text);

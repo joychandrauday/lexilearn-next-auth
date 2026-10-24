@@ -74,7 +74,7 @@ export default function PanicSheetPage() {
           <span className="bg-indigo-500/30 text-indigo-200 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block border border-indigo-400/30">
             পরীক্ষার আগের রাতের শিট • Exam-Eve Panic Sheet
           </span>
-          <h1 className="text-3xl md:text-4xl font-black mb-1">লাস্ট নাইট রিভিশন শিট ⚡</h1>
+          <h1 className="text-3xl md:text-4xl font-black mb-1">লাস্ট নাইট রিভিশন শিট</h1>
           <p className="text-indigo-200/80 text-sm max-w-xl font-normal">
             পরীক্ষার আগের রাতে বা সকালে হলে প্রবেশের পূর্বে আপনার দুর্বল বিষয়, ভুল প্রশ্ন ও
             বুকমার্ক করা গুরুত্বপূর্ণ শব্দসমূহ এক নজরে রিভিশন দিন।

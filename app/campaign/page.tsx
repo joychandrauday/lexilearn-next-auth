@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
   TrophyOutlined,
+  TrophyFilled,
   StarFilled,
   LockOutlined,
   CheckCircleFilled,
@@ -12,7 +13,11 @@ import {
   ReloadOutlined,
   FireOutlined,
   ThunderboltFilled,
+  ThunderboltOutlined,
   CompassOutlined,
+  BookOutlined,
+  BankOutlined,
+  AuditOutlined,
 } from '@ant-design/icons';
 import { Button, Progress, Modal, Tag } from 'antd';
 
@@ -45,7 +50,7 @@ const CAMPAIGN_STAGES: Stage[] = [
     levelName: 'উপজেলা গণগ্রন্থাগার',
     cadreRank: 'লাইব্রেরি তপস্বী (Fresher)',
     description: 'বিসিএস ও প্রাইমারি পরীক্ষার মোস্ট রিপিটেড বেসিক শব্দভাণ্ডার আয়ত্ত করুন।',
-    icon: '📚',
+    icon: 'book',
     gradient: 'from-emerald-500 to-teal-600',
     minStarsToUnlock: 0,
     questions: [
@@ -111,7 +116,7 @@ const CAMPAIGN_STAGES: Stage[] = [
     levelName: 'জেলা প্রশাসকের কার্যালয়',
     cadreRank: 'প্রিলি ক্র্যাকার (Prelims Cracker)',
     description: 'Appropriate Preposition ও পিএসসির মারাত্মক ট্র্যাপ দূর করুন।',
-    icon: '🏛️',
+    icon: 'bank',
     gradient: 'from-blue-600 to-indigo-600',
     minStarsToUnlock: 2,
     questions: [
@@ -177,7 +182,7 @@ const CAMPAIGN_STAGES: Stage[] = [
     levelName: 'বিভাগীয় কমিশনার কমপ্লেক্স',
     cadreRank: 'লিখিত যোদ্ধা (Written Warrior)',
     description: 'ব্যাংক ও বিসিএসের সবচেয়ে প্রভাবশালী Idioms ও Phrases।',
-    icon: '🏢',
+    icon: 'audit',
     gradient: 'from-amber-600 to-orange-600',
     minStarsToUnlock: 5,
     questions: [
@@ -243,7 +248,7 @@ const CAMPAIGN_STAGES: Stage[] = [
     levelName: 'পিএসসি ভবন, আগারগাঁও',
     cadreRank: 'ভাইভা প্রতিদ্বন্দ্বী (Viva Contender)',
     description: 'ইংরেজি সাহিত্য, বিখ্যাত উক্তি এবং হাই-ফ্রিকোয়েন্সি অ্যানালজি।',
-    icon: '🏛️',
+    icon: 'compass',
     gradient: 'from-purple-600 to-pink-600',
     minStarsToUnlock: 8,
     questions: [
@@ -309,7 +314,7 @@ const CAMPAIGN_STAGES: Stage[] = [
     levelName: 'বাংলাদেশ সচিবালয়',
     cadreRank: 'ক্যাডার অফিসার (Cadre Crown)',
     description: 'চূড়ান্ত অগ্নিপরীক্ষা! ব্যাংকিং জিআরই ভোকাব ও বিসিএস লিখিত লেভেল।',
-    icon: '👑',
+    icon: 'trophy',
     gradient: 'from-rose-600 via-red-600 to-amber-600',
     minStarsToUnlock: 12,
     questions: [
@@ -467,6 +472,23 @@ export default function CampaignPage() {
     }
   };
 
+  const getStageIcon = (type: string) => {
+    switch (type) {
+      case 'book':
+        return <BookOutlined />;
+      case 'bank':
+        return <BankOutlined />;
+      case 'audit':
+        return <AuditOutlined />;
+      case 'compass':
+        return <CompassOutlined />;
+      case 'trophy':
+        return <TrophyOutlined />;
+      default:
+        return <BookOutlined />;
+    }
+  };
+
   const activeQuestion = activeStage ? activeStage.questions[currentQuestionIndex] : null;
 
   return (
@@ -489,7 +511,7 @@ export default function CampaignPage() {
             </div>
             <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-white flex items-center gap-3">
               <span>বিসিএস সার্ভাইভার</span>
-              <span className="text-2xl animate-bounce">⚔️</span>
+              <TrophyOutlined className="text-2xl text-amber-400" />
             </h1>
             <p className="text-sm text-gray-400 mt-1 max-w-xl">
               উপজেলা লাইব্রেরি থেকে বাংলাদেশ সচিবালয় পর্যন্ত—প্রতিটি ধাপে ৫টি হাই-ভোল্টেজ ইংলিশ
@@ -553,9 +575,9 @@ export default function CampaignPage() {
                       <div className="flex items-start justify-between gap-3 mb-4">
                         <div className="flex items-center gap-3">
                           <div
-                            className={`w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-gradient-to-tr ${stage.gradient}`}
+                            className={`w-12 h-12 rounded-2xl flex items-center justify-center text-xl shadow-inner bg-gradient-to-tr text-white ${stage.gradient}`}
                           >
-                            {stage.icon}
+                            {getStageIcon(stage.icon)}
                           </div>
                           <div>
                             <span className="text-xs font-black tracking-wider uppercase text-emerald-400">
@@ -594,9 +616,10 @@ export default function CampaignPage() {
                           <Button
                             type="primary"
                             onClick={() => startStage(stage)}
+                            icon={<ThunderboltOutlined />}
                             className="bg-emerald-600 hover:!bg-emerald-500 rounded-xl font-bold border-none text-xs h-8 px-4 shadow-md"
                           >
-                            {isCompleted ? 'পুনরায় খেলুন' : 'মিশন শুরু করুন 🚀'}
+                            {isCompleted ? 'পুনরায় খেলুন' : 'মিশন শুরু করুন'}
                           </Button>
                         ) : (
                           <span className="text-amber-400/90 flex items-center gap-1 font-bold">
@@ -662,7 +685,7 @@ export default function CampaignPage() {
               {/* Question Header & Progress */}
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
-                  <span className="text-xl">{activeStage.icon}</span>
+                  <span className="text-xl text-emerald-400">{getStageIcon(activeStage.icon)}</span>
                   <div>
                     <h3 className="text-base font-bold text-white m-0">
                       {activeStage.levelName}
@@ -789,8 +812,14 @@ export default function CampaignPage() {
           ) : (
             /* Stage Finish Celebratory Screen */
             <div className="text-center py-6">
-              <div className="text-6xl mb-4 animate-bounce">
-                {earnedStars === 3 ? '🏆' : earnedStars >= 1 ? '🎉' : '💪'}
+              <div className="text-5xl mb-4 animate-bounce">
+                {earnedStars === 3 ? (
+                  <TrophyFilled className="text-amber-400" />
+                ) : earnedStars >= 1 ? (
+                  <CheckCircleFilled className="text-emerald-400" />
+                ) : (
+                  <FireOutlined className="text-blue-400" />
+                )}
               </div>
               <h2 className="text-2xl sm:text-3xl font-black text-white mb-2">
                 {earnedStars === 3

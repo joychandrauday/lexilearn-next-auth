@@ -40,11 +40,11 @@ export default function Navbar() {
 
   const navLinks = [
     { label: 'হোম', href: '/' },
-    { label: 'ক্যাম্পেইন ⚔️', href: '/campaign' },
+    { label: 'ক্যাম্পেইন', href: '/campaign' },
     { label: 'ভোকাবুলারি', href: '/words' },
-    { label: 'ক্লজ টেস্ট 🎯', href: '/cloze' },
-    { label: 'স্পেলিং বি 🐝', href: '/spelling' },
-    { label: 'রিভিশন ⚡', href: '/flashcards' },
+    { label: 'ক্লজ টেস্ট', href: '/cloze' },
+    { label: 'বানান শুদ্ধিকরণ', href: '/spelling' },
+    { label: 'রিভিশন কার্ড', href: '/flashcards' },
     { label: 'বাগধারা', href: '/bangla/baghdhara' },
     { label: 'মডেল টেস্ট', href: '/quiz' },
   ];
@@ -63,23 +63,23 @@ export default function Navbar() {
     { type: 'divider' },
     {
       key: 'my-words',
-      label: <Link href="/my-words">আমার সেভ করা শব্দ</Link>,
+      label: <Link href="/my-words">আমার সংরক্ষিত শব্দ</Link>,
     },
     {
       key: 'mistakes',
-      label: <Link href="/mistakes">❌ ভুলের খাতা (Mistake Vault)</Link>,
+      label: <Link href="/mistakes">ভুলের খাতা (Mistake Vault)</Link>,
     },
     {
       key: 'panic-sheet',
-      label: <Link href="/panic-sheet">📋 পরীক্ষার আগের প্যানিক শিট</Link>,
+      label: <Link href="/panic-sheet">পরীক্ষার রিভিশন শিট</Link>,
     },
     {
       key: 'admin-importer',
-      label: <Link href="/admin/importer">🤖 AI প্রশ্ন ইম্পোর্টার</Link>,
+      label: <Link href="/admin/importer">AI প্রশ্ন ইম্পোর্টার</Link>,
     },
     {
       key: 'add-word',
-      label: <Link href="/add">+ নতুন শব্দ যুক্ত করুন</Link>,
+      label: <Link href="/add">নতুন শব্দ যোগ করুন</Link>,
     },
     { type: 'divider' },
     {

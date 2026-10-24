@@ -253,7 +253,7 @@ export default function QuizPage() {
           <span className="bg-emerald-500/20 text-emerald-300 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block border border-emerald-400/20">
             বিসিএস ও ব্যাংক মডেল টেস্ট
           </span>
-          <h1 className="text-3xl md:text-4xl font-black mb-1">নেগেটিভ মার্কিং কুইজ 🎯</h1>
+          <h1 className="text-3xl md:text-4xl font-black mb-1">নেগেটিভ মার্কিং কুইজ</h1>
           <p className="text-emerald-100/80 text-sm max-w-md font-normal">
             আসল পরীক্ষার আদলে প্রস্তুতি নিন। প্রতিটি সঠিক উত্তরে +১.০ এবং ভুল উত্তরে -০.২৫ নম্বর
             কাটা হবে।
@@ -344,10 +344,10 @@ export default function QuizPage() {
 
             <p className="text-xs text-gray-600 mt-3 pt-2 border-t border-emerald-100 leading-relaxed font-semibold">
               {netScore >= 8
-                ? 'চমৎকার প্রস্তুতি! আপনি প্রিলি পাস করার অবস্থানে আছেন 🔥'
+                ? 'চমৎকার প্রস্তুতি! আপনি প্রিলি পাস করার সম্মানজনক অবস্থানে আছেন।'
                 : netScore >= 5
-                ? 'মোটামুটি ভালো হয়েছে। নেগেটিভ মার্কিং এড়াতে কনফিউজড প্রশ্নে সতর্কতা দরকার 👍'
-                : 'নেগেটিভ মার্কিংয়ের কারণে নম্বর কমে গেছে। নিয়মিত ফ্ল্যাশ কার্ড রিভিশন দিন 💪'}
+                ? 'মোটামুটি ভালো হয়েছে। নেগেটিভ মার্কিং এড়াতে দ্বিধাগ্রস্ত প্রশ্নে সতর্কতা প্রয়োজন।'
+                : 'নেগেটিভ মার্কিংয়ের কারণে নম্বর কমে গেছে। নিয়মিত কার্ড রিভিশনে দুর্বলতা দূর করুন।'}
             </p>
           </div>
 
