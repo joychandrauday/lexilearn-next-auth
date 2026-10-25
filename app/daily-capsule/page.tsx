@@ -532,6 +532,15 @@ export default function DailyCapsulePage() {
               </div>
             )}
 
+            <Link
+              href="/news-archive"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-bold bg-amber-50 text-amber-900 border border-amber-200 hover:bg-amber-100 transition shadow-xs"
+              title="দৈনিক পত্রিকা থেকে সংগৃহীত গুরুত্বপূর্ণ খবরের আর্কাইভ"
+            >
+              <ReadOutlined className="text-amber-600" />
+              <span>পত্রিকা আর্কাইভ</span>
+            </Link>
+
             <Button
               size="small"
               icon={<ReloadOutlined />}

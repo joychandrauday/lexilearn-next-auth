@@ -59,6 +59,7 @@ const primaryNavLinks = [
 
 // Secondary navigation – hidden under a "More" dropdown
 const secondaryNavLinks = [
+  { key: 'news-archive', label: 'পত্রিকা আর্কাইভ', href: '/news-archive', icon: <ReadOutlined /> },
   { key: 'feed', label: 'প্রস্তুতি ফিড', href: '/feed', icon: <ThunderboltFilled /> },
   { key: 'notebook', label: 'প্রস্তুতি নোটবুক', href: '/notebook', icon: <BookOutlined /> },
   { key: 'campaign', label: 'ক্যাম্পেইন', href: '/campaign', icon: <CrownOutlined /> },
@@ -94,6 +95,11 @@ const navLinks = [...primaryNavLinks, ...secondaryNavLinks];
       key: 'daily-capsule',
       label: <Link href="/daily-capsule">দৈনিক এক্সাম ক্যাপসুল (Daily Capsule)</Link>,
       icon: <FireOutlined />,
+    },
+    {
+      key: 'news-archive',
+      label: <Link href="/news-archive">পত্রিকা আর্কাইভ (News Archive)</Link>,
+      icon: <ReadOutlined />,
     },
     {
       key: 'question-bank',
