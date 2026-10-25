@@ -1303,7 +1303,7 @@ export default function LandingPage() {
                 </h2>
 
                 <p className="text-xs sm:text-sm text-emerald-200/90 font-medium m-0">
-                  সফটওয়্যার ইঞ্জিনিয়ার • ফাউন্ডার,{' '}
+                  সফটওয়্যার ইঞ্জিনিয়ার • কো-ফাউন্ডার (Co-Founder),{' '}
                   <a
                     href="https://g2gdigital.com"
                     target="_blank"

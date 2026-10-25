@@ -38,8 +38,8 @@ export const siteConfig = {
   creator: {
     name: 'Joy Chandra Uday',
     nameBn: 'জয় চন্দ্র উদয়',
-    role: 'Founder & Systems Architect',
-    title: 'Software Engineer & Founder, G2G Digital',
+    role: 'Co-Founder & Systems Architect',
+    title: 'Software Engineer & Co-Founder, G2G Digital',
     bio: 'Software engineer and systems architect passionate about high-scale distributed systems, spaced-repetition cognitive algorithms, and execution infrastructure.',
     portfolioUrl: 'https://joychandrauday-nexus.vercel.app/',
     githubUrl: 'https://github.com/joychandrauday',

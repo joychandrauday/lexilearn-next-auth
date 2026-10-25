@@ -19,7 +19,7 @@ import { siteConfig } from '../../lib/config/site';
 export const metadata: Metadata = {
   title: 'আমাদের সম্পর্কে (About Us) & প্রতিষ্ঠাতা | OwlPrep by Grow With Owl',
   description:
-    'OwlPrep হলো বাংলাদেশি চাকরিপ্রার্থীদের জন্য একটি বৈজ্ঞানিক স্পেসড-রিপিটিশন ও এআই লার্নিং প্ল্যাটফর্ম। প্রতিষ্ঠাতা ও সিস্টেম আর্কিটেক্ট: Joy Chandra Uday (Founder, G2G Digital).',
+    'OwlPrep হলো বাংলাদেশি চাকরিপ্রার্থীদের জন্য একটি বৈজ্ঞানিক স্পেসড-রিপিটিশন ও এআই লার্নিং প্ল্যাটফর্ম। আর্কিটেক্ট ও নির্মাতা: Joy Chandra Uday (Co-Founder, G2G Digital).',
   alternates: {
     canonical: 'https://growwithowl.com/about',
   },
@@ -92,7 +92,7 @@ export default function AboutPage() {
                 {siteConfig.creator.name} ({siteConfig.creator.nameBn})
               </h2>
               <p className="text-xs sm:text-sm text-emerald-300 font-medium">
-                Software Engineer • Founder,{' '}
+                Software Engineer • Co-Founder,{' '}
                 <a
                   href={siteConfig.creator.companyUrl}
                   target="_blank"
@@ -109,7 +109,7 @@ export default function AboutPage() {
             </blockquote>
 
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
-              জয় চন্দ্র উদয় একজন সফটওয়্যার ইঞ্জিনিয়ার ও সিস্টেম আর্কিটেক্ট। তিনি <strong>G2G Digital</strong>-এর প্রতিষ্ঠাতা, যেখানে মধ্যম ও বৃহৎ আকারের ডিজিটাল প্ল্যাটফর্মের জন্য এক্সিকিউশন ও গ্রোথ ইনফ্রাস্ট্রাকচার তৈরি করা হয়। শিক্ষাক্ষেত্রে মুখস্থবিদ্যার অচলায়তন ভেঙে প্রযুক্তির শক্তিতে প্রতিটি প্রার্থীর মেধা ও স্মৃতিশক্তিকে সর্বোচ্চ পর্যায়ে নিয়ে যাওয়ার লক্ষ্যেই তিনি <strong>{siteConfig.fullName}</strong> গড়ে তুলেছেন।
+              জয় চন্দ্র উদয় একজন সফটওয়্যার ইঞ্জিনিয়ার ও সিস্টেম আর্কিটেক্ট। তিনি <strong>G2G Digital</strong>-এর কো-ফাউন্ডার (Co-Founder), যেখানে মধ্যম ও বৃহৎ আকারের ডিজিটাল প্ল্যাটফর্মের জন্য এক্সিকিউশন ও গ্রোথ ইনফ্রাস্ট্রাকচার তৈরি করা হয়। শিক্ষাক্ষেত্রে মুখস্থবিদ্যার অচলায়তন ভেঙে প্রযুক্তির শক্তিতে প্রতিটি প্রার্থীর মেধা ও স্মৃতিশক্তিকে সর্বোচ্চ পর্যায়ে নিয়ে যাওয়ার লক্ষ্যেই তিনি <strong>{siteConfig.fullName}</strong> গড়ে তুলেছেন।
             </p>
 
             {/* Do-follow Backlinks Card */}

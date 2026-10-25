@@ -42,11 +42,19 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'OwlPrep — রাতজাগা প্রার্থীদের স্মার্ট চাকরি প্রস্তুতি | Grow With Owl',
     description:
-      '১ মিনিটের মাইক্রো-ক্যাপসুল, বৈজ্ঞানিক স্পেসড রিপিটেশন এবং সার্বিক এআই মেন্টর নিয়ে এগিয়ে থাকুন সবার চেয়ে। আর্কিটেক্ট: Joy Chandra Uday (G2G Digital).',
+      '১ মিনিটের মাইক্রো-ক্যাপসুল, বৈজ্ঞানিক স্পেসড রিপিটেশন এবং সার্বিক এআই মেন্টর নিয়ে এগিয়ে থাকুন সবার চেয়ে। আর্কিটেক্ট: Joy Chandra Uday (Co-Founder, G2G Digital).',
     url: 'https://growwithowl.com',
     siteName: 'OwlPrep by Grow With Owl',
     locale: 'bn_BD',
     type: 'website',
+    images: [
+      {
+        url: 'https://growwithowl.com/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'OwlPrep — বিসিএস ও ব্যাংক প্রস্তুতি (Grow With Owl)',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
@@ -54,6 +62,7 @@ export const metadata: Metadata = {
     description: '1-Minute Micro-Capsules, Spaced Repetition & AI Mentor for Competitive Exams.',
     creator: '@joychandrauday',
     site: '@growwithowl',
+    images: ['https://growwithowl.com/og-image.png'],
   },
   robots: {
     index: true,
@@ -102,7 +111,7 @@ const jsonLd = {
       '@type': 'Person',
       '@id': 'https://growwithowl.com/#founder',
       name: 'Joy Chandra Uday',
-      jobTitle: 'Software Engineer & Founder',
+      jobTitle: 'Software Engineer & Co-Founder, G2G Digital',
       worksFor: {
         '@type': 'Organization',
         name: 'G2G Digital',

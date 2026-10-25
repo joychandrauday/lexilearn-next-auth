@@ -392,7 +392,7 @@ export default function Footer() {
               >
                 Joy Chandra Uday
               </a>{' '}
-              (Founder,{' '}
+              (Co-Founder,{' '}
               <a
                 href={siteConfig.creator.companyUrl}
                 target="_blank"
