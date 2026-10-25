@@ -10,6 +10,7 @@ import {
   FireOutlined,
 } from '@ant-design/icons';
 import { toast } from 'sonner';
+import { siteConfig } from '../lib/config/site';
 
 interface Props {
   score: number;
@@ -39,7 +40,7 @@ export default function ShareableScoreCard({
   };
 
   const copyFacebookText = () => {
-    const text = `[LexiLearn BD] বিসিএস ও ব্যাংক ভোকাবুলারি টেস্ট সম্পন্ন করলাম!
+    const text = `[${siteConfig.name}] বিসিএস ও ব্যাংক প্রস্তুতি টেস্ট সম্পন্ন করলাম!
 ━━━━━━━━━━━━━━━━━━━━
 পরীক্ষার্থী: ${userName}
 নেট স্কোর: ${score} / ${total}
@@ -48,7 +49,7 @@ export default function ShareableScoreCard({
 বর্তমান স্ট্যাটাস: ${getRankTitle()}
 ━━━━━━━━━━━━━━━━━━━━
 বিনামূল্যে স্পেসড রিপিটেশন ও কুইজ দিন:
-https://lexilearn-rust.vercel.app #BCS #BankJobs #LexiLearn`;
+${siteConfig.links.url} #BCS #BankJobs #${siteConfig.name}`;
 
     navigator.clipboard.writeText(text);
     setCopied(true);
@@ -62,9 +63,9 @@ https://lexilearn-rust.vercel.app #BCS #BankJobs #LexiLearn`;
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className="w-6 h-6 bg-emerald-500 text-white rounded-lg flex items-center justify-center font-black text-xs">
-              L
+              🦉
             </span>
-            <span className="font-black text-sm tracking-tight">LexiLearn BD</span>
+            <span className="font-black text-sm tracking-tight">{siteConfig.name}</span>
             <Tag color="gold" className="text-[10px] uppercase font-bold m-0 rounded">
               {exam.toUpperCase()}
             </Tag>

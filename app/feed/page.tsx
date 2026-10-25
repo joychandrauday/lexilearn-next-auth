@@ -20,6 +20,7 @@ import ReelCard, { IReelPost } from '../../components/Feed/ReelCard';
 import CreatePostModal from '../../components/Feed/CreatePostModal';
 import InterestModal from '../../components/Feed/InterestModal';
 import LeaderboardModal from '../../components/Feed/LeaderboardModal';
+import { siteConfig, getStoredUserEmail, triggerAuthRequest } from '../../lib/config/site';
 
 const CATEGORY_TABS: Array<{ id: 'for_you' | 'bcs' | 'bank' | 'grammar' | 'vocab'; label: string }> = [
   { id: 'for_you', label: 'সবগুলো' },
@@ -49,10 +50,12 @@ export default function FeedPage() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const email = localStorage.getItem('lexi_user_email');
+      const email = getStoredUserEmail();
       if (email) setStoredEmail(email);
 
-      const savedInterests = localStorage.getItem('lexi_user_interests');
+      const savedInterests =
+        localStorage.getItem(siteConfig.storageKeys.userInterests) ||
+        localStorage.getItem(siteConfig.storageKeys.legacyUserInterests);
       if (savedInterests) {
         try {
           const parsed = JSON.parse(savedInterests);
@@ -78,7 +81,7 @@ export default function FeedPage() {
         params: {
           category,
           interests: interests.join(','),
-          userEmail: activeEmail || 'learner@lexilearn.com',
+          userEmail: activeEmail || `learner@${siteConfig.links.domain}`,
           shuffle: 'true',
           page: 1,
           limit: 50,
@@ -197,12 +200,10 @@ export default function FeedPage() {
 
   // Create post gate
   const handleOpenCreateModal = () => {
-    const isAuthed = !!(session?.user?.email || (typeof window !== 'undefined' && localStorage.getItem('lexi_user_email')));
+    const isAuthed = !!(session?.user?.email || getStoredUserEmail());
     if (!isAuthed) {
-      toast.error('কমিউনিটিতে অভিজ্ঞতা বা শব্দ শেয়ার করতে অনুগ্রহ করে সাইন ইন বা রেজিস্টার করুন');
-      if (typeof window !== 'undefined') {
-        window.dispatchEvent(new CustomEvent('lexi:request_auth'));
-      }
+      toast.error('কমিউনিটিতে অভিজ্ঞতা বা প্রশ্ন শেয়ার করতে অনুগ্রহ করে সাইন ইন বা রেজিস্টার করুন');
+      triggerAuthRequest();
       return;
     }
     setIsCreateModalOpen(true);
@@ -210,18 +211,16 @@ export default function FeedPage() {
 
   // Ask AI
   const handleAskAI = (prompt: string) => {
-    const isAuthed = !!(session?.user?.email || (typeof window !== 'undefined' && localStorage.getItem('lexi_user_email')));
+    const isAuthed = !!(session?.user?.email || getStoredUserEmail());
     if (!isAuthed) {
       toast.error('AI মেন্টর ব্যবহার করতে অনুগ্রহ করে সাইন ইন বা রেজিস্টার করুন');
-      if (typeof window !== 'undefined') {
-        window.dispatchEvent(new CustomEvent('lexi:request_auth'));
-      }
+      triggerAuthRequest();
       return;
     }
 
     if (typeof window !== 'undefined') {
-      const event = new CustomEvent('lexibot:ask', { detail: { prompt } });
-      window.dispatchEvent(event);
+      window.dispatchEvent(new CustomEvent(siteConfig.bot.eventTrigger, { detail: { prompt } }));
+      window.dispatchEvent(new CustomEvent(siteConfig.bot.legacyEventTrigger, { detail: { prompt } }));
     }
   };
 

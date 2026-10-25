@@ -27,9 +27,9 @@ export async function GET(req: NextRequest) {
       {
         $match: {
           $and: [
-            { 'author.role': { $nin: ['lexibot', 'admin'] } },
-            { 'author.email': { $not: /lexilearn|admin|lexibot|bot/i } },
-            { 'author.name': { $not: /lexilearn|lexibot|admin|মেন্টর/i } },
+            { 'author.role': { $nin: ['lexibot', 'admin', 'owlbot'] } },
+            { 'author.email': { $not: /growwithowl|owlprep|lexilearn|admin|lexibot|bot/i } },
+            { 'author.name': { $not: /growwithowl|owlprep|lexilearn|lexibot|owlbot|admin|মেন্টর/i } },
             { status: { $in: ['approved', null] } },
           ],
         },
@@ -55,8 +55,8 @@ export async function GET(req: NextRequest) {
       {
         $match: {
           $and: [
-            { userEmail: { $not: /lexilearn|admin|bot/i } },
-            { contributedBy: { $not: /lexilearn|admin|vault/i } },
+            { userEmail: { $not: /growwithowl|owlprep|lexilearn|admin|bot/i } },
+            { contributedBy: { $not: /growwithowl|owlprep|lexilearn|admin|vault/i } },
             { status: { $in: ['approved', null] } },
           ],
         },
@@ -77,7 +77,7 @@ export async function GET(req: NextRequest) {
 
     // Fetch user profiles to include direct exam tag contributions
     const profilesWithContributions = await UserProfile.find({
-      email: { $not: /lexilearn|admin|bot/i },
+      email: { $not: /growwithowl|owlprep|lexilearn|admin|bot/i },
       $or: [
         { contributionPoints: { $gt: 0 } },
         { contributionsCount: { $gt: 0 } },
@@ -99,7 +99,7 @@ export async function GET(req: NextRequest) {
     // 1. Process FeedPost contributors
     feedAgg.forEach((f) => {
       const email = f._id;
-      if (!email || /lexilearn|admin|lexibot|bot/i.test(email)) return;
+      if (!email || /growwithowl|owlprep|lexilearn|admin|lexibot|owlbot|bot/i.test(email)) return;
 
       const wordData = wordMap.get(email) || { wordCount: 0, wordUpvotes: 0 };
       const profData = profileMap.get(email);

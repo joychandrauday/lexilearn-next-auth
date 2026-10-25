@@ -24,6 +24,7 @@ import {
   RobotOutlined,
   SafetyCertificateOutlined,
 } from '@ant-design/icons';
+import { siteConfig } from '../lib/config/site';
 
 export default function Navbar() {
   const { data: session } = useSession();
@@ -67,6 +68,7 @@ const secondaryNavLinks = [
   { key: 'flashcards', label: 'রিভিশন কার্ড', href: '/flashcards', icon: <BookOutlined /> },
   { key: 'baghdhara', label: 'বাগধারা', href: '/bangla/baghdhara', icon: <BookOutlined /> },
   { key: 'quiz', label: 'মডেল টেস্ট', href: '/quiz', icon: <BookOutlined /> },
+  { key: 'about', label: 'আমাদের সম্পর্কে', href: '/about', icon: <BookOutlined /> },
 ];
 
 const navLinks = [...primaryNavLinks, ...secondaryNavLinks];
@@ -159,14 +161,14 @@ const navLinks = [...primaryNavLinks, ...secondaryNavLinks];
 
             <Link href="/" className="flex items-center gap-2.5 group">
               <div className="w-9 h-9 bg-gradient-to-tr from-emerald-600 to-teal-500 rounded-xl flex items-center justify-center text-white font-black text-lg shadow-sm group-hover:scale-105 transition-transform">
-                L
+                🦉
               </div>
               <div className="flex flex-col">
                 <span className="font-black text-lg text-gray-900 tracking-tight leading-none group-hover:text-emerald-700 transition-colors">
-                  Lexi<span className="text-emerald-600">Learn</span>
+                  Owl<span className="text-emerald-600">Prep</span>
                 </span>
                 <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider mt-0.5">
-                  বিসিএস ও ব্যাংক প্রস্তুতি
+                  by {siteConfig.parentBrand}
                 </span>
               </div>
             </Link>
@@ -269,9 +271,9 @@ const navLinks = [...primaryNavLinks, ...secondaryNavLinks];
         title={
           <div className="flex items-center gap-2">
             <div className="w-7 h-7 bg-emerald-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
-              L
+              🦉
             </div>
-            <span className="text-lg font-black text-gray-900">LexiLearn</span>
+            <span className="text-lg font-black text-gray-900">{siteConfig.name}</span>
           </div>
         }
         placement="left"

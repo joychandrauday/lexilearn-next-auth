@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lexilearn-cache-v1';
+const CACHE_NAME = 'owlprep-cache-v1';
 const STATIC_ASSETS = [
   '/',
   '/manifest.json',

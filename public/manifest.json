@@ -1,7 +1,7 @@
 {
-  "name": "LexiLearn BD - বিসিএস ও ব্যাংক ইংলিশ প্রস্তুতি",
-  "short_name": "LexiLearn",
-  "description": "Gamified Spaced Repetition Vocabulary & Job Prep Platform for Bangladeshi Aspirants",
+  "name": "OwlPrep - বিসিএস ও ব্যাংক প্রস্তুতি (Grow With Owl)",
+  "short_name": "OwlPrep",
+  "description": "Gamified Spaced Repetition, Micro-Capsules & AI Mentor for Competitive Exams",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#064e3b",

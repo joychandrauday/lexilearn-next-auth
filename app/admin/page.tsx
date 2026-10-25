@@ -459,7 +459,7 @@ export default function AdminPage() {
             </div>
             <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2.5 m-0">
               <DashboardOutlined className="text-emerald-400" />
-              <span>লেক্সিলার্ন সেন্ট্রাল কন্ট্রোল সেন্টার</span>
+              <span>OwlPrep সেন্ট্রাল কন্ট্রোল সেন্টার</span>
             </h1>
             <p className="text-xs text-gray-400 mt-1 m-0">
               ভোকাবুলারি ব্যাংক, মাল্টি-এক্সাম ট্যাগিং, বাগধারা কোষ এবং এআই প্রশ্ন ইম্পোর্টার ব্যবস্থাপনা

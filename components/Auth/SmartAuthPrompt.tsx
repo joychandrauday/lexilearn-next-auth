@@ -13,6 +13,7 @@ import {
 import { signIn, useSession } from 'next-auth/react';
 import axios from 'axios';
 import { toast } from 'sonner';
+import { siteConfig, getStoredUserEmail, setStoredUserEmail } from '../../lib/config/site';
 
 export default function SmartAuthPrompt() {
   const { data: session, status } = useSession();
@@ -25,8 +26,8 @@ export default function SmartAuthPrompt() {
     if (status === 'authenticated') return;
 
     if (typeof window !== 'undefined') {
-      const savedEmail = localStorage.getItem('lexi_user_email');
-      const dismissedUntil = localStorage.getItem('lexi_auth_dismissed_until');
+      const savedEmail = getStoredUserEmail();
+      const dismissedUntil = localStorage.getItem(siteConfig.storageKeys.authDismissedUntil) || localStorage.getItem(siteConfig.storageKeys.legacyAuthDismissedUntil);
 
       // If user has already provided email, don't show
       if (savedEmail) return;
@@ -41,15 +42,17 @@ export default function SmartAuthPrompt() {
 
       // Also listen to any custom trigger event (e.g. user clicks save to deck without email)
       const handleTriggerEvent = () => {
-        if (!localStorage.getItem('lexi_user_email')) {
+        if (!getStoredUserEmail()) {
           setOpen(true);
         }
       };
-      window.addEventListener('lexi:request_auth', handleTriggerEvent);
+      window.addEventListener(siteConfig.events.requestAuth, handleTriggerEvent);
+      window.addEventListener(siteConfig.events.legacyRequestAuth, handleTriggerEvent);
 
       return () => {
         clearTimeout(timer);
-        window.removeEventListener('lexi:request_auth', handleTriggerEvent);
+        window.removeEventListener(siteConfig.events.requestAuth, handleTriggerEvent);
+        window.removeEventListener(siteConfig.events.legacyRequestAuth, handleTriggerEvent);
       };
     }
   }, [status]);
@@ -58,7 +61,8 @@ export default function SmartAuthPrompt() {
     setOpen(false);
     if (typeof window !== 'undefined') {
       // Dismiss for 24 hours
-      localStorage.setItem('lexi_auth_dismissed_until', String(Date.now() + 24 * 60 * 60 * 1000));
+      localStorage.setItem(siteConfig.storageKeys.authDismissedUntil, String(Date.now() + 24 * 60 * 60 * 1000));
+      localStorage.setItem(siteConfig.storageKeys.legacyAuthDismissedUntil, String(Date.now() + 24 * 60 * 60 * 1000));
     }
   };
 
@@ -79,7 +83,7 @@ export default function SmartAuthPrompt() {
 
       if (res.data.success) {
         if (typeof window !== 'undefined') {
-          localStorage.setItem('lexi_user_email', email.trim().toLowerCase());
+          setStoredUserEmail(email.trim().toLowerCase());
         }
         toast.success('আপনার ইমেইল সফলভাবে সংরক্ষিত হয়েছে! অগ্রগতি স্বয়ংক্রিয়ভাবে সিঙ্ক হবে।');
         setOpen(false);

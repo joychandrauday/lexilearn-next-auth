@@ -1,4 +1,5 @@
-# LexiLearn - Next.js App Router + NextAuth (Google) Starter
+# OwlPrep — by Grow With Owl (growwithowl.com)
+Gamified Spaced Repetition, 1-Minute Micro-Capsules, Smart Question Bank & AI Mentor Platform for Competitive Exams.
 
 ## Quickstart
 

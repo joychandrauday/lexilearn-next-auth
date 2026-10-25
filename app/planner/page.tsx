@@ -34,14 +34,15 @@ export default function StudyPlannerPage() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      let email = localStorage.getItem('lexi_user_email');
+      let email = localStorage.getItem('owl_user_email') || localStorage.getItem('lexi_user_email');
       if (!email && !session?.user?.email) {
-        let guestId = localStorage.getItem('lexi_guest_id');
+        let guestId = localStorage.getItem('owl_guest_id') || localStorage.getItem('lexi_guest_id');
         if (!guestId) {
           guestId = 'guest_' + Math.random().toString(36).substring(2, 9);
+          localStorage.setItem('owl_guest_id', guestId);
           localStorage.setItem('lexi_guest_id', guestId);
         }
-        email = `${guestId}@guest.lexilearn.local`;
+        email = `${guestId}@guest.growwithowl.com`;
       }
       if (email) setStoredEmail(email);
     }

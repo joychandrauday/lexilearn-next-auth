@@ -26,6 +26,7 @@ import {
   Heart,
 } from 'lucide-react';
 import axios from 'axios';
+import { siteConfig, setStoredUserEmail } from '../lib/config/site';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -51,7 +52,7 @@ export default function Footer() {
         setSubscribed(true);
         antMessage.success('ধন্যবাদ! আপনি সফলভাবে স্টাডি বুলেটিনে সাবস্ক্রাইব করেছেন।');
         if (typeof window !== 'undefined') {
-          localStorage.setItem('lexi_user_email', email.trim().toLowerCase());
+          setStoredUserEmail(email.trim().toLowerCase());
         }
         setEmail('');
       }
@@ -114,9 +115,12 @@ export default function Footer() {
           <div className="col-span-2 md:col-span-3 lg:col-span-1 space-y-3">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-700 flex items-center justify-center text-white font-black text-base shadow-sm">
-                L
+                🦉
               </div>
-              <span className="font-black text-white text-lg tracking-tight">LexiLearn</span>
+              <div>
+                <span className="font-black text-white text-lg tracking-tight block leading-none">{siteConfig.name}</span>
+                <span className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider">by {siteConfig.parentBrand}</span>
+              </div>
             </div>
 
             <p className="text-xs text-slate-400 leading-relaxed font-normal">
@@ -138,31 +142,43 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* Social Links */}
+            {/* Social & Founder Links */}
             <div className="flex items-center gap-2 pt-3">
               <a
-                href="https://facebook.com"
+                href={siteConfig.creator.portfolioUrl}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
+                title="Joy Chandra Uday Portfolio"
                 className="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-emerald-500 transition"
               >
-                <FacebookOutlined />
+                <Sparkles className="w-4 h-4 text-amber-300" />
               </a>
               <a
-                href="https://linkedin.com"
+                href={siteConfig.creator.linkedinUrl}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
+                title="Joy Chandra Uday LinkedIn"
                 className="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-emerald-500 transition"
               >
                 <LinkedinOutlined />
               </a>
               <a
-                href="https://github.com"
+                href={siteConfig.creator.githubUrl}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
+                title="Joy Chandra Uday GitHub"
                 className="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-emerald-500 transition"
               >
                 <GithubOutlined />
+              </a>
+              <a
+                href={siteConfig.creator.companyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="G2G Digital"
+                className="px-2 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-[10px] font-bold text-amber-300 hover:text-white hover:border-amber-400 transition"
+              >
+                G2G
               </a>
             </div>
           </div>
@@ -317,8 +333,8 @@ export default function Footer() {
                   onClick={() => {
                     if (typeof window !== 'undefined') {
                       window.dispatchEvent(
-                        new CustomEvent('lexibot:ask', {
-                          detail: { prompt: 'লেক্সিলার্ন প্ল্যাটফর্ম ব্যবহারের সার্বিক নিয়ম ও ফিচার গাইড দিন।' },
+                        new CustomEvent(siteConfig.bot.legacyEventTrigger, {
+                          detail: { prompt: `${siteConfig.nameBn} প্ল্যাটফর্ম ব্যবহারের সার্বিক নিয়ম ও ফিচার গাইড দিন।` },
                         })
                       );
                     }
@@ -333,8 +349,8 @@ export default function Footer() {
                   onClick={() => {
                     if (typeof window !== 'undefined') {
                       window.dispatchEvent(
-                        new CustomEvent('lexibot:ask', {
-                          detail: { prompt: 'লেক্সিলার্ন ভেরিফিকেশন সিস্টেম এবং বাংলা একাডেমি প্রমিত বানান পদ্ধতি কীভাবে কাজ করে?' },
+                        new CustomEvent(siteConfig.bot.legacyEventTrigger, {
+                          detail: { prompt: `${siteConfig.nameBn} ভেরিফিকেশন সিস্টেম এবং বাংলা একাডেমি প্রমিত বানান পদ্ধতি কীভাবে কাজ করে?` },
                         })
                       );
                     }
@@ -343,6 +359,11 @@ export default function Footer() {
                 >
                   ভেরিফিকেশন সিস্টেম
                 </span>
+              </li>
+              <li>
+                <Link href="/about" className="hover:text-emerald-400 transition">
+                  আমাদের সম্পর্কে ও নির্মাতা
+                </Link>
               </li>
               <li>
                 <span className="text-slate-500">গোপনীয়তা ও নিরাপত্তা নীতি</span>
@@ -358,8 +379,30 @@ export default function Footer() {
       {/* BOTTOM LEGAL & SYSTEM STATUS BAR */}
       <div className="border-t border-slate-800/80 bg-slate-950 py-6 text-xs text-slate-500">
         <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <span>© 2026 LexiLearn Bangladesh. সর্বস্বত্ব সংরক্ষিত।</span>
+          <div className="flex flex-col sm:flex-row items-center gap-2">
+            <span>© 2026 {siteConfig.name} by {siteConfig.parentBrand}. সর্বস্বত্ব সংরক্ষিত।</span>
+            <span className="hidden sm:inline text-slate-700">•</span>
+            <span>
+              নির্মাতা:{' '}
+              <a
+                href={siteConfig.creator.portfolioUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-emerald-400 hover:text-emerald-300 font-bold underline underline-offset-2 transition-colors"
+              >
+                Joy Chandra Uday
+              </a>{' '}
+              (Founder,{' '}
+              <a
+                href={siteConfig.creator.companyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-amber-300 hover:text-amber-200 font-semibold"
+              >
+                G2G Digital
+              </a>
+              )
+            </span>
           </div>
 
           {/* Live System Status Pill */}

@@ -38,6 +38,7 @@ import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { toast } from 'sonner';
 import QuickSaveModal from '../../components/Notebook/QuickSaveModal';
+import { siteConfig, getStoredUserEmail } from '../../lib/config/site';
 
 interface NotebookItem {
   _id: string;
@@ -83,13 +84,11 @@ export default function NotebookPage() {
   const [storedEmail, setStoredEmail] = useState<string | null>(null);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const email = localStorage.getItem('lexi_user_email');
-      if (email) setStoredEmail(email);
-    }
+    const email = getStoredUserEmail();
+    if (email) setStoredEmail(email);
   }, []);
 
-  const activeEmail = session?.user?.email || storedEmail || 'learner@lexilearn.com';
+  const activeEmail = session?.user?.email || storedEmail || `learner@${siteConfig.links.domain}`;
 
   // Fetch notebook items
   const fetchNotebook = async () => {
@@ -129,8 +128,12 @@ export default function NotebookPage() {
     const handleNotebookUpdate = () => {
       fetchNotebook();
     };
-    window.addEventListener('lexi:notebook_updated', handleNotebookUpdate);
-    return () => window.removeEventListener('lexi:notebook_updated', handleNotebookUpdate);
+    window.addEventListener(siteConfig.events.notebookUpdated, handleNotebookUpdate);
+    window.addEventListener(siteConfig.events.legacyNotebookUpdated, handleNotebookUpdate);
+    return () => {
+      window.removeEventListener(siteConfig.events.notebookUpdated, handleNotebookUpdate);
+      window.removeEventListener(siteConfig.events.legacyNotebookUpdated, handleNotebookUpdate);
+    };
   }, [activeEmail]);
 
   // Handle Search
@@ -225,8 +228,8 @@ export default function NotebookPage() {
         : `এই বিষয়ে বিসিএস প্রিলিমিনারি প্রস্তুতির জন্য শর্টকাট ও জরুরি তথ্য বুঝিয়ে দিন: "${item.title}". বিবরণ: ${item.content}`;
 
     if (typeof window !== 'undefined') {
-      const event = new CustomEvent('lexibot:ask', { detail: { prompt } });
-      window.dispatchEvent(event);
+      window.dispatchEvent(new CustomEvent(siteConfig.bot.eventTrigger, { detail: { prompt } }));
+      window.dispatchEvent(new CustomEvent(siteConfig.bot.legacyEventTrigger, { detail: { prompt } }));
     }
   };
 
@@ -248,7 +251,7 @@ export default function NotebookPage() {
       return;
     }
 
-    const header = `# LexiLearn Personal Binder Study Sheet\nতারিখ: ${new Date().toLocaleDateString('bn-BD')}\nমোট আইটেম: ${items.length}টি\nফিল্টার: ${getSubjectName(activeSubject)}\n\n---\n\n`;
+    const header = `# ${siteConfig.name} Personal Binder Study Sheet\nতারিখ: ${new Date().toLocaleDateString('bn-BD')}\nমোট আইটেম: ${items.length}টি\nফিল্টার: ${getSubjectName(activeSubject)}\n\n---\n\n`;
     const body = items
       .map((item, idx) => {
         return `## ${idx + 1}. ${item.title} [${getSubjectName(item.subject)} - ${item.targetExam || 'BCS'}]\n${item.secondaryText ? `**ব্যাখ্যা/অর্থ:** ${item.secondaryText}\n\n` : ''}${item.content ? `**সারসংক্ষেপ:**\n${item.content}\n\n` : ''}${item.mnemonic ? `> **দেশি নেমোনিক / ট্রিক:** ${item.mnemonic}\n\n` : ''}**স্ট্যাটাস:** ${item.isMastered ? 'আয়ত্ত হয়েছে' : 'রিভিশন বাকি'} | অগ্রাধিকার: ${item.priority}\n\n---`;
@@ -259,7 +262,7 @@ export default function NotebookPage() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `LexiLearn-Binder-${activeSubject}-${new Date().toISOString().slice(0, 10)}.md`;
+    a.download = `${siteConfig.name}-Binder-${activeSubject}-${new Date().toISOString().slice(0, 10)}.md`;
     a.click();
     URL.revokeObjectURL(url);
     toast.success('নোটবুক ফাইল (.md) ডাউনলোড সম্পন্ন হয়েছে!');
@@ -669,7 +672,7 @@ export default function NotebookPage() {
                         />
                       </Tooltip>
 
-                      <Tooltip title="লেক্সিবট AI মেন্টর দিয়ে এই বিষয়টি বিস্তারিত বুঝুন">
+                      <Tooltip title="Owl AI মেন্টর দিয়ে এই বিষয়টি বিস্তারিত বুঝুন">
                         <Button
                           size="small"
                           icon={<RobotOutlined />}

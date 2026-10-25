@@ -27,6 +27,7 @@ import {
 } from '@ant-design/icons';
 import { Button, Input, Tag, message as antMessage } from 'antd';
 import MarkdownViewer from './AIChat/MarkdownViewer';
+import { siteConfig, getStoredUserEmail, setStoredUserEmail } from '../lib/config/site';
 
 const { TextArea } = Input;
 
@@ -85,7 +86,7 @@ export default function AIChatBot() {
       id: 'welcome',
       role: 'assistant',
       content:
-        '### স্বাগতম! আমি লেক্সিবট\nআপনার বিসিএস, ব্যাংক ও সরকারি চাকরির সার্বিক প্রস্তুতি সহকারী।\n\n• সাধারণ জ্ঞান (বাংলাদেশ ও আন্তর্জাতিক বিষয়াবলী, সংবিধান, ইতিহাস)\n• ইংরেজি ভোকাবুলারি, Candid vs Cynical কনফিউশন ও গ্রামার ট্র্যাপ\n• বাংলা প্রমিত শুদ্ধ বানান (কুষ্মাণ্ড, অকালপক্ব), বাগধারা ও সাহিত্য\n• গণিত শর্টকাট ও আইসিটি\n\nযেকোনো বিষয়ে প্রশ্ন করুন — টু-দ্য-পয়েন্ট ও সুনির্দিষ্ট ব্যাখ্যা প্রদান করা হবে।',
+        `### 🦉 স্বাগতম! আমি ${siteConfig.bot.name} (${siteConfig.bot.nameBn})\nআপনার বিসিএস, ব্যাংক ও সরকারি চাকরির সার্বিক প্রস্তুতি সহকারী।\n\n• সাধারণ জ্ঞান (বাংলাদেশ ও আন্তর্জাতিক বিষয়াবলী, সংবিধান, ইতিহাস)\n• ইংরেজি ভোকাবুলারি, Candid vs Cynical কনফিউশন ও গ্রামার ট্র্যাপ\n• বাংলা প্রমিত শুদ্ধ বানান (কুষ্মাণ্ড, অকালপক্ব), বাগধারা ও সাহিত্য\n• গণিত শর্টকাট ও আইসিটি\n\nযেকোনো বিষয়ে প্রশ্ন করুন — টু-দ্য-পয়েন্ট ও সুনির্দিষ্ট ব্যাখ্যা প্রদান করা হবে।`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     },
   ]);
@@ -107,16 +108,16 @@ export default function AIChatBot() {
       antMessage.info('ডাউনলোড করার মতো পর্যাপ্ত নোট চ্যাটে নেই');
       return;
     }
-    const textContent = `# LexiLearn AI Mentor Study Notes\nতারিখ: ${new Date().toLocaleDateString('bn-BD')}\nফোকাস: ${examFocus}\n\n` +
+    const textContent = `# ${siteConfig.name} AI Mentor Study Notes\nতারিখ: ${new Date().toLocaleDateString('bn-BD')}\nফোকাস: ${examFocus}\n\n` +
       messages
         .filter((m) => m.id !== 'welcome' && m.id !== 'welcome-reset')
-        .map((m) => `### ${m.role === 'user' ? 'প্রশ্ন' : 'লেক্সিবট সমাধান'} (${m.timestamp}):\n${m.content}\n\n`)
+        .map((m) => `### ${m.role === 'user' ? 'প্রশ্ন' : `${siteConfig.bot.name} সমাধান`} (${m.timestamp}):\n${m.content}\n\n`)
         .join('---\n\n');
     const blob = new Blob([textContent], { type: 'text/markdown;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `LexiBot-Study-Notes-${new Date().toISOString().slice(0, 10)}.md`;
+    a.download = `${siteConfig.name}-AI-Study-Notes-${new Date().toISOString().slice(0, 10)}.md`;
     a.click();
     URL.revokeObjectURL(url);
     antMessage.success('নোট ফাইল ডাউনলোড সম্পন্ন হয়েছে!');
@@ -139,7 +140,7 @@ export default function AIChatBot() {
   }, [messages, isOpen]);
 
   useEffect(() => {
-    const email = typeof window !== 'undefined' ? localStorage.getItem('lexi_user_email') || '' : '';
+    const email = getStoredUserEmail() || '';
     if (email) setSavedPhoneOrEmail(email);
   }, []);
 
@@ -152,8 +153,12 @@ export default function AIChatBot() {
         }, 150);
       }
     };
-    window.addEventListener('lexibot:ask', handleAskEvent);
-    return () => window.removeEventListener('lexibot:ask', handleAskEvent);
+    window.addEventListener(siteConfig.bot.eventTrigger, handleAskEvent);
+    window.addEventListener(siteConfig.bot.legacyEventTrigger, handleAskEvent);
+    return () => {
+      window.removeEventListener(siteConfig.bot.eventTrigger, handleAskEvent);
+      window.removeEventListener(siteConfig.bot.legacyEventTrigger, handleAskEvent);
+    };
   }, []);
 
   const handleCopy = (id: string, text: string) => {
@@ -167,8 +172,8 @@ export default function AIChatBot() {
 
   const handleSaveToNotebook = async (msg: Message) => {
     try {
-      const storedEmail = typeof window !== 'undefined' ? localStorage.getItem('lexi_user_email') : null;
-      const userEmail = session?.user?.email || savedPhoneOrEmail || storedEmail || 'learner@lexilearn.com';
+      const storedEmail = getStoredUserEmail();
+      const userEmail = session?.user?.email || savedPhoneOrEmail || storedEmail || `learner@${siteConfig.links.domain}`;
       
       // Extract title from first line
       const lines = msg.content.split('\n').filter((l) => l.trim().length > 0);
@@ -194,9 +199,9 @@ export default function AIChatBot() {
         title,
         itemType: 'topic',
         subject: detectedSubject,
-        category: `লেক্সিবট • ${examFocus}`,
+        category: `${siteConfig.bot.name} • ${examFocus}`,
         content: msg.content,
-        mnemonic: 'লেক্সিবট এআই এক্সাম হাই-ইল্ড সামারি',
+        mnemonic: `${siteConfig.bot.name} এআই এক্সাম হাই-ইল্ড সামারি`,
         tags: ['এআই নোট', examFocus, 'বিসিএস/ব্যাংক'],
         targetExam: examFocus,
         priority: 'high',
@@ -208,7 +213,8 @@ export default function AIChatBot() {
         );
         antMessage.success('নোটবুকে সফলভাবে সংরক্ষণ করা হয়েছে!');
         if (typeof window !== 'undefined') {
-          window.dispatchEvent(new CustomEvent('lexi:notebook_updated'));
+          window.dispatchEvent(new CustomEvent(siteConfig.events.notebookUpdated));
+          window.dispatchEvent(new CustomEvent(siteConfig.events.legacyNotebookUpdated));
         }
       } else {
         throw new Error(res.data?.message || 'সংরক্ষণ ব্যর্থ হয়েছে');
@@ -228,14 +234,14 @@ export default function AIChatBot() {
     const phoneMatch = textToSend.match(/(?:\+?880|0)1[3-9]\d{8}/);
 
     if (emailMatch && typeof window !== 'undefined') {
-      localStorage.setItem('lexi_user_email', emailMatch[0]);
+      setStoredUserEmail(emailMatch[0]);
       setSavedPhoneOrEmail(emailMatch[0]);
     } else if (phoneMatch && typeof window !== 'undefined') {
       localStorage.setItem('lexi_user_phone', phoneMatch[0]);
       setSavedPhoneOrEmail(phoneMatch[0]);
     }
 
-    const currentEmail = session?.user?.email || (typeof window !== 'undefined' ? localStorage.getItem('lexi_user_email') : null);
+    const currentEmail = session?.user?.email || getStoredUserEmail();
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -319,12 +325,12 @@ export default function AIChatBot() {
         <button
           onClick={() => setIsOpen(true)}
           className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 bg-gradient-to-r from-emerald-600 to-teal-700 text-white px-4 py-3 rounded-full shadow-2xl hover:shadow-emerald-900/30 hover:scale-105 active:scale-95 transition-all duration-300 font-bold border border-emerald-400/30"
-          aria-label="Open LexiBot AI"
+          aria-label={`Open ${siteConfig.bot.nameEn}`}
         >
-          <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
-            <RobotOutlined className="text-white text-sm" />
+          <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-sm">
+            🦉
           </div>
-          <span className="text-sm font-black tracking-wide">LexiBot AI</span>
+          <span className="text-sm font-black tracking-wide">{siteConfig.bot.nameEn}</span>
           <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
         </button>
       )}
@@ -335,12 +341,12 @@ export default function AIChatBot() {
           {/* Header */}
           <div className="p-4 bg-gradient-to-r from-slate-900 via-emerald-950 to-slate-900 text-white flex items-center justify-between shadow-md">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-400 shadow-inner">
-                <RobotOutlined className="text-xl" />
+              <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-xl shadow-inner">
+                🦉
               </div>
               <div>
                 <div className="flex items-center gap-1.5">
-                  <h3 className="font-black text-sm text-white m-0">LexiBot Universal AI</h3>
+                  <h3 className="font-black text-sm text-white m-0">{siteConfig.bot.nameEn} Mentor</h3>
                   <Tag color="cyan" className="text-[10px] m-0 border-0 font-bold">
                     BCS / Bank / GK
                   </Tag>
@@ -554,7 +560,7 @@ export default function AIChatBot() {
             {loading && (
               <div className="flex items-center gap-2.5 text-xs text-slate-700 bg-white p-3 rounded-2xl border border-gray-200 w-fit shadow-xs animate-pulse">
                 <SyncOutlined spin className="text-emerald-600 text-sm" />
-                <span className="font-semibold">লেক্সিবট উত্তর তৈরি করছে...</span>
+                <span className="font-semibold">{siteConfig.bot.name} উত্তর তৈরি করছে...</span>
               </div>
             )}
             <div ref={messagesEndRef} />

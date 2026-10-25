@@ -22,8 +22,8 @@ export async function seedInitialFeedIfEmpty() {
         difficulty: 'medium',
         isPinned: true,
         author: {
-          name: 'LexiLearn AI Mentor',
-          email: 'mentor@lexilearn.com',
+          name: 'Owl AI Mentor',
+          email: 'mentor@growwithowl.com',
           avatar: '/avatar-mentor.png',
           role: 'lexibot',
         },
@@ -39,8 +39,8 @@ export async function seedInitialFeedIfEmpty() {
         category: 'bcs',
         difficulty: 'medium',
         author: {
-          name: 'LexiLearn Lexicographer',
-          email: 'editor@lexilearn.com',
+          name: 'OwlPrep Lead Editor',
+          email: 'editor@growwithowl.com',
           role: 'admin',
         },
         vocabData: {
@@ -64,8 +64,8 @@ export async function seedInitialFeedIfEmpty() {
         category: 'bank',
         difficulty: 'hard',
         author: {
-          name: 'LexiLearn Exam Cell',
-          email: 'exams@lexilearn.com',
+          name: 'OwlPrep Exam Cell',
+          email: 'exams@growwithowl.com',
           role: 'admin',
         },
         mcqData: {
@@ -90,7 +90,7 @@ export async function seedInitialFeedIfEmpty() {
         difficulty: 'hard',
         author: {
           name: 'Daily Editorial Bot',
-          email: 'editorial@lexilearn.com',
+          email: 'editorial@growwithowl.com',
           role: 'lexibot',
         },
         vocabData: {
@@ -138,8 +138,8 @@ export async function seedInitialFeedIfEmpty() {
         category: 'bcs',
         difficulty: 'medium',
         author: {
-          name: 'LexiLearn AI Mentor',
-          email: 'mentor@lexilearn.com',
+          name: 'Owl AI Mentor',
+          email: 'mentor@growwithowl.com',
           role: 'lexibot',
         },
         vocabData: {

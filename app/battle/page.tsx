@@ -198,7 +198,7 @@ export default function BattleArenaPage() {
       const res = await axios.post('/api/battle', {
         action: 'submit_answer',
         roomCode: duel.roomCode,
-        userEmail: userEmail || 'guest@lexilearn.com',
+        userEmail: userEmail || 'guest@growwithowl.com',
         userName,
         questionIndex: currentQuestionIndex,
         selectedOption: option,
@@ -246,7 +246,7 @@ export default function BattleArenaPage() {
     try {
       const res = await axios.post('/api/battle', {
         action: 'match',
-        userEmail: userEmail || 'guest@lexilearn.com',
+        userEmail: userEmail || 'guest@growwithowl.com',
         userName,
         subject: selectedSubject,
       });
@@ -273,7 +273,7 @@ export default function BattleArenaPage() {
     try {
       const res = await axios.post('/api/battle', {
         action: 'create',
-        userEmail: userEmail || 'guest@lexilearn.com',
+        userEmail: userEmail || 'guest@growwithowl.com',
         userName,
         subject: selectedSubject,
       });
@@ -303,7 +303,7 @@ export default function BattleArenaPage() {
       const res = await axios.post('/api/battle', {
         action: 'join',
         roomCode: inputRoomCode.trim(),
-        userEmail: userEmail || 'guest@lexilearn.com',
+        userEmail: userEmail || 'guest@growwithowl.com',
         userName,
       });
 
@@ -330,7 +330,7 @@ export default function BattleArenaPage() {
     try {
       const res = await axios.post('/api/battle', {
         action: 'save_mistake',
-        userEmail: userEmail || 'guest@lexilearn.com',
+        userEmail: userEmail || 'guest@growwithowl.com',
         questionData: {
           questionText: q.questionText,
           options: q.options,
@@ -366,7 +366,7 @@ export default function BattleArenaPage() {
 
   // Current question & player helpers
   const currentQ = duel?.questions[currentQuestionIndex];
-  const isChallenger = duel?.challenger.email === (userEmail || 'guest@lexilearn.com');
+  const isChallenger = duel?.challenger.email === (userEmail || 'guest@growwithowl.com');
   const myPlayer = isChallenger ? duel?.challenger : duel?.opponent;
   const oppPlayer = isChallenger ? duel?.opponent : duel?.challenger;
 

@@ -26,6 +26,7 @@ import { Button, Tag, Modal } from 'antd';
 import { toast } from 'sonner';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
+import { siteConfig, getStoredUserEmail, triggerAuthRequest } from '../../lib/config/site';
 
 export interface IReelPost {
   _id: string;
@@ -99,13 +100,11 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
 
   // Save to Notebook handler
   const handleSaveToNotebook = async () => {
-    const savedEmail = typeof window !== 'undefined' ? localStorage.getItem('lexi_user_email') : null;
+    const savedEmail = getStoredUserEmail();
     const isAuthed = !!(session?.user?.email || savedEmail);
 
     if (!isAuthed) {
-      if (typeof window !== 'undefined') {
-        window.dispatchEvent(new CustomEvent('lexi:request_auth'));
-      }
+      triggerAuthRequest();
       toast.error('নোটবুকে সংরক্ষণ করতে অনুগ্রহ করে সাইন ইন বা রেজিস্টার করুন');
       return;
     }
@@ -138,7 +137,8 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
         setSavedToNotebook(true);
         toast.success('প্রস্তুতি নোটবুকে যুক্ত হয়েছে!');
         if (typeof window !== 'undefined') {
-          window.dispatchEvent(new CustomEvent('lexi:notebook_updated'));
+          window.dispatchEvent(new CustomEvent(siteConfig.events.notebookUpdated));
+          window.dispatchEvent(new CustomEvent(siteConfig.events.legacyNotebookUpdated));
         }
       }
     } catch {
@@ -201,17 +201,17 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
     if (typeof window !== 'undefined') {
       return `${window.location.origin}/feed#${post._id}`;
     }
-    return `https://lexilearn-rust.vercel.app/feed#${post._id}`;
+    return `https://${siteConfig.links.domain}/feed#${post._id}`;
   };
 
   const getShareText = () => {
     if (post.vocabData) {
-      return `[LexiLearn প্রস্তুতি ক্যাপসুল]\n${post.vocabData.word} (${post.vocabData.bangla})\nঅর্থ: ${post.vocabData.meaning}\nনেমোনিক: ${post.vocabData.mnemonic || 'বিসিএস ও ব্যাংক প্রস্তুতি'}\n\nলেক্সিলার্নে আরও দেখুন: ${getShareUrl()}`;
+      return `[${siteConfig.name} প্রস্তুতি ক্যাপসুল]\n${post.vocabData.word} (${post.vocabData.bangla})\nঅর্থ: ${post.vocabData.meaning}\nনেমোনিক: ${post.vocabData.mnemonic || 'বিসিএস ও ব্যাংক প্রস্তুতি'}\n\n${siteConfig.name}-এ আরও দেখুন: ${getShareUrl()}`;
     }
     if (post.mcqData) {
-      return `[বিসিএস/ব্যাংক কুইজ চ্যালেঞ্জ]\nপ্রশ্ন: ${post.mcqData.question}\nসঠিক উত্তর ও ব্যাখ্যা দেখুন লেক্সিলার্নে: ${getShareUrl()}`;
+      return `[বিসিএস/ব্যাংক কুইজ চ্যালেঞ্জ]\nপ্রশ্ন: ${post.mcqData.question}\nসঠিক উত্তর ও ব্যাখ্যা দেখুন ${siteConfig.name}-এ: ${getShareUrl()}`;
     }
-    return `[LexiLearn প্রস্তুতি ক্যাপসুল]\n${post.title}\n${post.content.slice(0, 140)}...\n\nবিস্তারিত পড়ুন: ${getShareUrl()}`;
+    return `[${siteConfig.name} প্রস্তুতি ক্যাপসুল]\n${post.title}\n${post.content.slice(0, 140)}...\n\nবিস্তারিত পড়ুন: ${getShareUrl()}`;
   };
 
   const handleCopyLink = () => {

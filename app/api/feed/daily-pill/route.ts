@@ -139,8 +139,8 @@ Strict requirements:
     const postsToInsert = (parsed.posts || []).map((p: any) => ({
       ...p,
       author: {
-        name: 'LexiLearn Daily Curator',
-        email: 'curator@lexilearn.com',
+        name: 'OwlPrep Daily Curator',
+        email: 'curator@growwithowl.com',
         role: 'lexibot',
       },
       likes: Math.floor(Math.random() * 25) + 10,

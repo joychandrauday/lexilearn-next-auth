@@ -30,6 +30,9 @@ import {
   ChevronRight,
   Send,
   Users,
+  Code2,
+  ExternalLink,
+  Globe,
 } from 'lucide-react';
 import {
   ThunderboltFilled,
@@ -42,15 +45,18 @@ import {
   PlusOutlined,
   CheckOutlined,
   SyncOutlined,
+  GithubOutlined,
+  LinkedinOutlined,
 } from '@ant-design/icons';
 import axios from 'axios';
 import Footer from '../components/Footer';
+import { siteConfig } from '../lib/config/site';
 
 // Sample Live Interactive Demos
 const DEMO_TABS = [
   { id: 'reel', label: '১ মিনিটের রিলস ক্যাপসুল', icon: Play },
   { id: 'mcq', label: 'বিসিএস MCQ চ্যালেঞ্জ', icon: Target },
-  { id: 'ai', label: 'লেক্সিবট এআই মেন্টর (লাইভ)', icon: Bot },
+  { id: 'ai', label: 'Owl AI মেন্টর (লাইভ)', icon: Bot },
   { id: 'notebook', label: 'স্টাডি বাইন্ডার ও শিট', icon: BookOpen },
 ];
 
@@ -200,7 +206,14 @@ export default function LandingPage() {
   const triggerAIMentor = () => {
     if (typeof window !== 'undefined') {
       window.dispatchEvent(
-        new CustomEvent('lexibot:ask', {
+        new CustomEvent(siteConfig.bot.eventTrigger, {
+          detail: {
+            prompt: 'বিসিএস ও ব্যাংক প্রিলিমিনারি প্রস্তুতির জন্য একটি সার্বিক রিভিশন রূপরেখা দিন।',
+          },
+        })
+      );
+      window.dispatchEvent(
+        new CustomEvent(siteConfig.bot.legacyEventTrigger, {
           detail: {
             prompt: 'বিসিএস ও ব্যাংক প্রিলিমিনারি প্রস্তুতির জন্য একটি সার্বিক রিভিশন রূপরেখা দিন।',
           },
@@ -231,7 +244,7 @@ export default function LandingPage() {
           >
             <div className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 border border-emerald-400/40 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-bold text-emerald-200 shadow-inner transition-colors">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-              <span>বিসিএস ও ব্যাংক চাকরিপ্রার্থীদের স্মার্ট লার্নিং ইকোসিস্টেম</span>
+              <span>🦉 রাতজাগা চাকরিপ্রার্থীদের স্মার্ট লার্নিং ইকোসিস্টেম</span>
               <span className="text-emerald-400 font-mono text-[11px] bg-emerald-950/80 px-2 py-0.5 rounded-full border border-emerald-500/30">
                 LIVE 2026
               </span>
@@ -341,7 +354,7 @@ export default function LandingPage() {
               <span>আমাদের লক্ষ্য ও স্বপ্ন</span>
             </div>
             <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight mb-4">
-              কেন লেক্সিলার্ন? আপনার ভেতরের স্বপ্নকে বাস্তবে রূপ দেওয়ার অঙ্গীকার
+              কেন {siteConfig.nameBn}? আপনার ভেতরের স্বপ্নকে বাস্তবে রূপ দেওয়ার অঙ্গীকার
             </h2>
             <p className="text-xs sm:text-base text-gray-600 leading-relaxed font-normal">
               আমরা জানি একজন চাকরিপ্রার্থীর প্রতিদিনের নীরব সংগ্রাম। নীলক্ষেতের শত শত পৃষ্ঠার গাইডবইয়ের ক্লান্তি,
@@ -430,11 +443,11 @@ export default function LandingPage() {
               </div>
               <div>
                 <h3 className="font-black text-base text-slate-900 mb-1.5">
-                  ৪. ২৪/৭ ব্যক্তিগত সার্বিক এআই মেন্টর (লেক্সিবট)
+                  ৪. ২৪/৭ ব্যক্তিগত সার্বিক এআই মেন্টর ({siteConfig.bot.name})
                 </h3>
                 <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-normal m-0">
                   রাত ২টায় সংবিধানের কোনো অনুচ্ছেদ বা ইংরেজি Subjunctive Mood-এ খটকা লাগলে শিক্ষক বা বন্ধুদের খুঁজতে হবে না;
-                  লেক্সিবট সাথে সাথে পরিমিত, টু-দ্য-পয়েন্ট ও বিসিএস ট্র্যাপসহ সমাধান বুঝিয়ে দেবে।
+                  {siteConfig.bot.name} সাথে সাথে পরিমিত, টু-দ্য-পয়েন্ট ও বিসিএস ট্র্যাপসহ সমাধান বুঝিয়ে দেবে।
                 </p>
               </div>
             </motion.div>
@@ -458,7 +471,7 @@ export default function LandingPage() {
               এখনই সাইটটির মূল ফিচারগুলো চালিয়ে দেখুন
             </h2>
             <p className="text-xs sm:text-sm text-gray-500 font-medium">
-              লগইন করার আগেই অভিজ্ঞতা নিন কীভাবে লেক্সিলার্ন আপনার প্রতিদিনের প্রস্তুতি বদলে দেয়।
+              লগইন করার আগেই অভিজ্ঞতা নিন কীভাবে {siteConfig.nameBn} আপনার প্রতিদিনের প্রস্তুতি বদলে দেয়।
             </p>
           </motion.div>
 
@@ -503,7 +516,7 @@ export default function LandingPage() {
                         <Zap className="w-4 h-4" />
                       </div>
                       <div>
-                        <span className="font-black text-xs text-gray-900 block">লেক্সিবট রিলস ক্যাপসুল</span>
+                        <span className="font-black text-xs text-gray-900 block">{siteConfig.bot.name} রিলস ক্যাপসুল</span>
                         <span className="text-[10px] text-gray-400">ক্যাপসুল {reelIndex + 1} / {REEL_DEMOS.length}</span>
                       </div>
                     </div>
@@ -713,7 +726,7 @@ export default function LandingPage() {
                         <Bot className="w-4 h-4" />
                       </div>
                       <div>
-                        <span className="font-black text-xs text-gray-900 block">লেক্সিবট লাইভ এআই পরীক্ষক</span>
+                        <span className="font-black text-xs text-gray-900 block">{siteConfig.bot.name} লাইভ এআই পরীক্ষক</span>
                         <span className="text-[10px] text-emerald-600 font-medium">সরাসরি প্রশ্ন করুন • রিয়েল-টাইম ইঞ্জিন</span>
                       </div>
                     </div>
@@ -772,7 +785,7 @@ export default function LandingPage() {
                     {aiLoading ? (
                       <div className="flex items-center gap-2 text-xs text-indigo-700 font-semibold py-4 justify-center">
                         <SyncOutlined spin />
-                        <span>লেক্সিবট নির্ভুল উত্তর তৈরি করছে...</span>
+                        <span>{siteConfig.bot.name} নির্ভুল উত্তর তৈরি করছে...</span>
                       </div>
                     ) : (
                       <div className="text-xs sm:text-sm text-gray-800 leading-relaxed font-normal whitespace-pre-wrap">
@@ -867,7 +880,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* 4. OLD WAY VS LEXILEARN WAY (CONTRAST COMPARISON) */}
+      {/* 4. OLD WAY VS UTKORSHO WAY (CONTRAST COMPARISON) */}
       <section className="py-16 md:py-24 bg-white border-b border-gray-200">
         <div className="max-w-5xl mx-auto px-4">
           <motion.div
@@ -880,7 +893,7 @@ export default function LandingPage() {
               বাস্তবতার মুখোমুখি
             </span>
             <h2 className="text-2xl sm:text-4xl font-black text-slate-900 mt-3 mb-2 tracking-tight">
-              প্রচলিত ক্লান্তিকর পথ বনাম লেক্সিলার্ন স্মার্ট প্রস্তুতি
+              প্রচলিত ক্লান্তিকর পথ বনাম {siteConfig.nameBn} স্মার্ট প্রস্তুতি
             </h2>
             <p className="text-xs sm:text-sm text-gray-500 font-medium">
               একই সময় ব্যয় করে দ্বিগুণ নির্ভুলতা ও স্মৃতিশক্তি অর্জন করুন।
@@ -922,7 +935,7 @@ export default function LandingPage() {
               </ul>
             </motion.div>
 
-            {/* The LexiLearn Way */}
+            {/* The Utkorsho Way */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -933,7 +946,7 @@ export default function LandingPage() {
                 <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold">
                   <CheckCircle2 className="w-5 h-5" />
                 </div>
-                <h3 className="font-black text-lg text-emerald-950 m-0">লেক্সিলার্ন স্মার্ট প্রিপারেশন</h3>
+                <h3 className="font-black text-lg text-emerald-950 m-0">{siteConfig.nameBn} স্মার্ট প্রিপারেশন</h3>
               </div>
 
               <ul className="space-y-3.5 text-xs sm:text-sm text-emerald-950 leading-relaxed pl-1 font-medium">
@@ -1153,7 +1166,7 @@ export default function LandingPage() {
               <Tag color="purple" className="font-bold text-[10px] rounded-md mb-2">
                 সার্বজনীন এআই গাইড
               </Tag>
-              <h3 className="font-black text-lg text-slate-900 mb-2">লেক্সিবট সার্বিক এআই মেন্টর</h3>
+              <h3 className="font-black text-lg text-slate-900 mb-2">{siteConfig.bot.name} সার্বিক এআই মেন্টর</h3>
               <p className="text-xs text-gray-600 leading-relaxed font-normal">
                 সাধারণ জ্ঞান, সংবিধান, মুক্তিযুদ্ধ, বাংলা প্রমিত বানান (কুষ্মাণ্ড, অকালপক্ব), ইংরেজি ও গণিত যে কোনো বিষয়ে টু-দ্য-পয়েন্ট ব্যাখ্যা।
               </p>
@@ -1246,7 +1259,7 @@ export default function LandingPage() {
             টার্গেটেড কম্পিটিটিভ পরীক্ষা
           </span>
           <h3 className="text-xl sm:text-2xl font-black text-slate-900 mb-6">
-            যেসব নিয়োগ পরীক্ষার জন্য লেক্সিলার্ন ডিজাইন করা হয়েছে
+            যেসব নিয়োগ পরীক্ষার জন্য {siteConfig.nameBn} ডিজাইন করা হয়েছে
           </h3>
           <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
             {[
@@ -1265,6 +1278,134 @@ export default function LandingPage() {
                 <span>{exam}</span>
               </span>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FOUNDER & ENGINEERING ARCHITECTURE SECTION (JOY CHANDRA UDAY) */}
+      <section className="py-16 md:py-24 bg-white border-b border-gray-200 relative overflow-hidden">
+        <div className="max-w-5xl mx-auto px-4 relative z-10">
+          <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 rounded-3xl p-8 sm:p-12 text-white border border-emerald-500/20 shadow-2xl relative overflow-hidden">
+            {/* Background decorative glow */}
+            <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-60 h-60 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+              {/* Left Column: Founder Bio & Philosophy */}
+              <div className="lg:col-span-7 space-y-4">
+                <div className="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 text-xs font-black uppercase tracking-wider px-3.5 py-1 rounded-full">
+                  <Code2 className="w-3.5 h-3.5 text-amber-300" />
+                  <span>নির্মাতা ও সিস্টেম আর্কিটেক্ট</span>
+                </div>
+
+                <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight m-0">
+                  জয় চন্দ্র উদয় (Joy Chandra Uday)
+                </h2>
+
+                <p className="text-xs sm:text-sm text-emerald-200/90 font-medium m-0">
+                  সফটওয়্যার ইঞ্জিনিয়ার • ফাউন্ডার,{' '}
+                  <a
+                    href="https://g2gdigital.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-amber-300 hover:text-amber-200 underline underline-offset-4 font-bold transition-colors inline-flex items-center gap-1"
+                  >
+                    G2G Digital <ExternalLink className="w-3 h-3" />
+                  </a>
+                </p>
+
+                <blockquote className="border-l-2 border-emerald-400 pl-4 py-1 italic text-xs sm:text-sm text-slate-300 my-3">
+                  &ldquo;Systems before heroics. Learn why before how. Understand systems instead of memorizing tools. See what others scroll past.&rdquo;
+                </blockquote>
+
+                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
+                  গতানুগতিক মুখস্থবিদ্যা ও নীলক্ষেতের ভারী গাইডবইয়ের সীমাবদ্ধতা ভেঙে বাংলাদেশের চাকরিপ্রার্থীদের জন্য একটি বৈজ্ঞানিক স্পেসড-রিপিটিশন (SM-2) ও এআই-চালিত লার্নিং ইকোসিস্টেম তৈরি করার লক্ষ্যেই <strong>{siteConfig.name}</strong>-এর জন্ম। এটি তৈরি করা হয়েছে আধুনিক হাই-পারফরম্যান্স সিস্টেম ডিজাইন এবং অপারেটর-গ্রেড এক্সিকিউশন কাঠামোর সমন্বয়ে।
+                </p>
+
+                {/* Backlink Action Buttons */}
+                <div className="flex flex-wrap items-center gap-2.5 pt-2">
+                  <a
+                    href="https://joychandrauday-nexus.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md transition-all"
+                  >
+                    <Globe className="w-3.5 h-3.5" />
+                    <span>পোর্টফোলিও ওয়েবসাইট</span>
+                  </a>
+
+                  <a
+                    href="https://github.com/joychandrauday"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs transition-all"
+                  >
+                    <GithubOutlined className="text-sm" />
+                    <span>GitHub Profile</span>
+                  </a>
+
+                  <a
+                    href="https://www.linkedin.com/in/joychandraudayy/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs transition-all"
+                  >
+                    <LinkedinOutlined className="text-sm text-blue-400" />
+                    <span>LinkedIn</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Right Column: Engineering Principles & G2G Pillars */}
+              <div className="lg:col-span-5 bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-md space-y-4">
+                <h4 className="text-xs font-black uppercase tracking-wider text-emerald-300 border-b border-white/10 pb-2 m-0 flex items-center justify-between">
+                  <span>ইঞ্জিনিয়ারিং ও প্রোডাক্ট পিলার</span>
+                  <span className="text-[10px] text-slate-400 font-mono">G2GOS / {siteConfig.name}</span>
+                </h4>
+
+                <div className="space-y-3 text-xs">
+                  <div className="flex items-start gap-2.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0" />
+                    <div>
+                      <span className="font-bold text-white block">সিস্টেমস ওভার হিরোইকস (Systems Before Heroics):</span>
+                      <span className="text-slate-400 leading-normal">
+                        র‌্যান্ডম পড়ার বদলে প্রতিদিনের অ্যালগরিদমিক রিভিশন ট্র্যাক যা তথ্যকে দীর্ঘস্থায়ী স্মৃতিতে রূপান্তর করে।
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-2.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-teal-400 mt-1.5 shrink-0" />
+                    <div>
+                      <span className="font-bold text-white block">জ্ঞানভিত্তিক এআই ইঞ্জিন (Context-Aware AI):</span>
+                      <span className="text-slate-400 leading-normal">
+                        বাংলাদেশের সংবিধান, মুক্তিযুদ্ধ ও বিগত বিসিএস ট্র্যাপ প্রশ্নের সুনির্দিষ্ট ও বিভ্রান্তিমুক্ত সমাধান।
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-2.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-1.5 shrink-0" />
+                    <div>
+                      <span className="font-bold text-white block">জবাবিদিহিতামূলক ফলাফল (Accountable Outcomes):</span>
+                      <span className="text-slate-400 leading-normal">
+                        ভ্যানিটি টাইম নষ্ট নয়; দিনে মাত্র ৫ মিনিটে ১টি করে বিসিএস বা ব্যাংক পরীক্ষায় নির্ভরযোগ্য নম্বর বৃদ্ধি।
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-slate-400">
+                  <span>অভিভাবক ব্র্যান্ড: <strong>{siteConfig.parentBrand}</strong></span>
+                  <a
+                    href="mailto:joychandraud@gmail.com"
+                    className="text-emerald-300 hover:text-emerald-200 font-semibold"
+                  >
+                    যোগাযোগ করুন →
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
