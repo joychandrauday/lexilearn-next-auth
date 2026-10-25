@@ -16,6 +16,7 @@ import {
   LogoutOutlined,
   ReadOutlined,
   CheckCircleFilled,
+  CalendarOutlined,
 } from '@ant-design/icons';
 
 export default function Navbar() {
@@ -44,6 +45,7 @@ export default function Navbar() {
     { label: 'হোম', href: '/' },
     { label: 'দৈনিক ক্যাপসুল', href: '/daily-capsule' },
     { label: 'স্মার্ট প্রশ্নব্যাংক', href: '/question-bank' },
+    { label: 'স্টাডি প্ল্যানার', href: '/planner' },
     { label: 'প্রস্তুতি ফিড', href: '/feed' },
     { label: 'প্রস্তুতি নোটবুক', href: '/notebook' },
     { label: 'ক্যাম্পেইন', href: '/campaign' },
@@ -81,6 +83,11 @@ export default function Navbar() {
       key: 'question-bank',
       label: <Link href="/question-bank">স্মার্ট প্রশ্নব্যাংক (Question Bank)</Link>,
       icon: <BookOutlined />,
+    },
+    {
+      key: 'planner',
+      label: <Link href="/planner">দৈনিক পড়ার রুটিন ও প্ল্যানার (Study Planner)</Link>,
+      icon: <CalendarOutlined />,
     },
     {
       key: 'notebook',

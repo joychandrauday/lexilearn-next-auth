@@ -19,6 +19,7 @@ export interface IUserProfile extends Document {
   capsuleStreak?: number;
   lastCapsuleDate?: string;
   completedCapsules?: string[];
+  totalFocusMinutes?: number;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -104,6 +105,10 @@ const userProfileSchema = new Schema<IUserProfile>(
     completedCapsules: {
       type: [String],
       default: [],
+    },
+    totalFocusMinutes: {
+      type: Number,
+      default: 0,
     },
   },
   { timestamps: true }
