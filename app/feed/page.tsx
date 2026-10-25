@@ -226,9 +226,9 @@ export default function FeedPage() {
   };
 
   return (
-    <div className="w-full flex flex-col font-sans select-none overflow-hidden h-[calc(100vh-64px)]">
+    <div className="w-full flex flex-col font-sans select-none overflow-hidden -mb-20 md:-mb-6 h-[calc(100dvh-64px)] relative">
       {/* Top Streamlined Interactive Hub Bar */}
-      <div className="bg-white border-b border-gray-200/90 px-4 py-2 shrink-0 z-20 shadow-2xs">
+      <div className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-gray-200/90 px-3 sm:px-5 py-2.5 shrink-0 shadow-xs">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2.5">
           {/* Category Tabs */}
           <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar w-full sm:w-auto">

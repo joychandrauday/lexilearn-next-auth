@@ -12,6 +12,10 @@ export interface IUserProfile extends Document {
   address?: string;
   dailyGoal?: number;
   bio?: string;
+  contributionPoints?: number;
+  contributionsCount?: number;
+  examTagsCount?: number;
+  badges?: string[];
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -67,6 +71,24 @@ const userProfileSchema = new Schema<IUserProfile>(
     bio: {
       type: String,
       default: 'লক্ষ্য: বিসিএস ও প্রথম শ্রেণির সরকারি চাকরি',
+    },
+    contributionPoints: {
+      type: Number,
+      default: 0,
+      index: true,
+    },
+    contributionsCount: {
+      type: Number,
+      default: 0,
+      index: true,
+    },
+    examTagsCount: {
+      type: Number,
+      default: 0,
+    },
+    badges: {
+      type: [String],
+      default: ['কমিউনিটি মেম্বার'],
     },
   },
   { timestamps: true }

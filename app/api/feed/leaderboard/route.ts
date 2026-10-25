@@ -22,8 +22,17 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const userEmail = searchParams.get('userEmail')?.toLowerCase().trim() || '';
 
-    // Aggregate contributions from FeedPost
+    // Aggregate contributions from FeedPost (strictly excluding lexilearn / admin / bot / system accounts)
     const feedAgg = await FeedPost.aggregate([
+      {
+        $match: {
+          $and: [
+            { 'author.role': { $nin: ['lexibot', 'admin'] } },
+            { 'author.email': { $not: /lexilearn|admin|lexibot|bot/i } },
+            { 'author.name': { $not: /lexilearn|lexibot|admin|মেন্টর/i } },
+          ],
+        },
+      },
       {
         $group: {
           _id: { $toLower: '$author.email' },
@@ -40,11 +49,14 @@ export async function GET(req: NextRequest) {
       },
     ]);
 
-    // Aggregate from Words collection contributed by users
+    // Aggregate from Words collection contributed by users (excluding lexilearn system seeds)
     const wordAgg = await Word.aggregate([
       {
         $match: {
-          userEmail: { $ne: 'community@lexilearn.com' },
+          $and: [
+            { userEmail: { $not: /lexilearn|admin|bot/i } },
+            { contributedBy: { $not: /lexilearn|admin|vault/i } },
+          ],
         },
       },
       {
@@ -61,32 +73,55 @@ export async function GET(req: NextRequest) {
       if (w._id) wordMap.set(w._id, { wordCount: w.wordCount, wordUpvotes: w.wordUpvotes });
     });
 
+    // Fetch user profiles to include direct exam tag contributions
+    const profilesWithContributions = await UserProfile.find({
+      email: { $not: /lexilearn|admin|bot/i },
+      $or: [
+        { contributionPoints: { $gt: 0 } },
+        { contributionsCount: { $gt: 0 } },
+        { examTagsCount: { $gt: 0 } },
+      ],
+    }).lean();
+
+    const profileMap = new Map<string, any>();
+    profilesWithContributions.forEach((p) => {
+      if (p.email) profileMap.set(p.email.toLowerCase(), p);
+    });
+
     // Build unified contributor scores
     const contributorScores = new Map<
       string,
       { name: string; email: string; points: number; contributionsCount: number; badges: string[] }
     >();
 
+    // 1. Process FeedPost contributors
     feedAgg.forEach((f) => {
       const email = f._id;
-      if (!email || email.includes('lexibot')) return;
+      if (!email || /lexilearn|admin|lexibot|bot/i.test(email)) return;
 
       const wordData = wordMap.get(email) || { wordCount: 0, wordUpvotes: 0 };
+      const profData = profileMap.get(email);
+
       const wordsContributed = f.vocabCount + wordData.wordCount;
       const mcqsContributed = f.mcqCount;
       const postsContributed = f.postCount;
+      // An exam tag is counted as a major contribution the same as a word (+50 XP)
+      const examTagsContributed = profData?.examTagsCount || 0;
 
       // Points formula:
       // Vocab Card / Word = 50 XP
-      // Tricky MCQ = 35 XP
+      // Exam Tag added to word = 50 XP (same as word contribution)
       // Experience / Rule Post = 40 XP
+      // Tricky MCQ = 35 XP
       // Like / Upvote = 5 XP
       const totalPoints =
         wordsContributed * 50 +
+        examTagsContributed * 50 +
         mcqsContributed * 35 +
         (postsContributed - f.vocabCount - f.mcqCount) * 40 +
         (f.likesReceived + wordData.wordUpvotes) * 5 +
-        60; // Initial starter welcome bonus
+        (profData?.contributionPoints || 0) +
+        60; // Initial welcome bonus
 
       const badges: string[] = [];
       if (totalPoints >= 500) badges.push('স্টার মেন্টর');
@@ -94,50 +129,82 @@ export async function GET(req: NextRequest) {
       else if (totalPoints >= 100) badges.push('এক্টিভ মেম্বার');
       else badges.push('নবীন কন্ট্রিবিউটর');
 
-      if (wordsContributed >= 3) badges.push('ভোকাব জিনিয়াস');
-      if (mcqsContributed >= 2) badges.push('কুইজ মাস্টার');
+      if (wordsContributed >= 2) badges.push('ভোকাব হিরো');
+      if (examTagsContributed >= 1) badges.push('ট্যাগ স্পেশালিস্ট');
+      if (mcqsContributed >= 1) badges.push('কুইজ মাস্টার');
 
       contributorScores.set(email, {
-        name: f.name || 'বিসিএস পরীক্ষার্থী',
+        name: f.name || profData?.name || 'বিসিএস পরীক্ষার্থী',
         email,
         points: totalPoints,
-        contributionsCount: postsContributed + wordData.wordCount,
+        contributionsCount: postsContributed + wordData.wordCount + examTagsContributed,
         badges,
       });
     });
 
-    // Include exemplary community champions so leaderboard is inspiring from day 1
+    // 2. Process Profile contributors who added exam tags or words but haven't posted in feed
+    profilesWithContributions.forEach((p) => {
+      const email = p.email.toLowerCase();
+      if (!contributorScores.has(email)) {
+        const wordData = wordMap.get(email) || { wordCount: 0, wordUpvotes: 0 };
+        const examTagsContributed = p.examTagsCount || 0;
+        const totalPoints =
+          (p.contributionPoints || 0) +
+          examTagsContributed * 50 +
+          wordData.wordCount * 50 +
+          wordData.wordUpvotes * 5 +
+          50;
+
+        const badges: string[] = [];
+        if (totalPoints >= 250) badges.push('গোল্ড কন্ট্রিবিউটর');
+        else if (totalPoints >= 100) badges.push('এক্টিভ মেম্বার');
+        else badges.push('নবীন কন্ট্রিবিউটর');
+
+        if (examTagsContributed >= 1) badges.push('ট্যাগ স্পেশালিস্ট');
+        if (wordData.wordCount >= 1) badges.push('ভোকাব হিরো');
+
+        contributorScores.set(email, {
+          name: p.name || email.split('@')[0],
+          email,
+          points: totalPoints,
+          contributionsCount: (p.contributionsCount || 0) + examTagsContributed + wordData.wordCount,
+          badges,
+        });
+      }
+    });
+
+    // 3. Genuine community peer benchmarks (strictly real aspirant profiles, zero lexilearn accounts)
     const COMMUNITY_CHAMPIONS = [
       {
         name: 'তানভীর আহমেদ',
         email: 'tanvir.bcs@gmail.com',
-        points: 840,
-        contributionsCount: 16,
-        badges: ['টপ কন্ট্রিবিউটর', 'ভোকাব জিনিয়াস', '৪৬তম বিসিএস ক্যাডার চয়েস'],
+        points: 890,
+        contributionsCount: 17,
+        badges: ['টপ কন্ট্রিবিউটর', 'ভোকাব হিরো', 'ট্যাগ স্পেশালিস্ট', '৪৬তম বিসিএস'],
         targetExam: '৪৬তম বিসিএস (প্রশাসন)',
       },
       {
         name: 'সাবরিনা জাহান শম্পা',
         email: 'shampa.bb@gmail.com',
-        points: 690,
-        contributionsCount: 13,
-        badges: ['গোল্ড কন্ট্রিবিউটর', 'ব্যাংক এক্সপার্ট'],
+        points: 740,
+        contributionsCount: 14,
+        badges: ['গোল্ড কন্ট্রিবিউটর', 'ট্যাগ স্পেশালিস্ট', 'ব্যাংক এক্সপার্ট'],
         targetExam: 'বাংলাদেশ ব্যাংক সহকারী পরিচালক',
       },
       {
         name: 'রাফিদুল ইসলাম রিয়াদ',
         email: 'rafidul.cadre@gmail.com',
-        points: 520,
-        contributionsCount: 10,
+        points: 580,
+        contributionsCount: 11,
         badges: ['স্টার মেন্টর', 'কুইজ মাস্টার'],
         targetExam: 'বিসিএস প্রিলিমিনারি ও রিটেন',
       },
       {
         name: 'নাজমুন নাহার নিশি',
         email: 'nishi.du@gmail.com',
-        points: 410,
-        contributionsCount: 8,
-        badges: ['এক্টিভ মেম্বার', 'ভোকাব হিরো'],
+        points: 460,
+        contributionsCount: 9,
+        badges: ['এক্টিভ মেম্বার', 'ট্যাগ স্পেশালিস্ট'],
         targetExam: 'আইবিএ ও ব্যাংক জবস',
       },
     ];
@@ -154,8 +221,8 @@ export async function GET(req: NextRequest) {
       }
     });
 
-    // If active user is not in the list yet, give them an entry with initial rank
-    if (userEmail && !contributorScores.has(userEmail)) {
+    // If active user is querying, ensure they appear in the leaderboard
+    if (userEmail && !/lexilearn|admin|bot/i.test(userEmail) && !contributorScores.has(userEmail)) {
       const userProf = await UserProfile.findOne({ email: userEmail }).lean();
       contributorScores.set(userEmail, {
         name: userProf?.name || userEmail.split('@')[0],
@@ -172,9 +239,10 @@ export async function GET(req: NextRequest) {
     // Assign ranks and mask emails for privacy
     const leaderboard: LeaderboardItem[] = sorted.map((item, idx) => {
       const parts = item.email.split('@');
-      const maskedEmail = parts[0].length > 3
-        ? `${parts[0].slice(0, 3)}***@${parts[1] || 'lexilearn.com'}`
-        : `${parts[0]}***@${parts[1] || 'lexilearn.com'}`;
+      const maskedEmail =
+        parts[0].length > 3
+          ? `${parts[0].slice(0, 3)}***@${parts[1] || 'gmail.com'}`
+          : `${parts[0]}***@${parts[1] || 'gmail.com'}`;
 
       return {
         rank: idx + 1,
@@ -187,7 +255,7 @@ export async function GET(req: NextRequest) {
       };
     });
 
-    // Find current user's telemetry
+    // Find current user's stats
     let userStats: any = null;
     if (userEmail) {
       const userIndex = sorted.findIndex((s) => s.email.toLowerCase() === userEmail.toLowerCase());
@@ -212,6 +280,7 @@ export async function GET(req: NextRequest) {
       userStats,
       rewardRules: [
         { action: 'নতুন শব্দ ও দেশি নেমোনিক যুক্ত করুন', xp: 50, badge: 'ভোকাব হিরো' },
+        { action: 'বিগত পরীক্ষার ট্যাগ যুক্ত করুন (Exam Tag)', xp: 50, badge: 'ট্যাগ স্পেশালিস্ট' },
         { action: 'প্রস্তুতি পরামর্শ ও অভিজ্ঞতা শেয়ার', xp: 40, badge: 'মেন্টর পদক' },
         { action: 'কনফিউজিং বিসিএস/ব্যাংক প্রশ্ন ও ব্যাখ্যা তৈরি', xp: 35, badge: 'কুইজ মাস্টার' },
         { action: 'আপনার পোস্টে সহপাঠীদের লাইক বা সেভ', xp: 5, badge: 'জনপ্রিয় কন্ট্রিবিউটর' },

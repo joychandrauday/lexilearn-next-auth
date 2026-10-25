@@ -150,22 +150,22 @@ export default function LeaderboardModal({
         )}
 
         {/* Reward Rules Grid */}
-        <div className="grid grid-cols-2 gap-2 text-xs">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
           <div className="bg-slate-50 p-2.5 rounded-xl border border-gray-100">
             <span className="font-bold text-gray-800 block text-[11px]">নতুন শব্দ ও নেমোনিক</span>
             <span className="text-emerald-700 font-black text-xs">+৫০ XP • ভোকাব হিরো</span>
           </div>
           <div className="bg-slate-50 p-2.5 rounded-xl border border-gray-100">
-            <span className="font-bold text-gray-800 block text-[11px]">প্রস্তুতি অভিজ্ঞতা ও পরামর্শ</span>
+            <span className="font-bold text-gray-800 block text-[11px]">বিগত পরীক্ষার ট্যাগ (Tag)</span>
+            <span className="text-emerald-700 font-black text-xs">+৫০ XP • ট্যাগ স্পেশালিস্ট</span>
+          </div>
+          <div className="bg-slate-50 p-2.5 rounded-xl border border-gray-100">
+            <span className="font-bold text-gray-800 block text-[11px]">প্রস্তুতি অভিজ্ঞতা শেয়ার</span>
             <span className="text-emerald-700 font-black text-xs">+৪০ XP • মেন্টর পদক</span>
           </div>
           <div className="bg-slate-50 p-2.5 rounded-xl border border-gray-100">
-            <span className="font-bold text-gray-800 block text-[11px]">কনফিউজিং MCQ ও ব্যাখ্যা</span>
+            <span className="font-bold text-gray-800 block text-[11px]">কনফিউজিং MCQ কুইজ</span>
             <span className="text-emerald-700 font-black text-xs">+৩৫ XP • কুইজ মাস্টার</span>
-          </div>
-          <div className="bg-slate-50 p-2.5 rounded-xl border border-gray-100">
-            <span className="font-bold text-gray-800 block text-[11px]">সহপাঠীদের প্রতিটি লাইক</span>
-            <span className="text-emerald-700 font-black text-xs">+৫ XP • কমিউনিটি স্টার</span>
           </div>
         </div>
 

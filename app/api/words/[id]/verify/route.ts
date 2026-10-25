@@ -52,12 +52,31 @@ export async function POST(
 
       await word.save();
 
+      // Count exam tag contribution the same as adding a word (+50 XP)
+      if (userEmail) {
+        try {
+          const cleanEmail = userEmail.toLowerCase().trim();
+          const UserProfile = (await import('../../../../../lib/models/UserProfile')).default;
+          await UserProfile.findOneAndUpdate(
+            { email: cleanEmail },
+            {
+              $inc: { contributionPoints: 50, contributionsCount: 1, examTagsCount: 1 },
+              $addToSet: { badges: 'এক্সাম ট্যাগ মাস্টার' },
+            },
+            { upsert: true }
+          );
+        } catch (profErr) {
+          console.warn('Profile XP increment error:', profErr);
+        }
+      }
+
       return NextResponse.json({
         success: true,
-        message: `"${cleanTag}" পরীক্ষার ট্যাগ যুক্ত হয়েছে! ফ্রিকোয়েন্সি স্কোর বৃদ্ধি পেয়েছে।`,
+        message: `"${cleanTag}" পরীক্ষার ট্যাগ সফলভাবে যুক্ত হয়েছে! কন্ট্রিবিউশনের জন্য +৫০ XP যোগ করা হলো।`,
         examTags: word.examTags,
         frequencyCount: word.frequencyCount,
         isMostRepeated: word.isMostRepeated,
+        awardedXp: 50,
       });
     }
 
