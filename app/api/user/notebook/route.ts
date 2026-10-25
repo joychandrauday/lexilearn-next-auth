@@ -63,7 +63,7 @@ export async function GET(req: NextRequest) {
   try {
     await connectDb();
     const { searchParams } = new URL(req.url);
-    const userEmail = searchParams.get('userEmail');
+    const userEmail = searchParams.get('userEmail') || searchParams.get('email');
 
     if (!userEmail) {
       return NextResponse.json({ error: 'userEmail is required' }, { status: 400 });
@@ -140,7 +140,8 @@ export async function POST(req: NextRequest) {
     await connectDb();
     const body = await req.json();
 
-    const { userEmail, title, itemType, subject, category, content, secondaryText, mnemonic, tags, targetExam, priority } = body;
+    const userEmail = body.userEmail || body.email;
+    const { title, itemType, subject, category, content, secondaryText, mnemonic, tags, targetExam, priority } = body;
 
     if (!userEmail || !title) {
       return NextResponse.json({ error: 'userEmail and title are required' }, { status: 400 });
@@ -179,7 +180,8 @@ export async function PATCH(req: NextRequest) {
   try {
     await connectDb();
     const body = await req.json();
-    const { id, userEmail, action, isMastered, priority, content, mnemonic } = body;
+    const userEmail = body.userEmail || body.email;
+    const { id, action, isMastered, priority, content, mnemonic, title, subject, category, secondaryText } = body;
 
     if (!id || !userEmail) {
       return NextResponse.json({ error: 'id and userEmail are required' }, { status: 400 });
@@ -206,6 +208,10 @@ export async function PATCH(req: NextRequest) {
       if (priority) item.priority = priority;
       if (content !== undefined) item.content = content;
       if (mnemonic !== undefined) item.mnemonic = mnemonic;
+      if (title !== undefined) item.title = title.trim();
+      if (subject !== undefined) item.subject = subject;
+      if (category !== undefined) item.category = category;
+      if (secondaryText !== undefined) item.secondaryText = secondaryText;
     }
 
     await item.save();
@@ -226,7 +232,7 @@ export async function DELETE(req: NextRequest) {
     await connectDb();
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');
-    const userEmail = searchParams.get('userEmail');
+    const userEmail = searchParams.get('userEmail') || searchParams.get('email');
 
     if (!id || !userEmail) {
       return NextResponse.json({ error: 'id and userEmail are required' }, { status: 400 });

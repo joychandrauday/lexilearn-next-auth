@@ -131,6 +131,9 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
       if (res.data.success) {
         setSavedToNotebook(true);
         toast.success('প্রস্তুতি নোটবুকে যুক্ত হয়েছে!');
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('lexi:notebook_updated'));
+        }
       }
     } catch {
       toast.error('নোটবুকে যুক্ত করতে সমস্যা হয়েছে');

@@ -9,17 +9,13 @@ import {
   Spin,
   Empty,
   Modal,
-  Badge,
-  Card,
-  Row,
-  Col,
   Tooltip,
+  Progress,
+  message,
 } from 'antd';
 import {
   BookOutlined,
-  ReadOutlined,
   BulbOutlined,
-  QuestionCircleOutlined,
   CheckCircleFilled,
   CheckCircleOutlined,
   UndoOutlined,
@@ -28,10 +24,15 @@ import {
   SearchOutlined,
   RobotOutlined,
   PrinterOutlined,
-  FilterOutlined,
   FireOutlined,
-  ThunderboltFilled,
-  ShareAltOutlined,
+  DownloadOutlined,
+  EditOutlined,
+  CopyOutlined,
+  EyeOutlined,
+  EyeInvisibleOutlined,
+  AppstoreOutlined,
+  CreditCardOutlined,
+  CheckOutlined,
 } from '@ant-design/icons';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
@@ -61,6 +62,10 @@ export default function NotebookPage() {
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({ total: 0, mastered: 0, pending: 0 });
 
+  // View Mode: 'cards' or 'flashcards'
+  const [viewMode, setViewMode] = useState<'cards' | 'flashcards'>('cards');
+  const [revealedCardIds, setRevealedCardIds] = useState<Record<string, boolean>>({});
+
   // Filters
   const [activeSubject, setActiveSubject] = useState<string>('all');
   const [activeType, setActiveType] = useState<string>('all');
@@ -71,6 +76,8 @@ export default function NotebookPage() {
   // Modals
   const [isQuickSaveOpen, setIsQuickSaveOpen] = useState(false);
   const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
+  const [editingItem, setEditingItem] = useState<NotebookItem | null>(null);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
 
   // Active email
   const [storedEmail, setStoredEmail] = useState<string | null>(null);
@@ -91,6 +98,7 @@ export default function NotebookPage() {
       const res = await axios.get('/api/user/notebook', {
         params: {
           userEmail: activeEmail,
+          email: activeEmail,
           subject: activeSubject,
           itemType: activeType,
           isMastered: activeStatus === 'all' ? 'all' : activeStatus === 'mastered',
@@ -99,7 +107,7 @@ export default function NotebookPage() {
         },
       });
 
-      if (res.data.success) {
+      if (res.data?.success) {
         setItems(res.data.items || []);
         if (res.data.stats) {
           setStats(res.data.stats);
@@ -116,7 +124,16 @@ export default function NotebookPage() {
     fetchNotebook();
   }, [activeSubject, activeType, activeStatus, activePriority, activeEmail]);
 
-  // Handle Search on enter or debounce
+  // Listen for notebook updates from chatbot or feed saves
+  useEffect(() => {
+    const handleNotebookUpdate = () => {
+      fetchNotebook();
+    };
+    window.addEventListener('lexi:notebook_updated', handleNotebookUpdate);
+    return () => window.removeEventListener('lexi:notebook_updated', handleNotebookUpdate);
+  }, [activeEmail]);
+
+  // Handle Search
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     fetchNotebook();
@@ -131,7 +148,7 @@ export default function NotebookPage() {
         action: 'toggle-mastered',
       });
 
-      if (res.data.success) {
+      if (res.data?.success) {
         toast.success(res.data.message);
         setItems((prev) =>
           prev.map((item) => (item._id === id ? { ...item, isMastered: !item.isMastered } : item))
@@ -157,7 +174,7 @@ export default function NotebookPage() {
         params: { id, userEmail: activeEmail },
       });
 
-      if (res.data.success) {
+      if (res.data?.success) {
         toast.success('আইটেমটি সফলভাবে মুছে ফেলা হয়েছে');
         setItems((prev) => prev.filter((i) => i._id !== id));
         setStats((prev) => ({
@@ -167,6 +184,34 @@ export default function NotebookPage() {
       }
     } catch {
       toast.error('মুছে ফেলতে সমস্যা হয়েছে');
+    }
+  };
+
+  // Handle inline item update
+  const handleSaveEdit = async () => {
+    if (!editingItem) return;
+    try {
+      const res = await axios.patch('/api/user/notebook', {
+        id: editingItem._id,
+        userEmail: activeEmail,
+        title: editingItem.title,
+        content: editingItem.content,
+        mnemonic: editingItem.mnemonic,
+        secondaryText: editingItem.secondaryText,
+        priority: editingItem.priority,
+        subject: editingItem.subject,
+        category: editingItem.category,
+      });
+
+      if (res.data?.success) {
+        toast.success('আইটেম সফলভাবে আপডেট করা হয়েছে');
+        setItems((prev) =>
+          prev.map((i) => (i._id === editingItem._id ? editingItem : i))
+        );
+        setEditingItem(null);
+      }
+    } catch {
+      toast.error('আপডেট করতে সমস্যা হয়েছে');
     }
   };
 
@@ -185,6 +230,46 @@ export default function NotebookPage() {
     }
   };
 
+  // Copy note as Markdown
+  const handleCopyNote = (item: NotebookItem) => {
+    const text = `### ${item.title} (${getSubjectName(item.subject)})\n${item.secondaryText ? `অর্থ: ${item.secondaryText}\n` : ''}\n${item.content}\n${item.mnemonic ? `\nস্মৃতিসূত্র (Mnemonic): ${item.mnemonic}` : ''}`;
+    if (navigator?.clipboard) {
+      navigator.clipboard.writeText(text);
+      setCopiedId(item._id);
+      message.success('নোটটি ক্লিপবোর্ডে কপি করা হয়েছে');
+      setTimeout(() => setCopiedId(null), 2000);
+    }
+  };
+
+  // Export full filtered notebook as .md file
+  const handleExportMarkdown = () => {
+    if (items.length === 0) {
+      toast.error('ডাউনলোড করার মতো কোনো নোট পাওয়া যায়নি');
+      return;
+    }
+
+    const header = `# LexiLearn Personal Binder Study Sheet\nতারিখ: ${new Date().toLocaleDateString('bn-BD')}\nমোট আইটেম: ${items.length}টি\nফিল্টার: ${getSubjectName(activeSubject)}\n\n---\n\n`;
+    const body = items
+      .map((item, idx) => {
+        return `## ${idx + 1}. ${item.title} [${getSubjectName(item.subject)} - ${item.targetExam || 'BCS'}]\n${item.secondaryText ? `**ব্যাখ্যা/অর্থ:** ${item.secondaryText}\n\n` : ''}${item.content ? `**সারসংক্ষেপ:**\n${item.content}\n\n` : ''}${item.mnemonic ? `> **দেশি নেমোনিক / ট্রিক:** ${item.mnemonic}\n\n` : ''}**স্ট্যাটাস:** ${item.isMastered ? 'আয়ত্ত হয়েছে' : 'রিভিশন বাকি'} | অগ্রাধিকার: ${item.priority}\n\n---`;
+      })
+      .join('\n\n');
+
+    const blob = new Blob([header + body], { type: 'text/markdown;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `LexiLearn-Binder-${activeSubject}-${new Date().toISOString().slice(0, 10)}.md`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success('নোটবুক ফাইল (.md) ডাউনলোড সম্পন্ন হয়েছে!');
+  };
+
+  // Toggle flashcard reveal
+  const toggleReveal = (id: string) => {
+    setRevealedCardIds((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
   const getSubjectName = (sub: string) => {
     switch (sub) {
       case 'english':
@@ -198,7 +283,7 @@ export default function NotebookPage() {
       case 'science_it':
         return 'বিজ্ঞান ও আইসিটি';
       default:
-        return 'সাধারণ প্রস্তুতি';
+        return 'সকল বিষয়';
     }
   };
 
@@ -215,6 +300,8 @@ export default function NotebookPage() {
     }
   };
 
+  const masteryPercent = stats.total > 0 ? Math.round((stats.mastered / stats.total) * 100) : 0;
+
   return (
     <div className="max-w-6xl mx-auto px-4 py-6 font-sans">
       {/* Hero Banner */}
@@ -226,45 +313,68 @@ export default function NotebookPage() {
               <span>Aspirant&apos;s Personal Binder • আপনার ব্যক্তিগত প্রস্তুতি হাব</span>
             </div>
             <h1 className="text-2xl md:text-3xl font-black mb-1.5 tracking-tight">
-              প্রস্তুতি নোটবুক ও সেভড হাব
+              প্রস্তুতি নোটবুক ও রিভিশন ভল্ট
             </h1>
             <p className="text-emerald-100/80 text-xs md:text-sm font-normal max-w-xl m-0 leading-relaxed">
-              পড়ার সময় চোখে পড়া যেকোনো কনফিউজিং শব্দ, গ্রামার নিয়ম, দেশি ট্রিক বা সংবিধানের অনুচ্ছেদ এক ক্লিকে সেভ করুন।
+              চাকরির পরীক্ষার জন্য কনফিউজিং শব্দ, গ্রামার নিয়ম, দেশি নেমোনিক ও সংবিধানের অনুচ্ছেদ এক ক্লিকে সেভ ও ঝালাই করুন।
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2.5">
+          <div className="flex flex-wrap items-center gap-2">
             <Button
               type="primary"
               icon={<PlusOutlined />}
               onClick={() => setIsQuickSaveOpen(true)}
-              className="bg-emerald-600 hover:!bg-emerald-500 font-black rounded-xl h-11 px-4 text-xs shadow-md border-0"
+              className="bg-emerald-600 hover:!bg-emerald-500 font-black rounded-xl h-10 px-4 text-xs shadow-md border-0"
             >
-              নতুন কিছু সেভ করুন
+              নতুন সেভ
+            </Button>
+            <Button
+              icon={<DownloadOutlined />}
+              onClick={handleExportMarkdown}
+              className="bg-white/10 hover:!bg-white/20 !text-white border-white/20 rounded-xl h-10 px-3 backdrop-blur-sm text-xs font-bold"
+              title="পুরো নোটবুক .md ফাইলে ডাউনলোড করুন"
+            >
+              নোট ডাউনলোড
             </Button>
             <Button
               icon={<PrinterOutlined />}
               onClick={() => setIsPrintModalOpen(true)}
-              className="bg-white/10 hover:!bg-white/20 !text-white border-white/20 rounded-xl h-11 px-3.5 backdrop-blur-sm text-xs font-bold"
+              className="bg-white/10 hover:!bg-white/20 !text-white border-white/20 rounded-xl h-10 px-3 backdrop-blur-sm text-xs font-bold"
             >
-              রিভিশন শিট ভিউ
+              প্রিন্ট শিট
             </Button>
           </div>
         </div>
 
-        {/* Telemetry Counter Chips */}
-        <div className="grid grid-cols-3 gap-2.5 mt-6 pt-5 border-t border-white/10 max-w-lg">
-          <div className="bg-white/5 backdrop-blur-sm p-2.5 rounded-2xl border border-white/10 text-center">
-            <span className="text-[11px] text-emerald-200/80 font-medium block">মোট সংরক্ষিত</span>
-            <span className="text-xl md:text-2xl font-black text-white">{stats.total}টি</span>
+        {/* Telemetry Counter Chips & Mastery Progress */}
+        <div className="mt-6 pt-5 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="grid grid-cols-3 gap-2.5 max-w-md w-full">
+            <div className="bg-white/5 backdrop-blur-sm p-2.5 rounded-2xl border border-white/10 text-center">
+              <span className="text-[11px] text-emerald-200/80 font-medium block">মোট নোট</span>
+              <span className="text-xl md:text-2xl font-black text-white">{stats.total}টি</span>
+            </div>
+            <div className="bg-white/5 backdrop-blur-sm p-2.5 rounded-2xl border border-white/10 text-center">
+              <span className="text-[11px] text-amber-200/80 font-medium block">রিভিশন বাকি</span>
+              <span className="text-xl md:text-2xl font-black text-amber-300">{stats.pending}টি</span>
+            </div>
+            <div className="bg-white/5 backdrop-blur-sm p-2.5 rounded-2xl border border-white/10 text-center">
+              <span className="text-[11px] text-teal-200/80 font-medium block">আয়ত্ত সম্পন্ন</span>
+              <span className="text-xl md:text-2xl font-black text-emerald-400">{stats.mastered}টি</span>
+            </div>
           </div>
-          <div className="bg-white/5 backdrop-blur-sm p-2.5 rounded-2xl border border-white/10 text-center">
-            <span className="text-[11px] text-amber-200/80 font-medium block">রিভিশন বাকি</span>
-            <span className="text-xl md:text-2xl font-black text-amber-300">{stats.pending}টি</span>
-          </div>
-          <div className="bg-white/5 backdrop-blur-sm p-2.5 rounded-2xl border border-white/10 text-center">
-            <span className="text-[11px] text-teal-200/80 font-medium block">আয়ত্ত সম্পন্ন</span>
-            <span className="text-xl md:text-2xl font-black text-emerald-400">{stats.mastered}টি</span>
+
+          <div className="bg-white/5 backdrop-blur-sm p-3 rounded-2xl border border-white/10 sm:w-64">
+            <div className="flex justify-between items-center text-xs text-emerald-200 font-bold mb-1.5">
+              <span>প্রস্তুতি অগ্রগতি</span>
+              <span>{masteryPercent}% সম্পন্ন</span>
+            </div>
+            <Progress
+              percent={masteryPercent}
+              showInfo={false}
+              strokeColor={{ '0%': '#10b981', '100%': '#34d399' }}
+              trailColor="rgba(255,255,255,0.15)"
+            />
           </div>
         </div>
       </div>
@@ -295,13 +405,41 @@ export default function NotebookPage() {
           ))}
         </div>
 
-        {/* Secondary Filter & Search Control Row */}
+        {/* Control Bar: Mode Toggle + Dropdown Filters + Search */}
         <div className="bg-white p-3 rounded-2xl border border-gray-100 shadow-xs flex flex-col md:flex-row justify-between items-stretch md:items-center gap-3">
           <div className="flex flex-wrap items-center gap-2">
+            {/* View Mode Toggle */}
+            <div className="bg-gray-100 p-1 rounded-xl flex items-center gap-1">
+              <button
+                onClick={() => setViewMode('cards')}
+                className={`px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 ${
+                  viewMode === 'cards'
+                    ? 'bg-white text-emerald-700 shadow-xs'
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
+                title="বিস্তারিত কার্ড ভিউ"
+              >
+                <AppstoreOutlined />
+                <span>কার্ড ভিউ</span>
+              </button>
+              <button
+                onClick={() => setViewMode('flashcards')}
+                className={`px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 ${
+                  viewMode === 'flashcards'
+                    ? 'bg-emerald-600 text-white shadow-xs'
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
+                title="অ্যাক্টিভ রিকল মেমোরি মোড"
+              >
+                <CreditCardOutlined />
+                <span>ফ্ল্যাশ কার্ড মোড</span>
+              </button>
+            </div>
+
             <Select
               value={activeType}
               onChange={(val) => setActiveType(val)}
-              className="w-36 text-xs"
+              className="w-32 text-xs"
               options={[
                 { label: 'সকল ধরন', value: 'all' },
                 { label: 'শব্দভাণ্ডার', value: 'word' },
@@ -314,7 +452,7 @@ export default function NotebookPage() {
             <Select
               value={activeStatus}
               onChange={(val) => setActiveStatus(val)}
-              className="w-36 text-xs"
+              className="w-32 text-xs"
               options={[
                 { label: 'সকল স্ট্যাটাস', value: 'all' },
                 { label: 'রিভিশন বাকি', value: 'pending' },
@@ -325,10 +463,10 @@ export default function NotebookPage() {
             <Select
               value={activePriority}
               onChange={(val) => setActivePriority(val)}
-              className="w-36 text-xs"
+              className="w-32 text-xs"
               options={[
                 { label: 'সকল অগ্রাধিকার', value: 'all' },
-                { label: 'জরুরি রিভিশন (High)', value: 'high' },
+                { label: 'জরুরি (High)', value: 'high' },
                 { label: 'মাঝারি (Medium)', value: 'medium' },
                 { label: 'সাধারণ (Normal)', value: 'normal' },
               ]}
@@ -341,7 +479,7 @@ export default function NotebookPage() {
               placeholder="টপিক, শব্দ বা ট্রিক খুঁজুন..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full md:w-64 rounded-xl text-xs"
+              className="w-full md:w-56 rounded-xl text-xs"
               allowClear
             />
             <Button
@@ -374,6 +512,8 @@ export default function NotebookPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {items.map((item) => {
+              const isRevealed = revealedCardIds[item._id] || viewMode === 'cards';
+
               return (
                 <div
                   key={item._id}
@@ -416,50 +556,80 @@ export default function NotebookPage() {
                       {item.title}
                     </h3>
 
-                    {/* Secondary text (Bangla meaning for word) */}
-                    {item.secondaryText && (
-                      <span className="text-xs font-bold text-emerald-800 block mb-2">
-                        {item.secondaryText}
-                      </span>
-                    )}
-
-                    {/* Category */}
-                    {item.category && (
-                      <span className="text-[11px] text-gray-400 block mb-2 font-medium">
-                        অধ্যায়/ক্যাটাগরি: {item.category}
-                      </span>
-                    )}
-
-                    {/* Content / Rule Breakdown */}
-                    {item.content && (
-                      <div className="bg-slate-50/80 p-3 rounded-2xl border border-gray-100 text-xs text-gray-700 leading-relaxed whitespace-pre-wrap font-medium mb-3">
-                        {item.content}
+                    {/* Flashcard Hidden / Revealed Body */}
+                    {viewMode === 'flashcards' && !isRevealed ? (
+                      <div className="my-4 py-8 px-4 rounded-2xl border-2 border-dashed border-emerald-200 bg-emerald-50/40 text-center">
+                        <p className="text-xs text-emerald-800 font-bold mb-2">
+                          নিজের স্মৃতি পরীক্ষা করুন: অর্থ ও নেমোনিক মনে করতে পারছেন?
+                        </p>
+                        <Button
+                          size="small"
+                          icon={<EyeOutlined />}
+                          onClick={() => toggleReveal(item._id)}
+                          className="bg-emerald-600 text-white font-black rounded-xl text-xs border-0 shadow-xs hover:!bg-emerald-500"
+                        >
+                          উত্তর ও ট্রিক দেখুন
+                        </Button>
                       </div>
-                    )}
-
-                    {/* Desi Mnemonic Shortcut */}
-                    {item.mnemonic && (
-                      <div className="bg-amber-50/70 border border-amber-200/80 p-2.5 rounded-2xl text-xs text-amber-950 mb-3 flex items-start gap-2">
-                        <BulbOutlined className="text-amber-600 text-sm mt-0.5 shrink-0" />
-                        <div>
-                          <span className="font-black text-[11px] text-amber-900 block">দেশি স্মৃতিসূত্র:</span>
-                          <span className="font-medium text-amber-950">{item.mnemonic}</span>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Tags */}
-                    {item.tags && item.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-1 mb-3">
-                        {item.tags.map((t, idx) => (
-                          <span
-                            key={idx}
-                            className="bg-gray-100 text-gray-600 text-[10px] font-bold px-2 py-0.5 rounded-md"
-                          >
-                            #{t}
+                    ) : (
+                      <>
+                        {/* Secondary text (Bangla meaning for word) */}
+                        {item.secondaryText && (
+                          <span className="text-xs font-bold text-emerald-800 block mb-2">
+                            {item.secondaryText}
                           </span>
-                        ))}
-                      </div>
+                        )}
+
+                        {/* Category */}
+                        {item.category && (
+                          <span className="text-[11px] text-gray-400 block mb-2 font-medium">
+                            অধ্যায়/ক্যাটাগরি: {item.category}
+                          </span>
+                        )}
+
+                        {/* Content / Rule Breakdown */}
+                        {item.content && (
+                          <div className="bg-slate-50/80 p-3 rounded-2xl border border-gray-100 text-xs text-gray-700 leading-relaxed whitespace-pre-wrap font-medium mb-3">
+                            {item.content}
+                          </div>
+                        )}
+
+                        {/* Desi Mnemonic Shortcut */}
+                        {item.mnemonic && (
+                          <div className="bg-amber-50/70 border border-amber-200/80 p-2.5 rounded-2xl text-xs text-amber-950 mb-3 flex items-start gap-2">
+                            <BulbOutlined className="text-amber-600 text-sm mt-0.5 shrink-0" />
+                            <div>
+                              <span className="font-black text-[11px] text-amber-900 block">দেশি স্মৃতিসূত্র:</span>
+                              <span className="font-medium text-amber-950">{item.mnemonic}</span>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Tags */}
+                        {item.tags && item.tags.length > 0 && (
+                          <div className="flex flex-wrap gap-1 mb-3">
+                            {item.tags.map((t, idx) => (
+                              <span
+                                key={idx}
+                                className="bg-gray-100 text-gray-600 text-[10px] font-bold px-2 py-0.5 rounded-md"
+                              >
+                                #{t}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+
+                        {viewMode === 'flashcards' && (
+                          <div className="text-right mb-2">
+                            <button
+                              onClick={() => toggleReveal(item._id)}
+                              className="text-[10px] text-gray-400 hover:text-gray-600 flex items-center gap-1 ml-auto"
+                            >
+                              <EyeInvisibleOutlined /> লুকান
+                            </button>
+                          </div>
+                        )}
+                      </>
                     )}
                   </div>
 
@@ -479,6 +649,26 @@ export default function NotebookPage() {
                     </Button>
 
                     <div className="flex items-center gap-1.5">
+                      <Tooltip title="নোট কপি করুন">
+                        <Button
+                          size="small"
+                          type="text"
+                          icon={copiedId === item._id ? <CheckOutlined className="text-emerald-600" /> : <CopyOutlined />}
+                          onClick={() => handleCopyNote(item)}
+                          className="hover:!bg-gray-100 rounded-xl text-gray-500"
+                        />
+                      </Tooltip>
+
+                      <Tooltip title="নোট এডিট করুন">
+                        <Button
+                          size="small"
+                          type="text"
+                          icon={<EditOutlined />}
+                          onClick={() => setEditingItem(item)}
+                          className="hover:!bg-gray-100 rounded-xl text-gray-500"
+                        />
+                      </Tooltip>
+
                       <Tooltip title="লেক্সিবট AI মেন্টর দিয়ে এই বিষয়টি বিস্তারিত বুঝুন">
                         <Button
                           size="small"
@@ -508,6 +698,103 @@ export default function NotebookPage() {
           </div>
         )}
       </div>
+
+      {/* Edit Item Modal */}
+      {editingItem && (
+        <Modal
+          open={Boolean(editingItem)}
+          onCancel={() => setEditingItem(null)}
+          onOk={handleSaveEdit}
+          okText="আপডেট সংরক্ষণ"
+          cancelText="বাতিল"
+          okButtonProps={{ className: 'bg-emerald-600 font-bold rounded-xl' }}
+          title={<span className="font-black text-gray-900">নোট এডিট করুন</span>}
+          className="rounded-3xl"
+        >
+          <div className="space-y-3 pt-2">
+            <div>
+              <label className="text-xs font-bold text-gray-700 block mb-1">শিরোনাম / মূল শব্দ</label>
+              <Input
+                value={editingItem.title}
+                onChange={(e) => setEditingItem({ ...editingItem, title: e.target.value })}
+                className="rounded-xl"
+              />
+            </div>
+
+            <div>
+              <label className="text-xs font-bold text-gray-700 block mb-1">অর্থ / সাব-টাইটেল</label>
+              <Input
+                value={editingItem.secondaryText || ''}
+                onChange={(e) => setEditingItem({ ...editingItem, secondaryText: e.target.value })}
+                placeholder="যেমন: অকপট, স্পষ্টবাদী"
+                className="rounded-xl"
+              />
+            </div>
+
+            <div>
+              <label className="text-xs font-bold text-gray-700 block mb-1">অধ্যায় / ক্যাটাগরি</label>
+              <Input
+                value={editingItem.category || ''}
+                onChange={(e) => setEditingItem({ ...editingItem, category: e.target.value })}
+                className="rounded-xl"
+              />
+            </div>
+
+            <div>
+              <label className="text-xs font-bold text-gray-700 block mb-1">বিস্তারিত বিবরণ বা নিয়ম</label>
+              <Input.TextArea
+                rows={4}
+                value={editingItem.content}
+                onChange={(e) => setEditingItem({ ...editingItem, content: e.target.value })}
+                className="rounded-xl"
+              />
+            </div>
+
+            <div>
+              <label className="text-xs font-bold text-amber-800 block mb-1">দেশি নেমোনিক / স্মৃতিসূত্র</label>
+              <Input.TextArea
+                rows={2}
+                value={editingItem.mnemonic || ''}
+                onChange={(e) => setEditingItem({ ...editingItem, mnemonic: e.target.value })}
+                placeholder="মনে রাখার সহজ কৌশল বা ছন্দ..."
+                className="rounded-xl"
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-2">
+              <div>
+                <label className="text-xs font-bold text-gray-700 block mb-1">অগ্রাধিকার</label>
+                <Select
+                  value={editingItem.priority}
+                  onChange={(val) => setEditingItem({ ...editingItem, priority: val })}
+                  className="w-full"
+                  options={[
+                    { label: 'জরুরি (High)', value: 'high' },
+                    { label: 'মাঝারি (Medium)', value: 'medium' },
+                    { label: 'সাধারণ (Normal)', value: 'normal' },
+                  ]}
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-gray-700 block mb-1">বিষয়</label>
+                <Select
+                  value={editingItem.subject}
+                  onChange={(val) => setEditingItem({ ...editingItem, subject: val })}
+                  className="w-full"
+                  options={[
+                    { label: 'ইংরেজি', value: 'english' },
+                    { label: 'বাংলা', value: 'bangla' },
+                    { label: 'সাধারণ জ্ঞান', value: 'gk' },
+                    { label: 'গণিত ও মানসিক', value: 'math' },
+                    { label: 'বিজ্ঞান ও আইসিটি', value: 'science_it' },
+                  ]}
+                />
+              </div>
+            </div>
+          </div>
+        </Modal>
+      )}
 
       {/* Quick Save Modal */}
       <QuickSaveModal

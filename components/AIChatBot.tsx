@@ -167,31 +167,55 @@ export default function AIChatBot() {
 
   const handleSaveToNotebook = async (msg: Message) => {
     try {
-      const userEmail = session?.user?.email || localStorage.getItem('lexi_user_email') || 'aspirant@lexilearn.com';
+      const storedEmail = typeof window !== 'undefined' ? localStorage.getItem('lexi_user_email') : null;
+      const userEmail = session?.user?.email || savedPhoneOrEmail || storedEmail || 'learner@lexilearn.com';
       
       // Extract title from first line
-      const firstLine = msg.content.split('\n')[0].replace(/^[#\*\s\-]+/, '').trim();
-      const title = firstLine.slice(0, 40) || 'এআই মেন্টর নোট';
+      const lines = msg.content.split('\n').filter((l) => l.trim().length > 0);
+      const firstLine = (lines[0] || '').replace(/^[#\*\s\-]+/, '').trim();
+      const title = firstLine.slice(0, 50) || 'এআই মেন্টর নোট';
 
-      await axios.post('/api/user/notebook', {
+      // Smart subject detection
+      const lower = msg.content.toLowerCase();
+      let detectedSubject: 'english' | 'bangla' | 'gk' | 'math' | 'science_it' = 'gk';
+      if (lower.includes('synonym') || lower.includes('antonym') || lower.includes('vocabulary') || lower.includes('noun') || lower.includes('verb') || lower.includes('preposition')) {
+        detectedSubject = 'english';
+      } else if (lower.includes('বানান') || lower.includes('বাগধারা') || lower.includes('কারক') || lower.includes('সমাস') || lower.includes('সন্ধি') || lower.includes('সাহিত্য')) {
+        detectedSubject = 'bangla';
+      } else if (lower.includes('শতকরা') || lower.includes('লাভ-ক্ষতি') || lower.includes('গণিত') || lower.includes('সুদকষা')) {
+        detectedSubject = 'math';
+      } else if (lower.includes('আইসিটি') || lower.includes('কম্পিউটার') || lower.includes('বাইনারি') || lower.includes('বিজ্ঞান')) {
+        detectedSubject = 'science_it';
+      }
+
+      const res = await axios.post('/api/user/notebook', {
+        userEmail,
         email: userEmail,
         title,
         itemType: 'topic',
-        subject: 'gk',
-        category: 'এআই মেন্টর রিভিশন',
+        subject: detectedSubject,
+        category: `লেক্সিবট • ${examFocus}`,
         content: msg.content,
         mnemonic: 'লেক্সিবট এআই এক্সাম হাই-ইল্ড সামারি',
-        tags: ['এআই নোট', 'বিসিএস/ব্যাংক'],
-        targetExam: 'BCS / Bank',
+        tags: ['এআই নোট', examFocus, 'বিসিএস/ব্যাংক'],
+        targetExam: examFocus,
         priority: 'high',
       });
 
-      setMessages((prev) =>
-        prev.map((m) => (m.id === msg.id ? { ...m, savedToNotebook: true } : m))
-      );
-      antMessage.success('নোটবুকে সংরক্ষণ করা হয়েছে!');
-    } catch (e) {
-      antMessage.info('নোটবুকে সেভ করতে লগইন বা ইমেইল প্রদান করুন');
+      if (res.data?.success) {
+        setMessages((prev) =>
+          prev.map((m) => (m.id === msg.id ? { ...m, savedToNotebook: true } : m))
+        );
+        antMessage.success('নোটবুকে সফলভাবে সংরক্ষণ করা হয়েছে!');
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('lexi:notebook_updated'));
+        }
+      } else {
+        throw new Error(res.data?.message || 'সংরক্ষণ ব্যর্থ হয়েছে');
+      }
+    } catch (e: any) {
+      console.error('Save to notebook error:', e);
+      antMessage.error('নোটবুকে সেভ করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।');
     }
   };
 
