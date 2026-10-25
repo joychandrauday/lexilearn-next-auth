@@ -29,8 +29,12 @@ import {
   StarFilled,
   CopyOutlined,
   RobotOutlined,
+  SearchOutlined,
+  ThunderboltFilled,
+  FilterOutlined,
+  CheckCircleOutlined,
 } from '@ant-design/icons';
-import { Button, Tag, Spin, Tooltip, Progress, Modal } from 'antd';
+import { Button, Tag, Spin, Tooltip, Progress, Modal, Input } from 'antd';
 import { siteConfig, getStoredUserEmail } from '../../lib/config/site';
 
 export default function DailyCapsulePage() {
@@ -46,6 +50,13 @@ export default function DailyCapsulePage() {
   const [vocabMode, setVocabMode] = useState<'cards' | 'flashcards'>('cards');
   const [activeFlashIndex, setActiveFlashIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
+
+  // Rapid Bullets Scraper State
+  const [rapidBullets, setRapidBullets] = useState<any[]>([]);
+  const [loadingBullets, setLoadingBullets] = useState(false);
+  const [scrapingNew, setScrapingNew] = useState(false);
+  const [bulletCategory, setBulletCategory] = useState<string>('all');
+  const [bulletSearch, setBulletSearch] = useState<string>('');
 
   // MCQ state: { [questionId]: selectedOption }
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
@@ -75,9 +86,56 @@ export default function DailyCapsulePage() {
     }
   };
 
+  // Fetch categorized rapid bullets from Scraper API
+  const fetchRapidBullets = async (cat = bulletCategory, search = bulletSearch) => {
+    setLoadingBullets(true);
+    try {
+      const res = await axios.get('/api/scraper/rapid-bullets', {
+        params: { category: cat, search: search.trim() || undefined, limit: 25 },
+      });
+      if (res.data.success && Array.isArray(res.data.bullets)) {
+        setRapidBullets(res.data.bullets);
+      }
+    } catch {
+      // fallback to capsule rapidFacts if available
+    } finally {
+      setLoadingBullets(false);
+    }
+  };
+
+  // Trigger live scraper / harvester for fresh high-yield bullets
+  const handleTriggerScraper = async () => {
+    setScrapingNew(true);
+    try {
+      const res = await axios.post('/api/scraper/rapid-bullets', {
+        category: bulletCategory,
+        count: 4,
+        sourceHint: 'বাংলাদেশ জাতীয় গেজেট, অর্থনৈতিক সমীক্ষা ও সাম্প্রতিক আন্তর্জাতিক চুক্তি',
+      });
+      if (res.data.success) {
+        toast.success(res.data.message || 'নতুন হাই-ইল্ড বুলেট সফলভাবে স্ক্র্যাপ হয়েছে!');
+        fetchRapidBullets(bulletCategory, bulletSearch);
+      } else {
+        toast.error('স্ক্র্যাপিংয়ে সমস্যা হয়েছে');
+      }
+    } catch {
+      toast.error('স্ক্র্যাপার সার্ভারের সাথে সংযোগে সাময়িক বিলম্ব হচ্ছে');
+    } finally {
+      setScrapingNew(false);
+    }
+  };
+
   useEffect(() => {
     fetchCapsule();
+    fetchRapidBullets('all', '');
   }, [userEmail]);
+
+  // Refetch bullets when category filter changes
+  useEffect(() => {
+    if (activeTab === 'facts') {
+      fetchRapidBullets(bulletCategory, bulletSearch);
+    }
+  }, [bulletCategory, activeTab]);
 
   // Pronunciation voice player
   const speakWord = (wordText: string) => {
@@ -142,7 +200,38 @@ export default function DailyCapsulePage() {
     }
   };
 
-  // 1-Click Save to Vocabulary Deck
+  // 1-Click Save Rapid Fact to Notebook
+  const handleSaveFactToNotebook = async (factItem: any) => {
+    if (!userEmail) {
+      toast.error('নোটবুকে সেভ করতে অনুগ্রহ করে লগইন করুন');
+      return;
+    }
+    const factText = typeof factItem === 'string' ? factItem : factItem.fact;
+    setSavingAction(`fact-${factText.slice(0, 15)}`);
+    try {
+      const res = await axios.post('/api/user/notebook', {
+        userEmail,
+        email: userEmail,
+        title: factText.slice(0, 50),
+        itemType: 'topic',
+        subject: 'gk',
+        category: factItem.categoryBn || 'হাই-ইল্ড র‍্যাপিড বুলেট',
+        content: `${factText}\n\n[পরীক্ষার প্রয়োগ ও ট্র্যাপ]: ${factItem.detail || ''}\n\n[উৎস]: ${factItem.source || 'OwlPrep'}`,
+        mnemonic: factItem.mnemonic || 'র‍্যাপিড এক্সাম রিভিশন',
+        tags: [...(factItem.examTags || []), 'Rapid Bullet', factItem.categoryBn || 'সাধারণ জ্ঞান'],
+        targetExam: 'বিসিএস ও ব্যাংক',
+        priority: 'high',
+      });
+      if (res.data?.success) {
+        toast.success('নোটবুকে সফলভাবে সংরক্ষিত হয়েছে!');
+        setSavedNotebook((prev) => ({ ...prev, [factText]: true }));
+      }
+    } catch {
+      toast.error('নোটবুকে সেভ করা যায়নি');
+    } finally {
+      setSavingAction(null);
+    }
+  };
   const handleSaveToWords = async (wordItem: any) => {
     if (!userEmail) {
       toast.error('ভোকাব ডেক-এ সেভ করতে লগইন করুন');
@@ -884,57 +973,227 @@ export default function DailyCapsulePage() {
               </div>
             )}
 
-            {/* TAB 3: RAPID EXAM FACTS */}
+            {/* TAB 3: RAPID EXAM FACTS & SCRAPER */}
             {activeTab === 'facts' && (
               <div className="space-y-4">
-                <div className="bg-purple-50 border border-purple-200/80 p-4 rounded-2xl flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-purple-700 text-white flex items-center justify-center font-bold text-base shrink-0 shadow-xs">
-                      <ThunderboltOutlined />
+                {/* Header Banner */}
+                <div className="bg-gradient-to-r from-purple-950 via-slate-900 to-indigo-950 text-white p-5 rounded-3xl border border-purple-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-md">
+                  <div className="flex items-center gap-3.5">
+                    <div className="w-11 h-11 rounded-2xl bg-purple-500/20 border border-purple-400/30 text-purple-300 flex items-center justify-center font-bold text-xl shrink-0 shadow-inner">
+                      <ThunderboltFilled />
                     </div>
                     <div>
-                      <h4 className="font-black text-purple-950 text-sm m-0">
-                        ২ মিনিটের হাই-ইল্ড র‍্যাপিড বুলেটস
-                      </h4>
-                      <p className="text-xs text-purple-800 m-0">
-                        সংবিধান, মুক্তিযুদ্ধ, অর্থনৈতিক সমীক্ষা ও আন্তর্জাতিক চুক্তি বিষয়ক একঝলক তথ্য।
+                      <div className="flex items-center gap-2">
+                        <h4 className="font-black text-white text-base m-0 tracking-tight">
+                          হাই-ইল্ড র‍্যাপিড এক্সাম বুলেটস (Exam Harvester)
+                        </h4>
+                        <Tag color="purple" className="text-[10px] font-black border-none rounded-md m-0">
+                          ভেরিফায়েড
+                        </Tag>
+                      </div>
+                      <p className="text-xs text-purple-200/90 m-0 mt-0.5">
+                        সংবিধান, মুক্তিযুদ্ধ, অর্থনৈতিক সমীক্ষা ও আন্তর্জাতিক চুক্তি বিষয়ক একঝলক পরীক্ষার প্রয়োগ।
                       </p>
                     </div>
                   </div>
-                  <Tag color="purple" className="font-bold text-xs rounded-md border-none m-0">
-                    ৫টি জরুরি বুলেট
-                  </Tag>
+
+                  {/* Scraper Trigger Button */}
+                  <Button
+                    type="primary"
+                    icon={<ThunderboltOutlined spin={scrapingNew} />}
+                    loading={scrapingNew}
+                    onClick={handleTriggerScraper}
+                    className="bg-purple-600 hover:!bg-purple-500 !text-white font-black rounded-2xl h-10 px-5 border-none text-xs shadow-md shrink-0 cursor-pointer"
+                  >
+                    {scrapingNew ? 'স্ক্র্যাপিং চলছে...' : '⚡ নতুন বুলেট স্ক্র্যাপ করুন'}
+                  </Button>
                 </div>
 
-                <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs divide-y divide-slate-100">
-                  {capsule?.rapidFacts?.map((fact: string, i: number) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.08 }}
-                      className="py-4 first:pt-0 last:pb-0 flex items-start justify-between gap-4"
-                    >
-                      <div className="flex items-start gap-3">
-                        <div className="w-7 h-7 rounded-full bg-purple-100 text-purple-800 font-black text-xs flex items-center justify-center shrink-0 mt-0.5">
-                          {i + 1}
-                        </div>
-                        <p className="font-bold text-slate-800 text-sm m-0 leading-relaxed">
-                          {fact}
-                        </p>
+                {/* Category Filter Pills & Search Bar */}
+                <div className="bg-white rounded-2xl p-3 border border-slate-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 sm:pb-0">
+                    {[
+                      { key: 'all', label: 'সব বিষয়', icon: AppstoreOutlined },
+                      { key: 'constitution', label: 'সংবিধান', icon: BookOutlined },
+                      { key: 'liberation_war', label: 'মুক্তিযুদ্ধ', icon: StarFilled },
+                      { key: 'economy', label: 'অর্থনৈতিক সমীক্ষা', icon: TrophyOutlined },
+                      { key: 'treaties', label: 'আন্তর্জাতিক চুক্তি', icon: ThunderboltOutlined },
+                    ].map((cat) => {
+                      const isActive = bulletCategory === cat.key;
+                      return (
+                        <button
+                          key={cat.key}
+                          onClick={() => setBulletCategory(cat.key)}
+                          className={`px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shrink-0 cursor-pointer ${
+                            isActive
+                              ? 'bg-purple-700 text-white shadow-xs'
+                              : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
+                          }`}
+                        >
+                          <span>{cat.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  <div className="w-full sm:w-60">
+                    <Input
+                      placeholder="বুলেট সার্চ করুন..."
+                      prefix={<SearchOutlined className="text-slate-400" />}
+                      value={bulletSearch}
+                      onChange={(e) => {
+                        setBulletSearch(e.target.value);
+                        fetchRapidBullets(bulletCategory, e.target.value);
+                      }}
+                      allowClear
+                      className="rounded-xl text-xs"
+                    />
+                  </div>
+                </div>
+
+                {/* Bullets List */}
+                {loadingBullets ? (
+                  <div className="py-16 text-center bg-white rounded-3xl border border-slate-200">
+                    <Spin tip="র‍্যাপিড বুলেট লোড হচ্ছে..." />
+                  </div>
+                ) : (
+                  <div className="space-y-3.5">
+                    {/* Render from database scraper items */}
+                    {rapidBullets.length > 0 ? (
+                      rapidBullets.map((item: any, i: number) => {
+                        const isNotebookSaved = savedNotebook[item.fact];
+                        const categoryColorMap: Record<string, string> = {
+                          constitution: 'green',
+                          liberation_war: 'purple',
+                          economy: 'blue',
+                          treaties: 'gold',
+                          general: 'default',
+                        };
+
+                        return (
+                          <motion.div
+                            key={item._id || i}
+                            initial={{ opacity: 0, y: 12 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: i * 0.05 }}
+                            className="bg-white rounded-3xl border border-slate-200 hover:border-purple-300 p-5 shadow-xs space-y-3 transition-all"
+                          >
+                            {/* Card Header */}
+                            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
+                              <div className="flex items-center gap-2">
+                                <span className="w-6 h-6 rounded-lg bg-purple-100 text-purple-800 font-black text-xs flex items-center justify-center shrink-0">
+                                  {i + 1}
+                                </span>
+                                <Tag
+                                  color={categoryColorMap[item.category] || 'purple'}
+                                  className="font-bold text-[10px] rounded border-none capitalize m-0"
+                                >
+                                  {item.categoryBn || item.category}
+                                </Tag>
+                                {item.source && (
+                                  <span className="text-[10px] text-slate-400 font-medium hidden sm:inline">
+                                    উৎস: {item.source}
+                                  </span>
+                                )}
+                              </div>
+
+                              <div className="flex items-center gap-2">
+                                <Button
+                                  size="small"
+                                  icon={isNotebookSaved ? <CheckOutlined /> : <ReadOutlined />}
+                                  loading={savingAction === `fact-${item.fact.slice(0, 15)}`}
+                                  onClick={() => handleSaveFactToNotebook(item)}
+                                  className={`rounded-xl text-[11px] font-bold ${
+                                    isNotebookSaved
+                                      ? 'bg-purple-50 !text-purple-700 border-purple-300'
+                                      : 'text-slate-700'
+                                  }`}
+                                >
+                                  {isNotebookSaved ? 'সেভড' : 'নোটবুকে সেভ'}
+                                </Button>
+
+                                <Button
+                                  size="small"
+                                  icon={<RobotOutlined className="text-purple-700" />}
+                                  onClick={() =>
+                                    askOwlAI(
+                                      `এই তথ্যের বিসিএস ও ব্যাংক পরীক্ষার বিশদ প্রেক্ষাপট বুঝিয়ে দিন: "${item.fact}". প্রাসঙ্গিক তথ্য: ${item.detail || ''}`
+                                    )
+                                  }
+                                  className="rounded-xl text-[11px] font-bold bg-purple-50 text-purple-800 border-purple-200 hover:bg-purple-100"
+                                >
+                                  Owl AI ব্যাখ্যা
+                                </Button>
+                              </div>
+                            </div>
+
+                            {/* Fact Core Text */}
+                            <p className="font-black text-slate-900 text-sm sm:text-base m-0 leading-relaxed">
+                              {item.fact}
+                            </p>
+
+                            {/* Detail / Exam Trap */}
+                            {item.detail && (
+                              <div className="bg-slate-50 border border-slate-100 p-3 rounded-2xl text-xs text-slate-700 space-y-0.5">
+                                <span className="font-bold text-slate-500 block text-[10px] uppercase tracking-wider">
+                                  পরীক্ষার প্রয়োগ ও ট্র্যাপ
+                                </span>
+                                <p className="m-0 font-medium leading-relaxed">{item.detail}</p>
+                              </div>
+                            )}
+
+                            {/* Mnemonic Hook */}
+                            {item.mnemonic && (
+                              <div className="bg-amber-50/80 border border-amber-200 p-2.5 rounded-xl text-xs text-amber-950 flex items-start gap-2">
+                                <BulbOutlined className="text-amber-600 mt-0.5 shrink-0" />
+                                <div>
+                                  <strong className="text-amber-900">মনে রাখার কৌশল: </strong>
+                                  <span>{item.mnemonic}</span>
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Exam Tags */}
+                            {item.examTags && item.examTags.length > 0 && (
+                              <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
+                                <span className="text-[10px] text-slate-400 font-medium">বিগত পরীক্ষা:</span>
+                                {item.examTags.map((t: string, idx: number) => (
+                                  <Tag key={idx} color="purple" className="text-[10px] font-bold rounded m-0 border-none">
+                                    {t}
+                                  </Tag>
+                                ))}
+                              </div>
+                            )}
+                          </motion.div>
+                        );
+                      })
+                    ) : (
+                      // Fallback to static capsule rapid facts if database has none
+                      <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs divide-y divide-slate-100">
+                        {capsule?.rapidFacts?.map((fact: string, i: number) => (
+                          <div key={i} className="py-4 first:pt-0 last:pb-0 flex items-start justify-between gap-4">
+                            <div className="flex items-start gap-3">
+                              <div className="w-7 h-7 rounded-full bg-purple-100 text-purple-800 font-black text-xs flex items-center justify-center shrink-0 mt-0.5">
+                                {i + 1}
+                              </div>
+                              <p className="font-bold text-slate-800 text-sm m-0 leading-relaxed">
+                                {fact}
+                              </p>
+                            </div>
+                            <Button
+                              size="small"
+                              icon={<RobotOutlined className="text-purple-700" />}
+                              onClick={() => askOwlAI(`এই তথ্যের ওপর বিস্তারিত বলুন: "${fact}"`)}
+                              className="rounded-xl text-[11px] font-bold shrink-0 bg-purple-50 text-purple-800 border-purple-200"
+                            >
+                              Owl AI
+                            </Button>
+                          </div>
+                        ))}
                       </div>
-
-                      <Button
-                        size="small"
-                        icon={<RobotOutlined className="text-emerald-700" />}
-                        onClick={() => askOwlAI(`এই গুরুত্বপূর্ণ তথ্যের ওপর বিস্তারিত বলুন: "${fact}"`)}
-                        className="rounded-xl text-[11px] font-bold shrink-0 bg-slate-50 text-emerald-800 border-slate-200"
-                      >
-                        Owl AI
-                      </Button>
-                    </motion.div>
-                  ))}
-                </div>
+                    )}
+                  </div>
+                )}
               </div>
             )}
 

@@ -249,7 +249,7 @@ Date: ${dateString}.
 Requirements:
 1. 5 High-frequency editorial vocabulary words from The Daily Star / Prothom Alo editorials. For each: word, bangla, meaning, partOfSpeech, witty Bengali mnemonic, administrative/news exampleSentence, examTags.
 2. 5 high-yield competitive exam MCQs (recent national/international affairs, constitution, economy, or ICT) with question, 4 options, exact correctAnswer, in-depth Bengali explanation, category.
-3. 5 rapid-fire one-liner high-yield facts.
+3. 5 rapid-fire one-liner high-yield facts covering: সংবিধান (Constitution), মুক্তিযুদ্ধ (1971 Liberation War), অর্থনৈতিক সমীক্ষা ও ব্যাংকিং (Economic Review & Bangladesh Bank), এবং আন্তর্জাতিক চুক্তি (Global Treaties).
 4. An inspiring quoteOfTheDay for civil service candidates.
 Output valid JSON only matching this schema without markdown code blocks:
 {
