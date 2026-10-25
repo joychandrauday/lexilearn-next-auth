@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Button, Spin, Empty, Tag } from 'antd';
+import { Button, Spin, Empty, Tag, Tooltip } from 'antd';
 import {
   PlusOutlined,
   ReloadOutlined,
@@ -9,6 +9,9 @@ import {
   DownOutlined,
   FilterOutlined,
   CompassOutlined,
+  TrophyOutlined,
+  ThunderboltFilled,
+  SyncOutlined,
 } from '@ant-design/icons';
 import axios from 'axios';
 import { toast } from 'sonner';
@@ -16,13 +19,14 @@ import { useSession } from 'next-auth/react';
 import ReelCard, { IReelPost } from '../../components/Feed/ReelCard';
 import CreatePostModal from '../../components/Feed/CreatePostModal';
 import InterestModal from '../../components/Feed/InterestModal';
+import LeaderboardModal from '../../components/Feed/LeaderboardModal';
 
 const CATEGORY_TABS: Array<{ id: 'for_you' | 'bcs' | 'bank' | 'grammar' | 'vocab'; label: string }> = [
   { id: 'for_you', label: 'সবগুলো' },
   { id: 'bcs', label: 'বিসিএস' },
   { id: 'bank', label: 'ব্যাংক জবস' },
-  { id: 'grammar', label: 'গ্রামার' },
-  { id: 'vocab', label: 'ভোকাব' },
+  { id: 'grammar', label: 'গ্রামার ট্রিক' },
+  { id: 'vocab', label: 'ভোকাবুলারি' },
 ];
 
 export default function FeedPage() {
@@ -33,7 +37,8 @@ export default function FeedPage() {
   const [selectedInterests, setSelectedInterests] = useState<string[]>(['bcs', 'grammar', 'vocab']);
   const [isInterestModalOpen, setIsInterestModalOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [generatingDaily, setGeneratingDaily] = useState(false);
+  const [isLeaderboardOpen, setIsLeaderboardOpen] = useState(false);
+  const [shuffling, setShuffling] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -64,36 +69,42 @@ export default function FeedPage() {
   const activeEmail = session?.user?.email || storedEmail || '';
   const activeName = session?.user?.name || (storedEmail ? storedEmail.split('@')[0] : 'বিসিএস পরীক্ষার্থী');
 
-  // Fetch feed posts with active category and user interests preferences
-  const fetchFeed = async (category = activeTab, interests = selectedInterests) => {
+  // Fetch feed posts with preference-weighted shuffle
+  const fetchFeed = async (category = activeTab, interests = selectedInterests, isShuffle = false) => {
     setLoading(true);
+    if (isShuffle) setShuffling(true);
     try {
       const res = await axios.get('/api/feed', {
         params: {
           category,
           interests: interests.join(','),
           userEmail: activeEmail || 'learner@lexilearn.com',
+          shuffle: 'true',
           page: 1,
-          limit: 40,
+          limit: 50,
         },
       });
 
-      if (res.data.success) {
+      if (res.data?.success) {
         setPosts(res.data.posts || []);
         setCurrentIndex(0);
         if (containerRef.current) {
           containerRef.current.scrollTo({ top: 0, behavior: 'instant' });
+        }
+        if (isShuffle) {
+          toast.success('পছন্দের ভিত্তিতে পোস্টগুলো নতুনভাবে শাফল করা হয়েছে!');
         }
       }
     } catch {
       toast.error('ফিড লোড করতে সমস্যা হয়েছে');
     } finally {
       setLoading(false);
+      setShuffling(false);
     }
   };
 
   useEffect(() => {
-    fetchFeed(activeTab, selectedInterests);
+    fetchFeed(activeTab, selectedInterests, false);
   }, [activeTab]);
 
   // Save updated preferences
@@ -103,7 +114,7 @@ export default function FeedPage() {
       localStorage.setItem('lexi_user_interests', JSON.stringify(newInterests));
     }
     toast.success('আপনার প্রস্তুতির পছন্দ আপডেট হয়েছে!');
-    fetchFeed(activeTab, newInterests);
+    fetchFeed(activeTab, newInterests, true);
   };
 
   // Scroll to a specific card index
@@ -121,7 +132,7 @@ export default function FeedPage() {
     [posts.length]
   );
 
-  // Single-stroke mouse wheel handler (like Facebook Reels on desktop)
+  // Single-stroke mouse wheel handler
   const handleWheel = (e: React.WheelEvent) => {
     if (isThrottled.current || posts.length <= 1) return;
 
@@ -131,7 +142,7 @@ export default function FeedPage() {
         scrollToIndex(currentIndex + 1);
         setTimeout(() => {
           isThrottled.current = false;
-        }, 400);
+        }, 380);
       }
     } else if (e.deltaY < -25) {
       if (currentIndex > 0) {
@@ -139,7 +150,7 @@ export default function FeedPage() {
         scrollToIndex(currentIndex - 1);
         setTimeout(() => {
           isThrottled.current = false;
-        }, 400);
+        }, 380);
       }
     }
   };
@@ -184,27 +195,11 @@ export default function FeedPage() {
     return () => observer.disconnect();
   }, [posts]);
 
-  // Pull daily pill
-  const handlePullDailyPill = async () => {
-    setGeneratingDaily(true);
-    try {
-      const res = await axios.post('/api/feed/daily-pill');
-      if (res.data.success) {
-        toast.success(res.data.message || 'আজকের নতুন ৩টি প্রস্তুতি ক্যাপসুল যোগ হয়েছে!');
-        fetchFeed(activeTab, selectedInterests);
-      }
-    } catch {
-      toast.error('দৈনিক ক্যাপসুল তৈরি করতে সমস্যা হয়েছে');
-    } finally {
-      setGeneratingDaily(false);
-    }
-  };
-
   // Create post gate
   const handleOpenCreateModal = () => {
     const isAuthed = !!(session?.user?.email || (typeof window !== 'undefined' && localStorage.getItem('lexi_user_email')));
     if (!isAuthed) {
-      toast.error('পোস্ট করতে অনুগ্রহ করে সাইন ইন বা রেজিস্টার করুন');
+      toast.error('কমিউনিটিতে অভিজ্ঞতা বা শব্দ শেয়ার করতে অনুগ্রহ করে সাইন ইন বা রেজিস্টার করুন');
       if (typeof window !== 'undefined') {
         window.dispatchEvent(new CustomEvent('lexi:request_auth'));
       }
@@ -232,18 +227,18 @@ export default function FeedPage() {
 
   return (
     <div className="w-full flex flex-col font-sans select-none overflow-hidden h-[calc(100vh-64px)]">
-      {/* Top Streamlined Header Bar with Preferences */}
-      <div className="bg-white border-b border-gray-200/80 px-4 py-2 shrink-0 z-20 shadow-2xs">
-        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+      {/* Top Streamlined Interactive Hub Bar */}
+      <div className="bg-white border-b border-gray-200/90 px-4 py-2 shrink-0 z-20 shadow-2xs">
+        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2.5">
           {/* Category Tabs */}
-          <div className="flex items-center gap-1 overflow-x-auto no-scrollbar w-full sm:w-auto">
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar w-full sm:w-auto">
             {CATEGORY_TABS.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
                   activeTab === tab.id
-                    ? 'bg-emerald-600 text-white shadow-xs'
+                    ? 'bg-emerald-600 text-white shadow-xs font-black'
                     : 'text-gray-600 hover:text-emerald-800 hover:bg-slate-100'
                 }`}
               >
@@ -252,8 +247,21 @@ export default function FeedPage() {
             ))}
           </div>
 
-          {/* Preferences & Quick Actions */}
+          {/* Interactive Hub Actions */}
           <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto justify-between sm:justify-end">
+            {/* Dynamic Shuffle Button */}
+            <Tooltip title="আপনার পছন্দের ভিত্তিতে কার্ডগুলো নতুন অর্ডারে সাজান">
+              <Button
+                size="small"
+                icon={<SyncOutlined spin={shuffling} />}
+                onClick={() => fetchFeed(activeTab, selectedInterests, true)}
+                className="text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 border-0 rounded-xl h-8 px-2.5"
+              >
+                শাফল
+              </Button>
+            </Tooltip>
+
+            {/* Interest Filter Button */}
             <Button
               size="small"
               icon={<FilterOutlined />}
@@ -263,31 +271,32 @@ export default function FeedPage() {
               পছন্দ ({selectedInterests.length})
             </Button>
 
+            {/* Leaderboard Button */}
             <Button
               size="small"
-              icon={<ReloadOutlined spin={generatingDaily} />}
-              loading={generatingDaily}
-              onClick={handlePullDailyPill}
-              className="text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 border-0 rounded-xl h-8 px-2.5"
-              title="নতুন প্রস্তুতি ক্যাপসুল তৈরি করুন"
+              icon={<TrophyOutlined className="text-amber-500" />}
+              onClick={() => setIsLeaderboardOpen(true)}
+              className="text-xs font-bold text-amber-950 bg-amber-50 hover:bg-amber-100 border-amber-200 rounded-xl h-8 px-2.5"
             >
-              <span className="hidden md:inline">নতুন ক্যাপসুল</span>
+              লিডারবোর্ড
             </Button>
 
+            {/* Creator Studio (+XP) */}
             <Button
               type="primary"
               size="small"
               icon={<PlusOutlined />}
               onClick={handleOpenCreateModal}
-              className="bg-emerald-600 hover:!bg-emerald-500 font-bold rounded-xl h-8 px-3 text-xs border-0 shadow-xs"
+              className="bg-emerald-600 hover:!bg-emerald-500 font-black rounded-xl h-8 px-3 text-xs border-0 shadow-xs flex items-center gap-1"
             >
-              পোস্ট
+              <span>শেয়ার</span>
+              <span className="text-[10px] bg-emerald-700 px-1 py-0.2 rounded-md">+XP</span>
             </Button>
           </div>
         </div>
       </div>
 
-      {/* Main Reel Feed Area (Single post per scroll stroke) */}
+      {/* Main Single-Stroke Reel Feed Area */}
       <div className="flex-1 relative w-full flex items-center justify-center overflow-hidden bg-slate-100/60">
         {loading ? (
           <div className="flex flex-col items-center justify-center py-20 text-center">
@@ -307,11 +316,11 @@ export default function FeedPage() {
                 পছন্দ পরিবর্তন করুন
               </Button>
               <Button
-                icon={<ReloadOutlined />}
-                onClick={handlePullDailyPill}
+                icon={<SyncOutlined />}
+                onClick={() => fetchFeed(activeTab, selectedInterests, true)}
                 className="rounded-xl font-bold text-xs"
               >
-                ক্যাপসুল আনুন
+                শাফল করুন
               </Button>
             </div>
           </div>
@@ -343,29 +352,29 @@ export default function FeedPage() {
               ))}
             </div>
 
-            {/* Desktop Floating Next / Prev Navigation Controls */}
+            {/* Desktop Floating Next / Prev Navigation Controls (NO NUMBER like 1/40) */}
             {posts.length > 1 && (
               <div className="hidden lg:flex flex-col items-center gap-2 absolute right-8 top-1/2 -translate-y-1/2 z-30 bg-white/90 backdrop-blur-md p-2 rounded-2xl shadow-lg border border-gray-200">
                 <button
                   onClick={() => scrollToIndex(currentIndex - 1)}
                   disabled={currentIndex === 0}
                   className="w-9 h-9 rounded-xl bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 disabled:opacity-30 disabled:hover:bg-slate-100 disabled:hover:text-gray-400 flex items-center justify-center transition font-bold cursor-pointer"
-                  title="পূর্ববর্তী পোস্ট (Arrow Up)"
+                  title="পূর্ববর্তী ক্যাপসুল (Arrow Up)"
                 >
                   <UpOutlined className="text-sm" />
                 </button>
 
-                <div className="text-[11px] font-black text-gray-600 px-1 py-0.5">
-                  <span>{currentIndex + 1}</span>
-                  <span className="text-gray-300 mx-0.5">/</span>
-                  <span>{posts.length}</span>
-                </div>
+                {/* Sleek icon indicator without numbers */}
+                <div
+                  className="w-2.5 h-2.5 rounded-full bg-emerald-500 my-1 animate-pulse"
+                  title="স্ক্রোল করে পরবর্তী ক্যাপসুলে যান"
+                />
 
                 <button
                   onClick={() => scrollToIndex(currentIndex + 1)}
                   disabled={currentIndex === posts.length - 1}
                   className="w-9 h-9 rounded-xl bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 disabled:opacity-30 disabled:hover:bg-slate-100 disabled:hover:text-gray-400 flex items-center justify-center transition font-bold cursor-pointer"
-                  title="পরবর্তী পোস্ট (Arrow Down)"
+                  title="পরবর্তী ক্যাপসুল (Arrow Down)"
                 >
                   <DownOutlined className="text-sm" />
                 </button>
@@ -388,7 +397,14 @@ export default function FeedPage() {
         onClose={() => setIsCreateModalOpen(false)}
         userEmail={activeEmail}
         userName={activeName}
-        onPostCreated={() => fetchFeed(activeTab, selectedInterests)}
+        onPostCreated={() => fetchFeed(activeTab, selectedInterests, true)}
+      />
+
+      <LeaderboardModal
+        open={isLeaderboardOpen}
+        onClose={() => setIsLeaderboardOpen(false)}
+        userEmail={activeEmail}
+        onOpenCreateModal={handleOpenCreateModal}
       />
     </div>
   );

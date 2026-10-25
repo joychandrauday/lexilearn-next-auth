@@ -39,29 +39,34 @@ export async function GET(req: NextRequest) {
       query.tags = tag.toLowerCase();
     }
 
-    // Fetch posts
+    // Fetch candidate posts from database pool
     const rawPosts = await FeedPost.find(query)
       .sort({ isPinned: -1, createdAt: -1 })
-      .limit(60)
+      .limit(150)
       .lean();
 
-    // If personalized 'for_you' is active, rank posts by interest score
+    // Rank posts by interest score + preference shuffle jitter
     let scoredPosts = rawPosts.map((post: any) => {
       let score = 0;
-      if (post.isPinned) score += 1000;
+      if (post.isPinned) score += 5000;
 
       // Tag matching with user interests
       if (userInterests.length > 0 && Array.isArray(post.tags)) {
         const matches = post.tags.filter((t: string) =>
           userInterests.includes(t.toLowerCase())
         ).length;
-        score += matches * 25;
+        score += matches * 30;
       }
 
       // Category matching
       if (userInterests.includes(post.category?.toLowerCase())) {
-        score += 30;
+        score += 35;
       }
+
+      // Dynamic preference-weighted shuffle jitter:
+      // High-interest cards stay prioritized, but within the interest band their order varies on every refresh!
+      const preferenceJitter = (Math.random() - 0.5) * 45;
+      score += preferenceJitter;
 
       // Recency factor (hours since created)
       const hoursAgo = (Date.now() - new Date(post.createdAt).getTime()) / (1000 * 60 * 60);
@@ -69,7 +74,7 @@ export async function GET(req: NextRequest) {
       else if (hoursAgo < 72) score += 10;
 
       // Engagement factor
-      score += (post.likes || 0) * 2 + (post.bookmarks || 0) * 3 + (post.viewsCount || 0) * 0.1;
+      score += (post.likes || 0) * 1.5 + (post.bookmarks || 0) * 2 + (post.viewsCount || 0) * 0.05;
 
       return {
         ...post,
@@ -79,9 +84,7 @@ export async function GET(req: NextRequest) {
       };
     });
 
-    if (category === 'for_you' || userInterests.length > 0) {
-      scoredPosts.sort((a, b) => b._score - a._score);
-    }
+    scoredPosts.sort((a, b) => b._score - a._score);
 
     const paginated = scoredPosts.slice(skip, skip + limit);
 
@@ -143,10 +146,46 @@ export async function POST(req: NextRequest) {
       isPinned: false,
     });
 
+    let awardedXp = 30;
+    if (type === 'vocab_card') awardedXp = 50;
+    else if (type === 'user_progress') awardedXp = 40;
+    else if (type === 'exam_mcq') awardedXp = 35;
+
+    // If vocabData provided, sync into Word collection as well
+    if (vocabData?.word && vocabData?.bangla) {
+      try {
+        const Word = (await import('../../../lib/models/Word')).default;
+        await Word.updateOne(
+          { word: vocabData.word.toLowerCase().trim() },
+          {
+            $set: {
+              word: vocabData.word.toLowerCase().trim(),
+              bangla: vocabData.bangla,
+              meaning: vocabData.meaning || '',
+              mnemonic: vocabData.mnemonic || '',
+              partOfSpeech: vocabData.partOfSpeech || 'noun',
+              examTags: vocabData.examTags || [category.toUpperCase()],
+              exam: category,
+              userEmail: author.email,
+              contributedBy: author.name,
+              verificationStatus: 'community',
+              verificationScore: 85,
+              updatedAt: new Date(),
+            },
+            $setOnInsert: { createdAt: new Date() },
+          },
+          { upsert: true }
+        );
+      } catch (wordErr) {
+        console.warn('Word sync error:', wordErr);
+      }
+    }
+
     return NextResponse.json({
       success: true,
       post: newPost,
-      message: 'পোস্ট সফলভাবে পাবলিশ হয়েছে!',
+      awardedXp,
+      message: `পোস্ট সফলভাবে পাবলিশ হয়েছে! আপনার কন্ট্রিবিউশনের জন্য +${awardedXp} XP যোগ হয়েছে।`,
     });
   } catch (error: any) {
     console.error('POST /api/feed error:', error);

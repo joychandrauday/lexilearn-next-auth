@@ -18,8 +18,10 @@ import {
   FireOutlined,
   CheckOutlined,
   PlusOutlined,
+  LinkOutlined,
+  CopyOutlined,
 } from '@ant-design/icons';
-import { Button, Tag } from 'antd';
+import { Button, Tag, Modal } from 'antd';
 import { toast } from 'sonner';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
@@ -90,6 +92,7 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
   const [savedToNotebook, setSavedToNotebook] = useState(false);
   const [savingNotebook, setSavingNotebook] = useState(false);
   const [speaking, setSpeaking] = useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
   // Save to Notebook handler
   const handleSaveToNotebook = async () => {
@@ -190,12 +193,58 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
     }
   };
 
-  // Share
-  const handleShare = () => {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(window.location.origin + `#${post._id}`);
-      toast.success('লিংক কপি করা হয়েছে!');
+  // Share Helpers
+  const getShareUrl = () => {
+    if (typeof window !== 'undefined') {
+      return `${window.location.origin}/feed#${post._id}`;
     }
+    return `https://lexilearn-rust.vercel.app/feed#${post._id}`;
+  };
+
+  const getShareText = () => {
+    if (post.vocabData) {
+      return `[LexiLearn প্রস্তুতি ক্যাপসুল]\n${post.vocabData.word} (${post.vocabData.bangla})\nঅর্থ: ${post.vocabData.meaning}\nনেমোনিক: ${post.vocabData.mnemonic || 'বিসিএস ও ব্যাংক প্রস্তুতি'}\n\nলেক্সিলার্নে আরও দেখুন: ${getShareUrl()}`;
+    }
+    if (post.mcqData) {
+      return `[বিসিএস/ব্যাংক কুইজ চ্যালেঞ্জ]\nপ্রশ্ন: ${post.mcqData.question}\nসঠিক উত্তর ও ব্যাখ্যা দেখুন লেক্সিলার্নে: ${getShareUrl()}`;
+    }
+    return `[LexiLearn প্রস্তুতি ক্যাপসুল]\n${post.title}\n${post.content.slice(0, 140)}...\n\nবিস্তারিত পড়ুন: ${getShareUrl()}`;
+  };
+
+  const handleCopyLink = () => {
+    if (navigator?.clipboard) {
+      navigator.clipboard.writeText(getShareUrl());
+      toast.success('ক্যাপসুল লিংক কপি করা হয়েছে!');
+    }
+  };
+
+  const handleCopySummary = () => {
+    if (navigator?.clipboard) {
+      navigator.clipboard.writeText(getShareText());
+      toast.success('স্টাডি ক্যাপসুল সম্পূর্ণ টেক্সট কপি হয়েছে!');
+    }
+  };
+
+  const handleSocialShare = (platform: 'facebook' | 'whatsapp' | 'linkedin') => {
+    const url = getShareUrl();
+    const text = getShareText();
+    let shareLink = '';
+
+    if (platform === 'facebook') {
+      shareLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+    } else if (platform === 'whatsapp') {
+      shareLink = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+    } else if (platform === 'linkedin') {
+      shareLink = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+    }
+
+    if (shareLink && typeof window !== 'undefined') {
+      window.open(shareLink, '_blank', 'width=600,height=500');
+    }
+  };
+
+  const handleOpenShare = () => {
+    setIsShareModalOpen(true);
   };
 
   // Calculate MCQ percentages
@@ -496,13 +545,13 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
             {likes > 0 && likes}
           </Button>
 
-          {/* Share */}
+          {/* Social Share Trigger */}
           <Button
             type="text"
             icon={<ShareAltOutlined className="text-gray-500 text-base" />}
-            onClick={handleShare}
+            onClick={handleOpenShare}
             className="text-gray-600 hover:!text-gray-900 rounded-xl px-2 h-8"
-            title="লিংক কপি করুন"
+            title="সোশ্যাল মিডিয়ায় শেয়ার করুন"
           />
         </div>
 
@@ -540,6 +589,78 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
           </Button>
         </div>
       </div>
+
+      {/* Social Share Modal */}
+      <Modal
+        open={isShareModalOpen}
+        onCancel={() => setIsShareModalOpen(false)}
+        footer={null}
+        width={420}
+        centered
+        className="rounded-3xl overflow-hidden font-sans"
+      >
+        <div className="p-2 space-y-4">
+          <div className="text-center pb-2 border-b border-gray-100">
+            <h3 className="text-base font-black text-gray-900 m-0">ক্যাপসুলটি শেয়ার করুন</h3>
+            <p className="text-xs text-gray-500 m-0 mt-0.5">আপনার বিসিএস ও ব্যাংক স্টাডি গ্রুপে শেয়ার করে অন্যকে সহায়তা করুন</p>
+          </div>
+
+          <div className="grid grid-cols-3 gap-2.5">
+            {/* WhatsApp */}
+            <button
+              onClick={() => handleSocialShare('whatsapp')}
+              className="p-3 rounded-2xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 flex flex-col items-center justify-center gap-1.5 transition group"
+            >
+              <div className="w-9 h-9 rounded-full bg-emerald-500 text-white flex items-center justify-center font-black text-sm shadow-xs">
+                WA
+              </div>
+              <span className="text-xs font-bold text-emerald-950">WhatsApp</span>
+            </button>
+
+            {/* Facebook */}
+            <button
+              onClick={() => handleSocialShare('facebook')}
+              className="p-3 rounded-2xl bg-blue-50 hover:bg-blue-100 border border-blue-200 flex flex-col items-center justify-center gap-1.5 transition group"
+            >
+              <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-sm shadow-xs">
+                FB
+              </div>
+              <span className="text-xs font-bold text-blue-950">Facebook</span>
+            </button>
+
+            {/* LinkedIn */}
+            <button
+              onClick={() => handleSocialShare('linkedin')}
+              className="p-3 rounded-2xl bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 flex flex-col items-center justify-center gap-1.5 transition group"
+            >
+              <div className="w-9 h-9 rounded-full bg-indigo-600 text-white flex items-center justify-center font-black text-sm shadow-xs">
+                IN
+              </div>
+              <span className="text-xs font-bold text-indigo-950">LinkedIn</span>
+            </button>
+          </div>
+
+          <div className="space-y-2 pt-2 border-t border-gray-100">
+            <Button
+              block
+              icon={<CopyOutlined />}
+              onClick={handleCopySummary}
+              className="rounded-xl h-10 font-bold text-xs bg-slate-100 hover:!bg-slate-200 border-0"
+            >
+              স্টাডি টেক্সট সারসংক্ষেপ কপি
+            </Button>
+            <Button
+              block
+              type="primary"
+              icon={<LinkOutlined />}
+              onClick={handleCopyLink}
+              className="rounded-xl h-10 font-black text-xs bg-emerald-600 hover:!bg-emerald-500 border-0 shadow-xs"
+            >
+              সরাসরি লিংক কপি করুন
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }
