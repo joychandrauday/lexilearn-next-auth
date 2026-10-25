@@ -16,6 +16,9 @@ export interface IUserProfile extends Document {
   contributionsCount?: number;
   examTagsCount?: number;
   badges?: string[];
+  capsuleStreak?: number;
+  lastCapsuleDate?: string;
+  completedCapsules?: string[];
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -89,6 +92,18 @@ const userProfileSchema = new Schema<IUserProfile>(
     badges: {
       type: [String],
       default: ['কমিউনিটি মেম্বার'],
+    },
+    capsuleStreak: {
+      type: Number,
+      default: 0,
+    },
+    lastCapsuleDate: {
+      type: String,
+      default: '',
+    },
+    completedCapsules: {
+      type: [String],
+      default: [],
     },
   },
   { timestamps: true }

@@ -42,6 +42,7 @@ export default function Navbar() {
 
   const navLinks = [
     { label: 'হোম', href: '/' },
+    { label: 'দৈনিক ক্যাপসুল', href: '/daily-capsule' },
     { label: 'প্রস্তুতি ফিড', href: '/feed' },
     { label: 'প্রস্তুতি নোটবুক', href: '/notebook' },
     { label: 'ক্যাম্পেইন', href: '/campaign' },
@@ -69,6 +70,11 @@ export default function Navbar() {
       key: 'profile',
       label: <Link href="/profile">আমার প্রোফাইল (My Profile)</Link>,
       icon: <UserOutlined />,
+    },
+    {
+      key: 'daily-capsule',
+      label: <Link href="/daily-capsule">দৈনিক এক্সাম ক্যাপসুল (Daily Capsule)</Link>,
+      icon: <FireOutlined />,
     },
     {
       key: 'notebook',
