@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { signIn, signOut, useSession } from 'next-auth/react';
-import { Drawer, Button, Avatar, Dropdown, MenuProps } from 'antd';
+import { Drawer, Button, Avatar, Dropdown, Menu, MenuProps } from 'antd';
 import {
   MenuOutlined,
   CloseOutlined,
@@ -18,6 +18,11 @@ import {
   ReadOutlined,
   CheckCircleFilled,
   CalendarOutlined,
+  HomeOutlined,
+  MoreOutlined,
+  CrownOutlined,
+  RobotOutlined,
+  SafetyCertificateOutlined,
 } from '@ant-design/icons';
 
 export default function Navbar() {
@@ -42,22 +47,29 @@ export default function Navbar() {
     }
   }, [session]);
 
-  const navLinks = [
-    { label: 'হোম', href: '/' },
-    { label: 'দৈনিক ক্যাপসুল', href: '/daily-capsule' },
-    { label: 'স্মার্ট প্রশ্নব্যাংক', href: '/question-bank' },
-    { label: '১-vs-১ কুইজ ডুয়েল', href: '/battle' },
-    { label: 'স্টাডি প্ল্যানার', href: '/planner' },
-    { label: 'প্রস্তুতি ফিড', href: '/feed' },
-    { label: 'প্রস্তুতি নোটবুক', href: '/notebook' },
-    { label: 'ক্যাম্পেইন', href: '/campaign' },
-    { label: 'ভোকাবুলারি', href: '/words' },
-    { label: 'ক্লজ টেস্ট', href: '/cloze' },
-    { label: 'বানান শুদ্ধিকরণ', href: '/spelling' },
-    { label: 'রিভিশন কার্ড', href: '/flashcards' },
-    { label: 'বাগধারা', href: '/bangla/baghdhara' },
-    { label: 'মডেল টেস্ট', href: '/quiz' },
-  ];
+  // Primary navigation – most used features
+const primaryNavLinks = [
+  { key: 'home', label: 'হোম', href: '/', icon: <HomeOutlined /> },
+  { key: 'daily-capsule', label: 'দৈনিক ক্যাপসুল', href: '/daily-capsule', icon: <FireOutlined /> },
+  { key: 'question-bank', label: 'স্মার্ট প্রশ্নব্যাংক', href: '/question-bank', icon: <BookOutlined /> },
+  { key: 'battle', label: '১‑vs‑১ কুইজ ডুয়েল', href: '/battle', icon: <ThunderboltOutlined /> },
+  { key: 'planner', label: 'স্টাডি প্ল্যানার', href: '/planner', icon: <CalendarOutlined /> },
+];
+
+// Secondary navigation – hidden under a "More" dropdown
+const secondaryNavLinks = [
+  { key: 'feed', label: 'প্রস্তুতি ফিড', href: '/feed', icon: <ThunderboltFilled /> },
+  { key: 'notebook', label: 'প্রস্তুতি নোটবুক', href: '/notebook', icon: <BookOutlined /> },
+  { key: 'campaign', label: 'ক্যাম্পেইন', href: '/campaign', icon: <CrownOutlined /> },
+  { key: 'words', label: 'ভোকাবুলারি', href: '/words', icon: <BookOutlined /> },
+  { key: 'cloze', label: 'ক্লজ টেস্ট', href: '/cloze', icon: <BookOutlined /> },
+  { key: 'spelling', label: 'বানান শুদ্ধিকরণ', href: '/spelling', icon: <BookOutlined /> },
+  { key: 'flashcards', label: 'রিভিশন কার্ড', href: '/flashcards', icon: <BookOutlined /> },
+  { key: 'baghdhara', label: 'বাগধারা', href: '/bangla/baghdhara', icon: <BookOutlined /> },
+  { key: 'quiz', label: 'মডেল টেস্ট', href: '/quiz', icon: <BookOutlined /> },
+];
+
+const navLinks = [...primaryNavLinks, ...secondaryNavLinks];
 
   const userMenuItems: MenuProps['items'] = [
     {
@@ -161,13 +173,12 @@ export default function Navbar() {
           </div>
 
           {/* Center: Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => {
+          <div className="hidden md:flex items-center gap-2">
+            {primaryNavLinks.map((link) => {
               const isActive =
                 link.href === '/'
                   ? pathname === '/'
                   : pathname === link.href || pathname.startsWith(link.href + '/');
-
               return (
                 <Link
                   key={link.href}
@@ -178,11 +189,30 @@ export default function Navbar() {
                       : 'text-gray-600 hover:text-emerald-700 hover:bg-gray-50'
                   }`}
                 >
-                  {link.label}
+                  {link.icon}
+                  <span className="ml-1">{link.label}</span>
                 </Link>
               );
             })}
-          </nav>
+            <Dropdown
+              overlay={
+                <Menu
+                  items={secondaryNavLinks.map((link) => ({
+                    key: link.key,
+                    label: (
+                      <Link href={link.href} className="flex items-center">
+                        {link.icon}
+                        <span className="ml-2">{link.label}</span>
+                      </Link>
+                    ),
+                  }))}
+                />
+              }
+              trigger={['click']}
+            >
+              <Button type="text" icon={<MoreOutlined />} className="text-gray-600 hover:text-emerald-700" />
+            </Dropdown>
+          </div>
 
           {/* Right: Quick Add + Streak + Profile */}
           <div className="flex items-center gap-2">

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import {
   DashboardOutlined,
@@ -53,6 +54,8 @@ const { Option } = Select;
 
 export default function AdminPage() {
   const { data: session } = useSession();
+  const router = useRouter();
+
   const [activeTab, setActiveTab] = useState<string>('overview');
 
   // Stats Data
