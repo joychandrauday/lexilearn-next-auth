@@ -41,7 +41,8 @@ export default function Navbar() {
   }, [session]);
 
   const navLinks = [
-    { label: 'হোম ফিড', href: '/' },
+    { label: 'হোম', href: '/' },
+    { label: 'প্রস্তুতি ফিড', href: '/feed' },
     { label: 'প্রস্তুতি নোটবুক', href: '/notebook' },
     { label: 'ক্যাম্পেইন', href: '/campaign' },
     { label: 'ভোকাবুলারি', href: '/words' },
