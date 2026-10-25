@@ -44,6 +44,8 @@ export interface IFeedPost extends Document {
   bookmarkedBy: string[];
   viewsCount: number;
   isPinned: boolean;
+  status: 'pending' | 'approved' | 'rejected';
+  rejectionReason?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -105,6 +107,13 @@ const FeedPostSchema = new Schema<IFeedPost>(
     bookmarkedBy: [{ type: String }],
     viewsCount: { type: Number, default: 0 },
     isPinned: { type: Boolean, default: false },
+    status: {
+      type: String,
+      enum: ['pending', 'approved', 'rejected'],
+      default: 'pending',
+      index: true,
+    },
+    rejectionReason: { type: String, default: '' },
   },
   {
     timestamps: true,

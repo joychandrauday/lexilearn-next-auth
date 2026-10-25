@@ -40,44 +40,60 @@ export async function POST(
 
       const cleanTag = examTag.trim();
       const existingTags = Array.isArray(word.examTags) ? word.examTags : [];
+      const pendingTags = Array.isArray(word.pendingExamTags) ? word.pendingExamTags : [];
 
-      if (!existingTags.some((t) => t.toLowerCase() === cleanTag.toLowerCase())) {
+      if (existingTags.some((t) => t.toLowerCase() === cleanTag.toLowerCase())) {
+        return NextResponse.json(
+          { success: false, message: 'এই পরীক্ষার ট্যাগটি পূর্বেই অনুমোদিত আছে' },
+          { status: 400 }
+        );
+      }
+
+      if (pendingTags.some((p: any) => p.tag?.toLowerCase() === cleanTag.toLowerCase())) {
+        return NextResponse.json(
+          { success: false, message: 'এই পরীক্ষার ট্যাগটি ইতোমধ্যে অনুমোদনের জন্য অপেক্ষমাণ রয়েছে' },
+          { status: 400 }
+        );
+      }
+
+      const cleanEmail = (userEmail || 'community@lexilearn.com').toLowerCase().trim();
+      const isSystemOrAdmin = /admin|lexilearn|bot/i.test(cleanEmail);
+
+      if (isSystemOrAdmin) {
         existingTags.push(cleanTag);
+        word.examTags = existingTags;
+        word.frequencyCount = Math.max(existingTags.length, (word.frequencyCount || 1) + 1);
+        word.isMostRepeated = word.frequencyCount >= 2;
+        word.verificationScore = Math.min(100, (word.verificationScore || 85) + 3);
+        await word.save();
+
+        return NextResponse.json({
+          success: true,
+          message: `"${cleanTag}" পরীক্ষার ট্যাগ সফলভাবে যুক্ত হয়েছে!`,
+          examTags: word.examTags,
+          frequencyCount: word.frequencyCount,
+          isMostRepeated: word.isMostRepeated,
+          isPending: false,
+        });
+      } else {
+        // Community contribution: store in pendingExamTags for admin review
+        word.pendingExamTags = [
+          ...pendingTags,
+          {
+            tag: cleanTag,
+            submittedBy: cleanEmail,
+            submittedByName: cleanEmail.split('@')[0],
+            createdAt: new Date(),
+          },
+        ];
+        await word.save();
+
+        return NextResponse.json({
+          success: true,
+          message: `"${cleanTag}" পরীক্ষার ট্যাগ সফলভাবে জমা নেওয়া হয়েছে! অ্যাডমিন অনুমোদনের পর এটি প্রদর্শিত হবে এবং আপনার প্রোফাইলে +৫০ XP যোগ হবে।`,
+          isPending: true,
+        });
       }
-
-      word.examTags = existingTags;
-      word.frequencyCount = Math.max(existingTags.length, (word.frequencyCount || 1) + 1);
-      word.isMostRepeated = word.frequencyCount >= 2;
-      word.verificationScore = Math.min(100, (word.verificationScore || 85) + 3);
-
-      await word.save();
-
-      // Count exam tag contribution the same as adding a word (+50 XP)
-      if (userEmail) {
-        try {
-          const cleanEmail = userEmail.toLowerCase().trim();
-          const UserProfile = (await import('../../../../../lib/models/UserProfile')).default;
-          await UserProfile.findOneAndUpdate(
-            { email: cleanEmail },
-            {
-              $inc: { contributionPoints: 50, contributionsCount: 1, examTagsCount: 1 },
-              $addToSet: { badges: 'এক্সাম ট্যাগ মাস্টার' },
-            },
-            { upsert: true }
-          );
-        } catch (profErr) {
-          console.warn('Profile XP increment error:', profErr);
-        }
-      }
-
-      return NextResponse.json({
-        success: true,
-        message: `"${cleanTag}" পরীক্ষার ট্যাগ সফলভাবে যুক্ত হয়েছে! কন্ট্রিবিউশনের জন্য +৫০ XP যোগ করা হলো।`,
-        examTags: word.examTags,
-        frequencyCount: word.frequencyCount,
-        isMostRepeated: word.isMostRepeated,
-        awardedXp: 50,
-      });
     }
 
     if (action === 'toggle-save') {

@@ -25,6 +25,10 @@ import {
   TagsOutlined,
   FileTextOutlined,
   WarningOutlined,
+  CheckCircleOutlined,
+  ClockCircleOutlined,
+  CheckOutlined,
+  CloseOutlined,
 } from '@ant-design/icons';
 import {
   Button,
@@ -39,6 +43,8 @@ import {
   message,
   Tabs,
   Slider,
+  Badge,
+  Popconfirm,
 } from 'antd';
 import { useSession } from 'next-auth/react';
 
@@ -76,6 +82,15 @@ export default function AdminPage() {
   const [importing, setImporting] = useState(false);
   const [parsedQuestions, setParsedQuestions] = useState<any[]>([]);
 
+  // Contribution Moderation State
+  const [contributions, setContributions] = useState<any[]>([]);
+  const [loadingContributions, setLoadingContributions] = useState(false);
+  const [contribStatusFilter, setContribStatusFilter] = useState<'pending' | 'approved' | 'rejected' | 'all'>('pending');
+  const [contribTypeFilter, setContribTypeFilter] = useState<'all' | 'feed_post' | 'word' | 'exam_tag'>('all');
+  const [contribSearch, setContribSearch] = useState('');
+  const [pendingCounts, setPendingCounts] = useState({ total: 0, feedPosts: 0, words: 0, examTags: 0 });
+  const [processingActionId, setProcessingActionId] = useState<string | null>(null);
+
   // 1. Fetch Admin Telemetry & Stats
   const fetchStats = useCallback(async () => {
     setLoadingStats(true);
@@ -94,9 +109,72 @@ export default function AdminPage() {
     }
   }, []);
 
+  // Fetch Contributions List
+  const fetchContributions = useCallback(async () => {
+    setLoadingContributions(true);
+    try {
+      const res = await axios.get('/api/admin/contributions', {
+        params: {
+          status: contribStatusFilter,
+          type: contribTypeFilter,
+          search: contribSearch,
+        },
+      });
+      if (res.data.success) {
+        setContributions(res.data.items || []);
+        if (res.data.counts) {
+          setPendingCounts(res.data.counts);
+        }
+      }
+    } catch {
+      message.error('কন্ট্রিবিউশন তালিকা লোড করতে ব্যর্থ হয়েছে');
+    } finally {
+      setLoadingContributions(false);
+    }
+  }, [contribStatusFilter, contribTypeFilter, contribSearch]);
+
+  const handleContributionAction = async (item: any, action: 'approve' | 'reject') => {
+    setProcessingActionId(item.id);
+    try {
+      const res = await axios.patch('/api/admin/contributions', {
+        id: item.id,
+        type: item.type,
+        action,
+        tag: item.details?.examTag,
+        userEmail: item.contributor?.email,
+      });
+
+      if (res.data.success) {
+        message.success(res.data.message);
+        fetchContributions();
+        fetchStats();
+      } else {
+        message.error(res.data.error || 'অ্যাকশন সম্পন্ন করা যায়নি');
+      }
+    } catch (err: any) {
+      message.error(err.response?.data?.error || 'ত্রুটি হয়েছে');
+    } finally {
+      setProcessingActionId(null);
+    }
+  };
+
   useEffect(() => {
     fetchStats();
+    axios
+      .get('/api/admin/contributions?status=pending')
+      .then((res) => {
+        if (res.data.success && res.data.counts) {
+          setPendingCounts(res.data.counts);
+        }
+      })
+      .catch(() => {});
   }, [fetchStats]);
+
+  useEffect(() => {
+    if (activeTab === 'contributions') {
+      fetchContributions();
+    }
+  }, [activeTab, fetchContributions]);
 
   // 2. Fetch Words for Vocabulary Management Table
   const fetchWordsList = useCallback(async () => {
@@ -391,10 +469,24 @@ export default function AdminPage() {
               onClick={() => {
                 fetchStats();
                 if (activeTab === 'words') fetchWordsList();
+                if (activeTab === 'contributions') fetchContributions();
               }}
               className="rounded-xl font-bold bg-white/10 hover:!bg-white/20 !text-white border-white/20"
             >
               রিফ্রেশ
+            </Button>
+            <Button
+              type="primary"
+              icon={<SafetyCertificateOutlined />}
+              onClick={() => setActiveTab('contributions')}
+              className="bg-amber-600 hover:!bg-amber-500 font-bold rounded-xl border-none flex items-center gap-1.5"
+            >
+              <span>পেন্ডিং অনুমোদন</span>
+              {pendingCounts.total > 0 && (
+                <span className="bg-amber-400 text-gray-950 text-xs px-2 py-0.5 rounded-full font-black">
+                  {pendingCounts.total}
+                </span>
+              )}
             </Button>
             <Button
               type="primary"
@@ -413,6 +505,12 @@ export default function AdminPage() {
         <div className="bg-white rounded-2xl p-1.5 border border-gray-200 shadow-xs mb-6 flex flex-wrap gap-2">
           {[
             { key: 'overview', label: 'ড্যাশবোর্ড ও মেট্রিক্স', icon: BarChartOutlined },
+            {
+              key: 'contributions',
+              label: 'কন্ট্রিবিউশন অনুমোদন',
+              icon: SafetyCertificateOutlined,
+              badge: pendingCounts.total,
+            },
             { key: 'words', label: 'ভোকাবুলারি ডাটাবেস', icon: BookOutlined },
             { key: 'importer', label: 'এআই প্রশ্ন ইম্পোর্টার', icon: RobotOutlined },
             { key: 'mistakes', label: 'শিক্ষার্থীদের ভুল ব্যাংক', icon: WarningOutlined },
@@ -423,7 +521,7 @@ export default function AdminPage() {
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
-                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all relative ${
                   isActive
                     ? 'bg-emerald-700 text-white shadow-xs'
                     : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
@@ -431,6 +529,15 @@ export default function AdminPage() {
               >
                 <Icon />
                 <span>{tab.label}</span>
+                {tab.badge !== undefined && tab.badge > 0 && (
+                  <span
+                    className={`text-[10px] font-black px-2 py-0.5 rounded-full ml-1 ${
+                      isActive ? 'bg-amber-400 text-gray-900' : 'bg-amber-500 text-white'
+                    }`}
+                  >
+                    {tab.badge}
+                  </span>
+                )}
               </button>
             );
           })}
@@ -439,6 +546,32 @@ export default function AdminPage() {
         {/* TAB 1: OVERVIEW & TELEMETRY */}
         {activeTab === 'overview' && (
           <div className="space-y-6">
+            {/* Pending Approvals Notice Banner */}
+            {pendingCounts.total > 0 && (
+              <div className="bg-amber-50 border border-amber-200 p-4 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center font-bold text-lg shrink-0">
+                    <ClockCircleOutlined />
+                  </div>
+                  <div>
+                    <h4 className="font-black text-amber-950 text-sm m-0">
+                      {pendingCounts.total} টি নতুন কন্ট্রিবিউশন পর্যালোচনার অপেক্ষায় আছে
+                    </h4>
+                    <p className="text-xs text-amber-800 m-0">
+                      ইউজারদের ফিড পোস্ট ({pendingCounts.feedPosts}), নতুন শব্দ ({pendingCounts.words}) এবং পরীক্ষার ট্যাগ ({pendingCounts.examTags}) অনুমোদন করে পয়েন্ট যোগ করুন।
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  type="primary"
+                  onClick={() => setActiveTab('contributions')}
+                  className="bg-amber-600 hover:!bg-amber-500 font-bold rounded-xl border-none shrink-0"
+                >
+                  অনুমোদন করুন ({pendingCounts.total})
+                </Button>
+              </div>
+            )}
+
             {/* Stat Cards */}
             {loadingStats ? (
               <div className="py-20 text-center">
@@ -591,6 +724,343 @@ export default function AdminPage() {
                   </div>
                 </div>
               </>
+            )}
+          </div>
+        )}
+
+        {/* TAB: PENDING CONTRIBUTIONS MODERATION */}
+        {activeTab === 'contributions' && (
+          <div className="space-y-6">
+            {/* Metric Summary Cards */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs">
+                <span className="text-xs font-bold text-gray-400 block mb-1">মোট অপেক্ষমাণ</span>
+                <span className="text-2xl sm:text-3xl font-black text-amber-600 block">
+                  {pendingCounts.total}
+                </span>
+                <span className="text-[11px] text-amber-700 font-bold flex items-center gap-1 mt-1">
+                  <ClockCircleOutlined /> অনুমোদনের অপেক্ষায়
+                </span>
+              </div>
+              <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs">
+                <span className="text-xs font-bold text-gray-400 block mb-1">ফিড পোস্ট</span>
+                <span className="text-2xl sm:text-3xl font-black text-indigo-600 block">
+                  {pendingCounts.feedPosts}
+                </span>
+                <span className="text-[11px] text-indigo-600 font-bold flex items-center gap-1 mt-1">
+                  <FileTextOutlined /> রিলস ও অভিজ্ঞতা
+                </span>
+              </div>
+              <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs">
+                <span className="text-xs font-bold text-gray-400 block mb-1">ভোকাবুলারি শব্দ</span>
+                <span className="text-2xl sm:text-3xl font-black text-emerald-600 block">
+                  {pendingCounts.words}
+                </span>
+                <span className="text-[11px] text-emerald-600 font-bold flex items-center gap-1 mt-1">
+                  <BookOutlined /> নতুন শব্দভাণ্ডার
+                </span>
+              </div>
+              <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs">
+                <span className="text-xs font-bold text-gray-400 block mb-1">পরীক্ষার ট্যাগ</span>
+                <span className="text-2xl sm:text-3xl font-black text-purple-600 block">
+                  {pendingCounts.examTags}
+                </span>
+                <span className="text-[11px] text-purple-600 font-bold flex items-center gap-1 mt-1">
+                  <TagsOutlined /> এক্সাম রেফারেন্স
+                </span>
+              </div>
+            </div>
+
+            {/* Filter Toolbar */}
+            <div className="bg-white p-4 rounded-2xl border border-gray-200 shadow-xs flex flex-wrap items-center justify-between gap-3">
+              {/* Type Filter Buttons */}
+              <div className="flex flex-wrap items-center gap-2">
+                {[
+                  { key: 'all', label: 'সকল টাইপ' },
+                  { key: 'feed_post', label: `ফিড পোস্ট (${pendingCounts.feedPosts})` },
+                  { key: 'word', label: `নতুন শব্দ (${pendingCounts.words})` },
+                  { key: 'exam_tag', label: `পরীক্ষার ট্যাগ (${pendingCounts.examTags})` },
+                ].map((t) => (
+                  <button
+                    key={t.key}
+                    onClick={() => setContribTypeFilter(t.key as any)}
+                    className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                      contribTypeFilter === t.key
+                        ? 'bg-slate-900 text-white'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    {t.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Status Filter & Search */}
+              <div className="flex items-center gap-2.5 w-full sm:w-auto">
+                <Select
+                  value={contribStatusFilter}
+                  onChange={(val) => setContribStatusFilter(val)}
+                  className="w-40"
+                >
+                  <Option value="pending">অপেক্ষমাণ (Pending)</Option>
+                  <Option value="approved">অনুমোদিত (Approved)</Option>
+                  <Option value="rejected">বাতিলকৃত (Rejected)</Option>
+                  <Option value="all">সব স্ট্যাটাস</Option>
+                </Select>
+
+                <Input
+                  placeholder="ইউজার বা বিষয় খুঁজুন..."
+                  prefix={<SearchOutlined className="text-gray-400" />}
+                  value={contribSearch}
+                  onChange={(e) => setContribSearch(e.target.value)}
+                  className="rounded-xl text-xs w-48 sm:w-56"
+                />
+
+                <Button
+                  icon={<ReloadOutlined />}
+                  onClick={fetchContributions}
+                  loading={loadingContributions}
+                  className="rounded-xl font-bold"
+                >
+                  রিফ্রেশ
+                </Button>
+              </div>
+            </div>
+
+            {/* Contributions List */}
+            {loadingContributions ? (
+              <div className="py-20 text-center bg-white rounded-3xl border border-gray-200">
+                <Spin size="large" tip="কন্ট্রিবিউশন তালিকা লোড হচ্ছে..." />
+              </div>
+            ) : contributions.length === 0 ? (
+              <div className="py-16 text-center bg-white rounded-3xl border border-gray-200 space-y-2">
+                <CheckCircleFilled className="text-4xl text-emerald-500" />
+                <h3 className="font-black text-gray-800 text-base m-0">কোন পেন্ডিং কন্ট্রিবিউশন নেই</h3>
+                <p className="text-xs text-gray-500">
+                  সব কন্ট্রিবিউশন অনুমোদিত অথবা ফিল্টারের সাথে কোন রেকর্ড পাওয়া যায়নি।
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {contributions.map((item) => (
+                  <div
+                    key={item.id}
+                    className="bg-white rounded-2xl border border-gray-200 hover:border-gray-300 p-5 shadow-xs transition-all flex flex-col md:flex-row items-start justify-between gap-4"
+                  >
+                    <div className="space-y-2.5 flex-1 min-w-0">
+                      {/* Item Header Badges */}
+                      <div className="flex flex-wrap items-center gap-2">
+                        {item.type === 'feed_post' && (
+                          <Tag color="blue" className="font-bold text-xs rounded-lg px-2 py-0.5 border-none">
+                            ফিড পোস্ট • {item.details?.postType || 'পোস্ট'}
+                          </Tag>
+                        )}
+                        {item.type === 'word' && (
+                          <Tag color="green" className="font-bold text-xs rounded-lg px-2 py-0.5 border-none">
+                            নতুন শব্দ
+                          </Tag>
+                        )}
+                        {item.type === 'exam_tag' && (
+                          <Tag color="purple" className="font-bold text-xs rounded-lg px-2 py-0.5 border-none">
+                            পরীক্ষার ট্যাগ
+                          </Tag>
+                        )}
+
+                        {item.status === 'pending' && (
+                          <Tag color="orange" className="font-bold text-xs rounded-lg px-2 py-0.5 border-none flex items-center gap-1">
+                            <ClockCircleOutlined /> পর্যালোচনায় অপেক্ষমাণ
+                          </Tag>
+                        )}
+                        {item.status === 'approved' && (
+                          <Tag color="success" className="font-bold text-xs rounded-lg px-2 py-0.5 border-none flex items-center gap-1">
+                            <CheckCircleOutlined /> অনুমোদিত
+                          </Tag>
+                        )}
+                        {item.status === 'rejected' && (
+                          <Tag color="error" className="font-bold text-xs rounded-lg px-2 py-0.5 border-none">
+                            বাতিলকৃত
+                          </Tag>
+                        )}
+
+                        <span className="bg-amber-100 text-amber-800 text-[11px] font-black px-2 py-0.5 rounded-full flex items-center gap-1">
+                          <ThunderboltOutlined className="text-amber-600" />
+                          +{item.xpReward} XP রিওয়ার্ড
+                        </span>
+                      </div>
+
+                      {/* Title & Contributor */}
+                      <div>
+                        <h3 className="text-base sm:text-lg font-black text-gray-900 m-0">
+                          {item.title}
+                        </h3>
+                        <div className="text-xs text-gray-500 mt-1 flex flex-wrap items-center gap-2">
+                          <span className="font-bold text-gray-700">{item.contributor.name}</span>
+                          <span>•</span>
+                          <span className="text-gray-400">{item.contributor.email}</span>
+                          <span>•</span>
+                          <span className="text-gray-400">
+                            {new Date(item.createdAt).toLocaleString('bn-BD', {
+                              dateStyle: 'medium',
+                              timeStyle: 'short',
+                            })}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Details Box */}
+                      {item.type === 'feed_post' && (
+                        <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-100 text-xs space-y-2">
+                          {item.details?.content && (
+                            <p className="text-gray-700 whitespace-pre-line m-0">
+                              {item.details.content}
+                            </p>
+                          )}
+                          {item.details?.vocabData && (
+                            <div className="p-2.5 bg-white rounded-lg border border-gray-200">
+                              <span className="font-black text-emerald-800 text-sm">
+                                {item.details.vocabData.word}
+                              </span>
+                              <span className="text-gray-600 ml-2">
+                                {item.details.vocabData.bangla}
+                              </span>
+                              {item.details.vocabData.meaning && (
+                                <p className="text-gray-500 mt-1 m-0">
+                                  {item.details.vocabData.meaning}
+                                </p>
+                              )}
+                              {item.details.vocabData.mnemonic && (
+                                <span className="text-amber-700 font-semibold block mt-1">
+                                  ট্রিক: {item.details.vocabData.mnemonic}
+                                </span>
+                              )}
+                            </div>
+                          )}
+                          {item.details?.mcqData && (
+                            <div className="p-2.5 bg-white rounded-lg border border-gray-200 space-y-1.5">
+                              <p className="font-bold text-gray-900 m-0">
+                                {item.details.mcqData.question}
+                              </p>
+                              <div className="grid grid-cols-2 gap-1.5 text-[11px]">
+                                {item.details.mcqData.options?.map((opt: string, i: number) => {
+                                  const isCorrect = opt === item.details.mcqData.correctAnswer;
+                                  return (
+                                    <div
+                                      key={i}
+                                      className={`px-2 py-1 rounded-md border ${
+                                        isCorrect
+                                          ? 'bg-emerald-50 border-emerald-300 text-emerald-800 font-bold'
+                                          : 'bg-gray-50 border-gray-200 text-gray-600'
+                                      }`}
+                                    >
+                                      {opt} {isCorrect && '(সঠিক)'}
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                              {item.details.mcqData.explanation && (
+                                <p className="text-gray-500 text-[11px] italic m-0 pt-1">
+                                  ব্যাখ্যা: {item.details.mcqData.explanation}
+                                </p>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      {item.type === 'word' && (
+                        <div className="bg-emerald-50/50 p-3.5 rounded-xl border border-emerald-100 text-xs space-y-1.5">
+                          <p className="text-gray-700 m-0">
+                            <strong>ইংরেজি সংজ্ঞা:</strong> {item.details?.meaning || 'সংজ্ঞা নেই'}
+                          </p>
+                          {item.details?.mnemonic && (
+                            <p className="text-amber-800 m-0">
+                              <strong>মনে রাখার ট্রিক:</strong> {item.details.mnemonic}
+                            </p>
+                          )}
+                          {item.details?.example && (
+                            <p className="text-gray-600 italic m-0">
+                              <strong>বাক্য:</strong> {item.details.example}
+                            </p>
+                          )}
+                        </div>
+                      )}
+
+                      {item.type === 'exam_tag' && (
+                        <div className="bg-purple-50/50 p-3.5 rounded-xl border border-purple-100 text-xs">
+                          <p className="text-gray-800 m-0">
+                            শব্দ: <strong className="text-purple-900 capitalize text-sm">{item.details?.word}</strong> ({item.details?.bangla})
+                          </p>
+                          <p className="text-purple-700 font-black text-sm mt-1 m-0">
+                            প্রস্তাবিত পরীক্ষার ট্যাগ: &quot;{item.details?.examTag}&quot;
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="flex md:flex-col items-center gap-2 shrink-0 w-full md:w-auto pt-2 md:pt-0 border-t md:border-t-0 border-gray-100">
+                      {item.status === 'pending' ? (
+                        <>
+                          <Button
+                            type="primary"
+                            icon={<CheckOutlined />}
+                            loading={processingActionId === item.id}
+                            onClick={() => handleContributionAction(item, 'approve')}
+                            className="bg-emerald-600 hover:!bg-emerald-500 font-bold rounded-xl border-none flex-1 md:w-44 text-xs h-9"
+                          >
+                            অনুমোদন করুন (+{item.xpReward} XP)
+                          </Button>
+
+                          <Popconfirm
+                            title="কন্ট্রিবিউশনটি বাতিল করতে চান?"
+                            description="এটি বাতিল করা হলে প্ল্যাটফর্মে প্রদর্শিত হবে না।"
+                            onConfirm={() => handleContributionAction(item, 'reject')}
+                            okText="হ্যাঁ, বাতিল করুন"
+                            cancelText="না"
+                            okButtonProps={{ danger: true }}
+                          >
+                            <Button
+                              danger
+                              icon={<CloseOutlined />}
+                              loading={processingActionId === item.id}
+                              className="font-bold rounded-xl flex-1 md:w-44 text-xs h-9"
+                            >
+                              প্রত্যাখ্যান
+                            </Button>
+                          </Popconfirm>
+                        </>
+                      ) : item.status === 'approved' ? (
+                        <Popconfirm
+                          title="অনুমোদন বাতিল করতে চান?"
+                          onConfirm={() => handleContributionAction(item, 'reject')}
+                          okText="হ্যাঁ, বাতিল করুন"
+                          cancelText="না"
+                          okButtonProps={{ danger: true }}
+                        >
+                          <Button
+                            danger
+                            size="small"
+                            loading={processingActionId === item.id}
+                            className="font-bold rounded-xl text-xs"
+                          >
+                            অনুমোদন বাতিল করুন
+                          </Button>
+                        </Popconfirm>
+                      ) : (
+                        <Button
+                          type="primary"
+                          size="small"
+                          loading={processingActionId === item.id}
+                          onClick={() => handleContributionAction(item, 'approve')}
+                          className="bg-emerald-600 hover:!bg-emerald-500 font-bold rounded-xl border-none text-xs"
+                        >
+                          পুনরায় অনুমোদন করুন
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
             )}
           </div>
         )}

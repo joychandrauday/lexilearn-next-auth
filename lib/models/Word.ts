@@ -16,12 +16,15 @@ export interface IWord extends Document {
 
   // Multi-Exam & Frequency Tracking
   examTags: string[];
+  pendingExamTags?: { tag: string; submittedBy: string; submittedByName?: string; createdAt?: Date }[];
   frequencyCount: number;
   isMostRepeated: boolean;
 
   // Verification Strength & Community Trust
   verificationScore: number; // 0 - 100
   verificationStatus: 'verified' | 'community' | 'unverified';
+  status: 'pending' | 'approved' | 'rejected';
+  rejectionReason?: string;
   verifiedBy: string;
   upvotes: number;
   downvotes: number;
@@ -65,6 +68,14 @@ const wordSchema = new Schema<IWord>(
 
     // Dynamic Multi-Exam & Frequency Tracking
     examTags: { type: [String], default: [], index: true },
+    pendingExamTags: [
+      {
+        tag: { type: String, required: true },
+        submittedBy: { type: String, required: true },
+        submittedByName: { type: String, default: '' },
+        createdAt: { type: Date, default: Date.now },
+      },
+    ],
     frequencyCount: { type: Number, default: 1, index: true },
     isMostRepeated: { type: Boolean, default: false, index: true },
 
@@ -76,6 +87,13 @@ const wordSchema = new Schema<IWord>(
       default: 'verified',
       index: true,
     },
+    status: {
+      type: String,
+      enum: ['pending', 'approved', 'rejected'],
+      default: 'approved',
+      index: true,
+    },
+    rejectionReason: { type: String, default: '' },
     verifiedBy: { type: String, default: 'পিএসসি প্রশ্ন ও এআই কনসেনসাস' },
     upvotes: { type: Number, default: 1 },
     downvotes: { type: Number, default: 0 },

@@ -20,43 +20,68 @@ export async function GET(req: Request) {
     const page = Math.max(1, parseInt(url.searchParams.get('page') || '1'));
     const skip = (page - 1) * limit;
 
-    const query: any = {};
+    const andConditions: any[] = [];
+
+    // Moderation: only show approved words publicly, unless author views own word
+    if (email) {
+      andConditions.push({
+        $or: [
+          { status: 'approved' },
+          { status: { $exists: false } },
+          { userEmail: email.toLowerCase().trim() },
+        ],
+      });
+    } else {
+      andConditions.push({
+        $or: [{ status: 'approved' }, { status: { $exists: false } }],
+      });
+    }
 
     // 1. User saved words filter
     if (savedOnly && email) {
-      query.$or = [{ savedBy: email }, { userEmail: email }];
+      andConditions.push({
+        $or: [{ savedBy: email }, { userEmail: email }],
+      });
     }
 
     // 2. Search query (matches English word, Bengali meaning, or synonyms)
     if (search) {
-      query.$or = [
-        { word: { $regex: search, $options: 'i' } },
-        { bangla: { $regex: search, $options: 'i' } },
-        { meaning: { $regex: search, $options: 'i' } },
-        { synonyms: { $in: [new RegExp(search, 'i')] } },
-        { examTags: { $in: [new RegExp(search, 'i')] } },
-      ];
+      andConditions.push({
+        $or: [
+          { word: { $regex: search, $options: 'i' } },
+          { bangla: { $regex: search, $options: 'i' } },
+          { meaning: { $regex: search, $options: 'i' } },
+          { synonyms: { $in: [new RegExp(search, 'i')] } },
+          { examTags: { $in: [new RegExp(search, 'i')] } },
+        ],
+      });
     }
 
     // 3. Difficulty / Intensity
     if (intensity && intensity !== 'all') {
-      query.intensity = intensity;
+      andConditions.push({ intensity });
     }
 
     // 4. Exam Filter (matches either category enum or examTags)
     if (exam && exam !== 'all') {
-      query.$or = [
-        { exam: exam },
-        { examTags: { $regex: exam, $options: 'i' } },
-      ];
+      andConditions.push({
+        $or: [
+          { exam: exam },
+          { examTags: { $regex: exam, $options: 'i' } },
+        ],
+      });
     }
 
     // 5. Special Filters
     if (filter === 'most-repeated') {
-      query.$or = [{ isMostRepeated: true }, { frequencyCount: { $gte: 2 } }];
+      andConditions.push({
+        $or: [{ isMostRepeated: true }, { frequencyCount: { $gte: 2 } }],
+      });
     } else if (filter === 'verified') {
-      query.verificationStatus = 'verified';
+      andConditions.push({ verificationStatus: 'verified' });
     }
+
+    const query = andConditions.length > 0 ? { $and: andConditions } : {};
 
     // Sorting options
     let sortObj: any = { frequencyCount: -1, verificationScore: -1, createdAt: -1 };
@@ -181,6 +206,8 @@ export async function POST(req: Request) {
     }
 
     const initialExamTags = [tagToAdd];
+    const isSystemOrAdmin = /admin|lexilearn|bot/i.test(currentUser);
+    const initialStatus = isSystemOrAdmin ? 'approved' : 'pending';
 
     const newWord = new Word({
       _id: new mongoose.Types.ObjectId(),
@@ -197,9 +224,10 @@ export async function POST(req: Request) {
       examTags: initialExamTags,
       frequencyCount: 1,
       isMostRepeated: false,
-      verificationScore: 92, // Strong initial score from AI & Dictionary synthesis
-      verificationStatus: 'verified',
-      verifiedBy: 'AI মডেল ও বাংলা ডিকশনারি সিন্থেসিস',
+      verificationScore: isSystemOrAdmin ? 92 : 80,
+      verificationStatus: isSystemOrAdmin ? 'verified' : 'community',
+      status: initialStatus,
+      verifiedBy: isSystemOrAdmin ? 'AI মডেল ও বাংলা ডিকশনারি সিন্থেসিস' : 'ইউজার কন্ট্রিবিউশন (Pending)',
       upvotes: 1,
       downvotes: 0,
       contributedBy: currentUser,
@@ -215,11 +243,16 @@ export async function POST(req: Request) {
 
     await newWord.save();
 
+    const returnMessage = isSystemOrAdmin
+      ? `"${lower}" সফলভাবে যুক্ত ও ভেরিফাই করা হয়েছে!`
+      : `"${lower}" শব্দটি পর্যালোচনার জন্য জমা নেওয়া হয়েছে! অ্যাডমিন অনুমোদনের পর এটি পাবলিক ডিকশনারিতে লাইভ হবে এবং আপনার প্রোফাইলে +৫০ XP যোগ হবে।`;
+
     return NextResponse.json({
       success: true,
       data: newWord,
       reused: false,
-      message: `"${lower}" সফলভাবে যুক্ত ও ভেরিফাই করা হয়েছে!`,
+      isPending: !isSystemOrAdmin,
+      message: returnMessage,
     });
   } catch (error: any) {
     console.error('POST /api/words error:', error);

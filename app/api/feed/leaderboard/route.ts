@@ -30,6 +30,7 @@ export async function GET(req: NextRequest) {
             { 'author.role': { $nin: ['lexibot', 'admin'] } },
             { 'author.email': { $not: /lexilearn|admin|lexibot|bot/i } },
             { 'author.name': { $not: /lexilearn|lexibot|admin|মেন্টর/i } },
+            { status: { $in: ['approved', null] } },
           ],
         },
       },
@@ -56,6 +57,7 @@ export async function GET(req: NextRequest) {
           $and: [
             { userEmail: { $not: /lexilearn|admin|bot/i } },
             { contributedBy: { $not: /lexilearn|admin|vault/i } },
+            { status: { $in: ['approved', null] } },
           ],
         },
       },

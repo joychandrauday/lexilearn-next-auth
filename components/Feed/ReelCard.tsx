@@ -20,6 +20,7 @@ import {
   PlusOutlined,
   LinkOutlined,
   CopyOutlined,
+  ClockCircleOutlined,
 } from '@ant-design/icons';
 import { Button, Tag, Modal } from 'antd';
 import { toast } from 'sonner';
@@ -71,6 +72,8 @@ export interface IReelPost {
   isLiked?: boolean;
   isBookmarked?: boolean;
   isPinned?: boolean;
+  status?: 'pending' | 'approved' | 'rejected';
+  rejectionReason?: string;
   createdAt: string;
 }
 
@@ -298,6 +301,16 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
         </div>
 
         <div className="flex items-center gap-1.5">
+          {post.status === 'pending' && (
+            <Tag color="orange" className="font-bold text-[10px] rounded-md m-0 border-0 flex items-center gap-1">
+              <ClockCircleOutlined /> পর্যালোচনায় অপেক্ষমাণ
+            </Tag>
+          )}
+          {post.status === 'rejected' && (
+            <Tag color="error" className="font-bold text-[10px] rounded-md m-0 border-0">
+              বাতিল
+            </Tag>
+          )}
           {post.isPinned && (
             <Tag color="gold" className="text-[10px] font-black rounded-md m-0 border-0">
               পিন্ড

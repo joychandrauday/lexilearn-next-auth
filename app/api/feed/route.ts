@@ -39,6 +39,18 @@ export async function GET(req: NextRequest) {
       query.tags = tag.toLowerCase();
     }
 
+    // Contribution moderation check: Only show approved posts publicly.
+    // Allow users to see their own submitted pending/rejected posts.
+    if (userEmail) {
+      query.$or = [
+        { status: 'approved' },
+        { status: { $exists: false } },
+        { 'author.email': userEmail.toLowerCase() },
+      ];
+    } else {
+      query.$or = [{ status: 'approved' }, { status: { $exists: false } }];
+    }
+
     // Fetch candidate posts from database pool
     const rawPosts = await FeedPost.find(query)
       .sort({ isPinned: -1, createdAt: -1 })
@@ -127,6 +139,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const cleanRole = author.role || 'user';
+    const isAutoApproved = cleanRole === 'admin' || cleanRole === 'lexibot';
+    const initialStatus = isAutoApproved ? 'approved' : 'pending';
+
     const newPost = await FeedPost.create({
       title,
       content: content || '',
@@ -134,10 +150,16 @@ export async function POST(req: NextRequest) {
       tags: tags.map((t: string) => t.toLowerCase()),
       category,
       difficulty,
-      author,
+      author: {
+        name: author.name,
+        email: author.email.toLowerCase().trim(),
+        avatar: author.avatar || '',
+        role: cleanRole,
+      },
       mcqData,
       vocabData,
       progressData,
+      status: initialStatus,
       likes: 0,
       likedBy: [],
       bookmarks: 0,
@@ -151,7 +173,23 @@ export async function POST(req: NextRequest) {
     else if (type === 'user_progress') awardedXp = 40;
     else if (type === 'exam_mcq') awardedXp = 35;
 
-    // If vocabData provided, sync into Word collection as well
+    // If auto-approved (admin/bot), award XP directly
+    if (isAutoApproved) {
+      try {
+        const UserProfile = (await import('../../../lib/models/UserProfile')).default;
+        await UserProfile.findOneAndUpdate(
+          { email: author.email.toLowerCase().trim() },
+          {
+            $inc: { contributionPoints: awardedXp, contributionsCount: 1 },
+          },
+          { upsert: true }
+        );
+      } catch (profErr) {
+        console.warn('Profile XP increment error:', profErr);
+      }
+    }
+
+    // If vocabData provided, sync into Word collection with corresponding status
     if (vocabData?.word && vocabData?.bangla) {
       try {
         const Word = (await import('../../../lib/models/Word')).default;
@@ -166,10 +204,11 @@ export async function POST(req: NextRequest) {
               partOfSpeech: vocabData.partOfSpeech || 'noun',
               examTags: vocabData.examTags || [category.toUpperCase()],
               exam: category,
-              userEmail: author.email,
+              userEmail: author.email.toLowerCase().trim(),
               contributedBy: author.name,
               verificationStatus: 'community',
-              verificationScore: 85,
+              status: initialStatus,
+              verificationScore: isAutoApproved ? 90 : 80,
               updatedAt: new Date(),
             },
             $setOnInsert: { createdAt: new Date() },
@@ -181,11 +220,16 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    const message = isAutoApproved
+      ? `পোস্ট সফলভাবে পাবলিশ হয়েছে! আপনার কন্ট্রিবিউশনের জন্য +${awardedXp} XP যোগ হয়েছে।`
+      : `পোস্ট সফলভাবে জমা হয়েছে! অ্যাডমিন পর্যালোচনার (Pending Approval) পর এটি পাবলিক ফিডে প্রদর্শিত হবে এবং আপনার প্রোফাইলে +${awardedXp} XP যোগ হবে।`;
+
     return NextResponse.json({
       success: true,
       post: newPost,
-      awardedXp,
-      message: `পোস্ট সফলভাবে পাবলিশ হয়েছে! আপনার কন্ট্রিবিউশনের জন্য +${awardedXp} XP যোগ হয়েছে।`,
+      isPending: !isAutoApproved,
+      awardedXp: isAutoApproved ? awardedXp : 0,
+      message,
     });
   } catch (error: any) {
     console.error('POST /api/feed error:', error);
