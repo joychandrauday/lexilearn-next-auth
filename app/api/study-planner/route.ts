@@ -214,6 +214,7 @@ export async function POST(req: NextRequest) {
       routine.completedCount = completedCount;
       routine.totalTasks = tasks.length;
       routine.isAllCompleted = isAllCompleted;
+      routine.markModified('tasks');
       await routine.save();
 
       // If user finished all daily routine tasks, award +30 XP bonus!
@@ -258,6 +259,7 @@ export async function POST(req: NextRequest) {
       routine.tasks.push(newTask as any);
       routine.totalTasks = routine.tasks.length;
       routine.isAllCompleted = false;
+      routine.markModified('tasks');
       await routine.save();
 
       return NextResponse.json({
@@ -274,6 +276,7 @@ export async function POST(req: NextRequest) {
       routine.completedCount = routine.tasks.filter((t) => t.isCompleted).length;
       routine.isAllCompleted =
         routine.tasks.length > 0 && routine.completedCount === routine.tasks.length;
+      routine.markModified('tasks');
       await routine.save();
 
       return NextResponse.json({

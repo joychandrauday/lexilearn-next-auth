@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import axios from 'axios';
-import { useSession } from 'next-auth/react';
+import { useSession, signIn } from 'next-auth/react';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -30,7 +30,24 @@ const { TextArea } = Input;
 
 export default function StudyPlannerPage() {
   const { data: session } = useSession();
-  const userEmail = session?.user?.email || '';
+  const [storedEmail, setStoredEmail] = useState<string>('');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      let email = localStorage.getItem('lexi_user_email');
+      if (!email && !session?.user?.email) {
+        let guestId = localStorage.getItem('lexi_guest_id');
+        if (!guestId) {
+          guestId = 'guest_' + Math.random().toString(36).substring(2, 9);
+          localStorage.setItem('lexi_guest_id', guestId);
+        }
+        email = `${guestId}@guest.lexilearn.local`;
+      }
+      if (email) setStoredEmail(email);
+    }
+  }, [session]);
+
+  const activeEmail = session?.user?.email || storedEmail || '';
 
   const [loading, setLoading] = useState(true);
   const [routine, setRoutine] = useState<any>(null);
@@ -57,10 +74,11 @@ export default function StudyPlannerPage() {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const fetchPlanner = async () => {
+    if (!activeEmail) return;
     setLoading(true);
     try {
       const res = await axios.get('/api/study-planner', {
-        params: { userEmail },
+        params: { userEmail: activeEmail },
       });
       if (res.data.success) {
         setRoutine(res.data.routine);
@@ -71,16 +89,18 @@ export default function StudyPlannerPage() {
           setReflectionText(res.data.routine.dailyReflection);
         }
       }
-    } catch {
-      toast.error('Failed to load study planner');
+    } catch (err: any) {
+      toast.error(err?.response?.data?.error || 'Failed to load study planner');
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchPlanner();
-  }, [userEmail]);
+    if (activeEmail) {
+      fetchPlanner();
+    }
+  }, [activeEmail]);
 
   // Pomodoro Timer Countdown Effect
   useEffect(() => {
@@ -126,11 +146,11 @@ export default function StudyPlannerPage() {
   };
 
   const handleLogPomodoro = async (minutes: number) => {
-    if (!userEmail) return;
+    if (!activeEmail) return;
     try {
       const res = await axios.post('/api/study-planner', {
         action: 'log-pomodoro',
-        userEmail,
+        userEmail: activeEmail,
         focusMinutes: minutes,
       });
       if (res.data.success) {
@@ -144,12 +164,35 @@ export default function StudyPlannerPage() {
     }
   };
 
-  // Toggle Task Completion
+  // Toggle Task Completion with Optimistic UI
   const handleToggleTask = async (taskId: string) => {
+    if (!routine) return;
+
+    // Previous snapshot for rollback on network error
+    const previousRoutine = { ...routine };
+
+    // Optimistic UI state update
+    const updatedTasks = (routine.tasks || []).map((t: any) => {
+      if (t.id === taskId) {
+        return { ...t, isCompleted: !t.isCompleted };
+      }
+      return t;
+    });
+
+    const completedCount = updatedTasks.filter((t: any) => t.isCompleted).length;
+    const isAllCompleted = updatedTasks.length > 0 && completedCount === updatedTasks.length;
+
+    setRoutine({
+      ...routine,
+      tasks: updatedTasks,
+      completedCount,
+      isAllCompleted,
+    });
+
     try {
       const res = await axios.post('/api/study-planner', {
         action: 'toggle-task',
-        userEmail,
+        userEmail: activeEmail,
         taskId,
       });
 
@@ -157,8 +200,10 @@ export default function StudyPlannerPage() {
         setRoutine(res.data.routine);
         toast.success(res.data.message);
       }
-    } catch {
-      toast.error('Failed to update task');
+    } catch (err: any) {
+      // Rollback on failure
+      setRoutine(previousRoutine);
+      toast.error(err?.response?.data?.error || 'Failed to update task');
     }
   };
 
@@ -168,7 +213,7 @@ export default function StudyPlannerPage() {
     try {
       const res = await axios.post('/api/study-planner', {
         action: 'add-task',
-        userEmail,
+        userEmail: activeEmail,
         taskData: {
           title: values.title,
           slot: values.slot,
@@ -183,8 +228,8 @@ export default function StudyPlannerPage() {
         setAddTaskModalOpen(false);
         addTaskForm.resetFields();
       }
-    } catch {
-      toast.error('Failed to add task');
+    } catch (err: any) {
+      toast.error(err?.response?.data?.error || 'Failed to add task');
     } finally {
       setAddingTask(false);
     }
@@ -195,7 +240,7 @@ export default function StudyPlannerPage() {
     try {
       const res = await axios.post('/api/study-planner', {
         action: 'delete-task',
-        userEmail,
+        userEmail: activeEmail,
         taskId,
       });
 
@@ -203,8 +248,8 @@ export default function StudyPlannerPage() {
         setRoutine(res.data.routine);
         toast.success(res.data.message);
       }
-    } catch {
-      toast.error('Failed to delete task');
+    } catch (err: any) {
+      toast.error(err?.response?.data?.error || 'Failed to delete task');
     }
   };
 
@@ -214,14 +259,14 @@ export default function StudyPlannerPage() {
     try {
       const res = await axios.post('/api/study-planner', {
         action: 'save-reflection',
-        userEmail,
+        userEmail: activeEmail,
         reflection: reflectionText,
       });
       if (res.data.success) {
         toast.success(res.data.message);
       }
-    } catch {
-      toast.error('Failed to save reflection');
+    } catch (err: any) {
+      toast.error(err?.response?.data?.error || 'Failed to save reflection');
     } finally {
       setSavingReflection(false);
     }
@@ -309,6 +354,28 @@ export default function StudyPlannerPage() {
 
       {/* Main Container */}
       <main className="max-w-6xl mx-auto px-4 -mt-6 space-y-6">
+        {/* Guest Mode Notice */}
+        {!session?.user?.email && (
+          <div className="bg-amber-50/90 border border-amber-200 text-amber-900 px-4 py-3 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xs">
+            <div className="flex items-center gap-2.5">
+              <BulbOutlined className="text-amber-600 text-base shrink-0" />
+              <div className="text-xs">
+                <span className="font-black block sm:inline">আপনি গেস্ট মোডে স্টাডি প্ল্যানার ব্যবহার করছেন।</span>
+                <span className="text-amber-700 ml-0 sm:ml-1 font-medium">
+                  আপনার পড়ার ধারাবাহিকতা, রুটিন ও অর্জিত XP ক্লাউডে স্থায়ীভাবে সংরক্ষণ করতে গুগল দিয়ে লগইন করুন।
+                </span>
+              </div>
+            </div>
+            <Button
+              size="small"
+              type="primary"
+              onClick={() => signIn('google')}
+              className="bg-amber-600 hover:!bg-amber-700 rounded-xl font-bold text-xs shrink-0"
+            >
+              গুগল দিয়ে লগইন
+            </Button>
+          </div>
+        )}
         {/* Progress & Quick Stats Card */}
         <div className="bg-white rounded-3xl border border-slate-200 shadow-md p-6 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-2 text-center md:text-left flex-1">
