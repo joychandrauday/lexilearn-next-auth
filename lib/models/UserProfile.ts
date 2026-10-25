@@ -20,6 +20,10 @@ export interface IUserProfile extends Document {
   lastCapsuleDate?: string;
   completedCapsules?: string[];
   totalFocusMinutes?: number;
+  duelWins?: number;
+  duelLosses?: number;
+  duelDraws?: number;
+  duelRating?: number;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -109,6 +113,22 @@ const userProfileSchema = new Schema<IUserProfile>(
     totalFocusMinutes: {
       type: Number,
       default: 0,
+    },
+    duelWins: {
+      type: Number,
+      default: 0,
+    },
+    duelLosses: {
+      type: Number,
+      default: 0,
+    },
+    duelDraws: {
+      type: Number,
+      default: 0,
+    },
+    duelRating: {
+      type: Number,
+      default: 1200,
     },
   },
   { timestamps: true }

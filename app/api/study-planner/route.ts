@@ -6,7 +6,7 @@ import UserProfile from '../../../lib/models/UserProfile';
 const DEFAULT_RECOMMENDED_TASKS = [
   {
     id: 'rec-1',
-    title: 'দৈনিক এক্সাম ক্যাপসুল পড়া ও ৫টি সম্পাদকীয় শব্দ রিভিশন',
+    title: 'Daily Exam Capsule & 5 Editorial Words Revision',
     slot: 'morning' as const,
     subject: 'English & Affairs',
     estimatedMinutes: 20,
@@ -15,7 +15,7 @@ const DEFAULT_RECOMMENDED_TASKS = [
   },
   {
     id: 'rec-2',
-    title: 'বিগত ৩০ বছরের প্রশ্নব্যাংক থেকে ৫০টি প্রশ্ন সমাধান ও ব্যাখ্যা পড়া',
+    title: 'Solve 50 Questions from 30-Year Smart Question Bank',
     slot: 'morning' as const,
     subject: 'Smart Question Bank',
     estimatedMinutes: 35,
@@ -24,7 +24,7 @@ const DEFAULT_RECOMMENDED_TASKS = [
   },
   {
     id: 'rec-3',
-    title: 'ইংরেজি ব্যাকরণ: Appropriate Preposition ও Subject-Verb Agreement',
+    title: 'English Grammar: Appropriate Prepositions & Subject-Verb Agreement',
     slot: 'afternoon' as const,
     subject: 'English Grammar',
     estimatedMinutes: 40,
@@ -33,7 +33,7 @@ const DEFAULT_RECOMMENDED_TASKS = [
   },
   {
     id: 'rec-4',
-    title: 'বাংলাদেশ বিষয়াবলী: সংবিধানের প্রধান অনুচ্ছেদ ও মুক্তিযুদ্ধ টাইমলাইন',
+    title: 'Bangladesh Affairs: Key Constitution Articles & 1971 Timeline',
     slot: 'evening' as const,
     subject: 'Bangladesh Affairs',
     estimatedMinutes: 45,
@@ -42,7 +42,7 @@ const DEFAULT_RECOMMENDED_TASKS = [
   },
   {
     id: 'rec-5',
-    title: 'ভুলের খাতা (Mistake Vault) রিভিশন ও দৈনিক আত্মবিশ্লেষণ',
+    title: 'Mistake Vault Revision & Daily Self-Reflection',
     slot: 'night' as const,
     subject: 'Mistake Vault',
     estimatedMinutes: 20,

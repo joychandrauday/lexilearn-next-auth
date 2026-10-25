@@ -10,6 +10,7 @@ import {
   CloseOutlined,
   FireOutlined,
   ThunderboltFilled,
+  ThunderboltOutlined,
   BookOutlined,
   PlusOutlined,
   UserOutlined,
@@ -45,6 +46,7 @@ export default function Navbar() {
     { label: 'হোম', href: '/' },
     { label: 'দৈনিক ক্যাপসুল', href: '/daily-capsule' },
     { label: 'স্মার্ট প্রশ্নব্যাংক', href: '/question-bank' },
+    { label: '১-vs-১ কুইজ ডুয়েল', href: '/battle' },
     { label: 'স্টাডি প্ল্যানার', href: '/planner' },
     { label: 'প্রস্তুতি ফিড', href: '/feed' },
     { label: 'প্রস্তুতি নোটবুক', href: '/notebook' },
@@ -83,6 +85,11 @@ export default function Navbar() {
       key: 'question-bank',
       label: <Link href="/question-bank">স্মার্ট প্রশ্নব্যাংক (Question Bank)</Link>,
       icon: <BookOutlined />,
+    },
+    {
+      key: 'battle',
+      label: <Link href="/battle">১-vs-১ কুইজ ডুয়েল (Aspirant Duel)</Link>,
+      icon: <ThunderboltOutlined />,
     },
     {
       key: 'planner',
