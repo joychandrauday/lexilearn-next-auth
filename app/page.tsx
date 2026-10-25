@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Button, Tag, Progress } from 'antd';
+import { Button, Tag, Input } from 'antd';
 import {
   Sparkles,
   Brain,
@@ -26,10 +26,10 @@ import {
   Play,
   RotateCcw,
   Clock,
-  Sparkle,
-  FileText,
   Printer,
   ChevronRight,
+  Send,
+  Users,
 } from 'lucide-react';
 import {
   ThunderboltFilled,
@@ -39,59 +39,161 @@ import {
   BookOutlined,
   RobotOutlined,
   FireOutlined,
-  TrophyOutlined,
   PlusOutlined,
   CheckOutlined,
-  ArrowRightOutlined,
+  SyncOutlined,
 } from '@ant-design/icons';
+import axios from 'axios';
+import Footer from '../components/Footer';
 
 // Sample Live Interactive Demos
 const DEMO_TABS = [
   { id: 'reel', label: '১ মিনিটের রিলস ক্যাপসুল', icon: Play },
   { id: 'mcq', label: 'বিসিএস MCQ চ্যালেঞ্জ', icon: Target },
-  { id: 'ai', label: 'লেক্সিবট এআই মেন্টর', icon: Bot },
+  { id: 'ai', label: 'লেক্সিবট এআই মেন্টর (লাইভ)', icon: Bot },
   { id: 'notebook', label: 'স্টাডি বাইন্ডার ও শিট', icon: BookOpen },
+];
+
+const REEL_DEMOS = [
+  {
+    word: 'Candid',
+    pos: 'Adjective',
+    bangla: 'সরল, স্পষ্টবাদী, অকপট',
+    meaning: 'Frank, outspoken, sincere, honest',
+    mnemonic: 'Can + did -> যে যা করতে পারে তা কোনো দ্বিধা বা ভয় ছাড়া অকপটে সরাসরি বলে দেয়!',
+    exams: ['৪৩তম বিসিএস', 'বাংলাদেশ ব্যাংক এডি'],
+  },
+  {
+    word: 'Ubiquitous',
+    pos: 'Adjective',
+    bangla: 'সর্বব্যাপী, সর্বত্র বিরাজমান',
+    meaning: 'Present, appearing, or found everywhere',
+    mnemonic: 'Ubi (উবি) + quitous (কোথায়) -> যা সর্বত্র বা সব জায়গায় অনায়াসে পাওয়া যায়!',
+    exams: ['৪২তম বিসিএস', 'সমন্বিত ৮ ব্যাংক অফিসার'],
+  },
+  {
+    word: 'অকাল কুষ্মাণ্ড',
+    pos: 'বাগধারা',
+    bangla: 'অপদার্থ, অকেজো ব্যক্তি',
+    meaning: 'Good for nothing / Worthless person',
+    mnemonic: 'অকাল (অসময়ে) কুষ্মাণ্ড (চালকুমড়া) -> কোনো কাজে লাগে না, তাই অপদার্থ ব্যক্তি!',
+    exams: ['৪০তম বিসিএস', 'প্রাথমিক শিক্ষক নিয়োগ'],
+  },
+];
+
+const MCQ_DEMOS = [
+  {
+    exam: '৪৪তম বিসিএস প্রিলিমিনারি',
+    topic: 'Subjunctive Mood',
+    question: 'The doctor recommended that the patient ______ medicine regularly.',
+    options: [
+      { letter: 'A', text: 'takes', percent: 12 },
+      { letter: 'B', text: 'take', percent: 76, correct: true },
+      { letter: 'C', text: 'should take', percent: 8 },
+      { letter: 'D', text: 'will take', percent: 4 },
+    ],
+    explanation:
+      'কিছু বিশেষ Verb (recommend, demand, insist, require)-এর পর that ক্লজ থাকলে Subject যাই হোক না কেন Verb-এর সর্বদা Base Form (V1) বসে। কোনো s/es বা modal বসে না।',
+  },
+  {
+    exam: '৪১তম বিসিএস ও ব্যাংক এডি',
+    topic: 'Appropriate Preposition',
+    question: 'A true patriot is never blind ______ the defects of his own country.',
+    options: [
+      { letter: 'A', text: 'of', percent: 14 },
+      { letter: 'B', text: 'to', percent: 78, correct: true },
+      { letter: 'C', text: 'for', percent: 5 },
+      { letter: 'D', text: 'with', percent: 3 },
+    ],
+    explanation:
+      'Blind of মানে চোখে অন্ধ (যেমন: blind of one eye), কিন্তু কোনো দোষ বা ত্রুটির প্রতি অন্ধ হওয়া বোঝালে সর্বদা "Blind to" বসে।',
+  },
+  {
+    exam: '১০ম-৪৫তম বিসিএস প্রশ্নব্যাংক',
+    topic: 'বাংলাদেশ সংবিধান',
+    question: 'বাংলাদেশ সংবিধানের কোন অনুচ্ছেদে "আইনের দৃষ্টিতে সমতা" নিশ্চিত করা হয়েছে?',
+    options: [
+      { letter: 'A', text: 'অনুচ্ছেদ ১৯', percent: 6 },
+      { letter: 'B', text: 'অনুচ্ছেদ ২৭', percent: 84, correct: true },
+      { letter: 'C', text: 'অনুচ্ছেদ ২৯', percent: 7 },
+      { letter: 'D', text: 'অনুচ্ছেদ ৩১', percent: 3 },
+    ],
+    explanation:
+      'সংবিধানের ২৭ নম্বর অনুচ্ছেদে বলা হয়েছে: "সকল নাগরিক আইনের দৃষ্টিতে সমান এবং আইনের সমান আশ্রয় লাভের অধিকারী।" ২৯ নম্বর অনুচ্ছেদ হলো সরকারি নিয়োগে সমতা।',
+  },
+];
+
+const LIVE_COMMUNITY_PULSES = [
+  { user: 'তানভীর আহমেদ', action: '৪৬তম বিসিএস নোটবুকে "Subjunctive Mood" সেভ করেছেন', time: '১ মিনিট আগে' },
+  { user: 'ফারহানা ইয়াসমিন', action: 'বাংলাদেশ ব্যাংক এডি কুইজে ৯৫% নির্ভুলতা অর্জন করেছেন', time: '৩ মিনিট আগে' },
+  { user: 'সাকিব আল হাসান', action: '৬৪৮টি বাগধারার মধ্যে "অকাল কুষ্মাণ্ড" রিভিশন করেছেন', time: '৫ মিনিট আগে' },
+  { user: 'নুসরাত জাহান', action: 'SM-2 স্পেসড ফ্লাশকার্ডে ৫০টি শব্দ আয়ত্ত করেছেন', time: '৮ মিনিট আগে' },
 ];
 
 export default function LandingPage() {
   const [activeDemo, setActiveDemo] = useState<'reel' | 'mcq' | 'ai' | 'notebook'>('reel');
 
-  // Interactive MCQ Demo state
-  const [selectedOption, setSelectedOption] = useState<number | null>(null);
-
-  // Interactive Reel Demo state
+  // Interactive Reel state
+  const [reelIndex, setReelIndex] = useState(0);
   const [savedToNotebook, setSavedToNotebook] = useState(false);
   const [isPronouncing, setIsPronouncing] = useState(false);
 
-  // Interactive AI Demo state
-  const [aiPreset, setAiPreset] = useState<number>(0);
+  // Interactive MCQ state
+  const [mcqIndex, setMcqIndex] = useState(0);
+  const [selectedOption, setSelectedOption] = useState<number | null>(null);
 
-  const AI_DEMO_PRESETS = [
-    {
-      q: 'Candid vs Cynical এর মূল পার্থক্য কী?',
-      ans: 'Candid মানে সরল বা অকপট (Frank, Outspoken)। আর Cynical মানে মানুষের ভালো উদ্দেশ্যে সন্দেহপ্রবণ বা স্বার্থপর মনে করা (Distrustful)।\n\n• দেশি ট্রিক: Can-did -> যা পারে অকপটে সরাসরি বলে।\n• বিসিএস ট্র্যাপ: ৪৩তম বিসিএস-এ "A person who doubts human sincerity" প্রশ্নের উত্তর ছিল Cynical।',
-    },
-    {
-      q: 'সংবিধানের ২৭ ও ২৯ অনুচ্ছেদের পার্থক্য কী?',
-      ans: '• অনুচ্ছেদ ২৭: আইনের দৃষ্টিতে সমতা এবং আইনের সমান আশ্রয় লাভের অধিকার।\n• অনুচ্ছেদ ২৯: সরকারি নিয়োগ লাভে সকল নাগরিকের সুযোগের সমতা (কোটা ও অনগ্রসর নাগরিকদের বিশেষ সুবিধা এতে সংরক্ষিত)।\n\n[টিপস] বিগত বিসিএস প্রিলিতে এ দুটি অনুচ্ছেদ ঘুরিয়ে-ফিরিয়ে বহুবার এসেছে।',
-    },
-    {
-      q: 'কুষ্মাণ্ড ও অকালপক্ব বানান শুদ্ধ কেন?',
-      ans: '• কুষ্মাণ্ড: সংস্কৃত সন্ধির নিয়মে ষ + ্ম + াণ্ড (ভুল: কুষ্মান্ড)। অর্থ: চালকুমড়া বা অপদার্থ ব্যক্তি।\n• অকালপক্ব: ক-এর সাথে ব-ফলা (পক্ব) আবশ্যক (ভুল: অকালপক্ক)। বাংলা একাডেমি প্রমিত নিয়মে ব-ফলা বর্জন করা যাবে না।',
-    },
-  ];
+  // Live Interactive AI state
+  const [customAiQuery, setCustomAiQuery] = useState('');
+  const [aiResponse, setAiResponse] = useState<string>(
+    'Candid মানে সরল বা অকপট (Frank, Outspoken)। আর Cynical মানে মানুষের ভালো উদ্দেশ্যে সন্দেহপ্রবণ বা স্বার্থপর মনে করা (Distrustful)।\n\n• দেশি ট্রিক: Can-did -> যা পারে অকপটে সরাসরি বলে।\n• বিসিএস ট্র্যাপ: ৪৩তম বিসিএস-এ "A person who doubts human sincerity" প্রশ্নের উত্তর ছিল Cynical।'
+  );
+  const [aiLoading, setAiLoading] = useState(false);
+
+  // Daily target habit calculator
+  const [selectedTargetExam, setSelectedTargetExam] = useState<'bcs' | 'bank' | 'primary'>('bcs');
+
+  // Live community ticker index
+  const [tickerIndex, setTickerIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTickerIndex((prev) => (prev + 1) % LIVE_COMMUNITY_PULSES.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, []);
 
   // Speech TTS handler
   const handlePronounce = (text: string) => {
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'en-US';
+      utterance.lang = text.match(/[a-zA-Z]/) ? 'en-US' : 'bn-BD';
       utterance.rate = 0.9;
       utterance.onstart = () => setIsPronouncing(true);
       utterance.onend = () => setIsPronouncing(false);
       utterance.onerror = () => setIsPronouncing(false);
       window.speechSynthesis.speak(utterance);
+    }
+  };
+
+  // Live AI chat call
+  const handleAskLiveAi = async (presetPrompt?: string) => {
+    const query = presetPrompt || customAiQuery.trim();
+    if (!query || aiLoading) return;
+
+    setAiLoading(true);
+    try {
+      const res = await axios.post('/api/ai/chat', {
+        messages: [{ role: 'user', content: query }],
+      });
+
+      if (res.data?.success && res.data?.reply) {
+        setAiResponse(res.data.reply);
+      }
+    } catch {
+      setAiResponse('দুঃখিত, সংযোগে সামান্য বিঘ্ন ঘটেছে। অনুগ্রহ করে আবার চেষ্টা করুন।');
+    } finally {
+      setAiLoading(false);
     }
   };
 
@@ -107,8 +209,11 @@ export default function LandingPage() {
     }
   };
 
+  const activeReel = REEL_DEMOS[reelIndex];
+  const activeMcq = MCQ_DEMOS[mcqIndex];
+
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 selection:bg-emerald-500 selection:text-white">
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 selection:bg-emerald-500 selection:text-white relative">
       {/* 1. HERO SECTION WITH DYNAMIC ENTRANCE & GLOW */}
       <section className="relative overflow-hidden pt-12 pb-20 md:pt-20 md:pb-32 bg-gradient-to-b from-slate-950 via-slate-900 to-emerald-950 text-white">
         {/* Glow backdrop circles */}
@@ -350,7 +455,7 @@ export default function LandingPage() {
               লাইভ প্রোডাক্ট অভিজ্ঞতা
             </span>
             <h2 className="text-2xl sm:text-4xl font-black text-slate-900 mt-3 mb-2 tracking-tight">
-              এখনই সাইটটির মূল ফিচারগুলো পরখ করে দেখুন
+              এখনই সাইটটির মূল ফিচারগুলো চালিয়ে দেখুন
             </h2>
             <p className="text-xs sm:text-sm text-gray-500 font-medium">
               লগইন করার আগেই অভিজ্ঞতা নিন কীভাবে লেক্সিলার্ন আপনার প্রতিদিনের প্রস্তুতি বদলে দেয়।
@@ -385,7 +490,7 @@ export default function LandingPage() {
               {/* TAB 1: REEL CARD DEMO */}
               {activeDemo === 'reel' && (
                 <motion.div
-                  key="reel-demo"
+                  key={`reel-demo-${reelIndex}`}
                   initial={{ opacity: 0, scale: 0.96 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.96 }}
@@ -399,7 +504,7 @@ export default function LandingPage() {
                       </div>
                       <div>
                         <span className="font-black text-xs text-gray-900 block">লেক্সিবট রিলস ক্যাপসুল</span>
-                        <span className="text-[10px] text-gray-400">বিসিএস ও ব্যাংক প্রিলিমিনারি</span>
+                        <span className="text-[10px] text-gray-400">ক্যাপসুল {reelIndex + 1} / {REEL_DEMOS.length}</span>
                       </div>
                     </div>
                     <Tag color="cyan" className="font-bold text-[10px] m-0 border-0 rounded-md">
@@ -411,16 +516,16 @@ export default function LandingPage() {
                   <div className="bg-gradient-to-br from-slate-50 via-emerald-50/30 to-teal-50/20 p-5 rounded-2xl border border-emerald-100 mb-4">
                     <div className="flex items-center justify-between mb-2">
                       <div>
-                        <span className="text-3xl font-black text-slate-900 block tracking-tight">Candid</span>
+                        <span className="text-3xl font-black text-slate-900 block tracking-tight">{activeReel.word}</span>
                         <span className="text-xs font-bold text-emerald-700 uppercase tracking-widest">
-                          Adjective
+                          {activeReel.pos}
                         </span>
                       </div>
                       <Button
                         shape="circle"
                         icon={<Volume2 className="w-4 h-4 text-white" />}
                         loading={isPronouncing}
-                        onClick={() => handlePronounce('Candid')}
+                        onClick={() => handlePronounce(activeReel.word)}
                         className="bg-emerald-600 hover:!bg-emerald-500 !text-white border-0 shadow-xs flex items-center justify-center"
                         title="উচ্চারণ শুনুন"
                       />
@@ -429,27 +534,29 @@ export default function LandingPage() {
                     <div className="space-y-2 text-xs sm:text-sm text-gray-700 pt-2 border-t border-emerald-100">
                       <div className="flex items-baseline gap-2">
                         <span className="font-bold text-gray-500 text-xs">বাংলা অর্থ:</span>
-                        <span className="font-black text-emerald-950 text-base">সরল, স্পষ্টবাদী, অকপট</span>
+                        <span className="font-black text-emerald-950 text-base">{activeReel.bangla}</span>
+                      </div>
+
+                      <div className="text-xs text-gray-600 font-medium">
+                        <span className="font-bold text-gray-500 block text-[11px]">English Meaning:</span>
+                        {activeReel.meaning}
                       </div>
 
                       <div className="bg-amber-50/90 border border-amber-200 p-3 rounded-xl flex items-start gap-2 text-xs">
                         <Sparkles className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
                         <div>
                           <span className="font-bold text-amber-950 block text-[11px]">দেশি স্মৃতিসূত্র (Desi Mnemonic):</span>
-                          <span className="text-amber-900 leading-snug">
-                            &quot;Can + did&quot; &rarr; যে যা করতে পারে তা কোনো ভয় বা দ্বিধা ছাড়া সরাসরি অকপটে বলে দেয়!
-                          </span>
+                          <span className="text-amber-900 leading-snug">{activeReel.mnemonic}</span>
                         </div>
                       </div>
 
                       <div className="flex items-center gap-1.5 pt-2">
                         <span className="text-[10px] font-bold text-gray-400">বিগত পরীক্ষা:</span>
-                        <Tag color="purple" className="text-[10px] font-bold rounded-md m-0">
-                          ৪৩তম বিসিএস
-                        </Tag>
-                        <Tag color="blue" className="text-[10px] font-bold rounded-md m-0">
-                          বাংলাদেশ ব্যাংক এডি
-                        </Tag>
+                        {activeReel.exams.map((ex, idx) => (
+                          <Tag key={idx} color="purple" className="text-[10px] font-bold rounded-md m-0">
+                            {ex}
+                          </Tag>
+                        ))}
                       </div>
                     </div>
                   </div>
@@ -468,11 +575,15 @@ export default function LandingPage() {
                       {savedToNotebook ? 'নোটবুকে সেভ হয়েছে!' : 'নোটবুকে সেভ করুন'}
                     </Button>
 
-                    <Link href="/feed">
-                      <span className="text-xs font-black text-emerald-700 hover:underline flex items-center gap-1">
-                        সম্পূর্ণ ফিড খুলুন <ArrowRight className="w-3.5 h-3.5" />
-                      </span>
-                    </Link>
+                    <Button
+                      onClick={() => {
+                        setReelIndex((prev) => (prev + 1) % REEL_DEMOS.length);
+                        setSavedToNotebook(false);
+                      }}
+                      className="text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 border-0 rounded-xl h-9"
+                    >
+                      পরবর্তী ক্যাপসুল &rarr;
+                    </Button>
                   </div>
                 </motion.div>
               )}
@@ -480,7 +591,7 @@ export default function LandingPage() {
               {/* TAB 2: LIVE MCQ DEMO */}
               {activeDemo === 'mcq' && (
                 <motion.div
-                  key="mcq-demo"
+                  key={`mcq-demo-${mcqIndex}`}
                   initial={{ opacity: 0, scale: 0.96 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.96 }}
@@ -489,23 +600,18 @@ export default function LandingPage() {
                 >
                   <div className="flex items-center justify-between mb-3 pb-2 border-b border-gray-100">
                     <span className="bg-indigo-600 text-white text-[10px] font-black px-2.5 py-0.5 rounded-lg">
-                      ৪৪তম বিসিএস প্রিলিমিনারি
+                      {activeMcq.exam}
                     </span>
-                    <span className="text-xs text-gray-400 font-bold">Subjunctive Mood</span>
+                    <span className="text-xs text-gray-400 font-bold">{activeMcq.topic}</span>
                   </div>
 
                   <h3 className="font-bold text-sm sm:text-base text-slate-900 mb-4 leading-snug">
-                    &quot;The doctor recommended that the patient ______ medicine regularly.&quot;
+                    &quot;{activeMcq.question}&quot;
                   </h3>
 
                   {/* Options */}
                   <div className="space-y-2 mb-4">
-                    {[
-                      { letter: 'A', text: 'takes', percent: 12 },
-                      { letter: 'B', text: 'take', percent: 76, correct: true },
-                      { letter: 'C', text: 'should take', percent: 8 },
-                      { letter: 'D', text: 'will take', percent: 4 },
-                    ].map((opt, idx) => {
+                    {activeMcq.options.map((opt, idx) => {
                       const isSelected = selectedOption === idx;
                       const answered = selectedOption !== null;
 
@@ -565,24 +671,33 @@ export default function LandingPage() {
                       className="p-3 bg-emerald-50/80 border border-emerald-200 rounded-xl text-xs text-emerald-950 leading-relaxed font-medium mb-3"
                     >
                       <span className="font-bold text-emerald-900 block mb-0.5">সঠিক উত্তরের ব্যাখ্যা:</span>
-                      কিছু বিশেষ Verb (recommend, demand, insist, require)-এর পর &apos;that&apos; ক্লজ থাকলে Subject যাই হোক
-                      না কেন Verb-এর সর্বদা Base Form (V1) বসে। কোনো s/es বা modal বসে না।
+                      {activeMcq.explanation}
                     </motion.div>
                   )}
 
                   <div className="flex justify-between items-center text-xs text-gray-400 pt-1">
-                    <span>{selectedOption === null ? 'একটি অপশনে ক্লিক করে ভোট দিন' : 'ভোট গৃহীত হয়েছে!'}</span>
                     <button
-                      onClick={() => setSelectedOption(null)}
-                      className="text-emerald-700 font-bold hover:underline"
+                      onClick={() => {
+                        setMcqIndex((prev) => (prev + 1) % MCQ_DEMOS.length);
+                        setSelectedOption(null);
+                      }}
+                      className="text-emerald-700 font-bold hover:underline cursor-pointer"
                     >
-                      রিসেট করুন
+                      অন্য প্রশ্ন ট্রাই করুন ({mcqIndex + 1}/{MCQ_DEMOS.length}) &rarr;
                     </button>
+                    {selectedOption !== null && (
+                      <button
+                        onClick={() => setSelectedOption(null)}
+                        className="text-gray-400 hover:text-gray-600 cursor-pointer"
+                      >
+                        রিসেট
+                      </button>
+                    )}
                   </div>
                 </motion.div>
               )}
 
-              {/* TAB 3: AI MENTOR DEMO */}
+              {/* TAB 3: LIVE FUNCTIONAL AI MENTOR DEMO */}
               {activeDemo === 'ai' && (
                 <motion.div
                   key="ai-demo"
@@ -592,50 +707,94 @@ export default function LandingPage() {
                   transition={{ duration: 0.3 }}
                   className="bg-white rounded-3xl border border-gray-200 p-6 shadow-xl"
                 >
-                  <div className="flex items-center gap-2 mb-3 pb-2 border-b border-gray-100">
-                    <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center text-white">
-                      <Bot className="w-4 h-4" />
+                  <div className="flex items-center justify-between mb-3 pb-2 border-b border-gray-100">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center text-white">
+                        <Bot className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <span className="font-black text-xs text-gray-900 block">লেক্সিবট লাইভ এআই পরীক্ষক</span>
+                        <span className="text-[10px] text-emerald-600 font-medium">সরাসরি প্রশ্ন করুন • রিয়েল-টাইম ইঞ্জিন</span>
+                      </div>
                     </div>
-                    <div>
-                      <span className="font-black text-xs text-gray-900 block">লেক্সিবট এআই মেন্টর প্রিভিউ</span>
-                      <span className="text-[10px] text-emerald-600 font-medium">অনলাইন • বিসিএস / ব্যাংক বিশেষজ্ঞ</span>
-                    </div>
+                    <Tag color="purple" className="text-[10px] font-bold rounded-md m-0 border-0">
+                      লাইভ এআই
+                    </Tag>
                   </div>
 
-                  {/* Query Selector chips */}
+                  {/* Preset Quick Chips */}
                   <div className="flex gap-1.5 overflow-x-auto no-scrollbar mb-3 pb-1">
-                    {AI_DEMO_PRESETS.map((p, idx) => (
+                    {[
+                      'Candid vs Cynical পার্থক্য কী?',
+                      'সংবিধানের ২৭ ও ২৯ অনুচ্ছেদের পার্থক্য কী?',
+                      'কুষ্মাণ্ড ও অকালপক্ব বানান শুদ্ধ কেন?',
+                      'লাভ-ক্ষতির ১০ সেকেন্ড শর্টকাট সূত্র কী?',
+                    ].map((p, idx) => (
                       <button
                         key={idx}
-                        onClick={() => setAiPreset(idx)}
-                        className={`px-2.5 py-1 rounded-xl text-[11px] font-bold shrink-0 transition-all cursor-pointer ${
-                          aiPreset === idx
-                            ? 'bg-indigo-600 text-white shadow-xs'
-                            : 'bg-slate-100 text-gray-700 hover:bg-slate-200'
-                        }`}
+                        onClick={() => {
+                          setCustomAiQuery(p);
+                          handleAskLiveAi(p);
+                        }}
+                        className="px-2.5 py-1 rounded-xl text-[11px] font-bold shrink-0 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 transition cursor-pointer text-gray-700"
                       >
-                        {p.q}
+                        {p}
                       </button>
                     ))}
                   </div>
 
-                  {/* AI Response Box */}
-                  <div className="bg-slate-50 p-4 rounded-2xl border border-gray-200/80 mb-4 min-h-[140px]">
-                    <div className="text-xs sm:text-sm text-gray-800 leading-relaxed font-normal whitespace-pre-wrap">
-                      {AI_DEMO_PRESETS[aiPreset].ans}
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <span className="text-[11px] text-gray-400">যেকোনো জটিল টপিকের টু-দ্য-পয়েন্ট ব্যাখ্যা</span>
+                  {/* Real-time Custom Query Input */}
+                  <div className="flex gap-2 mb-3">
+                    <Input
+                      placeholder="যেকোনো বিসিএস/ব্যাংক প্রশ্ন লিখুন (যেমন: সাবজাঙ্কটিভ নিয়ম...)"
+                      value={customAiQuery}
+                      onChange={(e) => setCustomAiQuery(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') handleAskLiveAi();
+                      }}
+                      disabled={aiLoading}
+                      className="rounded-xl text-xs py-2"
+                    />
                     <Button
                       type="primary"
-                      icon={<Bot className="w-3.5 h-3.5" />}
-                      onClick={triggerAIMentor}
-                      className="bg-indigo-600 hover:!bg-indigo-500 font-bold rounded-xl text-xs h-9 px-4"
+                      loading={aiLoading}
+                      onClick={() => handleAskLiveAi()}
+                      disabled={!customAiQuery.trim()}
+                      icon={<Send className="w-3.5 h-3.5" />}
+                      className="bg-indigo-600 hover:!bg-indigo-500 font-bold rounded-xl text-xs h-9 px-4 shrink-0"
                     >
-                      পূর্ণাঙ্গ চ্যাটবট খুলুন
+                      জিজ্ঞাসা করুন
                     </Button>
+                  </div>
+
+                  {/* AI Response Display */}
+                  <div className="bg-slate-50 p-4 rounded-2xl border border-gray-200/80 mb-3 min-h-[120px] max-h-[220px] overflow-y-auto no-scrollbar">
+                    {aiLoading ? (
+                      <div className="flex items-center gap-2 text-xs text-indigo-700 font-semibold py-4 justify-center">
+                        <SyncOutlined spin />
+                        <span>লেক্সিবট নির্ভুল উত্তর তৈরি করছে...</span>
+                      </div>
+                    ) : (
+                      <div className="text-xs sm:text-sm text-gray-800 leading-relaxed font-normal whitespace-pre-wrap">
+                        {aiResponse}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex items-center justify-between text-xs">
+                    <button
+                      onClick={() => handlePronounce(aiResponse.replace(/[#\*`_\[\]]/g, ' '))}
+                      className="text-gray-500 hover:text-indigo-600 flex items-center gap-1 font-semibold cursor-pointer"
+                    >
+                      <Volume2 className="w-3.5 h-3.5" />
+                      <span>উত্তর শুনুন</span>
+                    </button>
+                    <button
+                      onClick={triggerAIMentor}
+                      className="text-indigo-700 font-bold hover:underline cursor-pointer"
+                    >
+                      পূর্ণাঙ্গ চ্যাট উইন্ডো খুলুন &rarr;
+                    </button>
                   </div>
                 </motion.div>
               )}
@@ -800,25 +959,46 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* 5. YOUR 5-MINUTE DAILY ROUTINE TIMELINE */}
+      {/* 5. INTERACTIVE 5-MINUTE DAILY HABIT & EXAM CALCULATOR */}
       <section className="py-16 md:py-24 bg-slate-900 text-white relative overflow-hidden">
         <div className="max-w-5xl mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center max-w-2xl mx-auto mb-14"
+            className="text-center max-w-2xl mx-auto mb-10"
           >
             <span className="text-xs font-black uppercase tracking-widest text-emerald-300 bg-emerald-950/80 border border-emerald-400/30 px-3.5 py-1 rounded-full">
-              দৈনিক দিনলিপি
+              দৈনিক দিনলিপি ও লক্ষ্য ক্যালকুলেটর
             </span>
             <h2 className="text-2xl sm:text-4xl font-black text-white mt-3 mb-2 tracking-tight">
               দিনে মাত্র ৫ মিনিটের অভ্যাস, ক্যাডার হওয়ার স্বপ্ন পূরণ
             </h2>
             <p className="text-xs sm:text-sm text-emerald-100/70 font-normal">
-              ক্লান্তিকর ৮ ঘণ্টার চেয়ে প্রতিদিনের ৫ মিনিটের নিয়মিত স্মার্ট অভ্যাস অনেক বেশি শক্তিশালী।
+              আপনার লক্ষ্যভিত্তিক পরীক্ষা সিলেক্ট করে দেখুন আপনার প্রতিদিনের কাস্টমাইজড দিনলিপি।
             </p>
           </motion.div>
+
+          {/* Interactive Exam Selector Tabs */}
+          <div className="flex items-center justify-center gap-2 mb-10">
+            {[
+              { id: 'bcs', label: 'বিসিএস প্রিলিমিনারি' },
+              { id: 'bank', label: 'বাংলাদেশ ব্যাংক ও ৮ ব্যাংক' },
+              { id: 'primary', label: 'প্রাইমারি শিক্ষক ও NTRCA' },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setSelectedTargetExam(tab.id as any)}
+                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+                  selectedTargetExam === tab.id
+                    ? 'bg-emerald-500 text-slate-950 font-black shadow-lg scale-105'
+                    : 'bg-white/10 text-white hover:bg-white/15'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Step 1 */}
@@ -835,9 +1015,15 @@ export default function LandingPage() {
               <span className="text-[11px] font-black uppercase tracking-wider text-amber-300 block mb-1">
                 সকাল ৮:০০ • ঘুম থেকে উঠে
               </span>
-              <h3 className="font-black text-base text-white mb-2">৩টি রিলস ক্যাপসুল (২ মিনিট)</h3>
+              <h3 className="font-black text-base text-white mb-2">
+                {selectedTargetExam === 'bcs'
+                  ? '৩টি বিসিএস ভোকাব ও সম্পাদকীয় শব্দ (২ মিনিট)'
+                  : selectedTargetExam === 'bank'
+                  ? '৪টি হাই-ফ্রিকোয়েন্সি ব্যাংক ভোকাব (২ মিনিট)'
+                  : '৩টি বাংলা প্রমিত বানান ও বাগধারা (২ মিনিট)'}
+              </h3>
               <p className="text-xs text-gray-300 leading-relaxed font-normal m-0">
-                নাস্তার টেবিলে বা বাসে বসে ৩টি সম্পাদকীয় ভোকাব ও ব্যাকরণ ট্র্যাপ পড়ে নিন। কোনো বই খোলার প্রয়োজন নেই।
+                নাস্তার টেবিলে বা বাসে বসে ৩টি সম্পাদকীয় ভোকাব ও ব্যাকরণ ট্র্যাপ পড়ে নিন। কোনো ভারী বই খোলার প্রয়োজন নেই।
               </p>
             </motion.div>
 
@@ -855,7 +1041,13 @@ export default function LandingPage() {
               <span className="text-[11px] font-black uppercase tracking-wider text-emerald-300 block mb-1">
                 দুপুর ২:০০ • লাঞ্চ ব্রেকে
               </span>
-              <h3 className="font-black text-base text-white mb-2">৩টি বিসিএস MCQ চ্যালেঞ্জ (২ মিনিট)</h3>
+              <h3 className="font-black text-base text-white mb-2">
+                {selectedTargetExam === 'bcs'
+                  ? '৩টি বিসিএস ব্যাকরণ ও জিকে MCQ (২ মিনিট)'
+                  : selectedTargetExam === 'bank'
+                  ? '৩টি ম্যাথ শর্টকাট ও ক্রিটিক্যাল রিজনিং (২ মিনিট)'
+                  : '৩টি প্রাইমারি বিগত প্রশ্ন ও প্যাডাগজি (২ মিনিট)'}
+              </h3>
               <p className="text-xs text-gray-300 leading-relaxed font-normal m-0">
                 সহপাঠীদের সাথে ভোটে অংশ নিন, তৎক্ষণাৎ ভোট পার্সেন্টেজ দেখুন এবং ভেরিফায়েড ব্যাখ্যা পড়ে নিয়মটি আয়ত্ত করুন।
               </p>
@@ -1115,38 +1307,39 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* 9. FOOTER */}
-      <footer className="bg-white border-t border-gray-200 py-8">
-        <div className="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-black text-xs">
-              L
+      {/* 9. FLOATING LIVE COMMUNITY ACTIVITY TOAST */}
+      <div className="hidden sm:block fixed bottom-6 left-6 z-40 max-w-sm">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={tickerIndex}
+            initial={{ opacity: 0, y: 15, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -15, scale: 0.95 }}
+            transition={{ duration: 0.4 }}
+            className="bg-slate-900/90 backdrop-blur-md border border-slate-700/80 text-white p-3 rounded-2xl shadow-xl flex items-center gap-3"
+          >
+            <div className="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs shrink-0 border border-emerald-400/30">
+              <Users className="w-4 h-4" />
             </div>
-            <span className="font-black text-slate-900 text-sm">LexiLearn</span>
-            <span>• চাকরিপ্রার্থীদের স্মার্ট সহযোগী</span>
-          </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center justify-between gap-1">
+                <span className="font-black text-xs text-white truncate">
+                  {LIVE_COMMUNITY_PULSES[tickerIndex].user}
+                </span>
+                <span className="text-[10px] text-gray-400 shrink-0">
+                  {LIVE_COMMUNITY_PULSES[tickerIndex].time}
+                </span>
+              </div>
+              <p className="text-[11px] text-emerald-200/90 leading-tight m-0 truncate">
+                {LIVE_COMMUNITY_PULSES[tickerIndex].action}
+              </p>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </div>
 
-          <div className="flex items-center gap-4 font-semibold text-gray-600">
-            <Link href="/feed" className="hover:text-emerald-700">
-              ফিড
-            </Link>
-            <Link href="/notebook" className="hover:text-emerald-700">
-              নোটবুক
-            </Link>
-            <Link href="/bangla/baghdhara" className="hover:text-emerald-700">
-              বাগধারা
-            </Link>
-            <Link href="/campaign" className="hover:text-emerald-700">
-              ক্যাম্পেইন
-            </Link>
-            <Link href="/profile" className="hover:text-emerald-700">
-              প্রোফাইল
-            </Link>
-          </div>
-
-          <span className="text-[11px] text-gray-400">© 2026 LexiLearn Bangladesh. সর্বস্বত্ব সংরক্ষিত।</span>
-        </div>
-      </footer>
+      {/* 10. DETAILED COMPREHENSIVE FOOTER */}
+      <Footer />
     </div>
   );
 }

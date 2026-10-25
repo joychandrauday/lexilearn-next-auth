@@ -21,6 +21,9 @@ import {
   CheckCircleFilled,
   PhoneOutlined,
   MailOutlined,
+  DownloadOutlined,
+  AimOutlined,
+  QuestionCircleOutlined,
 } from '@ant-design/icons';
 import { Button, Input, Tag, message as antMessage } from 'antd';
 import MarkdownViewer from './AIChat/MarkdownViewer';
@@ -89,7 +92,40 @@ export default function AIChatBot() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [examFocus, setExamFocus] = useState<string>('বিসিএস প্রিলি');
   const [savedPhoneOrEmail, setSavedPhoneOrEmail] = useState<string>('');
+
+  const EXAM_MODES = [
+    { label: 'বিসিএস প্রিলি', tag: 'BCS' },
+    { label: 'বাংলাদেশ ব্যাংক', tag: 'BANK' },
+    { label: 'প্রাইমারি ও NTRCA', tag: 'DPE' },
+    { label: 'সাধারণ জ্ঞান ও সংবিধান', tag: 'GK' },
+  ];
+
+  const handleExportNotes = () => {
+    if (messages.length <= 1) {
+      antMessage.info('ডাউনলোড করার মতো পর্যাপ্ত নোট চ্যাটে নেই');
+      return;
+    }
+    const textContent = `# LexiLearn AI Mentor Study Notes\nতারিখ: ${new Date().toLocaleDateString('bn-BD')}\nফোকাস: ${examFocus}\n\n` +
+      messages
+        .filter((m) => m.id !== 'welcome' && m.id !== 'welcome-reset')
+        .map((m) => `### ${m.role === 'user' ? 'প্রশ্ন' : 'লেক্সিবট সমাধান'} (${m.timestamp}):\n${m.content}\n\n`)
+        .join('---\n\n');
+    const blob = new Blob([textContent], { type: 'text/markdown;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `LexiBot-Study-Notes-${new Date().toISOString().slice(0, 10)}.md`;
+    a.click();
+    URL.revokeObjectURL(url);
+    antMessage.success('নোট ফাইল ডাউনলোড সম্পন্ন হয়েছে!');
+  };
+
+  const handleQuizMe = () => {
+    const lastUserMsg = messages.filter((m) => m.role === 'user').pop()?.content || 'ভোকাবুলারি ও বিসিএস প্রস্তুতি';
+    handleSend(`[${examFocus} স্পেশাল কুইজ] "${lastUserMsg}" বিষয়ের উপর বিগত পরীক্ষার প্যাটার্নে ১টি ট্রিকি ৪-অপশনযুক্ত MCQ কুইজ প্রশ্ন এবং তার সঠিক ব্যাখ্যা দিন।`);
+  };
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -295,6 +331,13 @@ export default function AIChatBot() {
             <div className="flex items-center gap-1">
               <Button
                 type="text"
+                icon={<DownloadOutlined className="text-gray-300 hover:text-emerald-400 text-sm" />}
+                onClick={handleExportNotes}
+                title="নোট ডাউনলোড করুন (.md)"
+                className="hover:!bg-white/10 rounded-xl"
+              />
+              <Button
+                type="text"
                 icon={<DeleteOutlined className="text-gray-300 hover:text-rose-400 text-sm" />}
                 onClick={handleClearChat}
                 title="চ্যাট ক্লিয়ার করুন"
@@ -307,6 +350,37 @@ export default function AIChatBot() {
                 className="hover:!bg-white/10 rounded-xl"
               />
             </div>
+          </div>
+
+          {/* Exam Focus Mode Selector */}
+          <div className="bg-slate-900 border-b border-slate-800 px-3 py-1.5 flex items-center justify-between text-white overflow-x-auto no-scrollbar">
+            <div className="flex items-center gap-1">
+              <span className="text-[10px] font-bold text-slate-400 shrink-0 flex items-center gap-1">
+                <AimOutlined className="text-emerald-400" /> ফোকাস:
+              </span>
+              {EXAM_MODES.map((m, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setExamFocus(m.label)}
+                  className={`px-2 py-0.5 rounded-md text-[10px] font-bold transition shrink-0 ${
+                    examFocus === m.label
+                      ? 'bg-emerald-500 text-slate-950 font-black'
+                      : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                  }`}
+                >
+                  {m.label}
+                </button>
+              ))}
+            </div>
+
+            <button
+              onClick={handleQuizMe}
+              className="text-[10px] font-bold text-amber-300 hover:text-amber-200 bg-amber-500/10 border border-amber-400/30 px-2 py-0.5 rounded-md shrink-0 flex items-center gap-1 ml-2 transition"
+              title="বর্তমান টপিকে কুইজ প্রশ্ন তৈরি করুন"
+            >
+              <QuestionCircleOutlined />
+              <span>কুইজ নিন</span>
+            </button>
           </div>
 
           {/* Categorized Quick Prompts */}
