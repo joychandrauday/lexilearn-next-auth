@@ -43,6 +43,7 @@ export default function Navbar() {
   const navLinks = [
     { label: 'হোম', href: '/' },
     { label: 'দৈনিক ক্যাপসুল', href: '/daily-capsule' },
+    { label: 'স্মার্ট প্রশ্নব্যাংক', href: '/question-bank' },
     { label: 'প্রস্তুতি ফিড', href: '/feed' },
     { label: 'প্রস্তুতি নোটবুক', href: '/notebook' },
     { label: 'ক্যাম্পেইন', href: '/campaign' },
@@ -75,6 +76,11 @@ export default function Navbar() {
       key: 'daily-capsule',
       label: <Link href="/daily-capsule">দৈনিক এক্সাম ক্যাপসুল (Daily Capsule)</Link>,
       icon: <FireOutlined />,
+    },
+    {
+      key: 'question-bank',
+      label: <Link href="/question-bank">স্মার্ট প্রশ্নব্যাংক (Question Bank)</Link>,
+      icon: <BookOutlined />,
     },
     {
       key: 'notebook',
