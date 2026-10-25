@@ -12,7 +12,6 @@ import {
   CloseCircleFilled,
   ThunderboltFilled,
   BulbOutlined,
-  TagOutlined,
   RobotOutlined,
   TrophyOutlined,
   UserOutlined,
@@ -20,7 +19,7 @@ import {
   CheckOutlined,
   PlusOutlined,
 } from '@ant-design/icons';
-import { Button, Tag, Progress } from 'antd';
+import { Button, Tag } from 'antd';
 import { toast } from 'sonner';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
@@ -88,8 +87,6 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
   const [isBookmarked, setIsBookmarked] = useState(!!post.isBookmarked);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [showExplanation, setShowExplanation] = useState(false);
-  const [savingDeck, setSavingDeck] = useState(false);
-  const [savedToDeck, setSavedToDeck] = useState(false);
   const [savedToNotebook, setSavedToNotebook] = useState(false);
   const [savingNotebook, setSavingNotebook] = useState(false);
   const [speaking, setSpeaking] = useState(false);
@@ -154,75 +151,8 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
         userEmail: session?.user?.email || userEmail,
       });
     } catch {
-      // rollback
       setIsLiked(!nextState);
       setLikes((prev) => (!nextState ? prev + 1 : Math.max(0, prev - 1)));
-    }
-  };
-
-  // Bookmark handler
-  const handleBookmark = async () => {
-    const savedEmail = typeof window !== 'undefined' ? localStorage.getItem('lexi_user_email') : null;
-    const isAuthed = !!(session?.user?.email || savedEmail);
-
-    if (!isAuthed) {
-      if (typeof window !== 'undefined') {
-        window.dispatchEvent(new CustomEvent('lexi:request_auth'));
-      }
-      toast.error('বুকমার্ক করতে অনুগ্রহ করে সাইন ইন বা রেজিস্টার করুন');
-      return;
-    }
-
-    const effectiveEmail = session?.user?.email || savedEmail || userEmail;
-    const nextState = !isBookmarked;
-    setIsBookmarked(nextState);
-    setBookmarks((prev) => (nextState ? prev + 1 : Math.max(0, prev - 1)));
-
-    try {
-      await axios.post(`/api/feed/${post._id}/react`, {
-        action: 'bookmark',
-        userEmail: effectiveEmail,
-      });
-      toast.success(nextState ? 'কার্ডটি বুকমার্কে সংরক্ষিত হয়েছে' : 'বুকমার্ক সরানো হয়েছে');
-    } catch {
-      setIsBookmarked(!nextState);
-      setBookmarks((prev) => (!nextState ? prev + 1 : Math.max(0, prev - 1)));
-    }
-  };
-
-  // Save to Deck handler
-  const handleSaveToDeck = async () => {
-    if (!post.vocabData?.word) return;
-
-    // Strict Auth Gate
-    const savedEmail = typeof window !== 'undefined' ? localStorage.getItem('lexi_user_email') : null;
-    const isAuthed = !!(session?.user?.email || savedEmail);
-
-    if (!isAuthed) {
-      if (typeof window !== 'undefined') {
-        window.dispatchEvent(new CustomEvent('lexi:request_auth'));
-      }
-      toast.error('শব্দটি ডেক-এ সংরক্ষণ করতে অনুগ্রহ করে সাইন ইন বা রেজিস্টার করুন');
-      return;
-    }
-
-    const effectiveEmail = session?.user?.email || savedEmail || userEmail;
-
-    setSavingDeck(true);
-    try {
-      const res = await axios.post(`/api/feed/${post._id}/react`, {
-        action: 'save_to_deck',
-        userEmail: effectiveEmail,
-      });
-      if (res.data.success) {
-        setSavedToDeck(true);
-        setIsBookmarked(true);
-        toast.success(res.data.message || `"${post.vocabData.word}" আপনার রিভিশন ডেকে সেভ হয়েছে!`);
-      }
-    } catch {
-      toast.error('ডেকে সেভ করতে সমস্যা হয়েছে');
-    } finally {
-      setSavingDeck(false);
     }
   };
 
@@ -278,89 +208,79 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
   return (
     <div
       id={post._id}
-      className="bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden mb-6 relative"
+      className="w-full max-w-xl h-full max-h-[640px] bg-white rounded-3xl border border-gray-200/90 shadow-xl flex flex-col justify-between overflow-hidden relative transition-all"
     >
-      {/* Top Banner Tag for Pinned / Editorial */}
-      {post.isPinned && (
-        <div className="bg-gradient-to-r from-amber-500 to-amber-600 text-white text-[11px] font-black px-4 py-1 flex items-center gap-1.5 uppercase tracking-wider">
-          <ThunderboltFilled />
-          <span>আজকের স্পেশাল পিন্ড ক্যাপসুল</span>
-        </div>
-      )}
-
-      {post.type === 'daily_editorial' && !post.isPinned && (
-        <div className="bg-gradient-to-r from-indigo-900 to-slate-800 text-white text-[11px] font-bold px-4 py-1 flex items-center justify-between">
-          <span className="flex items-center gap-1">
-            <BulbOutlined className="text-amber-300" /> জাতীয় সম্পাদকীয় ভোকাবুলারি ক্যাপসুল
-          </span>
-          <span className="text-[10px] text-indigo-200">Daily Spotlight</span>
-        </div>
-      )}
-
-      {/* Capsule Header */}
-      <div className="p-5 pb-3 flex items-center justify-between">
-        <div className="flex items-center gap-3">
+      {/* Top Header Badge */}
+      <div className="px-5 pt-4 pb-2 flex items-center justify-between border-b border-gray-100 bg-slate-50/70 shrink-0">
+        <div className="flex items-center gap-2.5">
           <div
-            className={`w-10 h-10 rounded-2xl flex items-center justify-center font-bold text-white shadow-xs ${
+            className={`w-8 h-8 rounded-xl flex items-center justify-center font-bold text-white shadow-2xs ${
               post.author.role === 'lexibot'
                 ? 'bg-gradient-to-br from-indigo-600 to-purple-600'
                 : post.author.role === 'admin'
                 ? 'bg-gradient-to-br from-emerald-600 to-teal-700'
-                : 'bg-gradient-to-br from-slate-600 to-slate-800'
+                : 'bg-gradient-to-br from-slate-700 to-slate-900'
             }`}
           >
             {post.author.role === 'lexibot' ? (
-              <RobotOutlined className="text-lg" />
+              <RobotOutlined className="text-sm" />
             ) : post.author.role === 'admin' ? (
-              <ThunderboltFilled className="text-lg" />
+              <ThunderboltFilled className="text-sm" />
             ) : (
-              <UserOutlined className="text-base" />
+              <UserOutlined className="text-xs" />
             )}
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <h4 className="font-black text-sm text-gray-900 m-0">{post.author.name}</h4>
+              <span className="font-black text-xs text-gray-900">{post.author.name}</span>
               {post.author.role === 'lexibot' && (
-                <span className="bg-indigo-100 text-indigo-800 text-[10px] font-black px-1.5 py-0.5 rounded-md">
+                <span className="bg-indigo-100 text-indigo-800 text-[9px] font-black px-1.5 py-0.2 rounded">
                   AI Mentor
                 </span>
               )}
             </div>
-            <span className="text-xs text-gray-400 font-medium">
-              {post.category?.toUpperCase()} প্রস্তুতি • {new Date(post.createdAt).toLocaleDateString('bn-BD')}
+            <span className="text-[10px] text-gray-400 font-medium block">
+              {post.category?.toUpperCase()} প্রস্তুতি
             </span>
           </div>
         </div>
 
         <div className="flex items-center gap-1.5">
-          <Tag color="cyan" className="font-bold text-[11px] rounded-lg m-0 border-0">
+          {post.isPinned && (
+            <Tag color="gold" className="text-[10px] font-black rounded-md m-0 border-0">
+              পিন্ড
+            </Tag>
+          )}
+          <Tag color="cyan" className="font-bold text-[10px] rounded-md m-0 border-0">
             {post.type === 'vocab_card'
-              ? 'ভোকাব কার্ড'
+              ? 'ভোকাবুলারি'
               : post.type === 'exam_mcq'
-              ? 'MCQ চ্যালেঞ্জ'
+              ? 'MCQ কুইজ'
               : post.type === 'micro_lesson'
               ? '১ মিনিটের রুল'
               : post.type === 'user_progress'
-              ? 'অগ্রগতি'
+              ? 'মাইলস্টোন'
               : 'সম্পাদকীয়'}
           </Tag>
         </div>
       </div>
 
-      {/* Capsule Body */}
-      <div className="px-5 py-2">
-        <h3 className="font-black text-lg text-gray-900 mb-2 leading-snug">{post.title}</h3>
+      {/* Main Content Area (Scrollable if needed, nicely padded) */}
+      <div className="flex-1 px-5 py-4 overflow-y-auto no-scrollbar space-y-3">
+        <h3 className="font-black text-base sm:text-lg text-gray-900 m-0 leading-snug">
+          {post.title}
+        </h3>
 
-        {/* 1. VOCABULARY CARD TYPE */}
+        {/* 1. VOCABULARY CARD */}
         {post.vocabData && (
-          <div className="bg-gradient-to-br from-slate-50 via-emerald-50/20 to-teal-50/30 p-5 rounded-2xl border border-emerald-100/60 my-3">
-            <div className="flex items-center justify-between mb-3">
+          <div className="bg-gradient-to-br from-slate-50 via-emerald-50/30 to-teal-50/20 p-4 rounded-2xl border border-emerald-100/70 space-y-2.5">
+            <div className="flex items-center justify-between">
               <div>
-                <span className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight block">
+                <span className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight block">
                   {post.vocabData.word}
                 </span>
-                <span className="text-xs font-bold text-emerald-700 uppercase tracking-widest">
-                  {post.vocabData.partOfSpeech || 'word'}
+                <span className="text-[11px] font-bold text-emerald-700 uppercase tracking-wider">
+                  {post.vocabData.partOfSpeech || 'Word'}
                 </span>
               </div>
               <Button
@@ -368,91 +288,61 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
                 icon={<SoundOutlined />}
                 loading={speaking}
                 onClick={() => handlePronounce(post.vocabData?.word || '')}
-                className="bg-emerald-600 hover:!bg-emerald-500 !text-white border-0 shadow-sm"
+                className="bg-emerald-600 hover:!bg-emerald-500 !text-white border-0 shadow-xs"
               />
             </div>
 
-            <div className="space-y-2 text-sm text-gray-700">
-              <div className="flex items-baseline gap-2">
-                <span className="font-bold text-gray-900 text-base">বাংলা অর্থ:</span>
-                <span className="font-black text-emerald-800 text-lg">{post.vocabData.bangla}</span>
+            <div className="flex items-baseline gap-2 pt-1 border-t border-emerald-100/60">
+              <span className="font-bold text-gray-600 text-xs shrink-0">বাংলা অর্থ:</span>
+              <span className="font-black text-emerald-900 text-base sm:text-lg">
+                {post.vocabData.bangla}
+              </span>
+            </div>
+
+            {post.vocabData.meaning && (
+              <div className="text-xs text-gray-700 leading-relaxed font-medium">
+                <span className="font-bold text-gray-500 text-[11px] block">English Meaning:</span>
+                {post.vocabData.meaning}
               </div>
+            )}
 
-              {post.vocabData.meaning && (
+            {post.vocabData.mnemonic && (
+              <div className="bg-amber-50/90 border border-amber-200/80 p-2.5 rounded-xl flex items-start gap-2 text-xs">
+                <BulbOutlined className="text-amber-600 text-sm mt-0.5 shrink-0" />
                 <div>
-                  <span className="font-bold text-gray-500 text-xs block">ইংরেজি অর্থ:</span>
-                  <p className="font-medium text-gray-800 m-0 text-xs md:text-sm">
-                    {post.vocabData.meaning}
-                  </p>
+                  <span className="font-bold text-amber-950 text-[11px] block">দেশি স্মৃতিসূত্র:</span>
+                  <span className="text-amber-900 leading-snug">{post.vocabData.mnemonic}</span>
                 </div>
-              )}
+              </div>
+            )}
 
-              {post.vocabData.mnemonic && (
-                <div className="bg-amber-50/80 border border-amber-200/80 p-3 rounded-xl mt-3 flex items-start gap-2">
-                  <BulbOutlined className="text-amber-600 text-base mt-0.5" />
-                  <div>
-                    <span className="font-bold text-amber-950 text-xs block">দেশি স্মৃতিসূত্র:</span>
-                    <p className="text-xs text-amber-900 font-medium m-0 leading-relaxed">
-                      {post.vocabData.mnemonic}
-                    </p>
-                  </div>
-                </div>
-              )}
+            {post.vocabData.exampleSentence && (
+              <div className="bg-white/90 p-2.5 rounded-xl border border-gray-100 text-xs text-gray-600 italic">
+                &ldquo;{post.vocabData.exampleSentence}&rdquo;
+              </div>
+            )}
 
-              {post.vocabData.exampleSentence && (
-                <div className="bg-white/80 p-3 rounded-xl border border-gray-100 mt-2 text-xs text-gray-600 italic">
-                  &ldquo;{post.vocabData.exampleSentence}&rdquo;
-                </div>
-              )}
-
-              {post.vocabData.examTags && post.vocabData.examTags.length > 0 && (
-                <div className="flex flex-wrap items-center gap-1.5 pt-2">
-                  <span className="text-[11px] font-bold text-gray-400">বিগত পরীক্ষা:</span>
-                  {post.vocabData.examTags.map((et, idx) => (
-                    <Tag key={idx} color="purple" className="text-[10px] font-bold rounded-md m-0">
-                      {et}
-                    </Tag>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Quick Action: Save to Revision Deck */}
-            <div className="mt-4 pt-3 border-t border-emerald-100 flex items-center justify-between">
-              <span className="text-xs text-gray-500 font-medium">ব্যক্তিগত রিভিশন ডেকে যুক্ত করবেন?</span>
-              <Button
-                size="small"
-                type="primary"
-                icon={savedToDeck ? <CheckOutlined /> : <BookOutlined />}
-                loading={savingDeck}
-                onClick={handleSaveToDeck}
-                disabled={savedToDeck}
-                className={
-                  savedToDeck
-                    ? 'bg-slate-700 font-bold rounded-xl text-xs'
-                    : 'bg-emerald-600 hover:!bg-emerald-500 font-bold rounded-xl text-xs'
-                }
-              >
-                {savedToDeck ? 'ডেকে সংরক্ষিত' : 'ডেকে সেভ করুন'}
-              </Button>
-            </div>
+            {post.vocabData.examTags && post.vocabData.examTags.length > 0 && (
+              <div className="flex flex-wrap items-center gap-1 pt-1">
+                <span className="text-[10px] font-bold text-gray-400">বিগত পরীক্ষা:</span>
+                {post.vocabData.examTags.map((et, idx) => (
+                  <Tag key={idx} color="purple" className="text-[10px] font-bold rounded-md m-0">
+                    {et}
+                  </Tag>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
-        {/* 2. MCQ CHALLENGE TYPE */}
+        {/* 2. MCQ CHALLENGE */}
         {post.mcqData && (
-          <div className="bg-slate-50/80 p-5 rounded-2xl border border-gray-200/80 my-3">
-            <div className="flex items-start gap-2 mb-3">
-              <span className="bg-indigo-600 text-white text-xs font-black px-2 py-0.5 rounded-lg shrink-0">
-                MCQ
-              </span>
-              <h4 className="font-bold text-sm sm:text-base text-gray-900 m-0 leading-snug">
-                {post.mcqData.question}
-              </h4>
-            </div>
+          <div className="bg-slate-50/90 p-4 rounded-2xl border border-gray-200/80 space-y-3">
+            <h4 className="font-bold text-sm text-gray-900 m-0 leading-relaxed">
+              {post.mcqData.question}
+            </h4>
 
-            {/* Options list */}
-            <div className="space-y-2 mt-3">
+            <div className="space-y-1.5">
               {post.mcqData.options.map((opt, idx) => {
                 const isSelected = selectedOption === idx;
                 const isCorrect = opt.trim() === post.mcqData?.correctAnswer?.trim();
@@ -475,27 +365,26 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
                     key={idx}
                     disabled={answered}
                     onClick={() => handleSelectOption(idx)}
-                    className={`w-full text-left p-3 rounded-xl border text-xs sm:text-sm transition-all duration-200 relative overflow-hidden flex items-center justify-between ${btnStyle}`}
+                    className={`w-full text-left p-2.5 rounded-xl border text-xs transition-all relative overflow-hidden flex items-center justify-between ${btnStyle}`}
                   >
                     <span className="relative z-10 flex items-center gap-2">
-                      <span className="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-[10px] font-bold text-gray-600">
+                      <span className="w-4 h-4 rounded-full bg-gray-100 flex items-center justify-center text-[9px] font-bold text-gray-600">
                         {String.fromCharCode(65 + idx)}
                       </span>
                       <span>{opt}</span>
                     </span>
 
                     {answered && (
-                      <div className="relative z-10 flex items-center gap-2 text-xs font-bold">
+                      <div className="relative z-10 flex items-center gap-1.5 text-xs font-bold">
                         <span>{percent}%</span>
                         {isCorrect ? (
-                          <CheckCircleFilled className="text-emerald-600 text-base" />
+                          <CheckCircleFilled className="text-emerald-600" />
                         ) : isSelected ? (
-                          <CloseCircleFilled className="text-rose-500 text-base" />
+                          <CloseCircleFilled className="text-rose-500" />
                         ) : null}
                       </div>
                     )}
 
-                    {/* Background vote percentage fill */}
                     {answered && (
                       <div
                         className={`absolute left-0 top-0 bottom-0 ${
@@ -509,85 +398,74 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
               })}
             </div>
 
-            {/* Explanation reveal */}
             {showExplanation && post.mcqData.explanation && (
-              <div className="mt-4 p-3.5 bg-emerald-50/70 border border-emerald-200 rounded-xl animate-in fade-in duration-300">
-                <span className="font-bold text-xs text-emerald-900 block mb-1">সঠিক উত্তরের ব্যাখ্যা:</span>
-                <p className="text-xs text-emerald-950 leading-relaxed m-0 font-medium">
-                  {post.mcqData.explanation}
-                </p>
+              <div className="p-2.5 bg-emerald-50/80 border border-emerald-200 rounded-xl text-xs text-emerald-950 font-medium leading-relaxed">
+                <span className="font-bold text-emerald-900 block mb-0.5">ব্যাখ্যা:</span>
+                {post.mcqData.explanation}
               </div>
             )}
           </div>
         )}
 
-        {/* 3. MICRO-LESSON / RULE TYPE */}
+        {/* 3. MICRO-LESSON / RULE */}
         {post.type === 'micro_lesson' && (
-          <div className="bg-amber-50/40 border border-amber-200/60 p-4 rounded-2xl my-3">
-            <div className="flex items-center gap-2 text-amber-800 text-xs font-bold mb-2">
-              <BulbOutlined />
-              <span>১ মিনিটের গুরুত্বপূর্ণ ব্যাকরণ রুল</span>
-            </div>
-            <p className="text-xs sm:text-sm text-gray-800 leading-relaxed font-normal m-0 whitespace-pre-wrap">
-              {post.content}
-            </p>
+          <div className="bg-amber-50/50 border border-amber-200/80 p-4 rounded-2xl text-xs sm:text-sm text-gray-800 leading-relaxed whitespace-pre-wrap font-normal">
+            {post.content}
           </div>
         )}
 
-        {/* 4. USER PROGRESS ACHIEVER TYPE */}
+        {/* 4. USER PROGRESS */}
         {post.progressData && (
-          <div className="bg-gradient-to-r from-emerald-500 to-teal-700 text-white p-5 rounded-2xl my-3 shadow-sm">
-            <div className="flex items-center justify-between mb-3">
+          <div className="bg-gradient-to-r from-emerald-600 to-teal-700 text-white p-4 rounded-2xl space-y-3 shadow-xs">
+            <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <TrophyOutlined className="text-amber-300 text-2xl" />
+                <TrophyOutlined className="text-amber-300 text-xl" />
                 <div>
-                  <span className="text-[10px] text-emerald-200 uppercase font-black tracking-wider block">
+                  <span className="text-[10px] text-emerald-200 uppercase font-black block">
                     স্টাডি মাইলস্টোন
                   </span>
-                  <span className="font-black text-base text-white">
+                  <span className="font-black text-sm text-white">
                     {post.progressData.badgeTitle || 'সফল প্রস্তুতি অর্জন'}
                   </span>
                 </div>
               </div>
               {post.progressData.streakDays && (
-                <div className="flex items-center gap-1 bg-white/20 backdrop-blur-sm px-2.5 py-1 rounded-xl text-xs font-black">
+                <div className="flex items-center gap-1 bg-white/20 px-2 py-0.5 rounded-lg text-xs font-black">
                   <FireOutlined className="text-amber-300" />
-                  <span>{post.progressData.streakDays} দিন স্ট্রিক</span>
+                  <span>{post.progressData.streakDays} দিন</span>
                 </div>
               )}
             </div>
 
-            <div className="grid grid-cols-2 gap-2 bg-white/10 backdrop-blur-sm p-3 rounded-xl text-center">
+            <div className="grid grid-cols-2 gap-2 bg-white/10 p-2.5 rounded-xl text-center">
               <div>
-                <span className="text-2xl font-black block text-amber-300">
+                <span className="text-xl font-black block text-amber-300">
                   {post.progressData.wordsLearned || 35}+
                 </span>
-                <span className="text-[10px] text-emerald-100 font-medium">শব্দ আয়ত্ত</span>
+                <span className="text-[10px] text-emerald-100">শব্দ আয়ত্ত</span>
               </div>
               <div>
-                <span className="text-2xl font-black block text-emerald-200">
+                <span className="text-xl font-black block text-emerald-200">
                   {post.progressData.accuracy || 92}%
                 </span>
-                <span className="text-[10px] text-emerald-100 font-medium">কুইজ নির্ভুলতা</span>
+                <span className="text-[10px] text-emerald-100">নির্ভুলতা</span>
               </div>
             </div>
 
             {post.content && (
-              <p className="text-xs text-emerald-100/90 leading-relaxed m-0 italic mt-3">
-                &ldquo;{post.content}&rdquo;
-              </p>
+              <p className="text-xs text-emerald-100/90 italic m-0">&ldquo;{post.content}&rdquo;</p>
             )}
           </div>
         )}
 
-        {/* Tags row */}
+        {/* Tags */}
         {post.tags && post.tags.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mt-2">
+          <div className="flex flex-wrap gap-1 pt-1">
             {post.tags.map((tag, idx) => (
               <span
                 key={idx}
                 onClick={() => onTagClick?.(tag)}
-                className="text-[11px] font-bold text-gray-500 hover:text-emerald-700 bg-gray-100 hover:bg-emerald-50 px-2 py-0.5 rounded-md cursor-pointer transition-colors"
+                className="text-[10px] font-bold text-gray-500 hover:text-emerald-700 bg-gray-100 hover:bg-emerald-50 px-2 py-0.5 rounded-md cursor-pointer transition-colors"
               >
                 #{tag}
               </span>
@@ -596,83 +474,69 @@ export default function ReelCard({ post, userEmail, onTagClick, onAskAI }: ReelC
         )}
       </div>
 
-      {/* Action Bar */}
-      <div className="px-5 py-3 border-t border-gray-100 flex items-center justify-between mt-2">
-        <div className="flex items-center gap-2">
-          {/* Like button */}
+      {/* Bottom Action Rail */}
+      <div className="px-4 py-2.5 bg-slate-50/90 border-t border-gray-100 flex items-center justify-between shrink-0">
+        <div className="flex items-center gap-1.5">
+          {/* Like */}
           <Button
             type="text"
             icon={
               isLiked ? (
-                <HeartFilled className="text-rose-500 text-lg" />
+                <HeartFilled className="text-rose-500 text-base" />
               ) : (
-                <HeartOutlined className="text-gray-500 text-lg" />
+                <HeartOutlined className="text-gray-500 text-base" />
               )
             }
             onClick={handleLike}
-            className="font-bold text-xs flex items-center gap-1.5 text-gray-700 hover:!text-rose-600 rounded-xl px-2.5"
+            className="font-bold text-xs flex items-center gap-1 text-gray-700 hover:!text-rose-600 rounded-xl px-2 h-8"
           >
             {likes > 0 && likes}
-          </Button>
-
-          {/* Bookmark */}
-          <Button
-            type="text"
-            icon={
-              isBookmarked ? (
-                <BookFilled className="text-emerald-600 text-lg" />
-              ) : (
-                <BookOutlined className="text-gray-500 text-lg" />
-              )
-            }
-            onClick={handleBookmark}
-            className="font-bold text-xs flex items-center gap-1.5 text-gray-700 hover:!text-emerald-700 rounded-xl px-2.5"
-          >
-            {bookmarks > 0 && bookmarks}
           </Button>
 
           {/* Share */}
           <Button
             type="text"
-            icon={<ShareAltOutlined className="text-gray-500 text-lg" />}
+            icon={<ShareAltOutlined className="text-gray-500 text-base" />}
             onClick={handleShare}
-            className="font-bold text-xs text-gray-700 hover:!text-gray-900 rounded-xl px-2"
+            className="text-gray-600 hover:!text-gray-900 rounded-xl px-2 h-8"
+            title="লিংক কপি করুন"
           />
         </div>
 
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-2">
+          {/* Save to Notebook */}
           <Button
             size="small"
             icon={savedToNotebook ? <CheckOutlined /> : <PlusOutlined />}
             loading={savingNotebook}
             onClick={handleSaveToNotebook}
-            className={`text-xs font-bold rounded-xl ${
+            className={`text-xs font-bold rounded-xl h-8 px-2.5 ${
               savedToNotebook
                 ? 'bg-emerald-50 text-emerald-800 border-emerald-300'
-                : 'bg-slate-50 text-gray-700 border-gray-200 hover:border-emerald-500'
+                : 'bg-white text-gray-700 border-gray-200 hover:border-emerald-500'
             }`}
           >
             {savedToNotebook ? 'নোটবুকে আছে' : 'নোটবুকে সেভ'}
           </Button>
 
-          {/* Ask AI Explanation */}
+          {/* Ask AI */}
           <Button
             size="small"
             icon={<RobotOutlined className="text-indigo-600" />}
-          onClick={() => {
-            const prompt = post.vocabData?.word
-              ? `"${post.vocabData.word}" শব্দটির ব্যবহার, বিগত বিসিএস/ব্যাংক পরীক্ষার উদাহরণ এবং সিনোনিম বুঝিয়ে বলুন।`
-              : post.mcqData?.question
-              ? `এই প্রশ্নটির ব্যাকরণগত নিয়ম বুঝিয়ে বলুন: "${post.mcqData.question}"`
-              : `এই বিষয়টির বিশদ বিসিএস প্রস্তুতি টিপস দিন: "${post.title}"`;
-            onAskAI?.(prompt);
-          }}
-          className="text-xs font-bold text-indigo-700 bg-indigo-50 border-indigo-200 rounded-xl hover:!bg-indigo-100"
-        >
-          AI ব্যাখ্যা নিন
-        </Button>
+            onClick={() => {
+              const prompt = post.vocabData?.word
+                ? `"${post.vocabData.word}" শব্দটির অর্থ, ব্যবহার ও বিগত পরীক্ষার প্রশ্ন বুঝিয়ে বলুন।`
+                : post.mcqData?.question
+                ? `এই প্রশ্নটির নিয়ম বুঝিয়ে বলুন: "${post.mcqData.question}"`
+                : `এই টপিকের বিসিএস প্রস্তুতি টিপস দিন: "${post.title}"`;
+              onAskAI?.(prompt);
+            }}
+            className="text-xs font-bold text-indigo-700 bg-indigo-50 border-indigo-200 rounded-xl hover:!bg-indigo-100 h-8 px-2.5"
+          >
+            AI ব্যাখ্যা
+          </Button>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
 }
