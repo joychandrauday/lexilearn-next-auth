@@ -14,7 +14,7 @@ import {
   BulbOutlined,
 } from '@ant-design/icons';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/lib/auth-context';
 import { IWord } from '../../lib/models/Word';
 import { toast } from 'sonner';
 

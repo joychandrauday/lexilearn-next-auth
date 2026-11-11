@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { Table, Button, Modal, Form, Input, Select, Tag, Space, message, Popconfirm, Card } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined } from '@ant-design/icons';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/lib/auth-context';
 import WordByLanguageModal from './WordByLanguageModal';
 import { toast } from 'sonner';
 

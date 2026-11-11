@@ -34,7 +34,7 @@ import {
   CreditCardOutlined,
   CheckOutlined,
 } from '@ant-design/icons';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/lib/auth-context';
 import axios from 'axios';
 import { toast } from 'sonner';
 import QuickSaveModal from '../../components/Notebook/QuickSaveModal';

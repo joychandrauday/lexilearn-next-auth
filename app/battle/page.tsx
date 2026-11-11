@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import axios from 'axios';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/lib/auth-context';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
 import {

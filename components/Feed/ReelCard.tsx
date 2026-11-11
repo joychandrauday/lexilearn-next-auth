@@ -25,7 +25,7 @@ import {
 import { Button, Tag, Modal } from 'antd';
 import { toast } from 'sonner';
 import axios from 'axios';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/lib/auth-context';
 import { siteConfig, getStoredUserEmail, triggerAuthRequest } from '../../lib/config/site';
 
 export interface IReelPost {

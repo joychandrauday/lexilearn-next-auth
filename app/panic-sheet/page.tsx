@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/lib/auth-context';
 import { Button, Tag, Spin, Switch, Tooltip } from 'antd';
 import {
   PrinterOutlined,

@@ -1,11 +1,14 @@
-// components/Providers.tsx
-'use client'; // ⚠️ important
+// components/Provider.tsx
+'use client';
 
-import { SessionProvider } from 'next-auth/react';
 import { ReactNode } from 'react';
+import { AuthProvider } from '../lib/auth-context';
 import QueryProvider from '../providers/QueryProvider';
 
 export default function Providers({ children }: { children: ReactNode }) {
-
-    return <SessionProvider> <QueryProvider>{children}</QueryProvider></SessionProvider>;
+  return (
+    <AuthProvider>
+      <QueryProvider>{children}</QueryProvider>
+    </AuthProvider>
+  );
 }

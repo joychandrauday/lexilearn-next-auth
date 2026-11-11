@@ -10,7 +10,7 @@ import {
   CheckCircleFilled,
   CloseOutlined,
 } from '@ant-design/icons';
-import { signIn, useSession } from 'next-auth/react';
+import { signIn, useSession } from '@/lib/auth-context';
 import axios from 'axios';
 import { toast } from 'sonner';
 import { siteConfig, getStoredUserEmail, setStoredUserEmail } from '../../lib/config/site';

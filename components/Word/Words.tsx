@@ -40,7 +40,7 @@ import {
   CloseOutlined,
 } from '@ant-design/icons';
 import { IWord } from '../../lib/models/Word';
-import { useSession, signIn } from 'next-auth/react';
+import { useSession, signIn } from '@/lib/auth-context';
 
 const { Search } = Input;
 const { Option } = Select;

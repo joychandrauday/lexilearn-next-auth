@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/lib/auth-context';
 import { Button, Tag, Spin, Tooltip, Empty } from 'antd';
 import {
   SafetyCertificateOutlined,

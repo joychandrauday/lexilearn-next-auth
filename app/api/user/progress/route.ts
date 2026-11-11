@@ -58,12 +58,13 @@ export async function GET(req: NextRequest) {
     }
 
     // Get count of due words for today
-    const dueCount = await Word.countDocuments({
-      userEmail: email,
-      nextReviewAt: { $lte: new Date() },
-    });
-
-    const totalWords = await Word.countDocuments({ userEmail: email });
+    const [dueCount, totalWords] = await Promise.all([
+      Word.countDocuments({
+        userEmail: email,
+        nextReviewAt: { $lte: new Date() },
+      }),
+      Word.countDocuments({ userEmail: email }),
+    ]);
 
     return NextResponse.json({
       progress,

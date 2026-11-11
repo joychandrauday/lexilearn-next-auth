@@ -366,10 +366,14 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <span className="text-slate-500">গোপনীয়তা ও নিরাপত্তা নীতি</span>
+                <Link href="/privacy" className="hover:text-emerald-400 transition">
+                  গোপনীয়তা ও নিরাপত্তা নীতি
+                </Link>
               </li>
               <li>
-                <span className="text-slate-500">ব্যবহারের শর্তাবলী</span>
+                <Link href="/terms" className="hover:text-emerald-400 transition">
+                  ব্যবহারের শর্তাবলী
+                </Link>
               </li>
             </ul>
           </div>

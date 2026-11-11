@@ -27,7 +27,7 @@ import {
   TrophyOutlined,
   EditOutlined,
 } from '@ant-design/icons';
-import { useSession, signIn } from 'next-auth/react';
+import { useSession, signIn } from '@/lib/auth-context';
 import axios from 'axios';
 import { toast } from 'sonner';
 

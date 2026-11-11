@@ -16,7 +16,7 @@ import {
   WarningOutlined,
 } from '@ant-design/icons';
 import { motion } from 'framer-motion';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/lib/auth-context';
 import { toast } from 'sonner';
 import ShareableScoreCard from '../../components/ShareableScoreCard';
 

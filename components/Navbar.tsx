@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { signIn, signOut, useSession } from 'next-auth/react';
-import { Drawer, Button, Avatar, Dropdown, Menu, MenuProps } from 'antd';
+import { signIn, signOut, useSession } from '@/lib/auth-context';
+import { Drawer, Button, Avatar, Dropdown, MenuProps } from 'antd';
 import {
   MenuOutlined,
   CloseOutlined,
@@ -203,19 +203,17 @@ const navLinks = [...primaryNavLinks, ...secondaryNavLinks];
               );
             })}
             <Dropdown
-              overlay={
-                <Menu
-                  items={secondaryNavLinks.map((link) => ({
-                    key: link.key,
-                    label: (
-                      <Link href={link.href} className="flex items-center">
-                        {link.icon}
-                        <span className="ml-2">{link.label}</span>
-                      </Link>
-                    ),
-                  }))}
-                />
-              }
+              menu={{
+                items: secondaryNavLinks.map((link) => ({
+                  key: link.key,
+                  label: (
+                    <Link href={link.href} className="flex items-center">
+                      {link.icon}
+                      <span className="ml-2">{link.label}</span>
+                    </Link>
+                  ),
+                })),
+              }}
               trigger={['click']}
             >
               <Button type="text" icon={<MoreOutlined />} className="text-gray-600 hover:text-emerald-700" />

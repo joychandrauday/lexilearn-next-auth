@@ -121,6 +121,7 @@ const FeedPostSchema = new Schema<IFeedPost>(
 );
 
 FeedPostSchema.index({ createdAt: -1 });
+FeedPostSchema.index({ isPinned: -1, createdAt: -1 });
 FeedPostSchema.index({ tags: 1, createdAt: -1 });
 FeedPostSchema.index({ category: 1, createdAt: -1 });
 

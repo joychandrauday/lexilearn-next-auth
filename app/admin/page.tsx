@@ -47,7 +47,7 @@ import {
   Badge,
   Popconfirm,
 } from 'antd';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/lib/auth-context';
 
 const { TextArea } = Input;
 const { Option } = Select;

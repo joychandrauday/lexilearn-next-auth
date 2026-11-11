@@ -15,6 +15,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: '/mistakes', priority: 0.7, changeFrequency: 'weekly' as const },
     { url: '/my-words', priority: 0.7, changeFrequency: 'weekly' as const },
     { url: '/about', priority: 0.8, changeFrequency: 'monthly' as const },
+    { url: '/privacy', priority: 0.5, changeFrequency: 'yearly' as const },
+    { url: '/terms', priority: 0.5, changeFrequency: 'yearly' as const },
   ];
 
   return routes.map((route) => ({

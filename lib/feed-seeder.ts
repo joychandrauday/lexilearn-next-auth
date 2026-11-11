@@ -1,9 +1,19 @@
 import FeedPost from './models/FeedPost';
 
+// Avoid running a countDocuments() query on every feed request. Once the
+// collection is known to be non-empty (or has been seeded), skip the check
+// for the lifetime of this server process.
+let seedChecked = false;
+
 export async function seedInitialFeedIfEmpty() {
+  if (seedChecked) return;
+
   try {
     const count = await FeedPost.countDocuments();
-    if (count > 0) return;
+    if (count > 0) {
+      seedChecked = true;
+      return;
+    }
 
     const initialReels = [
       {
@@ -158,6 +168,7 @@ export async function seedInitialFeedIfEmpty() {
     ];
 
     await FeedPost.insertMany(initialReels);
+    seedChecked = true;
     console.log('Seeded initial reels feed successfully');
   } catch (err) {
     console.error('Error seeding initial feed:', err);

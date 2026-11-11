@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/lib/auth-context';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   RobotOutlined,

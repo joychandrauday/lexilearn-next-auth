@@ -120,10 +120,10 @@ const wordSchema = new Schema<IWord>(
 );
 
 // Indexes for fast lookup, frequency ranking, and verification
-wordSchema.index({ word: 1 });
+// `word` and `savedBy` already have `index: true` on their field definitions,
+// so declaring them again here caused duplicate-index warnings.
 wordSchema.index({ frequencyCount: -1 });
 wordSchema.index({ verificationScore: -1 });
-wordSchema.index({ savedBy: 1 });
 
 const Word = (mongoose.models.Word as Model<IWord>) || mongoose.model<IWord>('Word', wordSchema);
 

@@ -15,7 +15,7 @@ import {
 } from '@ant-design/icons';
 import axios from 'axios';
 import { toast } from 'sonner';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/lib/auth-context';
 import ReelCard, { IReelPost } from '../../components/Feed/ReelCard';
 import CreatePostModal from '../../components/Feed/CreatePostModal';
 import InterestModal from '../../components/Feed/InterestModal';
