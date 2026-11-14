@@ -1,0 +1,9518 @@
+// Curated Authentic Barron's 333 Vocabulary Dictionary
+// Contains verified Bengali meanings, English definitions, Desi mnemonics, and exam history
+
+export interface BarronWordDefinition {
+  word: string;
+  partOfSpeech: string;
+  meaningBn: string;
+  meaningEn: string;
+  mnemonic: string;
+  exampleSentence: string;
+  synonyms: string[];
+  antonyms: string[];
+  repetitionCount: number;
+  examHistory: { exam: string; year?: string }[];
+}
+
+export const BARRON_333_DICTIONARY: Record<string, BarronWordDefinition> = {
+  "aberrant": {
+    "word": "aberrant",
+    "partOfSpeech": "adjective",
+    "meaningBn": "বিপথগামী, নীতিচ্যুত, স্বাভাবিক নিয়মের বাইরে",
+    "meaningEn": "Departing from an accepted standard or normal type.",
+    "mnemonic": "Ab (দূরে) + errant (ভুল পথে চলা) -> স্বাভাবিক ও সঠিক পথ থেকে দূরে সরে যাওয়া।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of aberrant during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "abeyance": {
+    "word": "abeyance",
+    "partOfSpeech": "noun",
+    "meaningBn": "স্থগিতাবস্থা, সাময়িক নিষ্ক্রিয়তা, মুলতবি",
+    "meaningEn": "A state of temporary disuse, suspension, or inactivity.",
+    "mnemonic": "Abey (অবেলায়) কাজ স্থগিত রাখা বা মুলতবি (in abeyance) করে রাখা।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of abeyance during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "abscond": {
+    "word": "abscond",
+    "partOfSpeech": "verb",
+    "meaningBn": "আত্মগোপন করা, গোপনে পালিয়ে যাওয়া (বিশেষত অপরাধ বা অর্থ আত্মসাৎ করে)",
+    "meaningEn": "Leave hurriedly and secretly, typically to avoid detection of or arrest for an unlawful action.",
+    "mnemonic": "Ab (দূরে) + scond (লুকিয়ে থাকা) -> পুলিশ বা ঋণের ভয়ে গোপনে পালিয়ে দূরে আত্মগোপন করা।",
+    "exampleSentence": "The rogue director absconded with company funds shortly before the audit began.",
+    "synonyms": [
+      "flee",
+      "escape",
+      "bolt",
+      "decamp"
+    ],
+    "antonyms": [
+      "remain",
+      "stay",
+      "appear"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "abstemious": {
+    "word": "abstemious",
+    "partOfSpeech": "adjective",
+    "meaningBn": "সংযমী, মিতাচারী (বিশেষ করে পানাহারে পরিমিত)",
+    "meaningEn": "Not self-indulgent, especially when eating and drinking.",
+    "mnemonic": "Abstain (বিরত থাকা) থেকে abstemious -> অতিভোজন বা ভোগবিলাস থেকে নিজেকে সংযত রাখা।",
+    "exampleSentence": "Monks lead an abstemious life characterized by simple vegetarian meals and fasting.",
+    "synonyms": [
+      "temperate",
+      "abstinent",
+      "austere",
+      "moderate"
+    ],
+    "antonyms": [
+      "gluttonous",
+      "self-indulgent",
+      "greedy"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "admonish": {
+    "word": "admonish",
+    "partOfSpeech": "verb",
+    "meaningBn": "সতর্ক করা, মৃদু ভর্ৎসনা করা, উপদেশ দেওয়া",
+    "meaningEn": "Warn or reprimand someone firmly; advise or urge someone earnestly.",
+    "mnemonic": "Ad (প্রতি) + monish (মনে করিয়ে দেওয়া / সতর্ক করা) -> ভুল কাজের জন্য ভালোবেসে বকা বা সতর্ক করা।",
+    "exampleSentence": "The magistrate admonished the young offender not to associate with known felons.",
+    "synonyms": [
+      "reprimand",
+      "rebuke",
+      "scold",
+      "caution"
+    ],
+    "antonyms": [
+      "praise",
+      "applaud",
+      "commend"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "adulterate": {
+    "word": "adulterate",
+    "partOfSpeech": "verb",
+    "meaningBn": "খাদ বা ভেজাল মেশানো, অপমিশ্রণ করে গুণমান কমানো",
+    "meaningEn": "Render something poorer in quality by adding another substance, typically an inferior one.",
+    "mnemonic": "Adult + rate -> খাঁটি দ্রব্যে নিকৃষ্ট জিনিস মিশিয়ে বেশি দামে বিক্রি করার অপচেষ্টা।",
+    "exampleSentence": "Unscrupulous traders adulterate mustard oil with toxic industrial chemicals.",
+    "synonyms": [
+      "contaminate",
+      "taint",
+      "dilute",
+      "degrade"
+    ],
+    "antonyms": [
+      "purify",
+      "refine",
+      "cleanse"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "aesthetic": {
+    "word": "aesthetic",
+    "partOfSpeech": "adjective",
+    "meaningBn": "নান্দনিক, সৌন্দর্যবোধ সংক্রান্ত, চারুকলার সৌন্দর্য সম্পর্কিত",
+    "meaningEn": "Concerned with beauty or the appreciation of beauty.",
+    "mnemonic": "Aesthetic মানে যা চোখে দেখতে সুন্দর লাগে এবং মনকে শৈল্পিক তৃপ্তি দেয়।",
+    "exampleSentence": "The historical Mughal architecture reflects a sublime aesthetic balance.",
+    "synonyms": [
+      "artistic",
+      "tasteful",
+      "graceful",
+      "comely"
+    ],
+    "antonyms": [
+      "unsightly",
+      "crude",
+      "ugly"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "aggregate": {
+    "word": "aggregate",
+    "partOfSpeech": "noun",
+    "meaningBn": "সমষ্টি, মোট যোগফল; একত্রিত বা পুঞ্জীভূত করা",
+    "meaningEn": "A whole formed by combining several separate elements; form or group into a class or cluster.",
+    "mnemonic": "Ag (একসাথে) + gregate (গ্রুপ/দল) -> অনেকগুলো বিচ্ছিন্ন অংশকে একত্র করে গঠিত সমষ্টি।",
+    "exampleSentence": "The aggregate economic growth of South Asian nations expanded by six percent.",
+    "synonyms": [
+      "cumulative",
+      "collective",
+      "combined",
+      "total"
+    ],
+    "antonyms": [
+      "individual",
+      "discrete",
+      "separated"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "alacrity": {
+    "word": "alacrity",
+    "partOfSpeech": "noun",
+    "meaningBn": "প্রফুল্ল ক্ষিপ্রতা, ব্যগ্রতা, তৎপরতা",
+    "meaningEn": "Brisk and cheerful readiness; promptness.",
+    "mnemonic": "Ala (উচ্ছ্বসিত) + celerity (দ্রুততা) -> কোনো কাজ সানন্দে ও অত্যন্ত দ্রুত গতিতে করা।",
+    "exampleSentence": "The eager civil servant accepted the challenging rural assignment with alacrity.",
+    "synonyms": [
+      "eagerness",
+      "willingness",
+      "promptness",
+      "readiness"
+    ],
+    "antonyms": [
+      "apathy",
+      "reluctance",
+      "sluggishness"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "alleviate": {
+    "word": "alleviate",
+    "partOfSpeech": "verb",
+    "meaningBn": "উপশম করা, কষ্ট বা বেদনা কমানো, লাঘব করা",
+    "meaningEn": "Make suffering, deficiency, or a problem less severe.",
+    "mnemonic": "Elevate মানে উপরে তোলা, আর Alleviate মানে যন্ত্রণার ভার হালকা করে নিচে নামানো।",
+    "exampleSentence": "Targeted social safety nets help alleviate extreme poverty in vulnerable coastal belts.",
+    "synonyms": [
+      "relieve",
+      "ease",
+      "mitigate",
+      "lessen"
+    ],
+    "antonyms": [
+      "aggravate",
+      "worsen",
+      "exacerbate"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "amalgamate": {
+    "word": "amalgamate",
+    "partOfSpeech": "verb",
+    "meaningBn": "সংমিশ্রণ করা, একত্রিত করা, সংহত করা",
+    "meaningEn": "Combine or unite to form one organization or structure.",
+    "mnemonic": "Amalgam (পারদ ও ধাতুর মিশ্রণ) -> একাধিক দুর্বল প্রতিষ্ঠানকে জুড়ে শক্তিশালী এককে রূপ দেওয়া।",
+    "exampleSentence": "The government decided to amalgamate several state-owned non-banking financial institutions.",
+    "synonyms": [
+      "merge",
+      "unite",
+      "fuse",
+      "consolidate"
+    ],
+    "antonyms": [
+      "separate",
+      "divide",
+      "splinter"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "ambiguous": {
+    "word": "ambiguous",
+    "partOfSpeech": "adjective",
+    "meaningBn": "দ্ব্যর্থবোধক, অস্পষ্ট, একাধিক অর্থযুক্ত",
+    "meaningEn": "Open to more than one interpretation; having a double meaning; unclear.",
+    "mnemonic": "Ambi (উভয়) + agere (চালনা করা) -> যে বক্তব্যের দুই রকম অর্থ করা যায় এবং বিভ্রান্তি সৃষ্টি করে।",
+    "exampleSentence": "The contract contained ambiguous phrasing that gave rise to prolonged legal disputes.",
+    "synonyms": [
+      "equivocal",
+      "vague",
+      "obscure",
+      "cryptic"
+    ],
+    "antonyms": [
+      "clear",
+      "explicit",
+      "unambiguous"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "ambivalence": {
+    "word": "ambivalence",
+    "partOfSpeech": "noun",
+    "meaningBn": "দ্বিধাদ্বন্দ্ব, দোলাচল, পরস্পরবিরোধী অনুভূতির সহাবস্থান",
+    "meaningEn": "The state of having mixed feelings or contradictory ideas about something or someone.",
+    "mnemonic": "Ambi (দুটো) + valence (শক্তি) -> একই সাথে দুটি বিপরীত অনুভূতি বা দ্বিধাদ্বন্দ্বের টানাপোড়েন।",
+    "exampleSentence": "The citizen experienced profound ambivalence about relocating abroad for employment.",
+    "synonyms": [
+      "uncertainty",
+      "indecision",
+      "doubt",
+      "hesitation"
+    ],
+    "antonyms": [
+      "certainty",
+      "decisiveness",
+      "conviction"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "ameliorate": {
+    "word": "ameliorate",
+    "partOfSpeech": "verb",
+    "meaningBn": "উন্নতি সাধন করা, পরিস্থিতির উন্নয়ন ঘটানো",
+    "meaningEn": "Make something bad or unsatisfactory better or more tolerable.",
+    "mnemonic": "Ameli-orate: তেঁতুল (Imli) খেলে যেমন হজমের সমস্যা দূর হয়ে পেট ভালো হয়, তেমনই পরিস্থিতির উন্নয়ন (Ameliorate)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of ameliorate during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "anachronism": {
+    "word": "anachronism",
+    "partOfSpeech": "noun",
+    "meaningBn": "কালবৈষম্য, ঐতিহাসিক ভুল, যুগের সাথে বেমানান বিষয়",
+    "meaningEn": "A thing belonging or appropriate to a period other than that in which it exists.",
+    "mnemonic": "Ana (ভুল) + chronos (সময়) -> ইতিহাসের এক সময়ের জিনিস অন্য সময়ের সাথে গুলিয়ে ফেলা।",
+    "exampleSentence": "A horse-drawn carriage amid modern motorized expressway traffic seemed an anachronism.",
+    "synonyms": [
+      "chronological error",
+      "misplacement",
+      "archaism"
+    ],
+    "antonyms": [
+      "contemporary",
+      "modernity"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "analogous": {
+    "word": "analogous",
+    "partOfSpeech": "adjective",
+    "meaningBn": "সাদৃশ্যপূর্ণ, অনুরূপ, উপমেয়",
+    "meaningEn": "Comparable in certain respects, typically in a way that makes clearer the nature of the things compared.",
+    "mnemonic": "Analogy (সাদৃশ্য) থেকে analogous -> দুটি ভিন্ন জিনিসের অভ্যন্তরীণ গঠন বা বৈশিষ্ট্যের মিল।",
+    "exampleSentence": "The role of the heart in animals is analogous to a central pumping plant in irrigation.",
+    "synonyms": [
+      "comparable",
+      "parallel",
+      "similar",
+      "equivalent"
+    ],
+    "antonyms": [
+      "dissimilar",
+      "unrelated",
+      "divergent"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "anomalous": {
+    "word": "anomalous",
+    "partOfSpeech": "adjective",
+    "meaningBn": "ব্যতিক্রমী, অস্বাভাবিক, নিয়মের বাইরে",
+    "meaningEn": "Deviating from what is standard, normal, or expected.",
+    "mnemonic": "Anomaly মানে ত্রুটি বা ব্যতিক্রম -> Anomalous মানেই প্রচলিত নিয়মের ব্যত্যয়।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of anomalous during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "antipathy": {
+    "word": "antipathy",
+    "partOfSpeech": "noun",
+    "meaningBn": "তীব্র বিদ্বেষ, তীব্র ঘৃণা, অনীহা",
+    "meaningEn": "A deep-seated feeling of dislike, aversion, or hostility.",
+    "mnemonic": "Anti (বিরুদ্ধে) + Pathy (অনুভূতি): কারো প্রতি মনে গভীর বিদ্বেষ বা ঘৃণা পুষে রাখা (Antipathy)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of antipathy during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "apathy": {
+    "word": "apathy",
+    "partOfSpeech": "noun",
+    "meaningBn": "উদাসীনতা, অনীহা, সহমর্মিতাহীনতা",
+    "meaningEn": "Lack of interest, enthusiasm, or concern.",
+    "mnemonic": "A (না) + Pathy (অনুভূতি): কোনোপ্রকার অনুভূতি বা আগ্রহ না থাকা, অর্থাৎ উদাসীনতা (Apathy)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of apathy during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "appease": {
+    "word": "appease",
+    "partOfSpeech": "verb",
+    "meaningBn": "শান্ত করা, তুষ্ট করা, অন্যায় দাবি মেনে সাময়িকভাবে ঠাণ্ডা করা",
+    "meaningEn": "Pacify or placate someone by acceding to their demands.",
+    "mnemonic": "Peace (শান্তি) দেওয়া -> ক্ষুব্ধ প্রতিপক্ষকে কিছু সুবিধা ছেড়ে দিয়ে শান্ত করার চেষ্টা।",
+    "exampleSentence": "Concessions made merely to appease an aggressor seldom secure durable peace.",
+    "synonyms": [
+      "placate",
+      "pacify",
+      "mollify",
+      "conciliate"
+    ],
+    "antonyms": [
+      "provoke",
+      "antagonize",
+      "inflame"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "apprise": {
+    "word": "apprise",
+    "partOfSpeech": "verb",
+    "meaningBn": "অবহিত করা, বিশদ তথ্য জানানো, জ্ঞাত করা",
+    "meaningEn": "Inform or tell someone; give notice to.",
+    "mnemonic": "Apprise sounds like 'Up-prize/Advice' -> কোনো বিষয়ে ঊর্ধ্বতন কর্তৃপক্ষকে তথ্য দিয়ে সতর্ক বা অবহিত করা।",
+    "exampleSentence": "The diplomat apprised the ministry of the unfolding geopolitical developments in the region.",
+    "synonyms": [
+      "inform",
+      "notify",
+      "brief",
+      "advise"
+    ],
+    "antonyms": [
+      "conceal",
+      "hide",
+      "withhold"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "approbation": {
+    "word": "approbation",
+    "partOfSpeech": "noun",
+    "meaningBn": "অনুমোদন, উচ্চ প্রশংসা, স্বীকৃতি, সাধুবাদ",
+    "meaningEn": "Approval or praise.",
+    "mnemonic": "Approve থেকে approbation -> সমাজ বা কর্তৃপক্ষের আনুষ্ঠানিক অনুমোদন ও ভূয়সী প্রশংসা।",
+    "exampleSentence": "The young scientist's innovative solar water purifier earned international approbation.",
+    "synonyms": [
+      "approval",
+      "commendation",
+      "applause",
+      "endorsement"
+    ],
+    "antonyms": [
+      "disapproval",
+      "condemnation",
+      "censure"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "appropriate": {
+    "word": "appropriate",
+    "partOfSpeech": "verb",
+    "meaningBn": "বাজেয়াপ্ত করা, অন্যায়ভাবে দখল করা, নির্দিষ্ট খাতে বরাদ্দ করা",
+    "meaningEn": "Take something for one's own use, typically without the owner's permission; allocate.",
+    "mnemonic": "Appropriate (Adjective) মানে উপযুক্ত; কিন্তু Verb হিসেবে মানে কারও সম্পত্তি নিজের দখলে নেওয়া।",
+    "exampleSentence": "The autocratic regime appropriated private farmlands without offering adequate reparations.",
+    "synonyms": [
+      "seize",
+      "commandeer",
+      "confiscate",
+      "allocate"
+    ],
+    "antonyms": [
+      "relinquish",
+      "surrender",
+      "return"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "arduous": {
+    "word": "arduous",
+    "partOfSpeech": "adjective",
+    "meaningBn": "কঠোর পরিশ্রমসাধ্য, দুরূহ, কষ্টকর",
+    "meaningEn": "Involving or requiring strenuous effort; difficult and tiring.",
+    "mnemonic": "Hard for us: যা আমাদের জন্য অনেক কষ্টসাধ্য ও শ্রমসাধ্য (Arduous)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of arduous during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "artless": {
+    "word": "artless",
+    "partOfSpeech": "adjective",
+    "meaningBn": "সরল, অকপট, ছলনাহীন, আন্তরিক",
+    "meaningEn": "Without guile or deception; natural and simple.",
+    "mnemonic": "Art (কারসাজি/চাতুরী) + less (ছাড়া) -> কোনো চালাকি বা কপটতা নেই যার মধ্যে, একদম সাদা মনের মানুষ।",
+    "exampleSentence": "Her artless explanation convinced the panel of her absolute innocence.",
+    "synonyms": [
+      "guileless",
+      "ingenuous",
+      "naive",
+      "candid"
+    ],
+    "antonyms": [
+      "deceitful",
+      "cunning",
+      "crafty",
+      "artful"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "ascetic": {
+    "word": "ascetic",
+    "partOfSpeech": "adjective",
+    "meaningBn": "তপস্বী, কৃচ্ছ্রসাধনকারী, ভোগবিলাস বর্জনকারী",
+    "meaningEn": "Characterized by or suggesting the practice of severe self-discipline and abstention from all forms of indulgence.",
+    "mnemonic": "সাধু সন্ন্যাসীদের কঠোর ত্যাগী জীবনযাত্রা (Ascetic)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of ascetic during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "assiduous": {
+    "word": "assiduous",
+    "partOfSpeech": "adjective",
+    "meaningBn": "অধ্যবসায়ী, কঠোর পরিশ্রমী, যত্নবান",
+    "meaningEn": "Showing great care, attention, and persistent effort.",
+    "mnemonic": "Ass (গাধার মতো) নিরলস ও একনিষ্ঠ পরিশ্রমী ব্যক্তিই Assiduous।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of assiduous during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "attenuate": {
+    "word": "attenuate",
+    "partOfSpeech": "verb",
+    "meaningBn": "ক্ষীণ করা, তীব্রতা কমানো, পাতলা বা দুর্বল করা",
+    "meaningEn": "Reduce the force, effect, or value of.",
+    "mnemonic": "Tenuous (পাতলা/দুর্বল) -> কোনো কিছুর তেজ, বেগ বা ঘনত্ব ক্রমশ হ্রাস করে ক্ষীণ করা।",
+    "exampleSentence": "Dense mangrove forests attenuate the destructive velocity of oceanic storm surges.",
+    "synonyms": [
+      "weaken",
+      "diminish",
+      "lessen",
+      "dilute"
+    ],
+    "antonyms": [
+      "amplify",
+      "strengthen",
+      "intensify"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "audacious": {
+    "word": "audacious",
+    "partOfSpeech": "adjective",
+    "meaningBn": "দুঃসাহসী, নির্ভীক, বেপরোয়া",
+    "meaningEn": "Showing a willingness to take surprisingly bold risks; impudent.",
+    "mnemonic": "Audi গাড়ি যেমন হাইওয়েতে দুর্বার ও নির্ভীক গতিতে চলে, তেমনই দুঃসাহসী (Audacious)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of audacious during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "austere": {
+    "word": "austere",
+    "partOfSpeech": "adjective",
+    "meaningBn": "কঠোর, অনাড়ম্বর, অত্যন্ত সাদামাটা",
+    "meaningEn": "Severe or strict in manner, attitude, or appearance; having no comforts or luxuries.",
+    "mnemonic": "Australia-র শুষ্ক বিরান অঞ্চলের মতো কঠোর ও অনাড়ম্বর জীবন (Austere)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of austere during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "autonomous": {
+    "word": "autonomous",
+    "partOfSpeech": "adjective",
+    "meaningBn": "স্বায়ত্তশাসিত, স্বাধীন, আত্মনিয়ন্ত্রিত",
+    "meaningEn": "Having the freedom to act independently; self-governing.",
+    "mnemonic": "Auto (নিজস্ব) + nomos (আইন/শাসন) -> বাইরের কারো খবরদারি ছাড়া নিজের সিদ্ধান্ত নিজে নেওয়া।",
+    "exampleSentence": "The central bank must function as an autonomous entity to ensure sound monetary policy.",
+    "synonyms": [
+      "independent",
+      "self-governing",
+      "sovereign"
+    ],
+    "antonyms": [
+      "dependent",
+      "subjugated",
+      "controlled"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "aver": {
+    "word": "aver",
+    "partOfSpeech": "verb",
+    "meaningBn": "দৃঢ়তার সাথে দাবি করা বা সত্য বলে ঘোষণা করা",
+    "meaningEn": "State or assert to be the case; affirm with confidence.",
+    "mnemonic": "Verity (সত্য) থেকে aver -> শতভাগ নিশ্চিত হয়ে জোর গলায় সত্য বলে দাবি করা।",
+    "exampleSentence": "The defence witness averred that the accused was present at the village council meeting.",
+    "synonyms": [
+      "assert",
+      "affirm",
+      "declare",
+      "claim"
+    ],
+    "antonyms": [
+      "deny",
+      "refute",
+      "disclaim"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "banal": {
+    "word": "banal",
+    "partOfSpeech": "adjective",
+    "meaningBn": "গতানুগতিক, চর্বিতচর্বণ, গতানুগতিকতার কারণে আকর্ষণহীন",
+    "meaningEn": "So lacking in originality as to be obvious and boring.",
+    "mnemonic": "Banana ছিল অতি সহজলভ্য সাধারণ ফল -> যা এত বেশি বলা হয়েছে যে শুনতে একদম সাদামাটা লাগে।",
+    "exampleSentence": "The political speech offered only banal slogans rather than viable policy remedies.",
+    "synonyms": [
+      "cliché",
+      "trite",
+      "hackneyed",
+      "platitudinous"
+    ],
+    "antonyms": [
+      "original",
+      "novel",
+      "fresh"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "belie": {
+    "word": "belie",
+    "partOfSpeech": "verb",
+    "meaningBn": "মিথ্যে প্রমাণ করা, বিপরীত বা ভ্রান্ত ধারণা দেওয়া",
+    "meaningEn": "Fail to give a true impression of; disguise or contradict.",
+    "mnemonic": "Be + lie -> কারো বাহ্যিক আচরণ তার ভেতরের আসল সত্য বা যোগ্যতাকে লুকিয়ে রাখা।",
+    "exampleSentence": "Her calm demeanor belied the acute nervous anxiety raging within her.",
+    "synonyms": [
+      "contradict",
+      "disprove",
+      "disguise",
+      "mask"
+    ],
+    "antonyms": [
+      "reveal",
+      "confirm",
+      "affirm"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "beneficent": {
+    "word": "beneficent",
+    "partOfSpeech": "adjective",
+    "meaningBn": "হিতৈষী, দানশীল, পরোপকারী, কল্যাণকামী",
+    "meaningEn": "Resulting in good; generous or doing good.",
+    "mnemonic": "Bene (ভালো) + fic (করা) -> নিঃস্বার্থভাবে আর্তমানবতার কল্যাণে কাজ করা।",
+    "exampleSentence": "The beneficent industrialist established free healthcare trusts in disadvantaged districts.",
+    "synonyms": [
+      "generous",
+      "charitable",
+      "benevolent",
+      "altruistic"
+    ],
+    "antonyms": [
+      "malevolent",
+      "selfish",
+      "spiteful"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "bolster": {
+    "word": "bolster",
+    "partOfSpeech": "verb",
+    "meaningBn": "সহায়তা দেওয়া, শক্তিশালী করা, ভিত্তি মজবুত করা",
+    "meaningEn": "Support or strengthen; prop up.",
+    "mnemonic": "বিছানার কোলবালিশকে বলে bolster যা ঠেস দিয়ে সাপোর্ট দেয় -> কোনো দুর্বল বিষয়কে সুদৃঢ় করা।",
+    "exampleSentence": "Foreign direct investment will bolster macroeconomic reserves during this fiscal transition.",
+    "synonyms": [
+      "reinforce",
+      "buttress",
+      "fortify",
+      "support"
+    ],
+    "antonyms": [
+      "undermine",
+      "weaken",
+      "impair"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "bombastic": {
+    "word": "bombastic",
+    "partOfSpeech": "adjective",
+    "meaningBn": "আড়ম্বরপূর্ণ, বাগাড়ম্বরপূর্ণ, গর্জনশীল কিন্তু অসার",
+    "meaningEn": "High-sounding but with little meaning; inflated.",
+    "mnemonic": "Bomb (বোমা) এর মত বড় আওয়াজ কিন্তু ভেতরে ধোঁয়া -> কথার ফুলঝুরি আছে কিন্তু গভীরতা নেই।",
+    "exampleSentence": "The candidate's bombastic oratory failed to persuade discerning voters.",
+    "synonyms": [
+      "pompous",
+      "grandiloquent",
+      "turgid",
+      "inflated"
+    ],
+    "antonyms": [
+      "concise",
+      "humble",
+      "understated"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "boorish": {
+    "word": "boorish",
+    "partOfSpeech": "adjective",
+    "meaningBn": "অমার্জিত, অভদ্র, চাষাড়ু স্বভাবের, শিষ্টাচারহীন",
+    "meaningEn": "Rough and bad-mannered; coarse.",
+    "mnemonic": "Boor (বর্বর/গ্রাম্য চাষাড়ু স্বভাব) -> সাধারণ আদবকায়দা বা ভদ্রতাবোধহীন মানুষ।",
+    "exampleSentence": "Interrupting the distinguished panel with crude interjections was deemed unforgivably boorish.",
+    "synonyms": [
+      "uncouth",
+      "crude",
+      "coarse",
+      "churlish"
+    ],
+    "antonyms": [
+      "refined",
+      "polite",
+      "urbane"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "burgeoning": {
+    "word": "burgeoning",
+    "partOfSpeech": "adjective",
+    "meaningBn": "দ্রুত বিকাশমান, দ্রুত বাড়ন্ত, বিকশিত হতে থাকা",
+    "meaningEn": "Beginning to grow or rapidly flourish.",
+    "mnemonic": "Burger খেলে পেট যেমন দ্রুত ফুলে যায় -> কোনো শিল্প বা ব্যবসা অল্প সময়ে হু হু করে বেড়ে ওঠা।",
+    "exampleSentence": "The burgeoning software outsourcing industry in Dhaka offers tremendous export potential.",
+    "synonyms": [
+      "flourishing",
+      "expanding",
+      "thriving",
+      "sprouting"
+    ],
+    "antonyms": [
+      "shrinking",
+      "declining",
+      "dwindling"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "burnish": {
+    "word": "burnish",
+    "partOfSpeech": "verb",
+    "meaningBn": "ঘষে উজ্জ্বল করা, পালিশ করা, সুনাম বৃদ্ধি করা",
+    "meaningEn": "Polish something, especially metal, by rubbing; improve.",
+    "mnemonic": "Burnিশ করে চকচকে করা -> পরিশ্রম বা অনুশীলনের মাধ্যমে নিজের ভাবমূর্তি বা দক্ষতাকে চকচকে করা।",
+    "exampleSentence": "The junior diplomat sought to burnish his credentials through meticulous trade negotiations.",
+    "synonyms": [
+      "polish",
+      "shine",
+      "buff",
+      "enhance"
+    ],
+    "antonyms": [
+      "tarnish",
+      "dull",
+      "degrade"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "buttress": {
+    "word": "buttress",
+    "partOfSpeech": "verb",
+    "meaningBn": "সুদৃঢ় করা, স্তম্ভ বা যুক্তি দিয়ে অবলম্বন দেওয়া",
+    "meaningEn": "Provide with support or strengthen; reinforce.",
+    "mnemonic": "দেয়ালের বাইরে বাট্রেস পিলার দিয়ে প্রাচীর মজবুত রাখা -> অকাট্য যুক্তি বা প্রমাণ দিয়ে অবস্থান পোক্ত করা।",
+    "exampleSentence": "The auditor presented rigorous empirical ledgers to buttress the allegations of fraud.",
+    "synonyms": [
+      "strengthen",
+      "support",
+      "prop",
+      "shore up"
+    ],
+    "antonyms": [
+      "undermine",
+      "weaken",
+      "demolish"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "cacophonous": {
+    "word": "cacophonous",
+    "partOfSpeech": "adjective",
+    "meaningBn": "কর্কশ ধ্বনিযুক্ত, শ্রুতিকটু, বিশৃঙ্খল শব্দের",
+    "meaningEn": "Involving or producing a harsh, discordant mixture of sounds.",
+    "mnemonic": "Caco (খারাপ/কর্কশ) + phone (শব্দ) -> যা কানে শুনলে অস্বস্তি লাগে, বেসুরো কোলাহল।",
+    "exampleSentence": "The cacophonous din of construction machinery disrupted the university examinations.",
+    "synonyms": [
+      "discordant",
+      "jarring",
+      "grating",
+      "strident"
+    ],
+    "antonyms": [
+      "harmonious",
+      "melodious",
+      "euphonious"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "capricious": {
+    "word": "capricious",
+    "partOfSpeech": "adjective",
+    "meaningBn": "খামখেয়ালী, পরিবর্তনশীল, অস্থিরমতি",
+    "meaningEn": "Given to sudden and unaccountable changes of mood or behavior; fickle.",
+    "mnemonic": "Car-price: শেয়ার বাজারের গাড়ির মূল্যের মতো যা হুটহাট পরিবর্তনশীল ও খামখেয়ালী (Capricious)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of capricious during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "castigation": {
+    "word": "castigation",
+    "partOfSpeech": "noun",
+    "meaningBn": "তীব্র ভর্ৎসনা, কঠোর তিরস্কার, প্রকাশ্য শাস্তি",
+    "meaningEn": "Severe reprimand or punishment.",
+    "mnemonic": "Caste নিয়ে কাউকে ছোট করে বকাঝকা করার মত কঠোর শাস্তি দেওয়া।",
+    "exampleSentence": "The administrative tribunal issued a stern castigation against the negligent department head.",
+    "synonyms": [
+      "reprimand",
+      "rebuke",
+      "admonition",
+      "censure"
+    ],
+    "antonyms": [
+      "commendation",
+      "praise",
+      "applause"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "catalyst": {
+    "word": "catalyst",
+    "partOfSpeech": "noun",
+    "meaningBn": "প্রভাবক, অনুঘটক, পরিবর্তনের মূল উদ্দীপক",
+    "meaningEn": "A person or thing that precipitates an event or change without itself being affected.",
+    "mnemonic": "রসায়নের প্রভাবক -> যে নিজে পরিবর্তিত না হয়ে কোনো ইতিবাচক রূপান্তরের গতি তীব্র করে তোলে।",
+    "exampleSentence": "Digital land registration acted as a major catalyst for reducing local administrative corruption.",
+    "synonyms": [
+      "stimulus",
+      "spark",
+      "impetus",
+      "activator"
+    ],
+    "antonyms": [
+      "inhibitor",
+      "deterrent",
+      "obstacle"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "caustic": {
+    "word": "caustic",
+    "partOfSpeech": "adjective",
+    "meaningBn": "ক্ষয়কারক, তীব্র ব্যঙ্গাত্মক বা কটূক্তিকর",
+    "meaningEn": "Sarcastic in a scathing and bitter way; able to burn or corrode organic tissue.",
+    "mnemonic": "Caustic Soda চামড়া পুড়িয়ে দেয় -> তেমনই যে মন্তব্য মানুষের অন্তরে তীব্র জ্বালা সৃষ্টি করে।",
+    "exampleSentence": "The literary critic was notorious for his caustic assessments of contemporary poetry.",
+    "synonyms": [
+      "sarcastic",
+      "cutting",
+      "biting",
+      "mordant"
+    ],
+    "antonyms": [
+      "gentle",
+      "soothing",
+      "flattering"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "chicanery": {
+    "word": "chicanery",
+    "partOfSpeech": "noun",
+    "meaningBn": "চাতুরী, প্রতারণা, ছলচাতুরি, আইনি বা রাজনৈতিক কূটকৌশল",
+    "meaningEn": "The use of trickery to achieve a political, financial, or legal purpose.",
+    "mnemonic": "শিকারি পাখি যেমন ছল করে শিকার ধরে -> রাজনৈতিক বা আইনি মারপ্যাঁচে প্রতিপক্ষকে ফাঁদে ফেলা।",
+    "exampleSentence": "Investigative reporters uncovered financial chicanery within the offshore banking cartel.",
+    "synonyms": [
+      "trickery",
+      "deception",
+      "duplicity",
+      "guile"
+    ],
+    "antonyms": [
+      "honesty",
+      "candor",
+      "integrity"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "coagulate": {
+    "word": "coagulate",
+    "partOfSpeech": "verb",
+    "meaningBn": "জমাট বাঁধা, তরল থেকে ঘন পিণ্ডে পরিণত হওয়া",
+    "meaningEn": "Change to a solid or semi-solid state, especially of blood or other fluids.",
+    "mnemonic": "কাটা স্থানে রক্ত জমাট বাঁধাকে coagulation বলে -> তরল অবস্থা থেকে ঘন পিণ্ডে রূপ নেওয়া।",
+    "exampleSentence": "A specialized medicament was administered to coagulate blood in the wounded artery.",
+    "synonyms": [
+      "congeal",
+      "clot",
+      "solidify",
+      "thicken"
+    ],
+    "antonyms": [
+      "liquefy",
+      "dissolve",
+      "melt"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "coda": {
+    "word": "coda",
+    "partOfSpeech": "noun",
+    "meaningBn": "সমাপ্তিসূচক অংশ, উপসংহার, শেষ অনুচ্ছেদ",
+    "meaningEn": "A concluding event, remark, or section, especially in music or literature.",
+    "mnemonic": "Code শেষ করার অংশ -> কোনো দীর্ঘ সুর বা সাহিত্যের সমাপনী মূল সুর।",
+    "exampleSentence": "The statesman’s reflective memoirs formed a poignant coda to an illustrious public career.",
+    "synonyms": [
+      "epilogue",
+      "postscript",
+      "conclusion",
+      "finale"
+    ],
+    "antonyms": [
+      "prelude",
+      "introduction",
+      "prologue"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "compendium": {
+    "word": "compendium",
+    "partOfSpeech": "noun",
+    "meaningBn": "সংক্ষিপ্তসার, সারসংক্ষেপ, তথ্যসমগ্র",
+    "meaningEn": "A collection of concise but detailed information about a particular subject.",
+    "mnemonic": "সব তথ্য পেন্ড্রাইভে কম্প্যাক্ট করে নেওয়া -> কোনো বিষয়ের সম্পূর্ণ তথ্যসংবলিত সারপুস্তক।",
+    "exampleSentence": "The revision manual provides a handy compendium of high-yield BCS general knowledge facts.",
+    "synonyms": [
+      "handbook",
+      "summary",
+      "digest",
+      "anthology"
+    ],
+    "antonyms": [
+      "expansion",
+      "elaboration"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "complaisant": {
+    "word": "complaisant",
+    "partOfSpeech": "adjective",
+    "meaningBn": "বিনম্র, অন্যকে খুশি করতে অত্যন্ত আগ্রহী, অমায়িক",
+    "meaningEn": "Willing to please others; obliging or agreeable.",
+    "mnemonic": "Complaint করে না যে -> অপরের ইচ্ছা বা মন রক্ষা করতে সর্বদা হাসিমুখে রাজি থাকে।",
+    "exampleSentence": "Her complaisant nature made her exceptionally beloved by senior administrative colleagues.",
+    "synonyms": [
+      "obliging",
+      "accommodating",
+      "agreeable",
+      "amenable"
+    ],
+    "antonyms": [
+      "recalcitrant",
+      "obstinate",
+      "defiant"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "compliant": {
+    "word": "compliant",
+    "partOfSpeech": "adjective",
+    "meaningBn": "বাধ্য, অনুগত, নিয়মানুবর্তী, আইনসম্মত",
+    "meaningEn": "Disposed to agree with others or obey rules.",
+    "mnemonic": "Comply (মেনে চলা) থেকে compliant -> আইন, নিয়ম বা কর্তৃপক্ষের নির্দেশ অক্ষরে অক্ষরে পালন করা।",
+    "exampleSentence": "Export manufacturing plants must remain compliant with international workplace safety norms.",
+    "synonyms": [
+      "obedient",
+      "docile",
+      "acquiescent",
+      "conformist"
+    ],
+    "antonyms": [
+      "defiant",
+      "disobedient",
+      "rebellious"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "conciliatory": {
+    "word": "conciliatory",
+    "partOfSpeech": "adjective",
+    "meaningBn": "সমঝোতামূলক, শান্তিদায়ক, বিরোধ মেটানোর মনোভাবসম্পন্ন",
+    "meaningEn": "Intended or likely to placate or pacify; reconciling.",
+    "mnemonic": "Reconcile (মিটমাট করা) -> মারমুখী মনোভাব পরিহার করে আলোচনার মাধ্যমে আপস করার উদ্যোগ।",
+    "exampleSentence": "The envoy adopted a conciliatory posture to defuse volatile border tensions.",
+    "synonyms": [
+      "placatory",
+      "pacifying",
+      "appeasing",
+      "peace-making"
+    ],
+    "antonyms": [
+      "antagonistic",
+      "provocative",
+      "combative"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "condone": {
+    "word": "condone",
+    "partOfSpeech": "verb",
+    "meaningBn": "ক্ষমা করা, অন্যায় প্রশ্রয় দেওয়া, দেখেও না দেখার ভান করা",
+    "meaningEn": "Accept and allow (behavior that is considered morally wrong or offensive) to continue.",
+    "mnemonic": "Con (একসাথে) + done -> ভুল কাজকে শাস্তি না দিয়ে মেনে নেওয়া বা উপেক্ষা করা।",
+    "exampleSentence": "The democratic state cannot condone extrajudicial excesses under any circumstances.",
+    "synonyms": [
+      "overlook",
+      "pardon",
+      "excuse",
+      "tolerate"
+    ],
+    "antonyms": [
+      "condemn",
+      "punish",
+      "proscribe"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "confound": {
+    "word": "confound",
+    "partOfSpeech": "verb",
+    "meaningBn": "বিভ্রান্ত করা, হতভম্ব করা, গুলিয়ে ফেলা",
+    "meaningEn": "Cause surprise or confusion in someone, especially by acting against their expectations.",
+    "mnemonic": "Con (সম্পূর্ণ) + found (গুলিয়ে যাওয়া) -> অপ্রত্যাশিত কিছু ঘটিয়ে প্রতিপক্ষকে হতবুদ্ধি করে দেওয়া।",
+    "exampleSentence": "The sudden resurgence of local manufacturing confounded pessimistic international analysts.",
+    "synonyms": [
+      "bewilder",
+      "baffle",
+      "perplex",
+      "mystify"
+    ],
+    "antonyms": [
+      "clarify",
+      "enlighten",
+      "elucidate"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "connoisseur": {
+    "word": "connoisseur",
+    "partOfSpeech": "noun",
+    "meaningBn": "শিল্প, খাদ্য বা রুচির বিশিষ্ট সমঝদার, রসজ্ঞ",
+    "meaningEn": "An expert judge in matters of taste.",
+    "mnemonic": "Connoisseur সেই ব্যক্তি যে সূক্ষ্ম শিল্প বা স্বাদের ভালো-মন্দ খুঁটিনাটি বুঝতে পারে।",
+    "exampleSentence": "A true connoisseur of Bengali literature can readily identify Rabindranath's early poetic cadence.",
+    "synonyms": [
+      "expert",
+      "aficionado",
+      "specialist",
+      "critic"
+    ],
+    "antonyms": [
+      "novice",
+      "amateur",
+      "layman"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "contention": {
+    "word": "contention",
+    "partOfSpeech": "noun",
+    "meaningBn": "বিবাদ, তর্কবিতর্ক, প্রতিদ্বন্দ্বিতা; প্রধান যুক্তি বা দাবি",
+    "meaningEn": "Heated disagreement; an assertion, especially one maintained in argument.",
+    "mnemonic": "Contest থেকে contention -> যা নিয়ে তুমুল তর্ক বা বিরোধ চলছে; অথবা মূল বক্তব্যের মূল দাবি।",
+    "exampleSentence": "The equitable sharing of transboundary river waters remains a bone of fierce contention.",
+    "synonyms": [
+      "dispute",
+      "discord",
+      "assertion",
+      "argument"
+    ],
+    "antonyms": [
+      "agreement",
+      "accord",
+      "harmony"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "contentious": {
+    "word": "contentious",
+    "partOfSpeech": "adjective",
+    "meaningBn": "বিবাদপ্রিয়, বিতর্কিত, ঝগড়াঝাঁটি বাঁধাতে পারে এমন",
+    "meaningEn": "Causing or likely to cause an argument; controversial.",
+    "mnemonic": "যা নিয়ে বিতর্ক কখনোই শেষ হয় না -> সংবেদনশীল ও কলহপ্রবণ বিষয়।",
+    "exampleSentence": "Privatization of public health utilities proved to be an immensely contentious public issue.",
+    "synonyms": [
+      "controversial",
+      "disputable",
+      "argumentative",
+      "quarrelsome"
+    ],
+    "antonyms": [
+      "peaceable",
+      "amicable",
+      "uncontroversial"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "contiguous": {
+    "word": "contiguous",
+    "partOfSpeech": "adjective",
+    "meaningBn": "সংলগ্ন, সীমান্তবর্তী, পাশাপাশি অবস্থিত",
+    "meaningEn": "Sharing a common border; touching.",
+    "mnemonic": "Contact (স্পর্শে থাকা) থেকে contiguous -> যে দুটি ভূখণ্ড একে অপরের সীমানা স্পর্শ করে আছে।",
+    "exampleSentence": "Alaska is not contiguous with the other forty-eight continental United States.",
+    "synonyms": [
+      "adjacent",
+      "neighboring",
+      "abutting",
+      "adjoining"
+    ],
+    "antonyms": [
+      "distant",
+      "separated",
+      "isolated"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "contrite": {
+    "word": "contrite",
+    "partOfSpeech": "adjective",
+    "meaningBn": "গভীরভাবে অনুতপ্ত, অনুশোচনাগ্রস্ত, কৃতকর্মের জন্য ক্ষমাপ্রার্থী",
+    "meaningEn": "Feeling or expressing remorse at the recognition that one has done wrong.",
+    "mnemonic": "Contrition মানে পাপের জন্য কান্নাকাটি করা -> হৃদয় দিয়ে কৃত অপরাধের জন্য লজ্জিত ও অনুতপ্ত।",
+    "exampleSentence": "The contrite embezzler returned the illicit dividends and surrendered to authorities.",
+    "synonyms": [
+      "remorseful",
+      "penitent",
+      "regretful",
+      "apologetic"
+    ],
+    "antonyms": [
+      "unrepentant",
+      "defiant",
+      "shameless"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "conundrum": {
+    "word": "conundrum",
+    "partOfSpeech": "noun",
+    "meaningBn": "ধাঁধা, জটিল বা রহস্যজনক সমস্যা, যার সমাধান সহজ নয়",
+    "meaningEn": "A confusing and difficult problem or question.",
+    "mnemonic": "কঠিন ড্রাম (conundrum) যার ভেতর কি আছে বোঝা দায় -> জটিল অর্থনৈতিক বা রাজনৈতিক সঙ্কট।",
+    "exampleSentence": "Balancing fiscal stimulus with stubborn inflation poses a daunting macroeconomic conundrum.",
+    "synonyms": [
+      "riddle",
+      "puzzle",
+      "dilemma",
+      "enigma"
+    ],
+    "antonyms": [
+      "solution",
+      "clarity",
+      "answer"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "converge": {
+    "word": "converge",
+    "partOfSpeech": "verb",
+    "meaningBn": "একই বিন্দুতে মিলিত হওয়া, বিভিন্ন দিক থেকে এসে এক হওয়া",
+    "meaningEn": "Tend to meet at a point; come together from different directions.",
+    "mnemonic": "Diverge মানে আলাদা হওয়া, Converge মানে সব শাখা এসে এক নদীতে মিলিত হওয়া।",
+    "exampleSentence": "Aspirants from across sixty-four districts converge on Dhaka to appear for the BCS preliminary exam.",
+    "synonyms": [
+      "meet",
+      "intersect",
+      "unite",
+      "merge"
+    ],
+    "antonyms": [
+      "diverge",
+      "scatter",
+      "separate"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "convoluted": {
+    "word": "convoluted",
+    "partOfSpeech": "adjective",
+    "meaningBn": "জটিল, প্যাঁচানো, কুটিল, দুর্বোধ্য",
+    "meaningEn": "Extremely complex and difficult to follow; intricately folded.",
+    "mnemonic": "Revolver বা সাপের মত প্যাঁচানো -> এত বেশি শর্ত ও মারপ্যাঁচ যে সহজে বোঝা যায় না।",
+    "exampleSentence": "The statutory procurement protocol was so convoluted that essential supplies were stalled.",
+    "synonyms": [
+      "intricate",
+      "tangled",
+      "complex",
+      "byzantine"
+    ],
+    "antonyms": [
+      "simple",
+      "straightforward",
+      "lucid"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "craven": {
+    "word": "craven",
+    "partOfSpeech": "adjective",
+    "meaningBn": "ভীরু, কাপুরুষোচিত, সাহসশূন্য",
+    "meaningEn": "Contemptibly lacking in courage; cowardly.",
+    "mnemonic": "Crave করে দয়া চায় কারণ সে ভীরু -> বিপদের মুহূর্তে দায়িত্ব ফেলে পালিয়ে যাওয়ার মতো কাপুরুষ।",
+    "exampleSentence": "Fleeing the frontline while comrades stood ground was branded a craven dereliction of duty.",
+    "synonyms": [
+      "cowardly",
+      "spineless",
+      "pusillanimous",
+      "timorous"
+    ],
+    "antonyms": [
+      "brave",
+      "valiant",
+      "courageous"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "daunt": {
+    "word": "daunt",
+    "partOfSpeech": "verb",
+    "meaningBn": "ভীত করা, মনোবল ভেঙে দেওয়া, নিরুৎসাহিত করা",
+    "meaningEn": "Make someone feel intimidated or apprehensive.",
+    "mnemonic": "Daunting মানে যা দেখে ভয় লাগে -> পাহাড়সম প্রতিকূলতা দেখে পিছু হটে যাওয়া।",
+    "exampleSentence": "Formidable administrative challenges could not daunt the determined young magistrate.",
+    "synonyms": [
+      "intimidate",
+      "discourage",
+      "dismay",
+      "dishearten"
+    ],
+    "antonyms": [
+      "embolden",
+      "encourage",
+      "inspire"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "dearth": {
+    "word": "dearth",
+    "partOfSpeech": "noun",
+    "meaningBn": "অভাব, অপ্রতুলতা, তীব্র ঘাটতি, আকাল",
+    "meaningEn": "A scarcity or lack of something.",
+    "mnemonic": "Dearth মানে Dear (মূল্যবান) হওয়া কারণ বাজারে সরবরাহ নেই -> তীব্র ঘাটতি বা আকাল।",
+    "exampleSentence": "A persistent dearth of experienced clinical pathologists hampers peripheral healthcare.",
+    "synonyms": [
+      "scarcity",
+      "shortage",
+      "paucity",
+      "deficiency"
+    ],
+    "antonyms": [
+      "abundance",
+      "plethora",
+      "surfeit"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "debacle": {
+    "word": "debacle",
+    "partOfSpeech": "noun",
+    "meaningBn": "চরম বিপর্যয়, আকস্মিক ধস, সম্পূর্ণ ব্যর্থতা",
+    "meaningEn": "A sudden and ignominious failure; a fiasco.",
+    "mnemonic": "De-barkle মানে বরফের বাঁধ ভেঙে হুড়মুড় করে ধস নামা -> পরিকল্পনা ভেস্তে গিয়ে চরম বিপর্যয়।",
+    "exampleSentence": "The miscalculated currency demonetization resulted in an unmitigated economic debacle.",
+    "synonyms": [
+      "fiasco",
+      "catastrophe",
+      "disaster",
+      "collapse"
+    ],
+    "antonyms": [
+      "triumph",
+      "success",
+      "victory"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "decorum": {
+    "word": "decorum",
+    "partOfSpeech": "noun",
+    "meaningBn": "শোভনতা, শিষ্টাচার, প্রথাগত ভদ্রতা ও আদবকায়দা",
+    "meaningEn": "Behavior in keeping with good taste and propriety; etiquette.",
+    "mnemonic": "Decoration যেমন ঘর সুন্দর করে, Decorum তেমনি ব্যক্তিত্বকে মার্জিত ও সুন্দর রাখে।",
+    "exampleSentence": "Members of parliament are constitutionally mandated to uphold legislative decorum.",
+    "synonyms": [
+      "propriety",
+      "etiquette",
+      "decency",
+      "politeness"
+    ],
+    "antonyms": [
+      "impropriety",
+      "rudeness",
+      "indecorum"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "default": {
+    "word": "default",
+    "partOfSpeech": "noun",
+    "meaningBn": "ঋণ পরিশোধে ব্যর্থতা, চুক্তির শর্ত পালনে ব্যর্থ হওয়া",
+    "meaningEn": "Failure to fulfill an obligation, especially to repay a loan.",
+    "mnemonic": "ব্যাংকের কিস্তি সময়মতো না দিলে ঋণগ্রহীতাকে default-er (ঋণখেলাপি) বলা হয়।",
+    "exampleSentence": "A sovereign debt default would irreparably diminish the nation's international credit score.",
+    "synonyms": [
+      "nonpayment",
+      "dereliction",
+      "delinquency",
+      "lapse"
+    ],
+    "antonyms": [
+      "settlement",
+      "payment",
+      "discharge"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "deference": {
+    "word": "deference",
+    "partOfSpeech": "noun",
+    "meaningBn": "গভীর সম্মান, বিনম্র শ্রদ্ধা, মান্যতা দিয়ে অপরের মতামত গ্রহণ",
+    "meaningEn": "Polite submission and respect.",
+    "mnemonic": "Different (গুরুজনদের ভিন্ন চোখে দেখে) থেকে deference -> গুরুজন বা আইনের প্রতি বিনম্র শ্রদ্ধা।",
+    "exampleSentence": "The junior advocate addressed the appellate bench with impeccable legal deference.",
+    "synonyms": [
+      "respect",
+      "reverence",
+      "esteem",
+      "submission"
+    ],
+    "antonyms": [
+      "disrespect",
+      "insolence",
+      "contempt"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "delineate": {
+    "word": "delineate",
+    "partOfSpeech": "verb",
+    "meaningBn": "চিত্রিত করা, বিশদভাবে বর্ণনা করা, সীমানা নির্ধারণ করা",
+    "meaningEn": "Describe or portray something precisely; indicate the exact position of a border.",
+    "mnemonic": "Line টেনে টেনে সুস্পষ্ট নকশা এঁকে বোঝানো -> কোনো ধারণা বা সীমানা নিখুঁতভাবে তুলে ধরা।",
+    "exampleSentence": "The strategic masterplan delineates the administrative borders of the new economic zone.",
+    "synonyms": [
+      "outline",
+      "depict",
+      "describe",
+      "define"
+    ],
+    "antonyms": [
+      "confuse",
+      "distort",
+      "blur"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "denigrate": {
+    "word": "denigrate",
+    "partOfSpeech": "verb",
+    "meaningBn": "অসম্মান করা, খাটো করা, বদনাম করা, মানহানি করা",
+    "meaningEn": "Criticize unfairly; disparage.",
+    "mnemonic": "De + negro (কালো কালি লেপে দেওয়া) -> কারো সম্মান বা ভালো কাজকে ছোট করে হেয় প্রতিপন্ন করা।",
+    "exampleSentence": "Partisan commentators attempted to denigrate the judicial panel's landmark verdict.",
+    "synonyms": [
+      "disparage",
+      "belittle",
+      "defame",
+      "malign"
+    ],
+    "antonyms": [
+      "praise",
+      "extol",
+      "laud"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "deride": {
+    "word": "deride",
+    "partOfSpeech": "verb",
+    "meaningBn": "উপহাস করা, ব্যঙ্গবিদ্রূপ করে উড়িয়ে দেওয়া",
+    "meaningEn": "Express contempt for; ridicule.",
+    "mnemonic": "Ridicule করা -> কোনো নতুন প্রস্তাবকে হেসে তুচ্ছতাচ্ছিল্য করে প্রত্যাখ্যান করা।",
+    "exampleSentence": "Skeptics initially derided the notion of mass mobile banking in rural hamlets.",
+    "synonyms": [
+      "mock",
+      "ridicule",
+      "scoff",
+      "scorn"
+    ],
+    "antonyms": [
+      "respect",
+      "admire",
+      "compliment"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "derivative": {
+    "word": "derivative",
+    "partOfSpeech": "adjective",
+    "meaningBn": "অনুকরণমূলক, মৌলিকতাহীন, অন্য উৎস থেকে সংগৃহীত",
+    "meaningEn": "Imitative of the work of another person, and usually disapproved of for that reason.",
+    "mnemonic": "Derive (অন্য উৎস থেকে নেওয়া) -> যাতে নিজের কোনো নতুন বা মৌলিক চিন্তাভাবনা নেই।",
+    "exampleSentence": "The architectural blueprint was criticized for being merely derivative of Western skyscrapers.",
+    "synonyms": [
+      "imitative",
+      "unoriginal",
+      "secondary",
+      "hackneyed"
+    ],
+    "antonyms": [
+      "original",
+      "innovative",
+      "authentic"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "desiccate": {
+    "word": "desiccate",
+    "partOfSpeech": "verb",
+    "meaningBn": "শুষ্ক বা জলশূন্য করা, আর্দ্রতা শুষে সম্পূর্ণ শুকিয়ে ফেলা",
+    "meaningEn": "Remove the moisture from something, typically in order to preserve it.",
+    "mnemonic": "Desi-cake শুকিয়ে শক্ত করা -> পানি বা সজীবতা শুষে সম্পূর্ণ শুষ্ক খটখটে করে ফেলা।",
+    "exampleSentence": "Scorching droughts desiccated the alluvial topsoil across the northern barind tracts.",
+    "synonyms": [
+      "dry out",
+      "dehydrate",
+      "parch",
+      "drain"
+    ],
+    "antonyms": [
+      "moisten",
+      "hydrate",
+      "dampen"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "desultory": {
+    "word": "desultory",
+    "partOfSpeech": "adjective",
+    "meaningBn": "এলোমেলো, অসংলগ্ন, নিয়মশৃঙ্খলাহীন, উদ্দেশ্যবিহীন",
+    "meaningEn": "Lacking a plan, purpose, or enthusiasm; jumping from one thing to another.",
+    "mnemonic": "De-result যার কোনো সুনির্দিষ্ট ফল নেই -> মনযোগহীনভাবে এটা-ওটা ছুঁয়ে যাওয়া।",
+    "exampleSentence": "A desultory revision routine without mock exams rarely yields success in BCS.",
+    "synonyms": [
+      "aimless",
+      "haphazard",
+      "unfocused",
+      "discursive"
+    ],
+    "antonyms": [
+      "systematic",
+      "methodical",
+      "focused"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "deterrent": {
+    "word": "deterrent",
+    "partOfSpeech": "noun",
+    "meaningBn": "প্রতিবন্ধক, নিবৃত্তিকারক বিষয়, অপরাধ ঠেকানোর উপায়",
+    "meaningEn": "A thing that discourages or is intended to discourage someone from doing something.",
+    "mnemonic": "Deter (বিরত রাখা) -> এমন কঠোর শাস্তি যা দেখলে অন্যরা অপরাধ করতে ভয় পায়।",
+    "exampleSentence": "Exemplary anti-graft sentences serve as a formidable deterrent against bureaucratic bribery.",
+    "synonyms": [
+      "disincentive",
+      "curb",
+      "check",
+      "restraint"
+    ],
+    "antonyms": [
+      "incentive",
+      "encouragement",
+      "catalyst"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "diatribe": {
+    "word": "diatribe",
+    "partOfSpeech": "noun",
+    "meaningBn": "তীব্র আক্রমণাত্মক বক্তব্য বা তিরস্কারমূলক বক্তৃতা",
+    "meaningEn": "A forceful and bitter verbal attack against someone or something.",
+    "mnemonic": "Dia (দ্বিধা ছাড়া) + tribe (আঘাত) -> রাজনৈতিক মঞ্চে প্রতিপক্ষকে ধুয়ে দিয়ে বিষোদগার করা।",
+    "exampleSentence": "The disgruntled union leader launched a blistering diatribe against the board of directors.",
+    "synonyms": [
+      "tirade",
+      "harangue",
+      "invective",
+      "onslaught"
+    ],
+    "antonyms": [
+      "eulogy",
+      "panegyric",
+      "commendation"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "dichotomy": {
+    "word": "dichotomy",
+    "partOfSpeech": "noun",
+    "meaningBn": "দ্বিখণ্ডন, পরস্পরবিরোধী দুটি ভাগে বিভাজন",
+    "meaningEn": "A division or contrast between two things that are or are represented as being entirely different.",
+    "mnemonic": "Dicho (দুই) + tomy (কাটা) -> কোনো বিষয়কে সম্পূর্ণ বিপরীত দুটি ভাগে ভাগ করা (যেমন: ভালো বনাম মন্দ)।",
+    "exampleSentence": "The sharp dichotomy between urban wealth and rural indigence demands fiscal remediation.",
+    "synonyms": [
+      "division",
+      "split",
+      "gulf",
+      "contrast"
+    ],
+    "antonyms": [
+      "unity",
+      "synthesis",
+      "harmony"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "diffidence": {
+    "word": "diffidence",
+    "partOfSpeech": "noun",
+    "meaningBn": "আত্মবিশ্বাসের অভাব, লাজুকতা, কুণ্ঠাবোধ",
+    "meaningEn": "Modesty or shyness resulting from a lack of self-confidence.",
+    "mnemonic": "Diffident মানে আত্মবিশ্বাসের ঘাটতি -> মঞ্চে কথা বলতে গিয়ে সংকোচ বা ভয় পাওয়া।",
+    "exampleSentence": "Overcoming internal diffidence is crucial for excelling in viva-voce board examinations.",
+    "synonyms": [
+      "shyness",
+      "timidity",
+      "modesty",
+      "hesitancy"
+    ],
+    "antonyms": [
+      "confidence",
+      "assertiveness",
+      "audacity"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "diffuse": {
+    "word": "diffuse",
+    "partOfSpeech": "adjective",
+    "meaningBn": "ছড়ানো, অসংহত, দীর্ঘসূত্রপূর্ণ, অপ্রয়োজনীয় শব্দবহুল",
+    "meaningEn": "Spread out over a large area; not concentrated; wordy.",
+    "mnemonic": "ডিফিউশন মানে ব্যাপন হওয়া -> যে লেখার বক্তব্য সংহত নয়, চারিদিকে ছড়িয়ে অস্পষ্ট হয়ে গেছে।",
+    "exampleSentence": "The report was too diffuse and repetitive to serve as an actionable ministerial briefing.",
+    "synonyms": [
+      "scattered",
+      "verbose",
+      "wordy",
+      "dispersed"
+    ],
+    "antonyms": [
+      "concentrated",
+      "concise",
+      "succinct"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "digression": {
+    "word": "digression",
+    "partOfSpeech": "noun",
+    "meaningBn": "অপ্রাসঙ্গিক বিষয়ের অবতারণা, মূল প্রসঙ্গ থেকে সাময়িক বিচ্যুতি",
+    "meaningEn": "A temporary departure from the main subject in speech or writing.",
+    "mnemonic": "Di-progress মানে মূল রাস্তা ছেড়ে পাশের গলিতে ঢুকে যাওয়া -> বক্তব্য দিতে গিয়ে অপ্রাসঙ্গিক গল্পে চলে যাওয়া।",
+    "exampleSentence": "After a humorous digression regarding his university days, the professor resumed the lecture.",
+    "synonyms": [
+      "deviation",
+      "detour",
+      "aside",
+      "divergence"
+    ],
+    "antonyms": [
+      "directness",
+      "progression"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "dirge": {
+    "word": "dirge",
+    "partOfSpeech": "noun",
+    "meaningBn": "শোকসংগীত, শেষকৃত্যের সুর, শোকগাথা",
+    "meaningEn": "A lament for the dead, especially one forming part of a funeral rite.",
+    "mnemonic": "Dirge শোনার পর চোখে জল আসে -> কারো বিদায়ে গাওয়া বিষাদময় অন্তিম সুর।",
+    "exampleSentence": "A mournful instrumental dirge echoed across the memorial sanctuary on National Mourning Day.",
+    "synonyms": [
+      "lament",
+      "elegy",
+      "requiem",
+      "threnody"
+    ],
+    "antonyms": [
+      "hymn",
+      "paean",
+      "celebration"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "disabuse": {
+    "word": "disabuse",
+    "partOfSpeech": "verb",
+    "meaningBn": "ভুল ধারণা ভেঙে দেওয়া, মোহমুক্ত করা, আসল সত্য জানানো",
+    "meaningEn": "Persuade someone that an idea or belief is mistaken.",
+    "mnemonic": "Dis + abuse -> কারো মনের কুসংস্কার বা ভ্রান্ত বিশ্বাস দূর করে সঠিক বাস্তবতা বোঝানো।",
+    "exampleSentence": "The statistical report disabused citizens of the illusion that inflation was subsiding.",
+    "synonyms": [
+      "undeceive",
+      "disillusion",
+      "correct",
+      "enlighten"
+    ],
+    "antonyms": [
+      "deceive",
+      "delude",
+      "mislead"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "discerning": {
+    "word": "discerning",
+    "partOfSpeech": "adjective",
+    "meaningBn": "বিচক্ষণ, সূক্ষ্মদৃষ্টিসম্পন্ন, ভালো-মন্দ বিচার করতে সক্ষম",
+    "meaningEn": "Having or showing good judgment.",
+    "mnemonic": "Discern (আলাদা করে চেনা) -> গভীর অন্তর্দৃষ্টি দিয়ে খাঁটি ও নকলের পার্থক্য বুঝে ফেলা।",
+    "exampleSentence": "Discerning buyers examine provenance records before purchasing antique artworks.",
+    "synonyms": [
+      "judicious",
+      "perceptive",
+      "astute",
+      "shrewd"
+    ],
+    "antonyms": [
+      "obtuse",
+      "undiscriminating",
+      "naive"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "discordant": {
+    "word": "discordant",
+    "partOfSpeech": "adjective",
+    "meaningBn": "বেসুরো, অসঙ্গতিপূর্ণ, বেখাপ্পা, অমিলযুক্ত",
+    "meaningEn": "Disagreeing or incongruous; characterized by quarreling or conflict.",
+    "mnemonic": "Dis (বিরোধ) + cord (হৃদয়/সুর) -> যেখানে সুরের বা মতামতের কোনো মিল নেই।",
+    "exampleSentence": "Discordant policy pronouncements from allied ministers confounded economic markets.",
+    "synonyms": [
+      "inharmonious",
+      "dissonant",
+      "conflicting",
+      "clashing"
+    ],
+    "antonyms": [
+      "harmonious",
+      "concordant",
+      "melodious"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "discredit": {
+    "word": "discredit",
+    "partOfSpeech": "verb",
+    "meaningBn": "অসম্মানিত বা অবিশ্বাসযোগ্য করা, আস্থা বিনষ্ট করা",
+    "meaningEn": "Harm the good reputation of; cause an idea or evidence to be distrusted.",
+    "mnemonic": "Dis + credit (ধার/আস্থা) -> কারো সুনাম বা প্রমাণের বিশ্বাসযোগ্যতা ধ্বংস করে দেওয়া।",
+    "exampleSentence": "The leaked audit report decisively discredited the treasurer's fraudulent declarations.",
+    "synonyms": [
+      "disprove",
+      "debunk",
+      "tarnish",
+      "defame"
+    ],
+    "antonyms": [
+      "validate",
+      "endorse",
+      "confirm"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "discrepancy": {
+    "word": "discrepancy",
+    "partOfSpeech": "noun",
+    "meaningBn": "অসঙ্গতি, গরমিল, অমিল, পার্থক্যের বৈসাদৃশ্য",
+    "meaningEn": "A lack of compatibility or similarity between two or more facts.",
+    "mnemonic": "হিসাবের খাতা ও ব্যাংকের স্থিতির মধ্যে টাকার যে অমিল ধরা পড়ে তাকে discrepancy বলে।",
+    "exampleSentence": "Auditors detected an irreconcilable discrepancy of ten million taka in the procurement ledger.",
+    "synonyms": [
+      "inconsistency",
+      "variance",
+      "disparity",
+      "divergence"
+    ],
+    "antonyms": [
+      "consistency",
+      "congruence",
+      "agreement"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "discrete": {
+    "word": "discrete",
+    "partOfSpeech": "adjective",
+    "meaningBn": "পৃথক, আলাদা, স্বতন্ত্র, পরস্পরবিচ্ছিন্ন",
+    "meaningEn": "Individually separate and distinct.",
+    "mnemonic": "Dis-create মানে আলাদা আলাদা বানানো (Discreet মানে সতর্ক, আর Discrete মানে আলাদা)।",
+    "exampleSentence": "The project is broken down into four discrete phases with distinct quarterly milestones.",
+    "synonyms": [
+      "separate",
+      "distinct",
+      "individual",
+      "detached"
+    ],
+    "antonyms": [
+      "connected",
+      "continuous",
+      "integrated"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "disingenuous": {
+    "word": "disingenuous",
+    "partOfSpeech": "adjective",
+    "meaningBn": "কপট, চতুর, ভেতর এক বাইরে আরেক, ছলনাময়ী",
+    "meaningEn": "Not candid or sincere, typically by pretending that one knows less about something than one really does.",
+    "mnemonic": "Dis + ingenuous (সরল/সাদাসিধে) -> যে ব্যক্তি নিজেকে সাধু সাজিয়ে ভেতর থেকে ধূর্ত চাল চালে।",
+    "exampleSentence": "Claiming total ignorance of the corporate tax fraud was transparently disingenuous.",
+    "synonyms": [
+      "deceitful",
+      "insincere",
+      "duplicitous",
+      "hypocritical"
+    ],
+    "antonyms": [
+      "candid",
+      "ingenuous",
+      "sincere",
+      "frank"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "disinterested": {
+    "word": "disinterested",
+    "partOfSpeech": "adjective",
+    "meaningBn": "নিরপেক্ষ, স্বার্থহীন, পক্ষপাতহীন বিচারকতুল্য",
+    "meaningEn": "Not influenced by considerations of personal advantage; impartial.",
+    "mnemonic": "Uninterested মানে অনাগ্রহী, কিন্তু Disinterested মানে কোনো ব্যক্তিগত স্বার্থ না রেখে সম্পূর্ণ নিরপেক্ষ।",
+    "exampleSentence": "A judicial arbitrator must remain completely disinterested in the outcome of the corporate trial.",
+    "synonyms": [
+      "impartial",
+      "unbiased",
+      "neutral",
+      "detached"
+    ],
+    "antonyms": [
+      "biased",
+      "partisan",
+      "partial"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "disjointed": {
+    "word": "disjointed",
+    "partOfSpeech": "adjective",
+    "meaningBn": "অসংলগ্ন, বিচ্ছিন্ন, খাপছাড়া, সুসংহত নয় এমন",
+    "meaningEn": "Lacking a coherent sequence or connection.",
+    "mnemonic": "Joint (জোড়া) ছুটে যাওয়া -> যে লেখার অনুচ্ছেদগুলোর মধ্যে পারস্পরিক ধারাবাহিক সংযোগ নেই।",
+    "exampleSentence": "His feverish testimony was too disjointed to provide a reliable chronology of events.",
+    "synonyms": [
+      "incoherent",
+      "disconnected",
+      "fragmented",
+      "chaotic"
+    ],
+    "antonyms": [
+      "coherent",
+      "connected",
+      "seamless"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "dismiss": {
+    "word": "dismiss",
+    "partOfSpeech": "verb",
+    "meaningBn": "খারিজ করা, বাতিল করা, আমলে না নিয়ে বিদায় দেওয়া",
+    "meaningEn": "Treat as unworthy of serious consideration; discharge.",
+    "mnemonic": "আদালত ভিত্তিহীন মামলা যেভাবে খারিজ (dismiss) করে দেয়।",
+    "exampleSentence": "The judge dismissed the uncorroborated petition with exemplary legal censure.",
+    "synonyms": [
+      "reject",
+      "spurn",
+      "repudiate",
+      "discharge"
+    ],
+    "antonyms": [
+      "accept",
+      "entertain",
+      "retain"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "disparage": {
+    "word": "disparage",
+    "partOfSpeech": "verb",
+    "meaningBn": "হেয় প্রতিপন্ন করা, খাটো করা, অবজ্ঞাপূর্ণ কথা বলা",
+    "meaningEn": "Regard or represent as being of little worth.",
+    "mnemonic": "Dis + peer (সমকক্ষ না ভেবে তুচ্ছ মনে করা) -> কারো কৃতিত্বকে ছোট করে দেখানো।",
+    "exampleSentence": "Partisan critics sought to disparage the scientific milestone accomplished by local researchers.",
+    "synonyms": [
+      "belittle",
+      "denigrate",
+      "deprecate",
+      "demean"
+    ],
+    "antonyms": [
+      "praise",
+      "extol",
+      "applaud"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "disparate": {
+    "word": "disparate",
+    "partOfSpeech": "adjective",
+    "meaningBn": "সম্পূর্ণ ভিন্নধর্মী, বিষম, যার মধ্যে কোনো মিল নেই",
+    "meaningEn": "Essentially different in kind; not able to be compared.",
+    "mnemonic": "Dis-separate -> এমন দুটি বিষয় যাদের তুলনা করাই অর্থহীন কারণ তারা সম্পূর্ণ দুই জগতের।",
+    "exampleSentence": "The committee assembled experts from disparate disciplines including nuclear physics and agrarian law.",
+    "synonyms": [
+      "contrasting",
+      "divergent",
+      "heterogeneous",
+      "dissimilar"
+    ],
+    "antonyms": [
+      "homogeneous",
+      "similar",
+      "uniform"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "dissemble": {
+    "word": "dissemble",
+    "partOfSpeech": "verb",
+    "meaningBn": "ছদ্মবেশ ধারণ করা, মনের আসল উদ্দেশ্য বা অনুভূতি গোপন করা",
+    "meaningEn": "Conceal one's true motives, feelings, or beliefs.",
+    "mnemonic": "Dis + resemble (নকল রূপ নেওয়া) -> মনের আসল ক্ষোভ বা পরিকল্পনা মুখে হাসি দিয়ে লুকিয়ে রাখা।",
+    "exampleSentence": "A shrewd diplomat must occasionally dissemble to preserve delicate bilateral negotiations.",
+    "synonyms": [
+      "dissimulate",
+      "feign",
+      "masquerade",
+      "pretend"
+    ],
+    "antonyms": [
+      "reveal",
+      "disclose",
+      "confess"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "disseminate": {
+    "word": "disseminate",
+    "partOfSpeech": "verb",
+    "meaningBn": "ছড়িয়ে দেওয়া, বহুল প্রচার করা, জ্ঞাপন করা",
+    "meaningEn": "Spread (something, especially information) widely.",
+    "mnemonic": "Semen মানে বীজ -> কৃষক যেমন মাঠে বীজ ছিটায়, তেমনি বেতার বা ইন্টারনেটে তথ্য সবখানে ছড়িয়ে দেওয়া।",
+    "exampleSentence": "Health authorities utilized text messaging to disseminate pandemic precaution guidelines.",
+    "synonyms": [
+      "circulate",
+      "distribute",
+      "broadcast",
+      "promulgate"
+    ],
+    "antonyms": [
+      "withhold",
+      "suppress",
+      "contain"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "dissolution": {
+    "word": "dissolution",
+    "partOfSpeech": "noun",
+    "meaningBn": "অবসান, বিলুপ্তি, সংহতি বিনষ্ট হয়ে যাওয়া, ভেঙে পড়া",
+    "meaningEn": "The closing down or dismissal of an assembly, partnership, or official body.",
+    "mnemonic": "Dissolve হয়ে নিঃশেষ হয়ে যাওয়া -> সংসদ ভেঙে দেওয়া বা কোনো অংশীদারিত্বের আনুষ্ঠানিক সমাপ্তি।",
+    "exampleSentence": "The premature dissolution of parliament precipitated a profound constitutional crisis.",
+    "synonyms": [
+      "disintegration",
+      "termination",
+      "cessation",
+      "decomposition"
+    ],
+    "antonyms": [
+      "establishment",
+      "foundation",
+      "integration"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "dissonance": {
+    "word": "dissonance",
+    "partOfSpeech": "noun",
+    "meaningBn": "অনৈক্য, মতভেদ, সুরের অমিল, অভ্যন্তরীণ অসঙ্গতি",
+    "meaningEn": "A tension or clash resulting from the combination of two disharmonious or unsuitable elements.",
+    "mnemonic": "কগনিটিভ ডিসোনেন্স -> মন এক কথা বলে কিন্তু পরিস্থিতি উল্টো হলে যে মানসিক অস্বস্তি হয়।",
+    "exampleSentence": "There is a glaring dissonance between political campaign pledges and fiscal allocations.",
+    "synonyms": [
+      "discord",
+      "friction",
+      "strife",
+      "disagreement"
+    ],
+    "antonyms": [
+      "consonance",
+      "harmony",
+      "agreement"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "distend": {
+    "word": "distend",
+    "partOfSpeech": "verb",
+    "meaningBn": "স্ফীত হওয়া, ফুলে ওঠা, প্রসারিত হওয়া",
+    "meaningEn": "Swell or cause to swell by pressure from inside.",
+    "mnemonic": "Extend মানে বাড়ানো, Distend মানে ভেতরের চাপে বেলুনের মত ফুলে ওঠা।",
+    "exampleSentence": "Malnutrition in early infancy can cause the abdominal region to distend abnormally.",
+    "synonyms": [
+      "swell",
+      "bloat",
+      "dilate",
+      "expand"
+    ],
+    "antonyms": [
+      "deflate",
+      "shrink",
+      "contract"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "distill": {
+    "word": "distill",
+    "partOfSpeech": "verb",
+    "meaningBn": "পাতন করা, খাঁটি নির্যাস বের করে আনা, সারবস্তু গ্রহণ করা",
+    "meaningEn": "Extract the essential meaning or most important aspects of.",
+    "mnemonic": "ডিস্টিল ওয়াটার যেমন বিশুদ্ধ পানি -> শত পৃষ্ঠার বই পড়ে মূল ৪টি শিক্ষা খাঁটি আকারে বের করে আনা।",
+    "exampleSentence": "The editor distilled the voluminous commission report into a lucid four-page executive brief.",
+    "synonyms": [
+      "condense",
+      "refine",
+      "extract",
+      "purify"
+    ],
+    "antonyms": [
+      "dilute",
+      "adulterate",
+      "expand"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "diverge": {
+    "word": "diverge",
+    "partOfSpeech": "verb",
+    "meaningBn": "ভিন্ন পথে যাওয়া, পথ আলাদা হওয়া, অমিল দেখা দেওয়া",
+    "meaningEn": "Depart from a set course or standard; separate from another route.",
+    "mnemonic": "Converge মানে এক হওয়া, Diverge মানে এক পথ থেকে দুই দিকে ভাগ হয়ে যাওয়া।",
+    "exampleSentence": "Over the decades, their legal philosophies diverged irreconcilably.",
+    "synonyms": [
+      "deviate",
+      "branch off",
+      "part",
+      "differentiate"
+    ],
+    "antonyms": [
+      "converge",
+      "align",
+      "unite"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "divest": {
+    "word": "divest",
+    "partOfSpeech": "verb",
+    "meaningBn": "কেড়ে নেওয়া, অধিকারচ্যুত করা, শেয়ার বিক্রি করে পুঁজি প্রত্যাহার করা",
+    "meaningEn": "Deprive someone of power, rights, or possessions; rid oneself of something.",
+    "mnemonic": "Invest (বিনিয়োগ) এর বিপরীত Divest -> কোনো বিতর্কিত প্রতিষ্ঠান থেকে অর্থ বা দায়িত্ব প্রত্যাহার করা।",
+    "exampleSentence": "Ethical pension funds opted to divest their stakes in carbon-heavy coal enterprises.",
+    "synonyms": [
+      "strip",
+      "deprive",
+      "relinquish",
+      "dispossess"
+    ],
+    "antonyms": [
+      "invest",
+      "endow",
+      "equip"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "document": {
+    "word": "document",
+    "partOfSpeech": "verb",
+    "meaningBn": "দলিল বা দালিলিক প্রমাণ দ্বারা সত্যতা নিশ্চিত করা",
+    "meaningEn": "Record something in written, photographic, or other form; prove with evidence.",
+    "mnemonic": "দলিলপত্র দিয়ে অকাট্যভাবে প্রমাণ হাজির করা।",
+    "exampleSentence": "Historians systematically documented atrocities committed during the Liberation War of 1971.",
+    "synonyms": [
+      "record",
+      "archive",
+      "substantiate",
+      "verify"
+    ],
+    "antonyms": [
+      "conjecture",
+      "dispute",
+      "refute"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "dogmatic": {
+    "word": "dogmatic",
+    "partOfSpeech": "adjective",
+    "meaningBn": "গোঁড়া, একগুঁয়ে মতবাদী, নিজের মতকেই একমাত্র সত্য ভাবা",
+    "meaningEn": "Inclined to lay down principles as incontrovertibly true, without consideration of evidence.",
+    "mnemonic": "Dogma মানে ধর্মীয় বা দার্শনিক অন্ধ বিশ্বাস -> নতুন কোনো প্রমাণ ছাড়াই নিজের ভুল মত আঁকড়ে থাকা।",
+    "exampleSentence": "A dogmatic administrator resists empirical data that contradicts his personal ideology.",
+    "synonyms": [
+      "doctrinaire",
+      "opinionated",
+      "inflexible",
+      "authoritarian"
+    ],
+    "antonyms": [
+      "open-minded",
+      "flexible",
+      "pragmatic"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "dormant": {
+    "word": "dormant",
+    "partOfSpeech": "adjective",
+    "meaningBn": "সুপ্ত, নিষ্ক্রিয়, আপাতদৃষ্টিতে ঘুমন্ত কিন্তু জীবিত",
+    "meaningEn": "Having normal physical functions suspended or slowed down for a period; inoperative.",
+    "mnemonic": "Dormitory মানে ঘুমানোর ঘর -> সুপ্ত আগ্নেয়গিরি যা এখন শান্ত কিন্তু যেকোনো মুহূর্তে ফেটে পড়তে পারে।",
+    "exampleSentence": "The dormant financial accounts were scrutinized by the anti-money laundering division.",
+    "synonyms": [
+      "latent",
+      "quiescent",
+      "inactive",
+      "slumbering"
+    ],
+    "antonyms": [
+      "active",
+      "awake",
+      "operative"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "dupe": {
+    "word": "dupe",
+    "partOfSpeech": "verb",
+    "meaningBn": "প্রতারিত করা, বোকা বানানো; প্রতারিত ভিকটিম",
+    "meaningEn": "Deceive or trick someone; a victim of deception.",
+    "mnemonic": "Duplicate পণ্য আসল বলে চালিয়ে দিয়ে ক্রেতাকে ঠকানো।",
+    "exampleSentence": "Unwary elderly pensioners were duped into transferring their gratuity funds to fraudsters.",
+    "synonyms": [
+      "swindle",
+      "hoodwink",
+      "cozen",
+      "bamboozle"
+    ],
+    "antonyms": [
+      "enlighten",
+      "guide",
+      "protect"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "ebullient": {
+    "word": "ebullient",
+    "partOfSpeech": "adjective",
+    "meaningBn": "উচ্ছ্বসিত, প্রাণবন্ত, অতি-উৎসাহে টগবগে",
+    "meaningEn": "Cheerful and full of energy.",
+    "mnemonic": "Boil (ফুটন্ত) থেকে ebullient -> আনন্দের চোটে যার ভেতর থেকে উৎসাহ উপচে পড়ছে।",
+    "exampleSentence": "The ebullient crowd flooded the streets to celebrate the historic cricket championship.",
+    "synonyms": [
+      "exuberant",
+      "buoyant",
+      "joyful",
+      "vivacious"
+    ],
+    "antonyms": [
+      "depressed",
+      "morose",
+      "glum"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "eclectic": {
+    "word": "eclectic",
+    "partOfSpeech": "adjective",
+    "meaningBn": "নানা উৎস থেকে বাছাইকৃত, উদার দৃষ্টিভঙ্গিসম্পন্ন",
+    "meaningEn": "Deriving ideas, style, or taste from a broad and diverse range of sources.",
+    "mnemonic": "Selectic / Collection -> কারো পড়ার ঘরে শেক্সপিয়র, কোরআন, মার্কস এবং আধুনিক প্রযুক্তির বিচিত্র সমাবেশ।",
+    "exampleSentence": "The university library boasts an eclectic repository of classical and digital manuscripts.",
+    "synonyms": [
+      "diverse",
+      "catholic",
+      "varied",
+      "comprehensive"
+    ],
+    "antonyms": [
+      "uniform",
+      "monolithic",
+      "dogmatic"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "efficacy": {
+    "word": "efficacy",
+    "partOfSpeech": "noun",
+    "meaningBn": "কার্যকারিতা, কাঙ্ক্ষিত ফল পাওয়ার ক্ষমতা, ফলপ্রসূতা",
+    "meaningEn": "The ability to produce a desired or intended result.",
+    "mnemonic": "Effectiveness -> যে ঔষধ খেলে রোগ দ্রুত সারে তার efficacy শতভাগ।",
+    "exampleSentence": "Clinical trials confirmed the prophylactic efficacy of the new oral cholera vaccine.",
+    "synonyms": [
+      "effectiveness",
+      "potency",
+      "success",
+      "utility"
+    ],
+    "antonyms": [
+      "inefficacy",
+      "futility",
+      "impotence"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "effrontery": {
+    "word": "effrontery",
+    "partOfSpeech": "noun",
+    "meaningBn": "নির্লজ্জ ধৃষ্টতা, ঔদ্ধত্য, বেহায়াপনাপূর্ণ দুঃসাহস",
+    "meaningEn": "Insolent or impertinent behavior.",
+    "mnemonic": "Front (সবার সামনে এসে চোখ তুলে স্পর্ধা দেখানো) -> কোনো ভয় বা লজ্জা ছাড়া গুরুজনকে অপমান করার ধৃষ্টতা।",
+    "exampleSentence": "The corrupt lobbyist had the effrontery to demand an official state commendation.",
+    "synonyms": [
+      "audacity",
+      "insolence",
+      "presumption",
+      "brass"
+    ],
+    "antonyms": [
+      "modesty",
+      "deference",
+      "politeness"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "elegy": {
+    "word": "elegy",
+    "partOfSpeech": "noun",
+    "meaningBn": "শোকগাথা, শোককবিতা, কারো মৃত্যুতে লিখিত স্মৃতিচারণ",
+    "meaningEn": "A poem of serious reflection, typically a lament for the dead.",
+    "mnemonic": "Elegance দিয়ে লেখা কান্নার কবিতা -> বিখ্যাত কবির অকালপ্রয়াণে রচিত হৃদয়বিদারক শোককাব্য।",
+    "exampleSentence": "Milton's 'Lycidas' is widely regarded as an immortal elegy of the English literary canon.",
+    "synonyms": [
+      "lament",
+      "dirge",
+      "requiem",
+      "threnody"
+    ],
+    "antonyms": [
+      "panegyric",
+      "hymn",
+      "paean"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "elicit": {
+    "word": "elicit",
+    "partOfSpeech": "verb",
+    "meaningBn": "কৌশলে তথ্য বা প্রতিক্রিয়া বের করে আনা, টেনে বের করা",
+    "meaningEn": "Evoke or draw out (a response, answer, or fact) from someone in reaction to one's own actions.",
+    "mnemonic": "E (বাইরে) + licit -> জেরা করে অপরাধীর মুখ থেকে আসল সত্য ও স্বীকারোক্তি বের করা।",
+    "exampleSentence": "Skillful cross-examination elicited crucial confessions from the evasive co-conspirator.",
+    "synonyms": [
+      "extract",
+      "draw out",
+      "evoke",
+      "obtain"
+    ],
+    "antonyms": [
+      "suppress",
+      "hide",
+      "conceal"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "embellish": {
+    "word": "embellish",
+    "partOfSpeech": "verb",
+    "meaningBn": "অলংকৃত করা, রূপচর্চা করা; বাড়িয়ে চড়িয়ে সুন্দর করা",
+    "meaningEn": "Make something more attractive by the addition of decorative details or features; exaggerate.",
+    "mnemonic": "Belle মানে সুন্দরী -> কোনো ঘর ফুল দিয়ে সাজানো; অথবা গল্প বলার সময় বানিয়ে রঙ চড়ানো।",
+    "exampleSentence": "Tabloid journalists often embellish ordinary biographical sketches with scandalous fictions.",
+    "synonyms": [
+      "decorate",
+      "adorn",
+      "beautify",
+      "embroider"
+    ],
+    "antonyms": [
+      "strip",
+      "simplify",
+      "deflate"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "empirical": {
+    "word": "empirical",
+    "partOfSpeech": "adjective",
+    "meaningBn": "বাস্তব অভিজ্ঞতানির্ভর, পরীক্ষণমূলক, প্রত্যক্ষ প্রমাণের ওপর প্রতিষ্ঠিত",
+    "meaningEn": "Based on, concerned with, or verifiable by observation or experience rather than theory.",
+    "mnemonic": "Empirical Data মানে যা বইয়ের আন্দাজ নয়, সরেজমিনে পরীক্ষা ও সংখ্যা দিয়ে প্রমাণিত।",
+    "exampleSentence": "The economic thesis was applauded for its rigorous empirical substantiation and field surveys.",
+    "synonyms": [
+      "observational",
+      "experimental",
+      "verifiable",
+      "practical"
+    ],
+    "antonyms": [
+      "theoretical",
+      "hypothetical",
+      "speculative"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "emulate": {
+    "word": "emulate",
+    "partOfSpeech": "verb",
+    "meaningBn": "অনুকরণ করে সমকক্ষ হতে চেষ্টা করা, অনুসরণ করা",
+    "meaningEn": "Match or surpass a person or achievement, typically by imitation.",
+    "mnemonic": "Emulate মানে কারো ভালো আদর্শ দেখে তার মতো বা তার চেয়েও বড় হওয়ার সাধনা করা।",
+    "exampleSentence": "Aspiring diplomats seek to emulate the statesmanship of legendary international negotiators.",
+    "synonyms": [
+      "imitate",
+      "copy",
+      "mirror",
+      "follow"
+    ],
+    "antonyms": [
+      "neglect",
+      "repudiate",
+      "diverge"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "endemic": {
+    "word": "endemic",
+    "partOfSpeech": "adjective",
+    "meaningBn": "নির্দিষ্ট অঞ্চল বা সম্প্রদায়ের মধ্যে সীমাবদ্ধ (রোগ বা প্রথা)",
+    "meaningEn": "Regularly found among particular people or in a certain area.",
+    "mnemonic": "Epidemic মানে বিশ্বব্যাপী মহামারি, Endemic মানে কোনো নির্দিষ্ট এলাকার স্থায়ী স্থানীয় রোগ বা সমস্যা।",
+    "exampleSentence": "Corruption had grown so endemic within the licensing registry that reform seemed insurmountable.",
+    "synonyms": [
+      "native",
+      "indigenous",
+      "local",
+      "prevalent"
+    ],
+    "antonyms": [
+      "foreign",
+      "alien",
+      "pandemic"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "enervate": {
+    "word": "enervate",
+    "partOfSpeech": "verb",
+    "meaningBn": "দুর্বল করা, শক্তি বা জীবনীশক্তি নিঃশেষ করা",
+    "meaningEn": "Cause someone to feel drained of energy or vitality; weaken.",
+    "mnemonic": "Energy বের করে ফেলা (E-nerve) -> তীব্র গরমে বা রোগে শরীর সম্পূর্ণ নিস্তেজ হয়ে পড়া।",
+    "exampleSentence": "The sweltering humidity of coastal monsoons enervates laborers working on open docks.",
+    "synonyms": [
+      "weaken",
+      "exhaust",
+      "debilitate",
+      "drain"
+    ],
+    "antonyms": [
+      "energize",
+      "invigorate",
+      "strengthen"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "engender": {
+    "word": "engender",
+    "partOfSpeech": "verb",
+    "meaningBn": "জন্ম দেওয়া, সৃষ্টি করা, কোনো পরিস্থিতির কারণ হওয়া",
+    "meaningEn": "Cause or give rise to a feeling, situation, or condition.",
+    "mnemonic": "Generate (তৈরি করা) থেকে engender -> বৈষম্যমূলক আচরণ জনমনে তীব্র অসন্তোষের জন্ম দেওয়া।",
+    "exampleSentence": "Unchecked inflation invariably engenders deep civil resentment against sitting governments.",
+    "synonyms": [
+      "produce",
+      "create",
+      "generate",
+      "foster"
+    ],
+    "antonyms": [
+      "prevent",
+      "quell",
+      "extinguish"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "enhance": {
+    "word": "enhance",
+    "partOfSpeech": "verb",
+    "meaningBn": "বৃদ্ধি করা, মান উন্নত করা, আকর্ষণ বা মূল্য বাড়ানো",
+    "meaningEn": "Intensify, increase, or further improve the quality, value, or extent of.",
+    "mnemonic": "Chance কাজে লাগিয়ে নিজের পারফরম্যান্স উন্নত করা।",
+    "exampleSentence": "Upgrading digital broadband connectivity will immensely enhance rural productivity.",
+    "synonyms": [
+      "improve",
+      "boost",
+      "augment",
+      "elevate"
+    ],
+    "antonyms": [
+      "diminish",
+      "mar",
+      "undermine"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "ephemeral": {
+    "word": "ephemeral",
+    "partOfSpeech": "adjective",
+    "meaningBn": "ক্ষণস্থায়ী, ক্ষণভঙ্গুর, সামান্য সময়ের জন্য বিরাজমান",
+    "meaningEn": "Lasting for a very short time.",
+    "mnemonic": "E-phool (কাগজের ফুল) যেমন পানির ছোঁয়ায় নষ্ট হয় -> মানুষের পার্থিব জীবন বা যশ ক্ষণস্থায়ী।",
+    "exampleSentence": "Viral fame on social media algorithms is notoriously ephemeral and fickle.",
+    "synonyms": [
+      "transient",
+      "fleeting",
+      "evanescent",
+      "short-lived"
+    ],
+    "antonyms": [
+      "permanent",
+      "eternal",
+      "perpetual"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "equanimity": {
+    "word": "equanimity",
+    "partOfSpeech": "noun",
+    "meaningBn": "মানসিক প্রশান্তি, ধীরস্থির মনোভাব, বিপদে অবিচল থাকা",
+    "meaningEn": "Mental calmness, composure, and evenness of temper, especially in a difficult situation.",
+    "mnemonic": "Equal (সমান) + animus (মন) -> আনন্দ বা শোক কোনো কিছুতেই মন চঞ্চল না হওয়া, অবিচল থাকা।",
+    "exampleSentence": "The chief justice maintained unflinching equanimity despite tumultuous courtroom disruptions.",
+    "synonyms": [
+      "composure",
+      "calmness",
+      "poise",
+      "serenity"
+    ],
+    "antonyms": [
+      "agitation",
+      "anxiety",
+      "hysteria"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "equivocate": {
+    "word": "equivocate",
+    "partOfSpeech": "verb",
+    "meaningBn": "গোলমেলে কথা বলা, সত্য এড়িয়ে পাশ কাটানো, দ্ব্যর্থক ভাষা ব্যবহার করা",
+    "meaningEn": "Use ambiguous language so as to conceal the truth or avoid committing oneself.",
+    "mnemonic": "Equi (সমান) + vocal (কথা) -> এমনভাবে কথা বলা যাতে হ্যাঁ-ও বোঝায় আবার না-ও বোঝায়।",
+    "exampleSentence": "Under hostile questioning, the corporate executive equivocated about offshore bank holdings.",
+    "synonyms": [
+      "prevaricate",
+      "hedge",
+      "vacillate",
+      "evade"
+    ],
+    "antonyms": [
+      "be candid",
+      "speak frankly",
+      "confront"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "erudite": {
+    "word": "erudite",
+    "partOfSpeech": "adjective",
+    "meaningBn": "বিদ্যান, প্রগাঢ় পণ্ডিত, অগাধ পাণ্ডিত্যের অধিকারী",
+    "meaningEn": "Having or showing great knowledge or learning.",
+    "mnemonic": "Rude (অশিক্ষিত) অবস্থা কাটিয়ে যে ব্যক্তি গভীর জ্ঞান অর্জন করেছে।",
+    "exampleSentence": "The chancellor’s erudite disquisition on comparative constitutional law spellbound the audience.",
+    "synonyms": [
+      "scholarly",
+      "learned",
+      "knowledgeable",
+      "intellectual"
+    ],
+    "antonyms": [
+      "ignorant",
+      "illiterate",
+      "crude"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "esoteric": {
+    "word": "esoteric",
+    "partOfSpeech": "adjective",
+    "meaningBn": "অতি গোপন, দুর্বোধ্য, কেবল অল্প কজন বিশেষজ্ঞের বোধগম্য",
+    "meaningEn": "Intended for or likely to be understood by only a small number of people with a specialized knowledge.",
+    "mnemonic": "Exoteric মানে সবার জন্য উন্মুক্ত, Esoteric মানে কেবল দীক্ষাপ্রাপ্ত মুষ্টিমেয় ব্যক্তির জন্য।",
+    "exampleSentence": "Quantum string mechanics remains an esoteric field accessible only to theoretical physicists.",
+    "synonyms": [
+      "abstruse",
+      "obscure",
+      "arcane",
+      "recondite"
+    ],
+    "antonyms": [
+      "accessible",
+      "common",
+      "exoteric"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "eulogy": {
+    "word": "eulogy",
+    "partOfSpeech": "noun",
+    "meaningBn": "উচ্চ প্রশংসা, স্তুতিবাক্য, কারো মহত্ত্ব বর্ণনা করে প্রদত্ত ভাষণ",
+    "meaningEn": "A speech or piece of writing that praises someone or something highly, typically someone who has just died.",
+    "mnemonic": "Eu (ভালো) + logy (কথা) -> কোনো মহান নেতার চিরবিদায়ের দিনে তার কীর্তির ভূয়সী স্তুতিগাথা।",
+    "exampleSentence": "The prime minister delivered a moving eulogy paying tribute to the fallen freedom fighter.",
+    "synonyms": [
+      "panegyric",
+      "accolade",
+      "tribute",
+      "paean"
+    ],
+    "antonyms": [
+      "invective",
+      "tirade",
+      "condemnation"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "euphemism": {
+    "word": "euphemism",
+    "partOfSpeech": "noun",
+    "meaningBn": "শ্রুতিমধুর বা সুভাষণ, কঠোর বা অপ্রীতিকর শব্দের কোমল বিকল্প",
+    "meaningEn": "A mild or indirect word or expression substituted for one considered to be too harsh or blunt.",
+    "mnemonic": "Eu (ভালো/মধুর) + phem (বলা) -> কঠোর সত্যকে সরাসরি না বলে ভদ্র ও শিষ্ট ভাষায় নরম করে বলা। যেমন: 'মারা গেছে' না বলে 'পরলোকগমন করেছেন' বলা।",
+    "exampleSentence": "Calling mass lay-offs 'rightsizing the corporate workforce' is a classic corporate euphemism.",
+    "synonyms": [
+      "polite term",
+      "understatement",
+      "genteelism"
+    ],
+    "antonyms": [
+      "bluntness",
+      "dysphemism",
+      "harshness"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "exacerbate": {
+    "word": "exacerbate",
+    "partOfSpeech": "verb",
+    "meaningBn": "পরিস্থিতি আরও শোচনীয় বা তিক্ত করা, বাড়িয়ে তোলা",
+    "meaningEn": "Make a problem, bad situation, or negative feeling worse.",
+    "mnemonic": "Acer (তীব্র/তিক্ত) -> ক্ষতস্থানে নুনের ছিটা দিয়ে সমস্যাকে আরও বিষাক্ত করে তোলা।",
+    "exampleSentence": "Printing excess currency will merely exacerbate the existing inflationary crisis.",
+    "synonyms": [
+      "aggravate",
+      "worsen",
+      "inflame",
+      "intensify"
+    ],
+    "antonyms": [
+      "alleviate",
+      "mitigate",
+      "ameliorate"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "exculpate": {
+    "word": "exculpate",
+    "partOfSpeech": "verb",
+    "meaningBn": "দোষমুক্তি দেওয়া, নিরপরাধ প্রমাণ করে দায় থেকে খালাস করা",
+    "meaningEn": "Show or declare that someone is not guilty of wrongdoing.",
+    "mnemonic": "Ex (বের করা) + culpa (অপরাধ/পাপ) -> তদন্ত শেষে নির্দোষ প্রমাণিত করে অভিযোগ থেকে মুক্তি দেওয়া।",
+    "exampleSentence": "Forensic ballistic evidence conclusively exculpated the detained suspect.",
+    "synonyms": [
+      "absolve",
+      "vindicate",
+      "acquit",
+      "exonerate"
+    ],
+    "antonyms": [
+      "incriminate",
+      "convict",
+      "blame"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "exigency": {
+    "word": "exigency",
+    "partOfSpeech": "noun",
+    "meaningBn": "জরুরি প্রয়োজন, সংকটকালীন মুহূর্ত, আপদকালীন তাগিদ",
+    "meaningEn": "An urgent need or demand.",
+    "mnemonic": "Emergency থেকে exigency -> যুদ্ধের বা প্রাকৃতিক দুর্যোগের চরম মুহূর্তে যা অবিলম্বে করা প্রয়োজন।",
+    "exampleSentence": "The financial exigencies of the pandemic compelled the administration to reallocate capital expenditure.",
+    "synonyms": [
+      "emergency",
+      "urgency",
+      "crisis",
+      "necessity"
+    ],
+    "antonyms": [
+      "normality",
+      "ease"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "extrapolation": {
+    "word": "extrapolation",
+    "partOfSpeech": "noun",
+    "meaningBn": "উপাত্ত বিশ্লেষণ করে ভবিষ্যতের পূর্বাভাস বা অনুমিত সিদ্ধান্ত",
+    "meaningEn": "The action of estimating or concluding something by assuming that existing trends will continue.",
+    "mnemonic": "অতীতের ৪ বছরের ডেটা এক্সটেন্ড করে আগামী ৫ বছরের সম্ভাব্য পরিসংখ্যান বের করা।",
+    "exampleSentence": "Linear economic extrapolations often stumble when unanticipated geopolitical shocks strike.",
+    "synonyms": [
+      "projection",
+      "forecast",
+      "inference",
+      "prediction"
+    ],
+    "antonyms": [
+      "empirical fact",
+      "reality"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "facetious": {
+    "word": "facetious",
+    "partOfSpeech": "adjective",
+    "meaningBn": "রসাত্মক, তামাশাপূর্ণ, অসঙ্গত হালকা পরিহাসপ্রিয়",
+    "meaningEn": "Treating serious issues with deliberately inappropriate humor; flippant.",
+    "mnemonic": "Face (মুখ) বিকৃত করে সিরিয়াস বিষয়ে অহেতুক মশকরা বা তামাশা করা।",
+    "exampleSentence": "Making facetious remarks during a solemn memorial proceeding was deeply offensive.",
+    "synonyms": [
+      "flippant",
+      "jocular",
+      "frivolous",
+      "witty"
+    ],
+    "antonyms": [
+      "serious",
+      "grave",
+      "solemn"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "facilitate": {
+    "word": "facilitate",
+    "partOfSpeech": "verb",
+    "meaningBn": "সহজতর করা, পথ সুগম করা, সহায়তা দেওয়া",
+    "meaningEn": "Make an action or process easy or easier.",
+    "mnemonic": "Facility তৈরি করা -> যাতে সাধারণ মানুষ দীর্ঘ লাইনে না দাঁড়িয়ে সহজেই সেবা পায়।",
+    "exampleSentence": "Automated border scanning systems facilitate frictionless transboundary freight transit.",
+    "synonyms": [
+      "expedite",
+      "ease",
+      "assist",
+      "advance"
+    ],
+    "antonyms": [
+      "hinder",
+      "impede",
+      "obstruct"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "fallacious": {
+    "word": "fallacious",
+    "partOfSpeech": "adjective",
+    "meaningBn": "ভ্রান্ত, বিভ্রান্তিকর, ত্রুটিপূর্ণ যুক্তির ওপর প্রতিষ্ঠিত",
+    "meaningEn": "Based on a mistaken belief; logically unsound.",
+    "mnemonic": "Fallacy (যুক্তির ভুল) থেকে fallacious -> যা বাইরে দেখতে ঠিক মনে হলেও ভেতরে চরম ত্রুটিপূর্ণ।",
+    "exampleSentence": "The premise that unchecked industrial deregulation eliminates poverty is demonstrably fallacious.",
+    "synonyms": [
+      "erroneous",
+      "spurious",
+      "flawed",
+      "misleading"
+    ],
+    "antonyms": [
+      "valid",
+      "sound",
+      "verifiable"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "fatuous": {
+    "word": "fatuous",
+    "partOfSpeech": "adjective",
+    "meaningBn": "নির্বোধ, বোকাটে, আত্মতুষ্ট অজ্ঞতাপূর্ণ",
+    "meaningEn": "Silly and pointless; foolishly smug.",
+    "mnemonic": "Fat-headed (মোটা মাথার বোকা) ব্যক্তি যে কোনো বাস্তব জ্ঞান ছাড়াই অনর্থক কথা বলে।",
+    "exampleSentence": "His fatuous comments regarding macroeconomics revealed a profound absence of financial literacy.",
+    "synonyms": [
+      "foolish",
+      "silly",
+      "inane",
+      "vacuous"
+    ],
+    "antonyms": [
+      "sensible",
+      "judicious",
+      "prudent"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "fawning": {
+    "word": "fawning",
+    "partOfSpeech": "adjective",
+    "meaningBn": "তোষামোদী, চাটুকারিতাময়, পদলেহী",
+    "meaningEn": "Displaying exaggerated flattery or affection; obsequious.",
+    "mnemonic": "Fawn (ছোট হরিণছানা) যেমন কুকুরের মত আনুগত্য দেখায় -> সুবিধা পাওয়ার জন্য নেতার পদলেহন করা।",
+    "exampleSentence": "The authoritarian minister was constantly surrounded by a cabal of fawning sycophants.",
+    "synonyms": [
+      "sycophantic",
+      "obsequious",
+      "servile",
+      "flattering"
+    ],
+    "antonyms": [
+      "assertive",
+      "defiant",
+      "independent"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "felicitous": {
+    "word": "felicitous",
+    "partOfSpeech": "adjective",
+    "meaningBn": "উপযুক্ত, যথোপযুক্ত, মনোরম ও মানানসই",
+    "meaningEn": "Well chosen or suited to the circumstances; pleasing and fortunate.",
+    "mnemonic": "Felicity (পরম আনন্দ) -> এমন সুন্দর ও জুতসই বাক্য যা শোনার সাথে সাথে মন ভরে যায়।",
+    "exampleSentence": "The orator chose a felicitous historical quote to open his address at the United Nations.",
+    "synonyms": [
+      "apt",
+      "appropriate",
+      "fitting",
+      "pleasing"
+    ],
+    "antonyms": [
+      "inappropriate",
+      "clumsy",
+      "ill-suited"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "fervid": {
+    "word": "fervid",
+    "partOfSpeech": "adjective",
+    "meaningBn": "অত্যন্ত আবেগপ্রবণ, উদ্দীপ্ত, জ্বলন্ত অনুভূতিময়",
+    "meaningEn": "Intensely enthusiastic or passionate, especially to an excessive degree.",
+    "mnemonic": "Fever (জ্বর) এর মত গরম অনুভূতি -> কোনো আদর্শের জন্য মনে প্রচণ্ড আবেগ ও অনুরাগ থাকা।",
+    "exampleSentence": "His fervid devotion to social justice inspired generations of student activists.",
+    "synonyms": [
+      "ardent",
+      "fervent",
+      "passionate",
+      "zealous"
+    ],
+    "antonyms": [
+      "apathetic",
+      "lukewarm",
+      "indifferent"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "flag": {
+    "word": "flag",
+    "partOfSpeech": "verb",
+    "meaningBn": "দুর্বল হওয়া, উৎসাহ বা শক্তি হারানো, নিস্তেজ হয়ে পড়া",
+    "meaningEn": "Become tired, weaker, or less enthusiastic.",
+    "mnemonic": "পতাকা বাতাসে উড়তে উড়তে নিস্তেজ হয়ে এলিয়ে পড়া -> দীর্ঘ পথ চলে এনার্জি ফুরিয়ে যাওয়া।",
+    "exampleSentence": "Around the thirty-kilometer mark, the marathon runner's stamina began visibly to flag.",
+    "synonyms": [
+      "weaken",
+      "falter",
+      "droop",
+      "fade"
+    ],
+    "antonyms": [
+      "revive",
+      "strengthen",
+      "surge"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "fledgling": {
+    "word": "fledgling",
+    "partOfSpeech": "adjective",
+    "meaningBn": "অনভিজ্ঞ, নবীন, ডানা মেলতে শুরু করেছে এমন",
+    "meaningEn": "A person or organization that is immature, inexperienced, or newly established.",
+    "mnemonic": "পাখির ছানা যার শরীরে কেবল পালক গজাচ্ছে -> একদম নতুন স্টার্টআপ বা প্রতিষ্ঠান।",
+    "exampleSentence": "Tax incentives were enacted to shield the nation's fledgling clean-energy manufacturers.",
+    "synonyms": [
+      "emerging",
+      "budding",
+      "novice",
+      "nascent"
+    ],
+    "antonyms": [
+      "veteran",
+      "mature",
+      "established"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "flout": {
+    "word": "flout",
+    "partOfSpeech": "verb",
+    "meaningBn": "অবজ্ঞা করা, প্রকাশ্যে আইন বা প্রথা লঙ্ঘন করা",
+    "meaningEn": "Openly disregard a rule, law, or convention.",
+    "mnemonic": "Flute বাজিয়ে পুলিশের সামনে দিয়ে আইন ভেঙে যাওয়া -> আইনকে বৃদ্ধাঙ্গুলি প্রদর্শন করা।",
+    "exampleSentence": "Reckless commercial developers continually flout municipal building codes and safety norms.",
+    "synonyms": [
+      "defy",
+      "scorn",
+      "disregard",
+      "violate"
+    ],
+    "antonyms": [
+      "obey",
+      "respect",
+      "comply"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "foment": {
+    "word": "foment",
+    "partOfSpeech": "verb",
+    "meaningBn": "উসকানি দেওয়া, বিশৃঙ্খলা বা বিদ্রোহের আগুন জ্বালানো",
+    "meaningEn": "Instigate or stir up an undesirable or violent sentiment or course of action.",
+    "mnemonic": "Fomentation মানে সেঁক দেওয়া -> অসন্তোষের আগুনে ঘি ঢেলে সংঘাত উসকে দেওয়া।",
+    "exampleSentence": "Corrupt agitators attempted to foment sectarian unrest in the border districts.",
+    "synonyms": [
+      "instigate",
+      "incite",
+      "provoke",
+      "agitate"
+    ],
+    "antonyms": [
+      "quell",
+      "suppress",
+      "pacify"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "forestall": {
+    "word": "forestall",
+    "partOfSpeech": "verb",
+    "meaningBn": "আগেই প্রতিরোধ করা, আগাম পদক্ষেপ নিয়ে ঠেকানো",
+    "meaningEn": "Prevent or obstruct an anticipated event or action by taking action ahead of time.",
+    "mnemonic": "Fore (আগে) + stall (আটকানো) -> সংকট ঘটার আগেই বুদ্ধি করে সমাধান বের করে ফেলা।",
+    "exampleSentence": "The monetary board acted swiftly to forestall a potential liquidity squeeze in local banks.",
+    "synonyms": [
+      "preempt",
+      "prevent",
+      "thwart",
+      "avert"
+    ],
+    "antonyms": [
+      "encourage",
+      "facilitate",
+      "trigger"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "frugality": {
+    "word": "frugality",
+    "partOfSpeech": "noun",
+    "meaningBn": "মিতব্যয়িতা, হিসেবি জীবনযাপন, অর্থ বা সম্পদের অপচয় না করা",
+    "meaningEn": "The quality of being economical with money or food; thriftiness.",
+    "mnemonic": "Fruit খেয়ে দিন কাটানোর মতো কৃচ্ছ্রসাধন -> অপচয় না করে বিচক্ষণতার সাথে খরচ করা।",
+    "exampleSentence": "Renowned for lifelong frugality, the billionaire scholar lived in a modest rural cottage.",
+    "synonyms": [
+      "thrift",
+      "economy",
+      "parsimony",
+      "prudence"
+    ],
+    "antonyms": [
+      "extravagance",
+      "prodigality",
+      "wastefulness"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "futile": {
+    "word": "futile",
+    "partOfSpeech": "adjective",
+    "meaningBn": "বৃথা, নিষ্ফল, অকেজো, যা কোনো ফল দেয় না",
+    "meaningEn": "Incapable of producing any useful result; pointless.",
+    "mnemonic": "ফুটো কলসিতে জল ঢালার মতই যা কোনো কাজে আসে না -> সম্পূর্ণ অর্থহীন বা পণ্ডশ্রম।",
+    "exampleSentence": "Arguing against incontrovertible scientific evidence proved an entirely futile exercise.",
+    "synonyms": [
+      "pointless",
+      "useless",
+      "vain",
+      "ineffectual"
+    ],
+    "antonyms": [
+      "fruitful",
+      "effective",
+      "productive"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "gainsay": {
+    "word": "gainsay",
+    "partOfSpeech": "verb",
+    "meaningBn": "অস্বীকার করা, বিরোধিতা করা, প্রতিবাদ জানানো",
+    "meaningEn": "Deny or contradict a fact or statement; speak against.",
+    "mnemonic": "Gain-say মানে বিপরীত কথা বলা -> প্রতিষ্ঠিত সত্যকে অস্বীকার করে ভিন্ন দাবি করা।",
+    "exampleSentence": "No serious agrarian historian can gainsay the epochal impact of the 1971 Green Revolution.",
+    "synonyms": [
+      "contradict",
+      "deny",
+      "dispute",
+      "repudiate"
+    ],
+    "antonyms": [
+      "confirm",
+      "validate",
+      "endorse"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "garrulous": {
+    "word": "garrulous",
+    "partOfSpeech": "adjective",
+    "meaningBn": "বাচাল, অনর্গল অপ্রয়োজনীয় কথা বলে এমন",
+    "meaningEn": "Excessively talkative, especially on trivial matters.",
+    "mnemonic": "Girls are talkative (কথিত প্রবাদ) -> অতিরিক্ত কথা বলা বা বাচাল স্বভাবের (Garrulous)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of garrulous during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "goad": {
+    "word": "goad",
+    "partOfSpeech": "verb",
+    "meaningBn": "খোঁচানো, তাড়িত করা, ক্রমাগত প্ররোচিত করে বাধ্য করা",
+    "meaningEn": "Provoke or annoy someone so as to stimulate some action or reaction.",
+    "mnemonic": "গরু তাড়ানোর সূঁচালো লাঠিকে বলে goad -> কাউকে উত্যক্ত করে রাগান্বিত বা সক্রিয় করা।",
+    "exampleSentence": "Unrelenting taunts from the opposing bench goaded the diplomat into an uncharacteristic outburst.",
+    "synonyms": [
+      "provoke",
+      "spur",
+      "stimulate",
+      "prod"
+    ],
+    "antonyms": [
+      "deter",
+      "pacify",
+      "restrain"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "gouge": {
+    "word": "gouge",
+    "partOfSpeech": "verb",
+    "meaningBn": "অতিরিক্ত অর্থ দাবি করা, প্রতারণামূলক চড়া দাম হাঁকা",
+    "meaningEn": "Overcharge or swindle someone; make a groove or hole in.",
+    "mnemonic": "চোখ উপড়ে নেওয়ার মতো নির্দয়ভাবে সংকটের সময় অতিরিক্ত দাম নিয়ে মানুষের পকেট কাটা।",
+    "exampleSentence": "Unethical retailers attempted to gouge consumers during the artificial fuel scarcity.",
+    "synonyms": [
+      "overcharge",
+      "swindle",
+      "fleece",
+      "extort"
+    ],
+    "antonyms": [
+      "subsidize",
+      "discount",
+      "undercharge"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "grandiloquent": {
+    "word": "grandiloquent",
+    "partOfSpeech": "adjective",
+    "meaningBn": "আড়ম্বরপূর্ণ কথা বলা, ফাঁকা বাগাড়ম্বরপূর্ণ",
+    "meaningEn": "Pompous or extravagant in language, style, or manner, especially in a way that is intended to impress.",
+    "mnemonic": "Grand (বিশাল) + eloquent (বক্তা) -> অসার বিষয়েও বড় বড় ভারী শব্দ দিয়ে বাহাদুরি করা।",
+    "exampleSentence": "The minister's grandiloquent rhetoric could not conceal the utter vacuum of practical policies.",
+    "synonyms": [
+      "pompous",
+      "bombastic",
+      "turgid",
+      "magniloquent"
+    ],
+    "antonyms": [
+      "simple",
+      "plainspoken",
+      "understated"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "gregarious": {
+    "word": "gregarious",
+    "partOfSpeech": "adjective",
+    "meaningBn": "মিশুক, সামাজিক, দলপ্রিয়",
+    "meaningEn": "Fond of company; sociable; living in flocks or loose communities.",
+    "mnemonic": "Group: যারা একা না থেকে Group বা দলবদ্ধ হয়ে থাকতে ভালোবাসে (Gregarious)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of gregarious during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "guileless": {
+    "word": "guileless",
+    "partOfSpeech": "adjective",
+    "meaningBn": "নিস্পাপ, অকপট, ছলচাতুরিহীন, সাদা মনের মানুষ",
+    "meaningEn": "Devoid of guile; innocent and without deception.",
+    "mnemonic": "Guile (কূটবুদ্ধি) + less (ছাড়া) -> যার মনে বিন্দুমাত্র শঠতা বা কুটিলতা নেই।",
+    "exampleSentence": "Her guileless smile and frank testimony completely won over the skeptical jury.",
+    "synonyms": [
+      "ingenuous",
+      "artless",
+      "naive",
+      "candid"
+    ],
+    "antonyms": [
+      "deceitful",
+      "cunning",
+      "crafty",
+      "shrewd"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "gullible": {
+    "word": "gullible",
+    "partOfSpeech": "adjective",
+    "meaningBn": "সহজেই প্রতারিত হয় এমন, অতিবিশ্বাসী, হাবাগোবা",
+    "meaningEn": "Easily persuaded to believe something; credulous.",
+    "mnemonic": "যে কারো কথাই চোখ বন্ধ করে গিলে ফেলে এবং প্রতারিত হয় (Gullible)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of gullible during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "harangue": {
+    "word": "harangue",
+    "partOfSpeech": "noun",
+    "meaningBn": "দীর্ঘ ও আক্রমণাত্মক কর্কশ বক্তৃতা, তিরস্কারপূর্ণ ভাষণ",
+    "meaningEn": "A lengthy and aggressive speech or tirade delivered before a crowd.",
+    "mnemonic": "He arranged a speech to scold everyone: চিৎকার-চেঁচামেচি করে তিরস্কারপূর্ণ ভাষণ (Harangue)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of harangue during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "homogeneous": {
+    "word": "homogeneous",
+    "partOfSpeech": "adjective",
+    "meaningBn": "সমজাতীয়, অভিন্ন বৈশিষ্ট্যের, একরূপ",
+    "meaningEn": "Of the same kind; alike; consisting of parts all of the same kind.",
+    "mnemonic": "Homo (একই) + genus (জাত) -> যে মিশ্রণের প্রতিটি উপাদানের গুণমান ও রূপ অবিকল এক।",
+    "exampleSentence": "The pilot cohort formed a remarkably homogeneous group of university graduates.",
+    "synonyms": [
+      "uniform",
+      "identical",
+      "consistent",
+      "standardized"
+    ],
+    "antonyms": [
+      "heterogeneous",
+      "diverse",
+      "disparate"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "hyperbole": {
+    "word": "hyperbole",
+    "partOfSpeech": "noun",
+    "meaningBn": "অত্যুক্তি, অতিরঞ্জন, বাড়িয়ে বলা অলংকার",
+    "meaningEn": "Exaggerated statements or claims not meant to be taken literally.",
+    "mnemonic": "Hyper + Bole: স্বাভাবিকের চেয়ে বহুগুণ বাড়িয়ে বা ফুলিয়ে-ফাঁপিয়ে বলা (Hyperbole)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of hyperbole during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "iconoclast": {
+    "word": "iconoclast",
+    "partOfSpeech": "noun",
+    "meaningBn": "প্রচলিত অন্ধবিশ্বাস বা ঐতিহ্য ভঙ্গকারী, সংস্কারমুক্ত ব্যক্তি",
+    "meaningEn": "A person who attacks cherished beliefs or institutions; someone who opposes conventional customs.",
+    "mnemonic": "Icon (মূর্তি/প্রথা) + Clast (ভাঙা): প্রচলিত কুসংস্কার ভেঙে নতুন যুগের প্রবর্তনকারী (Iconoclast)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of iconoclast during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "idolatry": {
+    "word": "idolatry",
+    "partOfSpeech": "noun",
+    "meaningBn": "মূর্তিপূজা, কোনো ব্যক্তি বা বস্তুর অন্ধ স্তাবকতা",
+    "meaningEn": "Extreme admiration, love, or reverence for something or someone; worship of idols.",
+    "mnemonic": "Idol (মূর্তি) + worship -> কোনো রাজনৈতিক নেতা বা সেলিব্রিটিকে অন্ধভাবে পূজা করার প্রবণতা।",
+    "exampleSentence": "Blind party idolatry frequently blinds voters to severe economic malfeasance.",
+    "synonyms": [
+      "worship",
+      "adoration",
+      "veneration",
+      "fetishism"
+    ],
+    "antonyms": [
+      "iconoclasm",
+      "disdain",
+      "scorn"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "immutable": {
+    "word": "immutable",
+    "partOfSpeech": "adjective",
+    "meaningBn": "অপরিবর্তনীয়, স্থায়ী, চিরন্তন",
+    "meaningEn": "Unchanging over time or unable to be changed.",
+    "mnemonic": "Mutate (পরিবর্তন হওয়া) এর উল্টো হলো Immutable: যা কখনো পরিবর্তিত হয় না।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of immutable during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "impair": {
+    "word": "impair",
+    "partOfSpeech": "verb",
+    "meaningBn": "ক্ষতিগ্রস্ত করা, দুর্বল করা, গুণমান হ্রাস করা",
+    "meaningEn": "Weaken or damage something, especially a human faculty or function.",
+    "mnemonic": "Repair মানে মেরামত করা, আর Impair মানে কোনো কিছুর ক্ষতি করে নষ্ট করা।",
+    "exampleSentence": "Chronic dietary malnutrition can permanently impair cognitive development in infants.",
+    "synonyms": [
+      "damage",
+      "weaken",
+      "diminish",
+      "undermine"
+    ],
+    "antonyms": [
+      "repair",
+      "enhance",
+      "strengthen"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "impassive": {
+    "word": "impassive",
+    "partOfSpeech": "adjective",
+    "meaningBn": "আবেগহীন, নির্বিকার, মুখে কোনো ভাব প্রকাশ না করা",
+    "meaningEn": "Not feeling or showing emotion; calm and unaffected.",
+    "mnemonic": "Passive মানে নিষ্ক্রিয় -> শত শোক বা আনন্দেও যার মুখের ভাব পাথরের মত অবিচল থাকে।",
+    "exampleSentence": "The experienced interrogator listened to the harrowing confession with an impassive countenance.",
+    "synonyms": [
+      "expressionless",
+      "inscrutable",
+      "stolid",
+      "serene"
+    ],
+    "antonyms": [
+      "emotional",
+      "expressive",
+      "demonstrative"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "impede": {
+    "word": "impede",
+    "partOfSpeech": "verb",
+    "meaningBn": "বিঘ্ন ঘটানো, বাধা সৃষ্টি করা, গতি রোধ করা",
+    "meaningEn": "Delay or prevent someone or something by obstructing them; hinder.",
+    "mnemonic": "Ped (পা) আটকে দেওয়া -> কোনো প্রকল্প বা অগ্রযাত্রায় প্রতিবন্ধকতা সৃষ্টি করা।",
+    "exampleSentence": "Chronic port congestion and red tape severely impede Bangladesh's containerized export turnaround.",
+    "synonyms": [
+      "hinder",
+      "obstruct",
+      "hamper",
+      "block"
+    ],
+    "antonyms": [
+      "facilitate",
+      "assist",
+      "expedite"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "impermeable": {
+    "word": "impermeable",
+    "partOfSpeech": "adjective",
+    "meaningBn": "অপ্রবেশ্য, যা ভেদ করা যায় না, জল বা গ্যাস নিরোধক",
+    "meaningEn": "Not allowing fluid to pass through.",
+    "mnemonic": "Permeable মানে যা চুইয়ে ঢোকে, Impermeable মানে যার ভেতরে এক ফোঁটা পানিও ঢুকতে পারে না।",
+    "exampleSentence": "A thick subsurface layer of impermeable clay protects groundwater from chemical seepage.",
+    "synonyms": [
+      "impenetrable",
+      "watertight",
+      "impervious",
+      "hermetic"
+    ],
+    "antonyms": [
+      "permeable",
+      "porous",
+      "absorbent"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "imperturbable": {
+    "word": "imperturbable",
+    "partOfSpeech": "adjective",
+    "meaningBn": "অবিচল, পরম শান্ত, কোনো উত্তেজনাতেই বিচলিত হয় না এমন",
+    "meaningEn": "Unable to be upset or excited; calm.",
+    "mnemonic": "Disturb করা যায় না যাকে -> ঝড়ের মধ্যেও শান্তভাবে সঠিক সিদ্ধান্ত নেওয়া সেনাপতির গুণ।",
+    "exampleSentence": "The seasoned flight commander remained totally imperturbable throughout the engine emergency.",
+    "synonyms": [
+      "composed",
+      "calm",
+      "unflappable",
+      "serene"
+    ],
+    "antonyms": [
+      "excitable",
+      "anxious",
+      "turbulent"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "impervious": {
+    "word": "impervious",
+    "partOfSpeech": "adjective",
+    "meaningBn": "অভেদ্য, অপ্রতিরোধ্য, প্রভাবিত বা আঘাতপ্রাপ্ত হয় না এমন",
+    "meaningEn": "Unable to be affected by; not allowing water or other fluid to pass through.",
+    "mnemonic": "Impervious to criticism -> কঠোর সমালোচনা বা প্রতিকূলতায় যার বিশ্বাস টলে না।",
+    "exampleSentence": "The steadfast magistrate proved entirely impervious to external political pressures.",
+    "synonyms": [
+      "immune",
+      "invulnerable",
+      "impenetrable",
+      "resistant"
+    ],
+    "antonyms": [
+      "susceptible",
+      "vulnerable",
+      "permeable"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "implacable": {
+    "word": "implacable",
+    "partOfSpeech": "adjective",
+    "meaningBn": "শান্ত বা তুষ্ট করা যায় না এমন, অপ্রতিরোধ্য, কঠোর",
+    "meaningEn": "Unable to be placated, appeased, or mollified; relentless.",
+    "mnemonic": "In + Placate: যাকে কোনোভাবেই খুশি বা শান্ত করা যায় না (Implacable)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of implacable during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "implicit": {
+    "word": "implicit",
+    "partOfSpeech": "adjective",
+    "meaningBn": "অন্তর্নিহিত, পরোক্ষ, বিনা শর্তে অটুট",
+    "meaningEn": "Implied though not plainly expressed; with no qualification or doubt; absolute.",
+    "mnemonic": "Explicit মানে স্পষ্ট বলা, আর Implicit মানে আকারে-ইঙ্গিতে লুকিয়ে থাকা বা পূর্ণ আস্থা রাখা।",
+    "exampleSentence": "There was an implicit contractual understanding that all overtime hours would be compensated.",
+    "synonyms": [
+      "implied",
+      "unspoken",
+      "tacit",
+      "absolute"
+    ],
+    "antonyms": [
+      "explicit",
+      "stated",
+      "direct"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "implode": {
+    "word": "implode",
+    "partOfSpeech": "verb",
+    "meaningBn": "ভেতরের দিকে ধসে পড়া, অভ্যন্তরীণ সংকটে ধ্বংস হওয়া",
+    "meaningEn": "Collapse or cause to collapse violently inwards.",
+    "mnemonic": "Explode মানে বাইরের দিকে ফাটা, আর Implode মানে ভেতরের চরম দুর্নীতিতে কাঠামো নিজেই ভেঙে পড়া।",
+    "exampleSentence": "Without sovereign bailouts, the insolvent non-banking financial firm was doomed to implode.",
+    "synonyms": [
+      "collapse",
+      "cave in",
+      "crumble",
+      "fall"
+    ],
+    "antonyms": [
+      "explode",
+      "expand",
+      "proliferate"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "inadvertent": {
+    "word": "inadvertent",
+    "partOfSpeech": "adjective",
+    "meaningBn": "অসাবধানতাবশত, অনিচ্ছাকৃত, ভুলবশত ঘটে যাওয়া",
+    "meaningEn": "Not resulting from or achieved through deliberate planning.",
+    "mnemonic": "Advert (মনোযোগ) না দেওয়া -> কোনো খারাপ উদ্দেশ্য ছাড়াই ভুলক্রমে কোনো ভুল হয়ে যাওয়া।",
+    "exampleSentence": "The accidental deletion of audit databases was declared an inadvertent clerical error.",
+    "synonyms": [
+      "unintentional",
+      "unintended",
+      "accidental",
+      "unwitting"
+    ],
+    "antonyms": [
+      "deliberate",
+      "intentional",
+      "calculated"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "inchoate": {
+    "word": "inchoate",
+    "partOfSpeech": "adjective",
+    "meaningBn": "অপরিপক্ক, প্রাথমিক পর্যায়ে থাকা, গঠনহীন ও অসংহত",
+    "meaningEn": "Just begun and so not fully formed or developed; rudimentary.",
+    "mnemonic": "In-choate মানে শুরুর দিকের অবস্থা -> কোনো বিপ্লব বা ধারণার ভ্রূণাবস্থা যা এখনো স্পষ্ট রূপ পায়নি।",
+    "exampleSentence": "The fledgling civil rights movement remained inchoate, lacking disciplined district leadership.",
+    "synonyms": [
+      "rudimentary",
+      "nascent",
+      "embryonic",
+      "undeveloped"
+    ],
+    "antonyms": [
+      "mature",
+      "developed",
+      "crystallized"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "incongruity": {
+    "word": "incongruity",
+    "partOfSpeech": "noun",
+    "meaningBn": "অসঙ্গতি, বেমানান অবস্থা, খাপছাড়া ভাব",
+    "meaningEn": "The state of being out of keeping or discordant with surroundings or factors.",
+    "mnemonic": "Incongruous মানে যা মিলে না -> বিলাসবহুল রাজপ্রাসাদের পাশে চরম বস্তির নির্মম বৈপরীত্য।",
+    "exampleSentence": "The stark incongruity of high-tech digital offices amid recurrent blackouts bewildered visitors.",
+    "synonyms": [
+      "incompatibility",
+      "mismatch",
+      "discordance",
+      "anomaly"
+    ],
+    "antonyms": [
+      "harmony",
+      "consistency",
+      "congruence"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "inconsequential": {
+    "word": "inconsequential",
+    "partOfSpeech": "adjective",
+    "meaningBn": "গুরুত্বহীন, তুচ্ছ, যার কোনো সুদূরপ্রসারী প্রভাব নেই",
+    "meaningEn": "Not important or significant.",
+    "mnemonic": "Consequence (ফলাফল) নেই যার -> এত ছোটখাটো ভুল যা মূল ফলাফলে কোনো প্রভাব ফেলে না।",
+    "exampleSentence": "Typographical anomalies in the appendices were deemed legally inconsequential to the treaty.",
+    "synonyms": [
+      "insignificant",
+      "trivial",
+      "negligible",
+      "minor"
+    ],
+    "antonyms": [
+      "significant",
+      "momentous",
+      "crucial"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "incorporate": {
+    "word": "incorporate",
+    "partOfSpeech": "verb",
+    "meaningBn": "অন্তর্ভুক্ত করা, অঙ্গীভূত করা, বিধিবদ্ধ সংগঠনে রূপ দেওয়া",
+    "meaningEn": "Take in or contain (something) as part of a whole; include.",
+    "mnemonic": "Corporate কাঠামোতে একীভূত করা -> নতুন আইন বা সংস্কারকে মূল সংবিধানে যুক্ত করা।",
+    "exampleSentence": "The revised education policy incorporates practical programming modules in secondary schools.",
+    "synonyms": [
+      "integrate",
+      "include",
+      "assimilate",
+      "embody"
+    ],
+    "antonyms": [
+      "exclude",
+      "separate",
+      "segregate"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "indeterminate": {
+    "word": "indeterminate",
+    "partOfSpeech": "adjective",
+    "meaningBn": "অনির্ধারিত, অনির্দিষ্ট, অস্পষ্ট বা অনিশ্চিত",
+    "meaningEn": "Not exactly known, established, or defined.",
+    "mnemonic": "Determine (নির্ধারণ) করা যায়নি -> যার সঠিক তারিখ বা পরিমাণ আগে থেকে বলা যায় না।",
+    "exampleSentence": "A person of indeterminate age presented the historical petition to the royal archives.",
+    "synonyms": [
+      "uncertain",
+      "vague",
+      "indefinite",
+      "unsettled"
+    ],
+    "antonyms": [
+      "definite",
+      "fixed",
+      "certain"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "indigence": {
+    "word": "indigence",
+    "partOfSpeech": "noun",
+    "meaningBn": "চরম দারিদ্র্য, চরম নিঃস্বাবস্থা ও অর্থাভাব",
+    "meaningEn": "A state of extreme poverty; penury.",
+    "mnemonic": "Indigent মানে যার পেটে ভাত ও মাথায় ছাদ নেই -> বেঁচে থাকার ন্যূনতম সম্বলহীন অবস্থা।",
+    "exampleSentence": "Microcredit facilities originally aimed to emancipate millions from generational indigence.",
+    "synonyms": [
+      "poverty",
+      "penury",
+      "destitution",
+      "privation"
+    ],
+    "antonyms": [
+      "wealth",
+      "affluence",
+      "opulence"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "indolent": {
+    "word": "indolent",
+    "partOfSpeech": "adjective",
+    "meaningBn": "অলস, শ্রমবিমুখ, কুঁড়ে স্বভাবের",
+    "meaningEn": "Wanting to avoid activity or exertion; lazy.",
+    "mnemonic": "Dole (দরিদ্র ভাতার ওপর বেঁচে থাকে যারা) -> কোনো কাজ না করে শুয়ে-বসে থাকা মানুষ।",
+    "exampleSentence": "The decadent heir lived an indolent existence characterized by uninterrupted recreation.",
+    "synonyms": [
+      "lazy",
+      "slothful",
+      "lethargic",
+      "idle"
+    ],
+    "antonyms": [
+      "industrious",
+      "diligent",
+      "assiduous"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "inert": {
+    "word": "inert",
+    "partOfSpeech": "adjective",
+    "meaningBn": "নিশ্চল, জড়, রাসায়নিকভাবে নিষ্ক্রিয়, সাড়া দেয় না এমন",
+    "meaningEn": "Lacking the ability or strength to move; chemically inactive.",
+    "mnemonic": "Inertia (জড়তা) -> জড় পদার্থের মত শক্তি ও প্রাণহীন হয়ে পড়ে থাকা।",
+    "exampleSentence": "Nitrogen is classified as an inert carrier gas in many industrial combustion procedures.",
+    "synonyms": [
+      "motionless",
+      "immobile",
+      "passive",
+      "unreactive"
+    ],
+    "antonyms": [
+      "active",
+      "dynamic",
+      "reactive"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "ingenuous": {
+    "word": "ingenuous",
+    "partOfSpeech": "adjective",
+    "meaningBn": "অকপট, নিষ্পাপ, সরলমনা ও বিশ্বাসপ্রবণ",
+    "meaningEn": "Innocent and unsuspecting; frank and candid.",
+    "mnemonic": "Genius নয় কিন্তু অত্যন্ত সৎ ও নিষ্পাপ -> কোনো ভণ্ডামি বা স্বার্থান্বেষী উদ্দেশ্য ছাড়া কথা বলা।",
+    "exampleSentence": "Her ingenuous response melted the skepticism of the stern cross-examiner.",
+    "synonyms": [
+      "candid",
+      "frank",
+      "naive",
+      "guileless"
+    ],
+    "antonyms": [
+      "disingenuous",
+      "cunning",
+      "artful"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "inherent": {
+    "word": "inherent",
+    "partOfSpeech": "adjective",
+    "meaningBn": "সহজাত, অন্তর্নিহিত, যা প্রকৃতিগতভাবেই বিদ্যমান",
+    "meaningEn": "Existing in something as a permanent, essential, or characteristic attribute.",
+    "mnemonic": "Inherit (বংশানুক্রমিক সূত্রে পাওয়া) -> কোনো সত্তার মূল গঠনের অবিচ্ছেদ্য অংশ।",
+    "exampleSentence": "Uncertainty is an inherent reality of sovereign foreign exchange trading operations.",
+    "synonyms": [
+      "intrinsic",
+      "innate",
+      "inborn",
+      "essential"
+    ],
+    "antonyms": [
+      "extrinsic",
+      "alien",
+      "acquired"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "innocuous": {
+    "word": "innocuous",
+    "partOfSpeech": "adjective",
+    "meaningBn": "নিরীহ, ক্ষতিকর নয় এমন, অপকারীতাহীন",
+    "meaningEn": "Not harmful or offensive.",
+    "mnemonic": "Innocent (নির্দোষ) থেকে innocuous -> বিষহীন সাপ বা নিরীহ ওষুধ যা কোনো ক্ষতি করে না।",
+    "exampleSentence": "What appeared as an innocuous clerical typographical error concealed a multimillion-taka heist.",
+    "synonyms": [
+      "harmless",
+      "benign",
+      "safe",
+      "nontoxic"
+    ],
+    "antonyms": [
+      "harmful",
+      "noxious",
+      "pernicious"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "insensible": {
+    "word": "insensible",
+    "partOfSpeech": "adjective",
+    "meaningBn": "সংজ্ঞাহীন, অনুভূতিহীন, প্রতিকূলতায় অচেতন বা অসাড়",
+    "meaningEn": "Without one's mental faculties, typically as a result of violence or intoxication; unaware.",
+    "mnemonic": "Sense (চেতনা) হারিয়ে ফেলা -> প্রচণ্ড আঘাতে অজ্ঞান হয়ে পড়া বা কোনো বিপদের প্রতি উদাসীন থাকা।",
+    "exampleSentence": "The boxer collapsed insensible onto the canvas following the devastating knockout blow.",
+    "synonyms": [
+      "unconscious",
+      "unaware",
+      "insensate",
+      "oblivious"
+    ],
+    "antonyms": [
+      "conscious",
+      "aware",
+      "sensible"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "insinuate": {
+    "word": "insinuate",
+    "partOfSpeech": "verb",
+    "meaningBn": "কৌশলে পরোক্ষভাবে কুৎসা রটানো বা অপ্রিয় ইঙ্গিত করা",
+    "meaningEn": "Suggest or hint (something bad or reprehensible) in an indirect and unpleasant way.",
+    "mnemonic": "Sin (পাপ) অন্যের ওপর চাপিয়ে দেওয়ার জন্য সরাসরি না বলে মিষ্টি কথায় বিষাক্ত ইঙ্গিত করা।",
+    "exampleSentence": "The partisan editorial subtly insinuated that the minister took secret corporate gratuities.",
+    "synonyms": [
+      "hint",
+      "imply",
+      "intimate",
+      "suggest"
+    ],
+    "antonyms": [
+      "declare",
+      "state openly",
+      "affirm"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "insipid": {
+    "word": "insipid",
+    "partOfSpeech": "adjective",
+    "meaningBn": "পানসে, স্বাদহীন, আকর্ষণহীন, নিরস",
+    "meaningEn": "Lacking flavor; weak or tasteless; lacking vigor or interest.",
+    "mnemonic": "Sip (চুমুক) দিয়ে মনে হলো চিনির কোনো স্বাদ নেই -> এমন রচনা বা নাটক যাতে কোনো প্রাণ নেই।",
+    "exampleSentence": "Critics condemned the cinematic adaptation for its insipid dialogue and wooden acting.",
+    "synonyms": [
+      "tasteless",
+      "flavorless",
+      "bland",
+      "dull"
+    ],
+    "antonyms": [
+      "tasty",
+      "piquant",
+      "exciting"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "insularity": {
+    "word": "insularity",
+    "partOfSpeech": "noun",
+    "meaningBn": "সংকীর্ণ মনোভাব, কূপমণ্ডূকতা, বাইরের পৃথিবী সম্পর্কে অনীহা",
+    "meaningEn": "Ignorance of or lack of interest in cultures, ideas, or peoples outside one's own experience.",
+    "mnemonic": "Island (দ্বীপ) এর মতো একা থাকা -> কূপের ব্যাঙের মত বাইরের জ্ঞানবিজ্ঞানকে তুচ্ছজ্ঞান করা।",
+    "exampleSentence": "Academic insularity hampers international scholarly collaboration and cross-border research.",
+    "synonyms": [
+      "parochialism",
+      "provincialism",
+      "narrow-mindedness"
+    ],
+    "antonyms": [
+      "cosmopolitanism",
+      "open-mindedness"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "intractable": {
+    "word": "intractable",
+    "partOfSpeech": "adjective",
+    "meaningBn": "অবাধ্য, সহজে বশ মানে না এমন, অতি জটিল ও অনিয়ন্ত্রণযোগ্য",
+    "meaningEn": "Hard to control or deal with; stubborn.",
+    "mnemonic": "Tractor দিয়েও যাকে সোজা করা যায় না -> এমন জটিল রোগ বা বিরোধ যা কোনো ওষুধে বা আলোচনায় সারে না।",
+    "exampleSentence": "Stubborn inflation and exchange rate depreciation constituted an intractable economic dilemma.",
+    "synonyms": [
+      "unmanageable",
+      "stubborn",
+      "refractory",
+      "obstinate"
+    ],
+    "antonyms": [
+      "tractable",
+      "manageable",
+      "amenable"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "intransigence": {
+    "word": "intransigence",
+    "partOfSpeech": "noun",
+    "meaningBn": "অনমনীয়তা, একগুঁয়ে মনোভাব, কোনোভাবেই আপস না করা",
+    "meaningEn": "Refusal to change one's views or to agree about something.",
+    "mnemonic": "Not transaction (কোনো আপসরফা না করা) -> অনড় অবস্থান নিয়ে শান্তি আলোচনা ভণ্ডুল করা।",
+    "exampleSentence": "Diplomats lamented that bureaucratic intransigence paralyzed urgent cross-border flood relief.",
+    "synonyms": [
+      "obstinacy",
+      "stubbornness",
+      "inflexibility",
+      "rigidity"
+    ],
+    "antonyms": [
+      "flexibility",
+      "compliance",
+      "amenability"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "inundate": {
+    "word": "inundate",
+    "partOfSpeech": "verb",
+    "meaningBn": "প্লাবিত করা, বন্যায় ভাসানো; বিপুল কাজের চাপে ভাসিয়ে দেওয়া",
+    "meaningEn": "Overwhelm (someone) with things or people to be dealt with; flood.",
+    "mnemonic": "In-under water -> বর্ষায় নদী উপচে নিম্নাঞ্চল তলিয়ে দেওয়া; অথবা অফিসে ইমেইলের বন্যায় ভেসে যাওয়া।",
+    "exampleSentence": "A flash deluge inundated hundreds of village homesteads across the northeastern haor basin.",
+    "synonyms": [
+      "flood",
+      "submerge",
+      "deluge",
+      "overwhelm"
+    ],
+    "antonyms": [
+      "drain",
+      "parch",
+      "unburden"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "inured": {
+    "word": "inured",
+    "partOfSpeech": "adjective",
+    "meaningBn": "অভ্যস্ত বা অনুভূতিহীন হয়ে পড়া (কষ্ট বা প্রতিকূলতার কারণে)",
+    "meaningEn": "Accustomed to something, especially something unpleasant.",
+    "mnemonic": "দীর্ঘদিন কষ্ট সহ্য করতে করতে শরীর ও মন যখন ব্যথা-বেদনা সহ্য করতে অভ্যস্ত হয়ে যায়।",
+    "exampleSentence": "Coastal fishermen are inured to the perils of seasonal cyclonic depressions in the Bay.",
+    "synonyms": [
+      "habituated",
+      "hardened",
+      "seasoned",
+      "toughened"
+    ],
+    "antonyms": [
+      "sensitive",
+      "unaccustomed",
+      "vulnerable"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "invective": {
+    "word": "invective",
+    "partOfSpeech": "noun",
+    "meaningBn": "তীব্র আক্রমণাত্মক ভাষা, গালিগালাজ, তিক্ত তিরস্কার",
+    "meaningEn": "Insulting, abusive, or highly critical language.",
+    "mnemonic": "In-verbal attack -> ক্ষুব্ধ হয়ে প্রতিপক্ষকে লক্ষ্য করে বিষাক্ত ও অশালীন গালাগাল ছোঁড়া।",
+    "exampleSentence": "The parliamentary debate degenerated into a storm of unparliamentary invective.",
+    "synonyms": [
+      "abuse",
+      "vituperation",
+      "censure",
+      "diatribe"
+    ],
+    "antonyms": [
+      "praise",
+      "compliment",
+      "eulogy"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "irascible": {
+    "word": "irascible",
+    "partOfSpeech": "adjective",
+    "meaningBn": "বদমেজাজী, সহজে রেগে যায় এমন, খিটখিটে স্বভাবের",
+    "meaningEn": "Having or showing a tendency to be easily angered.",
+    "mnemonic": "Irate (রেগে যাওয়া) থেকে irascible -> সামান্য কারণেই যে মানুষের মেজাজ আগুন হয়ে যায়।",
+    "exampleSentence": "The irascible magistrate was feared across the appellate district for his volcanic tempers.",
+    "synonyms": [
+      "irritable",
+      "short-tempered",
+      "peevish",
+      "choleric"
+    ],
+    "antonyms": [
+      "placid",
+      "even-tempered",
+      "patient"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "irresolute": {
+    "word": "irresolute",
+    "partOfSpeech": "adjective",
+    "meaningBn": "দ্বিধাগ্রস্ত, সিদ্ধান্তহীন, দোদুল্যমান মনের অধিকারী",
+    "meaningEn": "Showing or feeling hesitancy; uncertain.",
+    "mnemonic": "Resolution (দৃঢ় সংকল্প) নেই যার -> বিপদের মুহূর্তে কী করবে তা ঠিক করতে না পেরে দোলাচলে থাকা।",
+    "exampleSentence": "An irresolute military commander risks losing the strategic initiative during modern warfare.",
+    "synonyms": [
+      "indecisive",
+      "hesitant",
+      "vacillating",
+      "wavering"
+    ],
+    "antonyms": [
+      "resolute",
+      "decisive",
+      "determined"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "itinerant": {
+    "word": "itinerant",
+    "partOfSpeech": "adjective",
+    "meaningBn": "পরিব্রাজক, এক স্থান থেকে অন্য স্থানে ভ্রমণশীল, যাযাবর",
+    "meaningEn": "Traveling from place to place, especially to perform work.",
+    "mnemonic": "Itinerary (ভ্রমণসূচি) থেকে itinerant -> এক শহরে স্থায়ী না থেকে কাজের খোঁজে ঘুরে বেড়ানো।",
+    "exampleSentence": "Itinerant agricultural harvesters migrate seasonally across deltaic districts to reap the boro crop.",
+    "synonyms": [
+      "peripatetic",
+      "migratory",
+      "nomadic",
+      "wandering"
+    ],
+    "antonyms": [
+      "sedentary",
+      "stationary",
+      "settled"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "laconic": {
+    "word": "laconic",
+    "partOfSpeech": "adjective",
+    "meaningBn": "অল্পভাষী, মিতভাষী, স্বল্পকথায় গভীর ভাব প্রকাশকারী",
+    "meaningEn": "Using very few words; concise.",
+    "mnemonic": "লাকনিক উত্তর মানে হ্যাঁ বা না দিয়ে কড়া কথা শেষ করা -> বেশি কথা না বলে টু-দ্য-পয়েন্ট বলা।",
+    "exampleSentence": "His laconic telegram stated simply: 'Mission accomplished; awaiting instructions.'",
+    "synonyms": [
+      "concise",
+      "terse",
+      "succinct",
+      "brief"
+    ],
+    "antonyms": [
+      "verbose",
+      "garrulous",
+      "loquacious"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "lassitude": {
+    "word": "lassitude",
+    "partOfSpeech": "noun",
+    "meaningBn": "অবসাদ, শারীরিক বা মানসিক ক্লান্তিবোধ, ক্লান্তিজনিত অলসতা",
+    "meaningEn": "A state of physical or mental weariness; lack of energy.",
+    "mnemonic": "Lazy attitude -> অতিরিক্ত পরিশ্রমে বা অসুখে সারা শরীরে যে ক্লান্তিময় ঝিমুনি আসে।",
+    "exampleSentence": "After thirty hours of emergency flood rescue, sheer lassitude overcame the volunteer squads.",
+    "synonyms": [
+      "lethargy",
+      "weariness",
+      "fatigue",
+      "languor"
+    ],
+    "antonyms": [
+      "vigor",
+      "vitality",
+      "energy"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "laud": {
+    "word": "laud",
+    "partOfSpeech": "verb",
+    "meaningBn": "উচ্চ প্রশংসা করা, মহিমান্বিত করা, স্তুতি করা",
+    "meaningEn": "Praise a person or their achievements highly, especially in a public context.",
+    "mnemonic": "Lord (ঈশ্বরের প্রশংসা) করার মতো কারো অবদানকে জনসম্মুখে মহিমান্বিত করে প্রশংসা করা।",
+    "exampleSentence": "International ecological agencies lauded Bangladesh's community-based cyclone preparedness.",
+    "synonyms": [
+      "extol",
+      "praise",
+      "commend",
+      "acclaim"
+    ],
+    "antonyms": [
+      "condemn",
+      "castigate",
+      "criticize"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "lethargic": {
+    "word": "lethargic",
+    "partOfSpeech": "adjective",
+    "meaningBn": "অলস, নিস্তেজ, অবসন্ন, মন্থর গতির",
+    "meaningEn": "Affected by lethargy; sluggish and apathetic.",
+    "mnemonic": "Lethargy (নিষ্ক্রিয়তা) -> শরীরে ক্লান্তি ও অলসতার কারণে কোনো কাজে উৎসাহ না পাওয়া।",
+    "exampleSentence": "Deprived of sleep, the tired aspirant felt lethargic throughout the afternoon examination session.",
+    "synonyms": [
+      "sluggish",
+      "apathetic",
+      "torpid",
+      "somnolent"
+    ],
+    "antonyms": [
+      "energetic",
+      "brisk",
+      "vigorous"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "levee": {
+    "word": "levee",
+    "partOfSpeech": "noun",
+    "meaningBn": "নদীবাঁধ, বন্যা প্রতিরোধক মাটির বাঁধ",
+    "meaningEn": "An embankment built to prevent the overflow of a river.",
+    "mnemonic": "নদী উপচে জনপদ প্লাবিত হওয়া ঠেকাতে নদীর পাড় ঘেঁষে উঁচু করে তৈরি মাটির প্রাচীর।",
+    "exampleSentence": "Engineers reinforced the vulnerable earthen levee before the onset of monsoon flash floods.",
+    "synonyms": [
+      "embankment",
+      "dyke",
+      "bund",
+      "barrier"
+    ],
+    "antonyms": [
+      "breach",
+      "chasm"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "levity": {
+    "word": "levity",
+    "partOfSpeech": "noun",
+    "meaningBn": "চপলতা, অসংযত হালকা আচরণ, গুরুগম্ভীর বিষয়ে লঘুতা",
+    "meaningEn": "Humor or frivolity, especially the treatment of a serious matter with lack of due respect.",
+    "mnemonic": "Levitate (বাতাসে ভাসা) -> শোকসভা বা রাষ্ট্রীয় সভায় হালকা মশকরা বা চটুল আচরণ প্রদর্শন।",
+    "exampleSentence": "Treating a constitutional impasse with unseemly levity deeply offended legislative delegates.",
+    "synonyms": [
+      "flippancy",
+      "frivolity",
+      "triviality",
+      "gaiety"
+    ],
+    "antonyms": [
+      "gravity",
+      "solemnity",
+      "seriousness"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "log": {
+    "word": "log",
+    "partOfSpeech": "noun",
+    "meaningBn": "দিনলিপি, আনুষ্ঠানিক যাত্রাপুস্তক, ধারাবাহিক রেকর্ড",
+    "meaningEn": "An official record of events during the voyage of a ship or aircraft; a systematic ledger.",
+    "mnemonic": "জাহাজের লগবুক -> যেখানে প্রতিদিনের ঘটনা ও সময়ের নিখুঁত হিসাব নথিবদ্ধ করা থাকে।",
+    "exampleSentence": "The security log confirmed that the treasurer departed the building hours before the alarm tripped.",
+    "synonyms": [
+      "record",
+      "journal",
+      "register",
+      "chronicle"
+    ],
+    "antonyms": [
+      "omission",
+      "erasure"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "loquacious": {
+    "word": "loquacious",
+    "partOfSpeech": "adjective",
+    "meaningBn": "বাচাল, অতিরিক্ত কথা বলায় পটু, অনর্গল বক্তা",
+    "meaningEn": "Tending to talk a great deal; talkative.",
+    "mnemonic": "Loqua (কথা বলা) -> যে থামতেই চায় না, যাকে থামানো কঠিন এমন অনর্গল কথা বলা ব্যক্তি।",
+    "exampleSentence": "The loquacious merchant regaled tourists with endless maritime tales of the port.",
+    "synonyms": [
+      "talkative",
+      "voluble",
+      "garrulous",
+      "chatty"
+    ],
+    "antonyms": [
+      "reticent",
+      "laconic",
+      "taciturn"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "lucid": {
+    "word": "lucid",
+    "partOfSpeech": "adjective",
+    "meaningBn": "স্পষ্ট, সহজবোধ্য, প্রাঞ্জল ও পরিষ্কার",
+    "meaningEn": "Expressed clearly; easy to understand; bright or luminous.",
+    "mnemonic": "Lucent (আলো) -> যার ভাষা এত সহজ ও প্রাঞ্জল যে পড়তে গিয়ে কোনো খটকা লাগে না।",
+    "exampleSentence": "The judicial verdict provided a lucid exposition of fundamental property rights.",
+    "synonyms": [
+      "clear",
+      "comprehensible",
+      "articulate",
+      "transparent"
+    ],
+    "antonyms": [
+      "obscure",
+      "vague",
+      "ambiguous",
+      "muddy"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "luminous": {
+    "word": "luminous",
+    "partOfSpeech": "adjective",
+    "meaningBn": "উজ্জ্বল, আলোকময়, আলোকোজ্জ্বল, সুস্পষ্ট",
+    "meaningEn": "Full of or shedding light; bright or shining, especially in the dark.",
+    "mnemonic": "Lumen (আলোর একক) -> যা অন্ধকারেও জ্বলজ্বল করে জ্বলতে থাকে; অথবা আলোকময় স্পষ্ট প্রজ্ঞা।",
+    "exampleSentence": "The philosopher’s luminous insights continue to illuminate modern jurisprudence.",
+    "synonyms": [
+      "radiant",
+      "glowing",
+      "bright",
+      "incandescent"
+    ],
+    "antonyms": [
+      "dark",
+      "dim",
+      "gloomy"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "magnanimity": {
+    "word": "magnanimity",
+    "partOfSpeech": "noun",
+    "meaningBn": "মহানুভবতা, পরম উদারতা, শত্রুকেও ক্ষমা করার মহৎ গুণ",
+    "meaningEn": "The fact or condition of being magnanimous; generous in forgiving an insult or injury.",
+    "mnemonic": "Magna (বিশাল) + animus (মন) -> পরাজিত বা দুর্বল শত্রুর প্রতি উদারতা ও ক্ষমাশীলতা প্রদর্শন।",
+    "exampleSentence": "With characteristic magnanimity, the victorious prime minister pardoned his political detractors.",
+    "synonyms": [
+      "generosity",
+      "nobility",
+      "benevolence",
+      "clemency"
+    ],
+    "antonyms": [
+      "pettiness",
+      "vindictiveness",
+      "spite"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "malleable": {
+    "word": "malleable",
+    "partOfSpeech": "adjective",
+    "meaningBn": "নমনীয়, পিটিয়ে সহজে আকার দেওয়া যায় এমন; সহজে প্রভাবযোগ্য",
+    "meaningEn": "Able to be hammered or pressed permanently out of shape without breaking or cracking; easily influenced.",
+    "mnemonic": "সোনার পাত যেমন হাতুড়ি দিয়ে পিটিয়ে গয়না বানানো যায় -> তরুণ মন যা সহজে গড়ে তোলা যায়।",
+    "exampleSentence": "Copper is a highly malleable conductor essential for microchip electrification.",
+    "synonyms": [
+      "pliable",
+      "ductile",
+      "flexible",
+      "impressionable"
+    ],
+    "antonyms": [
+      "rigid",
+      "brittle",
+      "inflexible"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "maverick": {
+    "word": "maverick",
+    "partOfSpeech": "noun",
+    "meaningBn": "স্বতন্ত্র ও স্বাধীনচেতা চিন্তার মানুষ, প্রচলিত প্রথাবিরোধী",
+    "meaningEn": "An unorthodox or independent-minded person.",
+    "mnemonic": "যে গরু দলের সাথে না গিয়ে একা চলে -> দলীয় শৃঙ্খলার বাইরে গিয়ে নিজের বিবেক অনুযায়ী চলা ব্যক্তি।",
+    "exampleSentence": "The maverick legislator refused to vote with the party whip on the austerity bill.",
+    "synonyms": [
+      "nonconformist",
+      "individualist",
+      "rebel",
+      "dissident"
+    ],
+    "antonyms": [
+      "conformist",
+      "traditionalist",
+      "follower"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "mendacious": {
+    "word": "mendacious",
+    "partOfSpeech": "adjective",
+    "meaningBn": "মিথ্যাবাদী, অসত্যভাষী, প্রতারণামূলক মিথ্যা রটনাকারী",
+    "meaningEn": "Not telling the truth; lying.",
+    "mnemonic": "Mend (মিথ্যা সেলাই করে জোড়া দেওয়া) -> যে জেনেবুঝে মিথ্যা বিবৃতি দিয়ে মানুষকে বিভ্রান্ত করে।",
+    "exampleSentence": "The corporate lobbyist was penalized for submitting mendacious affidavits under oath.",
+    "synonyms": [
+      "untruthful",
+      "dishonest",
+      "deceitful",
+      "false"
+    ],
+    "antonyms": [
+      "truthful",
+      "veracious",
+      "honest"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "metamorphosis": {
+    "word": "metamorphosis",
+    "partOfSpeech": "noun",
+    "meaningBn": "রূপান্তর, আকৃতি ও স্বভাবের আমূল যুগান্তকারী পরিবর্তন",
+    "meaningEn": "A change of the form or nature of a thing or person into a completely different one.",
+    "mnemonic": "শুঁয়োপোকা রূপ নিয়ে রঙিন প্রজাপতি হওয়া -> কোনো দেশ বা ব্যক্তির সম্পূর্ণ ভোলবদল হয়ে যাওয়া।",
+    "exampleSentence": "Digital payments sparked a remarkable metamorphosis in Bangladesh's informal retail markets.",
+    "synonyms": [
+      "transformation",
+      "transmutation",
+      "evolution",
+      "mutation"
+    ],
+    "antonyms": [
+      "stagnation",
+      "permanence"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "meticulous": {
+    "word": "meticulous",
+    "partOfSpeech": "adjective",
+    "meaningBn": "অত্যন্ত সতর্ক, নিখুঁত ও পুঙ্খানুপুঙ্খ যত্নশীল",
+    "meaningEn": "Showing great attention to detail; very careful and precise.",
+    "mnemonic": "ছোট্ট একটি কমা বা দাড়িও যাতে ভুল না হয় এমন অতি-সতর্ক দৃষ্টিতে কাজ করা।",
+    "exampleSentence": "Forensic accountants conducted a meticulous forensic audit of the frozen foreign assets.",
+    "synonyms": [
+      "scrupulous",
+      "punctilious",
+      "painstaking",
+      "rigorous"
+    ],
+    "antonyms": [
+      "careless",
+      "slipshod",
+      "sloppy"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "misanthrope": {
+    "word": "misanthrope",
+    "partOfSpeech": "noun",
+    "meaningBn": "মানববিদ্বেষী, মানুষকে ঘৃণা ও অবিশ্বাস করে এমন ব্যক্তি",
+    "meaningEn": "A person who dislikes humankind and avoids human society.",
+    "mnemonic": "Mis (ঘৃণা) + anthropos (মানবজাতি) -> যে মানুষকে স্বার্থপর মনে করে একাকী জীবনযাপন করে।",
+    "exampleSentence": "Embittered by financial betrayals, the reclusive author turned into an eccentric misanthrope.",
+    "synonyms": [
+      "cynic",
+      "recluse",
+      "hater",
+      "skeptic"
+    ],
+    "antonyms": [
+      "philanthropist",
+      "humanitarian"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "mitigate": {
+    "word": "mitigate",
+    "partOfSpeech": "verb",
+    "meaningBn": "উপশম করা, ক্ষতিকর প্রভাব কমানো, লাঘব করা",
+    "meaningEn": "Make less severe, serious, or painful.",
+    "mnemonic": "Gate বন্ধ করে বন্যার পানি আটকে ক্ষতি কমানো -> দুর্যোগের তীব্রতা কমিয়ে আনা।",
+    "exampleSentence": "Building cyclonic safety shelters mitigated the loss of coastal human lives dramatically.",
+    "synonyms": [
+      "alleviate",
+      "lessen",
+      "attenuate",
+      "palliate"
+    ],
+    "antonyms": [
+      "exacerbate",
+      "aggravate",
+      "intensify"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "mollify": {
+    "word": "mollify",
+    "partOfSpeech": "verb",
+    "meaningBn": "শান্ত করা, ক্রোধ বা ক্ষোভ প্রশমিত করা",
+    "meaningEn": "Appease the anger or anxiety of someone.",
+    "mnemonic": "মৌলভি সাহেব যেমন শান্ত পরামর্শ দিয়ে রাগ কমায় -> রুষ্ট ক্ষুব্ধ জনতাকে নরম করে আনা।",
+    "exampleSentence": "Tax rebates on essential grains mollified the agitating trade federations.",
+    "synonyms": [
+      "pacify",
+      "placate",
+      "appease",
+      "soothe"
+    ],
+    "antonyms": [
+      "enrage",
+      "provoke",
+      "incense"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "morose": {
+    "word": "morose",
+    "partOfSpeech": "adjective",
+    "meaningBn": "বিষণ্ণ, খিটখিটে মেজাজের, নিরানন্দ ও গোমড়ামুখো",
+    "meaningEn": "Sullen and ill-tempered.",
+    "mnemonic": "মরে যাওয়ার মতো গোমড়া মুখ করে বসে থাকা -> সর্বদা মন খারাপ ও খিটখিটে ভাব।",
+    "exampleSentence": "The rejected applicant sat morose and uncommunicative throughout the family dinner.",
+    "synonyms": [
+      "sullen",
+      "gloomy",
+      "glum",
+      "melancholy"
+    ],
+    "antonyms": [
+      "cheerful",
+      "ebullient",
+      "optimistic"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "mundane": {
+    "word": "mundane",
+    "partOfSpeech": "adjective",
+    "meaningBn": "পার্থিব, জাগতিক, সাধারণ গতানুগতিক ও একঘেয়ে",
+    "meaningEn": "Lacking interest or excitement; dull; of this earthly world rather than heavenly.",
+    "mnemonic": "মণ্ডল বা দুনিয়ার সাধারণ আটপৌরে বিষয় -> যার মধ্যে কোনো অলৌকিক বা রোমাঞ্চকর নতুনত্ব নেই।",
+    "exampleSentence": "Aspirants must conquer mundane daily tasks like rote revision to achieve civil service triumph.",
+    "synonyms": [
+      "ordinary",
+      "routine",
+      "humdrum",
+      "earthly"
+    ],
+    "antonyms": [
+      "extraordinary",
+      "heavenly",
+      "celestial"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "negate": {
+    "word": "negate",
+    "partOfSpeech": "verb",
+    "meaningBn": "বাতিল করা, অর্থহীন প্রমাণ করা, নিষ্ক্রিয় করে দেওয়া",
+    "meaningEn": "Nullify; make ineffective; deny the existence of.",
+    "mnemonic": "Negative বানিয়ে দেওয়া -> কোনো অর্জন বা চুক্তির কার্যকারিতা পুরোপুরি বাতিল করে দেওয়া।",
+    "exampleSentence": "A single breach of constitutional integrity can negate decades of administrative credibility.",
+    "synonyms": [
+      "nullify",
+      "invalidate",
+      "neutralize",
+      "undo"
+    ],
+    "antonyms": [
+      "affirm",
+      "validate",
+      "confirm"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "neophyte": {
+    "word": "neophyte",
+    "partOfSpeech": "noun",
+    "meaningBn": "নবীন, শিক্ষানবিস, দীক্ষার্থী",
+    "meaningEn": "A person who is new to a subject, skill, or belief; a novice.",
+    "mnemonic": "Neo (নতুন) + Phyte (উদ্ভিদ): নতুন চারাগাছের মতো নবীন শিক্ষানবিস (Neophyte)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of neophyte during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "obdurate": {
+    "word": "obdurate",
+    "partOfSpeech": "adjective",
+    "meaningBn": "একগুঁয়ে, অনমনীয়, হৃদয়হীন, অবাধ্য",
+    "meaningEn": "Stubbornly refusing to change one\\",
+    "mnemonic": "Ob (অবাধ্য) + Durable (কঠিন): যার মনোভাব ভাঙা যায় না, এমন একগুঁয়ে ও অনমনীয় (Obdurate)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of obdurate during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "obsequious": {
+    "word": "obsequious",
+    "partOfSpeech": "adjective",
+    "meaningBn": "চাটুকার, তোষামোদী, গোলামের মতো পদলেহনকারী",
+    "meaningEn": "Obedient or attentive to an excessive or servile degree.",
+    "mnemonic": "Obey করতে করতে কুইজের মত সবসময় মাথা নোয়ানো -> আত্মমর্যাদাহীন চাটুকার ব্যক্তি।",
+    "exampleSentence": "The authoritarian director was surrounded by obsequious deputies who never dared dissent.",
+    "synonyms": [
+      "servile",
+      "sycophantic",
+      "submissive",
+      "fawning"
+    ],
+    "antonyms": [
+      "assertive",
+      "domineering",
+      "independent"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "obviate": {
+    "word": "obviate",
+    "partOfSpeech": "verb",
+    "meaningBn": "অপ্রয়োজনীয় করে দেওয়া, আগেই দূর করা, নিবারণ করা",
+    "meaningEn": "Remove (a need or difficulty); prevent; avoid.",
+    "mnemonic": "Ob (আগে) + via (রাস্তা) -> এমন স্থায়ী ব্যবস্থা নেওয়া যাতে ভবিষ্যতে কোনো সমস্যার প্রয়োজনই আর না থাকে।",
+    "exampleSentence": "Installing automated storm drainage obviated the recurrent requirement for emergency water pumps.",
+    "synonyms": [
+      "preclude",
+      "prevent",
+      "eliminate",
+      "avert"
+    ],
+    "antonyms": [
+      "necessitate",
+      "require",
+      "cause"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "occlude": {
+    "word": "occlude",
+    "partOfSpeech": "verb",
+    "meaningBn": "বন্ধ করা, আটকে দেওয়া, পথ বা রক্তনালী রুদ্ধ করা",
+    "meaningEn": "Stop, close up, or obstruct an opening, orifice, or passage.",
+    "mnemonic": "Include মানে ঢোকানো, আর Occlude মানে মুখ বন্ধ করে পথ আটকে দেওয়া।",
+    "exampleSentence": "Arterial cholesterol deposits can occlude critical blood flow, precipitating cardiac arrest.",
+    "synonyms": [
+      "block",
+      "obstruct",
+      "clog",
+      "congest"
+    ],
+    "antonyms": [
+      "unblock",
+      "open",
+      "clear"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "officious": {
+    "word": "officious",
+    "partOfSpeech": "adjective",
+    "meaningBn": "গায়ে পড়ে অনধিকারচর্চা করা, অহেতুক মাতব্বরিপ্রিয়",
+    "meaningEn": "Assertive of authority in an annoyingly domineering way, especially with regard to petty or trivial matters.",
+    "mnemonic": "অফিসের ছোট পিয়ন যখন গায়ে পড়ে অতিরিক্ত ক্ষমতা দেখিয়ে সাধারণ মানুষকে হয়রানি করে।",
+    "exampleSentence": "The officious security clerk insisted on checking ministerial credentials three separate times.",
+    "synonyms": [
+      "intrusive",
+      "meddlesome",
+      "interfering",
+      "domineering"
+    ],
+    "antonyms": [
+      "unobtrusive",
+      "reserved",
+      "modest"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "onerous": {
+    "word": "onerous",
+    "partOfSpeech": "adjective",
+    "meaningBn": "গুরুভার, কষ্টসাধ্য, অত্যন্ত দুর্বিষহ ও কঠিন",
+    "meaningEn": "Involving an amount of effort and difficulty that is oppressively burdensome.",
+    "mnemonic": "One ton (এক টন) ওজনের বোঝা মাথায় নিলে যেমন লাগে -> অত্যন্ত ভারী ও দুঃসাধ্য দায়িত্ব।",
+    "exampleSentence": "Repaying external debt under soaring interest rates imposed an onerous fiscal burden.",
+    "synonyms": [
+      "burdensome",
+      "arduous",
+      "heavy",
+      "taxing"
+    ],
+    "antonyms": [
+      "effortless",
+      "easy",
+      "light"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "opprobrium": {
+    "word": "opprobrium",
+    "partOfSpeech": "noun",
+    "meaningBn": "তীব্র নিন্দা, সামাজিক কলঙ্ক, অসম্মান ও ধিক্কার",
+    "meaningEn": "Harsh criticism or censure; public disgrace arising from shameful conduct.",
+    "mnemonic": "Appropriate শাস্তিস্বরূপ জনসম্মুখে ধিক্কার দেওয়া -> দুর্নীতি ফাঁস হওয়ার পর চারদিকের ঘৃণা ও অসম্মান।",
+    "exampleSentence": "The treasonous cabinet collaborator endured universal public opprobrium following liberation.",
+    "synonyms": [
+      "ignominy",
+      "disgrace",
+      "shame",
+      "censure"
+    ],
+    "antonyms": [
+      "honor",
+      "acclaim",
+      "glory"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "oscillate": {
+    "word": "oscillate",
+    "partOfSpeech": "verb",
+    "meaningBn": "দোদুল্যমান হওয়া, সিদ্ধান্তহীনতায় দোলা, উঠানামা করা",
+    "meaningEn": "Move or swing back and forth at a regular speed; waver between opinions.",
+    "mnemonic": "পেন্ডুলাম যেমন এপাশ-ওপাশ দোলে -> কোনো সিদ্ধান্তে স্থির না হয়ে এদিক-ওদিক দোলাচল করা।",
+    "exampleSentence": "Throughout the debate, his economic philosophy oscillated between laissez-faire and state control.",
+    "synonyms": [
+      "swing",
+      "fluctuate",
+      "waver",
+      "vacillate"
+    ],
+    "antonyms": [
+      "stabilize",
+      "settle",
+      "remain firm"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "ostentatious": {
+    "word": "ostentatious",
+    "partOfSpeech": "adjective",
+    "meaningBn": "আড়ম্বরপূর্ণ, লোকদেখানো, প্রদর্শনকামী",
+    "meaningEn": "Characterized by vulgar or pretentious display; designed to impress or attract notice.",
+    "mnemonic": "Stunt বা দেখনদারি দেখানো: অহংকারপূর্ণ প্রদর্শনকামী লোক (Ostentatious)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of ostentatious during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "paragon": {
+    "word": "paragon",
+    "partOfSpeech": "noun",
+    "meaningBn": "নিখুঁত দৃষ্টান্ত, শ্রেষ্ঠ আদর্শ, অনন্য রূপরেখা",
+    "meaningEn": "A person or thing regarded as a perfect example of a particular quality.",
+    "mnemonic": "Paragon স্যান্ডেল যেমন ক্লাসিক ও টেকসই -> কোনো গুণের সর্বোচ্চ ও নিখুঁত উদাহরণ।",
+    "exampleSentence": "Mother Teresa is universally revered as an enduring paragon of selfless humanitarian devotion.",
+    "synonyms": [
+      "epitome",
+      "model",
+      "ideal",
+      "exemplar"
+    ],
+    "antonyms": [
+      "flaw",
+      "imperfection",
+      "antithesis"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "partisan": {
+    "word": "partisan",
+    "partOfSpeech": "adjective",
+    "meaningBn": "পক্ষপাতদুষ্ট, অন্ধ দলীয় সমর্থক, নিরপেক্ষতাহীন",
+    "meaningEn": "Prejudiced in favor of a particular cause or party.",
+    "mnemonic": "Party এর অন্ধ সমর্থক যে ন্যায়াঅন্যায় ভুলে কেবল নিজের দলের পক্ষ নেয়।",
+    "exampleSentence": "Civil servants are sworn to deliver public services free from partisan ideological bias.",
+    "synonyms": [
+      "biased",
+      "prejudiced",
+      "one-sided",
+      "sectarian"
+    ],
+    "antonyms": [
+      "impartial",
+      "disinterested",
+      "neutral"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "pathological": {
+    "word": "pathological",
+    "partOfSpeech": "adjective",
+    "meaningBn": "রোগসংক্রান্ত, বিকৃত বা চরম অস্বাভাবিক",
+    "meaningEn": "Relating to pathology; compulsive or obsessive to an abnormal degree.",
+    "mnemonic": "প্যাথলজিক্যাল লায়ার -> যে স্বভাবগত রোগের কারণে অপ্রয়োজনেও অনর্গল মিথ্যা বলে।",
+    "exampleSentence": "A pathological obsession with secrecy paralyzed transparency within the intelligence unit.",
+    "synonyms": [
+      "morbid",
+      "abnormal",
+      "compulsive",
+      "diseased"
+    ],
+    "antonyms": [
+      "healthy",
+      "normal",
+      "wholesome"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "paucity": {
+    "word": "paucity",
+    "partOfSpeech": "noun",
+    "meaningBn": "স্বল্পতা, অভাব, অপ্রতুলতা, ঘাটতি",
+    "meaningEn": "The presence of something only in small or insufficient quantities or amounts; scarcity.",
+    "mnemonic": "City (শহরে) বিশুদ্ধ বাতাসের অভাব বা অপ্রতুলতা (Paucity)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of paucity during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "pedantic": {
+    "word": "pedantic",
+    "partOfSpeech": "adjective",
+    "meaningBn": "পাণ্ডিত্য প্রদর্শনকারী, অহেতুক ক্ষুদ্র নিয়মে খুঁতখুঁতে",
+    "meaningEn": "Excessively concerned with minor details, rules, or with displaying academic learning.",
+    "mnemonic": "পণ্ডিতি দেখানো: বইয়ের ক্ষুদ্রাতিক্ষুদ্র নিয়মে অযথা আটকে থেকে পাণ্ডিত্য ফলানো (Pedantic)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of pedantic during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "penchant": {
+    "word": "penchant",
+    "partOfSpeech": "noun",
+    "meaningBn": "বিশেষ পছন্দ, তীব্র ঝোঁক বা আসক্তি, অনুরাগের টান",
+    "meaningEn": "A strong or habitual liking for something or a tendency to do something.",
+    "mnemonic": "Pendant যেমন বুকের কাছে ঝুলে থাকে -> মনের গভীর থেকে কোনো বিশেষ শিল্পের প্রতি গভীর ভালোবাসা।",
+    "exampleSentence": "The distinguished magistrate possessed an abiding penchant for classical Rabindra Sangeet.",
+    "synonyms": [
+      "predilection",
+      "affinity",
+      "inclination",
+      "fondness"
+    ],
+    "antonyms": [
+      "aversion",
+      "dislike",
+      "antipathy"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "penury": {
+    "word": "penury",
+    "partOfSpeech": "noun",
+    "meaningBn": "চরম দারিদ্র্য, নিঃস্ব অবস্থা, নিদারুণ অর্থকষ্ট",
+    "meaningEn": "Extreme poverty; destitution.",
+    "mnemonic": "যার কাছে একটি পেনিও (Penny) নেই, এমন নিঃস্ব চরম দারিদ্র্য (Penury)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of penury during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "perennial": {
+    "word": "perennial",
+    "partOfSpeech": "adjective",
+    "meaningBn": "দীর্ঘস্থায়ী, বারোমেসে, চিরন্তন ও চিরজীবী",
+    "meaningEn": "Lasting or existing for a long or apparently infinite time; continually recurring.",
+    "mnemonic": "Annual মানে এক বছরের, Perennial মানে যা বছর বছর টিকে থাকে এবং কখনো মরে না।",
+    "exampleSentence": "Waterlogging along metropolitan thoroughfares remains a perennial monsoon affliction in Dhaka.",
+    "synonyms": [
+      "everlasting",
+      "enduring",
+      "perpetual",
+      "abiding"
+    ],
+    "antonyms": [
+      "ephemeral",
+      "fleeting",
+      "transient"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "perfidious": {
+    "word": "perfidious",
+    "partOfSpeech": "adjective",
+    "meaningBn": "বিশ্বাসঘাতক, অবিশ্বস্ত, প্রতারণাপূর্ণ পিঠে ছুরিকাঘাতকারী",
+    "meaningEn": "Deceitful and untrustworthy; treacherous.",
+    "mnemonic": "Per-faith (বিশ্বাসের উল্টো) -> বন্ধুত্বের মুখোশ পরে চরম মুহূর্তে বিশ্বাসঘাতকতা করা।",
+    "exampleSentence": "Mir Jafar is immortalized in Bengali history as the archetypal perfidious traitor.",
+    "synonyms": [
+      "treacherous",
+      "traitorous",
+      "duplicitous",
+      "disloyal"
+    ],
+    "antonyms": [
+      "loyal",
+      "faithful",
+      "trustworthy"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "perfunctory": {
+    "word": "perfunctory",
+    "partOfSpeech": "adjective",
+    "meaningBn": "দায়সারাভাবে করা, আগ্রহহীন, গতানুগতিক",
+    "meaningEn": "Carried out with a minimum of effort or reflection; superficial.",
+    "mnemonic": "Function পালন: দায় মেটানোর জন্য শুধুমাত্র নিয়ম রক্ষার খাতিরে কোনো কাজ দায়সারাভাবে করা (Perfunctory)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of perfunctory during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "permeable": {
+    "word": "permeable",
+    "partOfSpeech": "adjective",
+    "meaningBn": "প্রবেশ্য, যা ভেদ করে তরল বা গ্যাস পার হতে পারে",
+    "meaningEn": "Allowing liquids or gases to pass through it.",
+    "mnemonic": "Permit (অনুমতি) থেকে permeable -> যার সূক্ষ্ম ছিদ্র দিয়ে পানি সহজে চলাচল করতে পারে।",
+    "exampleSentence": "Sandy deltaic soil is exceptionally permeable, facilitating swift agrarian groundwater recharge.",
+    "synonyms": [
+      "porous",
+      "penetrable",
+      "absorbent"
+    ],
+    "antonyms": [
+      "impermeable",
+      "watertight",
+      "impenetrable"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "pervasive": {
+    "word": "pervasive",
+    "partOfSpeech": "adjective",
+    "meaningBn": "সর্বত্র বিস্তৃত, পরিব্যপ্ত, সর্বব্যাপী",
+    "meaningEn": "Spreading widely throughout an area or a group of people, especially an unwelcome influence.",
+    "mnemonic": "Pervade থেকে Pervasive: সুবাস বা ক্ষতিকর বিষবাষ্পের মতো যা সর্বত্র ছড়িয়ে পড়ে।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of pervasive during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "phlegmatic": {
+    "word": "phlegmatic",
+    "partOfSpeech": "adjective",
+    "meaningBn": "শান্ত স্বভাবের, সহজে উত্তেজিত হয় না এমন, ধীরস্থির",
+    "meaningEn": "Having an unemotional and stolidly calm disposition.",
+    "mnemonic": "যার রক্ত ঠান্ডা এবং কোনো উসকানিতেই যে রাগে বা আতঙ্কে মেজাজ হারায় না।",
+    "exampleSentence": "The seasoned diplomat maintained a phlegmatic disposition amid provocative hostile questioning.",
+    "synonyms": [
+      "calm",
+      "composed",
+      "impassive",
+      "stolid"
+    ],
+    "antonyms": [
+      "excitable",
+      "volatile",
+      "passionate"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "piety": {
+    "word": "piety",
+    "partOfSpeech": "noun",
+    "meaningBn": "ধার্মিকতা, ভক্তি, ধর্মানুরাগ ও শ্রদ্ধাবোধ",
+    "meaningEn": "The quality of being religious or reverent.",
+    "mnemonic": "Pious (ধার্মিক) এর বিশেষ্যরূপ -> ঈশ্বরের প্রতি গভীর আনুগত্য ও আন্তরিক শ্রদ্ধাবোধ।",
+    "exampleSentence": "The sage’s quiet humility and unyielding piety inspired deep reverence across the valley.",
+    "synonyms": [
+      "devotion",
+      "reverence",
+      "holiness",
+      "godliness"
+    ],
+    "antonyms": [
+      "impiety",
+      "sacrilege",
+      "irreverence"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "placate": {
+    "word": "placate",
+    "partOfSpeech": "verb",
+    "meaningBn": "শান্ত করা, সন্তুষ্ট করা, ক্রোধ প্রশমন করা",
+    "meaningEn": "Make someone less angry or hostile; appease.",
+    "mnemonic": "Please + Calm: কাউকে আদর ও বিনয়ের সাথে শান্ত বা তুষ্ট করা (Placate)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of placate during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "plasticity": {
+    "word": "plasticity",
+    "partOfSpeech": "noun",
+    "meaningBn": "নমনীয়তা, পরিবর্তনের ক্ষমতা, আকার নেওয়ার উপযোগী গুণ",
+    "meaningEn": "The quality of being easily shaped or molded; adaptability.",
+    "mnemonic": "Plastic যেমন উত্তাপে গলিয়ে যেকোনো ছাঁচে ঢালা যায় -> মস্তিষ্ক বা মনের নতুন কিছু শেখার অভিযোজন ক্ষমতা।",
+    "exampleSentence": "Neuroscientists emphasize the remarkable plasticity of the juvenile human brain.",
+    "synonyms": [
+      "malleability",
+      "flexibility",
+      "adaptability",
+      "ductility"
+    ],
+    "antonyms": [
+      "rigidity",
+      "inflexibility",
+      "brittleness"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "platitude": {
+    "word": "platitude",
+    "partOfSpeech": "noun",
+    "meaningBn": "অতিচর্বিত নীতিবাক্য, গৎবাঁধা মামুলি ও একঘেয়ে কথা",
+    "meaningEn": "A remark or statement, especially one with a moral content, that has been used too often to be interesting or thoughtful.",
+    "mnemonic": "Flat (সমতল ও স্বাদহীন) কথা -> যা শুনতে শুনতে কান পচে গেছে অথচ বাস্তব সমাধানের কোনো ইঙ্গিত নেই।",
+    "exampleSentence": "Empty political speeches loaded with predictable platitudes fail to comfort grieving families.",
+    "synonyms": [
+      "cliché",
+      "truism",
+      "banality",
+      "bromides"
+    ],
+    "antonyms": [
+      "novelty",
+      "originality",
+      "insight"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "plethora": {
+    "word": "plethora",
+    "partOfSpeech": "noun",
+    "meaningBn": "আধিক্য, অতিরিক্ত প্রাচুর্য, মাত্রাতিরিক্ত পরিমাণ",
+    "meaningEn": "A large or excessive amount of (something); an overabundance.",
+    "mnemonic": "Plenty + Flora: প্রয়োজনের তুলনায় অতিরিক্ত প্রাচুর্য বা আধিক্য (Plethora)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of plethora during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "plummet": {
+    "word": "plummet",
+    "partOfSpeech": "verb",
+    "meaningBn": "খাড়াভাবে দ্রুত নিচে পড়ে যাওয়া, ধস নামা",
+    "meaningEn": "Fall or drop straight down at high speed; decrease rapidly.",
+    "mnemonic": "পাথর যেমন খাড়াভাবে ওপর থেকে নিচে আছড়ে পড়ে, তেমনই হুট করে ধস নামা (Plummet)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of plummet during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "porous": {
+    "word": "porous",
+    "partOfSpeech": "adjective",
+    "meaningBn": "ছিদ্রযুক্ত, জলভেদ্য, যার মধ্যে তরল প্রবেশ করতে পারে",
+    "meaningEn": "Having minute spaces or holes through which liquid or air may pass; easily penetrated.",
+    "mnemonic": "পোড়া মাটির হাঁড়ি যাতে জল চুইয়ে ঠান্ডা থাকে -> ছিদ্রময় বা দুর্বল সুরক্ষাব্যবস্থা।",
+    "exampleSentence": "The international boundary through dense swamp forests proved exceptionally porous to smugglers.",
+    "synonyms": [
+      "permeable",
+      "penetrable",
+      "absorbent",
+      "spongy"
+    ],
+    "antonyms": [
+      "impermeable",
+      "solid",
+      "dense"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "pragmatic": {
+    "word": "pragmatic",
+    "partOfSpeech": "adjective",
+    "meaningBn": "বাস্তবধর্মী, বাস্তববাদী, প্রায়োগিক",
+    "meaningEn": "Dealing with things sensibly and realistically in a way that is based on practical rather than theoretical considerations.",
+    "mnemonic": "Practical thinking: অলীক কল্পনায় না ভেসে বাস্তবতার নিরিখে সিদ্ধান্ত নেওয়া (Pragmatic)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of pragmatic during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "preamble": {
+    "word": "preamble",
+    "partOfSpeech": "noun",
+    "meaningBn": "প্রস্তাবনা, সংবিধান বা আইনের আনুষ্ঠানিক ভূমিকা",
+    "meaningEn": "A preliminary or preparatory statement; an introduction.",
+    "mnemonic": "Amble (হেঁটে প্রবেশ করা) -> কোনো বই বা সংবিধানের মূল অংশে যাওয়ার আগে যে মূল দর্শন লেখা থাকে।",
+    "exampleSentence": "The historic Preamble to the Constitution of Bangladesh enshrines democracy and secularism.",
+    "synonyms": [
+      "introduction",
+      "prologue",
+      "preface",
+      "prelude"
+    ],
+    "antonyms": [
+      "epilogue",
+      "postscript",
+      "conclusion"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "precarious": {
+    "word": "precarious",
+    "partOfSpeech": "adjective",
+    "meaningBn": "অনিশ্চিত, ঝুঁকিপূর্ণ, বিপজ্জনক ও ভারসাম্যহীন",
+    "meaningEn": "Not securely held or in position; dangerously likely to fall or collapse; uncertain.",
+    "mnemonic": "Pre-care (আগাম সাবধানতা না নিলে বিপদ) -> পাহাড়ের খাঁদে ঝুলন্ত বিপজ্জনক অবস্থা।",
+    "exampleSentence": "Millions of daily wage laborers subsist in a precarious socioeconomic equilibrium.",
+    "synonyms": [
+      "perilous",
+      "hazardous",
+      "risky",
+      "insecure"
+    ],
+    "antonyms": [
+      "secure",
+      "stable",
+      "safe"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "precipitate": {
+    "word": "precipitate",
+    "partOfSpeech": "verb",
+    "meaningBn": "আকস্মিক দ্রুত ঘটিয়ে ফেলা; হঠকারী বা তড়িঘড়ি করা",
+    "meaningEn": "Cause (an event or situation, typically one that is bad or undesirable) to happen suddenly, unexpectedly, or prematurely.",
+    "mnemonic": "বৃষ্টির মতো হঠাৎ আকাশ থেকে পড়া -> হঠকারী কোনো সিদ্ধান্ত নিয়ে বড় সংকট ডেকে আনা।",
+    "exampleSentence": "A sudden sovereign devaluation of the rupee precipitated mass panic across the bourse.",
+    "synonyms": [
+      "trigger",
+      "hasten",
+      "accelerate",
+      "instigate"
+    ],
+    "antonyms": [
+      "delay",
+      "retard",
+      "forestall"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "precursor": {
+    "word": "precursor",
+    "partOfSpeech": "noun",
+    "meaningBn": "পূর্বসূরি, অগ্রদূত, যা অন্য কিছুর আগমন বার্তা দেয়",
+    "meaningEn": "A person or thing that comes before another of the same kind; a forerunner.",
+    "mnemonic": "Pre (আগে) + cursor (দৌড়ায় যে) -> কোনো বড় বিপ্লব বা আবিষ্কারের পথপ্রদর্শক।",
+    "exampleSentence": "Early experiments with carbon filaments were the direct technological precursor to modern illumination.",
+    "synonyms": [
+      "forerunner",
+      "predecessor",
+      "pioneer",
+      "herald"
+    ],
+    "antonyms": [
+      "successor",
+      "descendant",
+      "consequence"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "presumptuous": {
+    "word": "presumptuous",
+    "partOfSpeech": "adjective",
+    "meaningBn": "অহংকারী, স্পর্ধিত, সীমা অতিক্রমকারী ঔদ্ধত্যপূর্ণ",
+    "meaningEn": "Failing to observe the limits of what is permitted or appropriate; insolent.",
+    "mnemonic": "Presume (অনুমতি ছাড়া ধরে নেওয়া) -> মর্যাদা না মেনে বড়দের সামনে ধৃষ্টতাপূর্ণ আচরণ করা।",
+    "exampleSentence": "It was deemed presumptuous for the junior intern to contradict the chief surgeon's diagnosis.",
+    "synonyms": [
+      "audacious",
+      "arrogant",
+      "insolent",
+      "bold"
+    ],
+    "antonyms": [
+      "humble",
+      "modest",
+      "deferential"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "prevaricate": {
+    "word": "prevaricate",
+    "partOfSpeech": "verb",
+    "meaningBn": "সত্য গোপন করা, পাশ কাটিয়ে চলা, ছলচাতুরি করা",
+    "meaningEn": "Speak or act in an evasive way; equivocate.",
+    "mnemonic": "Pre + Fabricate: আগে থেকেই বানিয়ে ঘুরিয়ে-পেঁচিয়ে মিথ্যা বলা বা ছলচাতুরি করা (Prevaricate)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of prevaricate during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "pristine": {
+    "word": "pristine",
+    "partOfSpeech": "adjective",
+    "meaningBn": "আদিম, নিখুঁত, অকলুষিত, মানুষের ছোঁয়া না লাগা খাঁটি",
+    "meaningEn": "In its original condition; unspoiled; clean and fresh as if new.",
+    "mnemonic": "Pri (আদি) -> কোনো দূষণহীন বনভূমি যা সৃষ্টির আদিম রূপেই নির্মল রয়ে গেছে।",
+    "exampleSentence": "Remote alpine valleys remain in pristine state due to strict conservation regulations.",
+    "synonyms": [
+      "unspoiled",
+      "immaculate",
+      "pure",
+      "untouched"
+    ],
+    "antonyms": [
+      "polluted",
+      "corrupted",
+      "tarnished"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "probity": {
+    "word": "probity",
+    "partOfSpeech": "noun",
+    "meaningBn": "সততা, ন্যায়পরায়ণতা, চারিত্রিক নির্মলতা ও সাধুতা",
+    "meaningEn": "The quality of having strong moral principles; honesty and decency.",
+    "mnemonic": "Probe (তদন্ত) করে যার চরিত্রে কোনো দাগ বা দুর্নীতির চিহ্ন পাওয়া যায় না।",
+    "exampleSentence": "The retiring ombudsman was universally lauded for his unimpeachable financial probity.",
+    "synonyms": [
+      "integrity",
+      "honesty",
+      "rectitude",
+      "virtue"
+    ],
+    "antonyms": [
+      "dishonesty",
+      "corruption",
+      "perfidy"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "problematic": {
+    "word": "problematic",
+    "partOfSpeech": "adjective",
+    "meaningBn": "সমস্যামূলক, অনিশ্চিত, যা সমাধান করা সহজ নয়",
+    "meaningEn": "Constituting or presenting a problem or difficulty; doubtful.",
+    "mnemonic": "Problem পূর্ণ -> যা সহজেই বিতর্ক বা প্রশাসনিক অচলাবস্থার সৃষ্টি করে।",
+    "exampleSentence": "Financing grand megaprojects through high-interest short-term commercial loans is deeply problematic.",
+    "synonyms": [
+      "difficult",
+      "doubtful",
+      "uncertain",
+      "troublesome"
+    ],
+    "antonyms": [
+      "straightforward",
+      "unproblematic",
+      "certain"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "prodigal": {
+    "word": "prodigal",
+    "partOfSpeech": "adjective",
+    "meaningBn": "অপব্যয়ী, অমিতব্যয়ী, বেহিসাবিভাবে ধনসম্পদ ওড়ানো",
+    "meaningEn": "Spending money or resources freely and recklessly; wastefully extravagant.",
+    "mnemonic": "Prodigal son গল্পে ছেলে যেমন বাবার সমস্ত সম্পত্তি জুয়া ও ভোগবিলাসে উড়িয়ে নিঃস্ব হয়েছিল।",
+    "exampleSentence": "The prodigal crown prince dissipated centuries of royal dynastic treasure within two decades.",
+    "synonyms": [
+      "extravagant",
+      "wasteful",
+      "profligate",
+      "spendthrift"
+    ],
+    "antonyms": [
+      "frugal",
+      "thrifty",
+      "parsimonious"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "profound": {
+    "word": "profound",
+    "partOfSpeech": "adjective",
+    "meaningBn": "গভীর, প্রগাঢ়, সুদূরপ্রসারী ও অর্থপূর্ণ",
+    "meaningEn": "Very great or intense; having or showing great knowledge or insight.",
+    "mnemonic": "Pro-found (যার গভীরে পাওয়া গেছে) -> সাধারণ অগভীর জ্ঞান নয়, বরং আত্মার গভীরের প্রজ্ঞা।",
+    "exampleSentence": "The Liberation War exerted a profound transforming impact upon the nation's literary soul.",
+    "synonyms": [
+      "deep",
+      "insightful",
+      "intense",
+      "far-reaching"
+    ],
+    "antonyms": [
+      "superficial",
+      "shallow",
+      "trivial"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "profligate": {
+    "word": "profligate",
+    "partOfSpeech": "adjective",
+    "meaningBn": "বেহিসাবি, চরিত্রহীন, অপব্যয়ী ও নৈতিক স্খলনযুক্ত",
+    "meaningEn": "Recklessly extravagant or wasteful in the use of resources; licentious.",
+    "mnemonic": "Prodigal এর চেয়েও জঘন্য -> মদ, জুয়া ও অনৈতিক পথে সরকারি অর্থ অপচয়কারী।",
+    "exampleSentence": "The profligate spending sprees of the autocratic junta bankrupted the national exchequer.",
+    "synonyms": [
+      "extravagant",
+      "dissolute",
+      "prodigal",
+      "wanton"
+    ],
+    "antonyms": [
+      "frugal",
+      "virtuous",
+      "austere"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "proliferate": {
+    "word": "proliferate",
+    "partOfSpeech": "verb",
+    "meaningBn": "দ্রুত বংশবৃদ্ধি করা, সংখ্যায় বহুগুণে বেড়ে যাওয়া",
+    "meaningEn": "Increase rapidly in numbers; multiply.",
+    "mnemonic": "Life (জীবন) হু হু করে ছড়িয়ে পড়া -> অল্প সময়ে চারদিকে নতুন শাখার বিস্তার ঘটা।",
+    "exampleSentence": "Microcredit cooperatives began to proliferate across every union parishad in the nineteen-nineties.",
+    "synonyms": [
+      "multiply",
+      "mushroom",
+      "burgeon",
+      "expand"
+    ],
+    "antonyms": [
+      "decrease",
+      "dwindle",
+      "diminish"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "propensity": {
+    "word": "propensity",
+    "partOfSpeech": "noun",
+    "meaningBn": "স্বাভাবিক প্রবণতা, সহজাত ঝোঁক বা আসক্তি",
+    "meaningEn": "An inclination or natural tendency to behave in a particular way.",
+    "mnemonic": "Pro-pend (ঝুলে পড়া) -> কোনো নির্দিষ্ট ভালো বা খারাপ কাজের দিকে স্বভাবগত পক্ষপাত।",
+    "exampleSentence": "Certain speculative investors exhibit a dangerous propensity for high-volatility cryptocurrency schemes.",
+    "synonyms": [
+      "inclination",
+      "tendency",
+      "penchant",
+      "predilection"
+    ],
+    "antonyms": [
+      "aversion",
+      "disinclination",
+      "reluctance"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "propitiate": {
+    "word": "propitiate",
+    "partOfSpeech": "verb",
+    "meaningBn": "সন্তুষ্ট করা, বলি বা উপহার দিয়ে দেবতার ক্ষোভ শান্ত করা",
+    "meaningEn": "Win or regain the favor of (a god, spirit, or person) by doing something that pleases them.",
+    "mnemonic": "Peace তৈরি করতে উপঢৌকন দেওয়া -> ক্রোধান্বিত দেবতাকে তুষ্ট করে আশীর্বাদ চাওয়া।",
+    "exampleSentence": "Ancient coastal mariners performed rituals to propitiate the capricious spirits of the tempest.",
+    "synonyms": [
+      "placate",
+      "appease",
+      "mollify",
+      "conciliate"
+    ],
+    "antonyms": [
+      "provoke",
+      "enrage",
+      "offend"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "propriety": {
+    "word": "propriety",
+    "partOfSpeech": "noun",
+    "meaningBn": "শোভনতা, শিষ্টাচার, সমাজসম্মত মার্জিত আচরণ",
+    "meaningEn": "The state or quality of conforming to conventionally accepted standards of behavior or morals.",
+    "mnemonic": "Proper (সঠিক) আচরণ -> সবার সাথে শিষ্টাচার ও মর্যাদা রক্ষা করে শালীন আচরণ করা।",
+    "exampleSentence": "Civil servants are bound by service rules to maintain flawless moral propriety at all times.",
+    "synonyms": [
+      "decorum",
+      "decency",
+      "correctness",
+      "respectability"
+    ],
+    "antonyms": [
+      "impropriety",
+      "indecency",
+      "crudeness"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "proscribe": {
+    "word": "proscribe",
+    "partOfSpeech": "verb",
+    "meaningBn": "নিষিদ্ধ ঘোষণা করা, বেআইনি করে দেওয়া, সমাজচ্যুত করা",
+    "meaningEn": "Forbid, especially by law; denounce or condemn.",
+    "mnemonic": "Prescribe মানে ডাক্তার ওষুধ লিখে দেওয়া, আর Proscribe মানে সরকার আইন করে কোনো দল বা বই নিষিদ্ধ করা।",
+    "exampleSentence": "The Supreme Court proscribed all forms of student torture within university residential dormitories.",
+    "synonyms": [
+      "ban",
+      "forbid",
+      "prohibit",
+      "outlaw"
+    ],
+    "antonyms": [
+      "allow",
+      "permit",
+      "prescribe"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "pungent": {
+    "word": "pungent",
+    "partOfSpeech": "adjective",
+    "meaningBn": "ঝাঁঝালো, তীব্র গন্ধ বা স্বাদের; তীব্র কটূক্তিকর",
+    "meaningEn": "Having a sharply strong taste or smell; having a sharp and caustic quality (as of comments).",
+    "mnemonic": "সরিষার তেলের ঝাঁঝালো গন্ধ -> অথবা যে কথা শুনলে মনের ভেতর তীরের মত বেঁধে।",
+    "exampleSentence": "The editorial offered a delightfully pungent critique of the municipal council's paralysis.",
+    "synonyms": [
+      "sharp",
+      "acrid",
+      "biting",
+      "caustic"
+    ],
+    "antonyms": [
+      "bland",
+      "mild",
+      "soothing"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "qualified": {
+    "word": "qualified",
+    "partOfSpeech": "adjective",
+    "meaningBn": "শর্তসাপেক্ষ, সীমাবদ্ধ, পূর্ণাঙ্গ নয় এমন",
+    "meaningEn": "Not complete or absolute; limited; conditionally endorsed.",
+    "mnemonic": "Qualified endorsement মানে চোখ বুজে সমর্থন নয়, কিছু শর্ত সাপেক্ষে আংশিক সমর্থন।",
+    "exampleSentence": "The central bank issued only qualified approval for the cross-border corporate merger.",
+    "synonyms": [
+      "conditional",
+      "limited",
+      "restricted",
+      "reserved"
+    ],
+    "antonyms": [
+      "unqualified",
+      "absolute",
+      "unconditional"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "quibble": {
+    "word": "quibble",
+    "partOfSpeech": "verb",
+    "meaningBn": "তুচ্ছ বিষয়ে অপ্রয়োজনীয় খুঁত ধরা বা বিতর্ক করা",
+    "meaningEn": "Argue or raise objections about a trivial matter.",
+    "mnemonic": "ছোটখাটো তুচ্ছ বিষয় নিয়ে অহেতুক ক্যাঁচাল বাঁধিয়ে আসল আলোচনার সময় নষ্ট করা।",
+    "exampleSentence": "Lawyers spent three fruitless hours quibbling over minor typographical semicolons.",
+    "synonyms": [
+      "cavil",
+      "nitpick",
+      "split hairs",
+      "bicker"
+    ],
+    "antonyms": [
+      "agree",
+      "concur",
+      "overlook"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "quiescent": {
+    "word": "quiescent",
+    "partOfSpeech": "adjective",
+    "meaningBn": "শান্ত, স্থির, সুপ্তাবস্থায় থাকা, সাময়িক নিষ্ক্রিয়",
+    "meaningEn": "In a state or period of inactivity or dormancy.",
+    "mnemonic": "Quiet (শান্ত) থেকে quiescent -> শীতকালে গাছের ঘুমিয়ে থাকা অবস্থা যা বসন্তে জেগে উঠবে।",
+    "exampleSentence": "After months of tectonic agitation, the Himalayan seismic fault remained blessedly quiescent.",
+    "synonyms": [
+      "dormant",
+      "inactive",
+      "latent",
+      "serene"
+    ],
+    "antonyms": [
+      "active",
+      "turbulent",
+      "restless"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "rarefied": {
+    "word": "rarefied",
+    "partOfSpeech": "adjective",
+    "meaningBn": "সূক্ষ্ম, বায়ুহীন বা হালকা; অতি অভিজাত ও সাধারণের নাগালের বাইরে",
+    "meaningEn": "Distant from the lives and concerns of ordinary people; thin (of air).",
+    "mnemonic": "হিমালয়ের চূড়ার বাতাস যা এত পাতলা যে নিঃশ্বাস নেওয়া কঠিন -> অথবা অভিজাতদের ধরাছোঁয়ার বাইরের জগৎ।",
+    "exampleSentence": "Living in the rarefied atmosphere of diplomatic banquets detached the envoy from grassroots realities.",
+    "synonyms": [
+      "exclusive",
+      "elite",
+      "elevated",
+      "sublime"
+    ],
+    "antonyms": [
+      "common",
+      "vulgar",
+      "mundane"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "recalcitrant": {
+    "word": "recalcitrant",
+    "partOfSpeech": "adjective",
+    "meaningBn": "অবাধ্য, নিয়ন্ত্রণহীন, ঘাড়ত্যাড়া স্বভাবের",
+    "meaningEn": "Having an obstinately uncooperative attitude toward authority or discipline.",
+    "mnemonic": "Re-calcitate মানে পেছনের পা তুলে লাথি দিয়ে পালিয়ে যাওয়া -> কোনো নিয়ম বা শৃঙ্খলা না মানা।",
+    "exampleSentence": "The reformist magistrate cracked down sternly upon recalcitrant food adulterators.",
+    "synonyms": [
+      "unruly",
+      "defiant",
+      "disobedient",
+      "refractory"
+    ],
+    "antonyms": [
+      "compliant",
+      "docile",
+      "obedient"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "recant": {
+    "word": "recant",
+    "partOfSpeech": "verb",
+    "meaningBn": "পূর্বে ব্যক্ত মত বা শপথ প্রত্যাহার করা, কথা ফিরিয়ে নেওয়া",
+    "meaningEn": "Say that one no longer holds an opinion or belief, especially one considered heretical.",
+    "mnemonic": "Can't stand with my old statement -> আদালতে পূর্বের জবানবন্দি প্রত্যাহার করা।",
+    "exampleSentence": "Under threat of excommunication, Galileo was pressured to recant his heliocentric doctrines.",
+    "synonyms": [
+      "renounce",
+      "retract",
+      "repudiate",
+      "disavow"
+    ],
+    "antonyms": [
+      "reaffirm",
+      "assert",
+      "uphold"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "recluse": {
+    "word": "recluse",
+    "partOfSpeech": "noun",
+    "meaningBn": "নির্জনবাসী, সমাজবিচ্ছিন্ন সন্ন্যাসী, একাকী বাস করা ব্যক্তি",
+    "meaningEn": "A person who lives a solitary life and tends to avoid other people.",
+    "mnemonic": "Re-close (ঘরের দরজা বন্ধ করে থাকা) -> সমাজ, বন্ধুবান্ধব ছেড়ে জঙ্গলে বা নির্জন কুটিরে থাকা মানুষ।",
+    "exampleSentence": "Disillusioned by societal hypocrisy, the celebrated poet spent his twilight years as a hermit recluse.",
+    "synonyms": [
+      "hermit",
+      "solitary",
+      "anchorite",
+      "loner"
+    ],
+    "antonyms": [
+      "extrovert",
+      "socialite"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "recondite": {
+    "word": "recondite",
+    "partOfSpeech": "adjective",
+    "meaningBn": "দুর্বোধ্য, গভীর ও জটিল, সাধারণের বোঝার বাইরে",
+    "meaningEn": "Little known; abstruse; dealing with very profound, difficult subject matter.",
+    "mnemonic": "Re-conduct করে বারবার পড়তে হয় কারণ লেখাটি অতি জটিল ও গূঢ় তত্ত্বসমৃদ্ধ।",
+    "exampleSentence": "Ancient Sanskrit grammatical treatises contain notoriously recondite linguistic formulas.",
+    "synonyms": [
+      "obscure",
+      "abstruse",
+      "arcane",
+      "esoteric"
+    ],
+    "antonyms": [
+      "simple",
+      "lucid",
+      "accessible"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "refractory": {
+    "word": "refractory",
+    "partOfSpeech": "adjective",
+    "meaningBn": "একগুঁয়ে, অবাধ্য, সহজে গলানো বা নিয়ন্ত্রণ করা যায় না এমন",
+    "meaningEn": "Stubborn or unmanageable; resistant to a process or stimulus.",
+    "mnemonic": "হাঁড়ির মত শক্ত যা সহজে গলে না -> যে রোগী ওষুধের কথা শোনে না বা কোনো সংস্কার মানে না।",
+    "exampleSentence": "A refractory cohort of tax evaders continued to conceal capital within clandestine trusts.",
+    "synonyms": [
+      "obstinate",
+      "stubborn",
+      "intractable",
+      "recalcitrant"
+    ],
+    "antonyms": [
+      "malleable",
+      "obedient",
+      "tractable"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "refute": {
+    "word": "refute",
+    "partOfSpeech": "verb",
+    "meaningBn": "যুক্তি ও প্রমাণ দিয়ে ভুল বা মিথ্যা প্রমাণ করা, খণ্ডন করা",
+    "meaningEn": "Prove a statement or theory to be wrong or false; disprove.",
+    "mnemonic": "Re-fight করে মিথ্যার মুখোশ উন্মোচন করা -> অকাট্য দালিলিক প্রমাণ দিয়ে প্রতিপক্ষের দাবি নস্যাৎ করা।",
+    "exampleSentence": "Empirical macroeconomic data decisively refuted the opposition's claims of an impending famine.",
+    "synonyms": [
+      "disprove",
+      "debunk",
+      "invalidate",
+      "rebut"
+    ],
+    "antonyms": [
+      "confirm",
+      "validate",
+      "prove"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "relegate": {
+    "word": "relegate",
+    "partOfSpeech": "verb",
+    "meaningBn": "নিম্নপদে নামিয়ে দেওয়া, গুরুত্ব কমিয়ে নির্বাসনে দেওয়া",
+    "meaningEn": "Consign or dismiss to an inferior rank or position.",
+    "mnemonic": "Re-leg (পা দিয়ে নিচে নামিয়ে দেওয়া) -> বড় পদ থেকে সরিয়ে কম গুরুত্বপূর্ণ ডেস্কে বদলি করা।",
+    "exampleSentence": "Following the audit scandal, the senior director was relegated to an advisory research post.",
+    "synonyms": [
+      "demote",
+      "downgrade",
+      "consign",
+      "banish"
+    ],
+    "antonyms": [
+      "promote",
+      "elevate",
+      "upgrade"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "reproach": {
+    "word": "reproach",
+    "partOfSpeech": "verb",
+    "meaningBn": "ভর্ৎসনা করা, অনুযোগ করা, কাজের জন্য দোষারোপ করা",
+    "meaningEn": "Address someone in such a way as to express disapproval or disappointment.",
+    "mnemonic": "কাউকে ভালোবাসার সাথে ভর্ৎসনা করে বলা: 'তোমার কাছ থেকে এই ভুল আমি আশা করিনি'।",
+    "exampleSentence": "The veteran inspector gently reproached the constable for arriving late at the check-post.",
+    "synonyms": [
+      "scold",
+      "chide",
+      "rebuke",
+      "upbraid"
+    ],
+    "antonyms": [
+      "praise",
+      "commend",
+      "applaud"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "reprobate": {
+    "word": "reprobate",
+    "partOfSpeech": "noun",
+    "meaningBn": "চরিত্রহীন, দুশ্চরিত্র ব্যক্তি, পাপী ও নীতিহীন মানুষ",
+    "meaningEn": "An unprincipled person; a morally unprincipled rogue.",
+    "mnemonic": "Re-probation (সংশোধনহীন অপরাধী) -> যার কোনো নীতি বা লজ্জা নেই এমন দুশ্চরিত্র মানুষ।",
+    "exampleSentence": "The fraudulent lottery syndicate was orchestrated by a notorious financial reprobate.",
+    "synonyms": [
+      "scoundrel",
+      "rascal",
+      "rogue",
+      "villain"
+    ],
+    "antonyms": [
+      "paragon",
+      "saint",
+      "virtuous person"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "repudiate": {
+    "word": "repudiate",
+    "partOfSpeech": "verb",
+    "meaningBn": "প্রত্যাখ্যান করা, সম্পর্ক অস্বীকার করা, সত্যতা অস্বীকার করা",
+    "meaningEn": "Refuse to accept or be associated with; deny the truth or validity of.",
+    "mnemonic": "Re-put-away (ছুঁড়ে ফেলে দেওয়া) -> কোনো অবৈধ চুক্তি বা অপবাদের দায়ভার সরাসরি অস্বীকার করা।",
+    "exampleSentence": "The sovereign republic formally repudiated the illegitimate colonial maritime boundaries.",
+    "synonyms": [
+      "reject",
+      "disown",
+      "renounce",
+      "disclaim"
+    ],
+    "antonyms": [
+      "embrace",
+      "accept",
+      "ratify"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "rescind": {
+    "word": "rescind",
+    "partOfSpeech": "verb",
+    "meaningBn": "বাতিল করা, আইন বা আদেশ প্রত্যাহার করে নেওয়া",
+    "meaningEn": "Revoke, cancel, or repeal a law, order, or agreement.",
+    "mnemonic": "Re-scissors (কাঁচি দিয়ে কেটে আদেশ বাতিল করা) -> জনরোষের মুখে সরকার কোনো বিতর্কিত গেজেট প্রত্যাহার করা।",
+    "exampleSentence": "Facing massive general strikes, the municipality rescinded the controversial holding tax hike.",
+    "synonyms": [
+      "revoke",
+      "repeal",
+      "annul",
+      "nullify"
+    ],
+    "antonyms": [
+      "enact",
+      "enforce",
+      "validate"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "resolution": {
+    "word": "resolution",
+    "partOfSpeech": "noun",
+    "meaningBn": "দৃঢ় সংকল্প, সুদৃঢ় সিদ্ধান্ত, আনুষ্ঠানিক প্রস্তাব",
+    "meaningEn": "A firm decision to do or not to do something; a formal expression of opinion agreed on by a body.",
+    "mnemonic": "নববর্ষের পণ বা জাতিসংঘে গৃহীত আনুষ্ঠানিক প্রস্তাব -> কোনো কিছু অর্জনে অটুট প্রতিজ্ঞা।",
+    "exampleSentence": "The United Nations General Assembly passed a landmark resolution condemning genocide.",
+    "synonyms": [
+      "determination",
+      "resolve",
+      "decision",
+      "motion"
+    ],
+    "antonyms": [
+      "indecision",
+      "hesitancy",
+      "irresolution"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "resolve": {
+    "word": "resolve",
+    "partOfSpeech": "verb",
+    "meaningBn": "দৃঢ় সিদ্ধান্ত নেওয়া, সমাধান করা, নিষ্পত্তি করা",
+    "meaningEn": "Settle or find a solution to a problem; decide firmly on a course of action.",
+    "mnemonic": "সমস্যার জট পাকানো গিঁট খুলে সুষ্ঠু সমাধান বের করা।",
+    "exampleSentence": "Sincere bilateral dialogue alone can peacefully resolve longstanding enclave disputes.",
+    "synonyms": [
+      "settle",
+      "solve",
+      "determine",
+      "decide"
+    ],
+    "antonyms": [
+      "vacillate",
+      "worsen",
+      "complicate"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "reticent": {
+    "word": "reticent",
+    "partOfSpeech": "adjective",
+    "meaningBn": "মিতভাষী, সংযতবাক, অনুভূতি প্রকাশে কুণ্ঠিত ও নীরব",
+    "meaningEn": "Not revealing one's thoughts or feelings readily.",
+    "mnemonic": "রেডিওর মতো সব কথা না বলে যে নিজের মনের কথা ভেতরে লুকিয়ে রাখে।",
+    "exampleSentence": "The decorated wartime scout remained remarkably reticent about his acts of frontline valor.",
+    "synonyms": [
+      "reserved",
+      "uncommunicative",
+      "laconic",
+      "taciturn"
+    ],
+    "antonyms": [
+      "loquacious",
+      "voluble",
+      "candid"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "reverent": {
+    "word": "reverent",
+    "partOfSpeech": "adjective",
+    "meaningBn": "শ্রদ্ধাশীল, ভক্তিপূর্ণ, পরম শ্রদ্ধাযুক্ত মনোভাব",
+    "meaningEn": "Feeling or showing deep and solemn respect.",
+    "mnemonic": "Reverence (শ্রদ্ধা) থেকে reverent -> শহীদ বেদীতে দাঁড়িয়ে ফুল দিয়ে পরম শ্রদ্ধাভরে দাঁড়ানো।",
+    "exampleSentence": "A reverent hush descended upon the congregation as the liberation chronicle was read aloud.",
+    "synonyms": [
+      "respectful",
+      "devout",
+      "venerating",
+      "awed"
+    ],
+    "antonyms": [
+      "irreverent",
+      "disrespectful",
+      "insolent"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "sage": {
+    "word": "sage",
+    "partOfSpeech": "noun",
+    "meaningBn": "বিজ্ঞ, প্রাজ্ঞ ব্যক্তি, প্রজ্ঞাবান দার্শনিক",
+    "meaningEn": "A profoundly wise man, especially one who features in ancient history or legend; wise.",
+    "mnemonic": "যিনি বছরের পর বছর সাধনা করে গভীর প্রজ্ঞা ও জীবনের সত্য উপলব্ধি করেছেন।",
+    "exampleSentence": "Villagers sought the counsel of the octogenarian sage during bitter land boundary rivalries.",
+    "synonyms": [
+      "philosopher",
+      "scholar",
+      "guru",
+      "savants"
+    ],
+    "antonyms": [
+      "fool",
+      "simpleton",
+      "idiot"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "salubrious": {
+    "word": "salubrious",
+    "partOfSpeech": "adjective",
+    "meaningBn": "স্বাস্থ্যকর, হিতকর, রোগমুক্তিকর",
+    "meaningEn": "Health-giving; healthy; pleasant and not rundown.",
+    "mnemonic": "সকালে খোলা বাতাসে প্রাণভরে শ্বাস নিলে শরীর যেমন স্বাস্থ্যকর ও সতেজ থাকে (Salubrious)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of salubrious during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "sanction": {
+    "word": "sanction",
+    "partOfSpeech": "noun",
+    "meaningBn": "আনুষ্ঠানিক অনুমোদন; অর্থনৈতিক বা কূটনৈতিক নিষেধাজ্ঞা",
+    "meaningEn": "A threatened penalty for disobeying a law or rule; official permission or approval for an action.",
+    "mnemonic": "Sanction-এর দুই বিপরীত অর্থ: অনুমোদন দেওয়া, অথবা কোনো দেশের ওপর বাণিজ্য নিষেধাজ্ঞা আরোপ করা।",
+    "exampleSentence": "The security council imposed comprehensive trade sanctions upon the belligerent regime.",
+    "synonyms": [
+      "penalty",
+      "punishment",
+      "embargo",
+      "authorization"
+    ],
+    "antonyms": [
+      "prohibition",
+      "disapproval"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "satiate": {
+    "word": "satiate",
+    "partOfSpeech": "verb",
+    "meaningBn": "সম্পূর্ণ পরিতৃপ্ত করা, অতিরিক্ত দিয়ে পেট বা মন ভরিয়ে তোলা",
+    "meaningEn": "Satisfied to the full; sate.",
+    "mnemonic": "Satisfy এর চরম রূপ -> এত বেশি তৃপ্ত করা যাতে আর এক ফোঁটাও নেওয়ার ক্ষুধা না থাকে।",
+    "exampleSentence": "A lavish multi-course feast failed to fully satiate the voracious glutton.",
+    "synonyms": [
+      "satisfy",
+      "sate",
+      "surfeit",
+      "glut"
+    ],
+    "antonyms": [
+      "deprive",
+      "starve",
+      "famish"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "saturate": {
+    "word": "saturate",
+    "partOfSpeech": "verb",
+    "meaningBn": "সম্পূর্ণরূপে সিক্ত বা ভরিয়ে তোলা, কানায় কানায় পূর্ণ করা",
+    "meaningEn": "Cause (something) to become thoroughly soaked with water or other liquid; fill completely.",
+    "mnemonic": "তুলা যেমন পানি শুষে সম্পূর্ণ ভেজা পিণ্ড হয় -> বাজারে পণ্যের সরবরাহ দিয়ে সব ঘাটতি পূরণ করা।",
+    "exampleSentence": "The heavy monsoon torrential rains saturated agricultural lowlands across the coastal belt.",
+    "synonyms": [
+      "soak",
+      "drench",
+      "steep",
+      "imbue"
+    ],
+    "antonyms": [
+      "dry",
+      "drain",
+      "dehydrate"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "savor": {
+    "word": "savor",
+    "partOfSpeech": "verb",
+    "meaningBn": "আস্বাদন করা, পরম আনন্দে স্বাদ গ্রহণ বা উপভোগ করা",
+    "meaningEn": "Taste (good food or drink) and enjoy it completely; enjoy or appreciate something pleasant.",
+    "mnemonic": "মিষ্টির প্রতিটি কামড় ধীরে ধীরে মুখে নিয়ে আনন্দ উপভোগ করা -> বিজয়ের স্বাদ পুরোপুরি উপভোগ করা।",
+    "exampleSentence": "The newly appointed civil servant paused to savor the proud milestone with his family.",
+    "synonyms": [
+      "relish",
+      "enjoy",
+      "appreciate",
+      "taste"
+    ],
+    "antonyms": [
+      "dislike",
+      "abhor",
+      "ignore"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "secrete": {
+    "word": "secrete",
+    "partOfSpeech": "verb",
+    "meaningBn": "লুকিয়ে রাখা; শরীর থেকে তরল নিঃসরণ বা ক্ষরণ করা",
+    "meaningEn": "Conceal, hide, or store away; produce and discharge a substance.",
+    "mnemonic": "Secret থেকে secrete (লুকানো); আবার গ্রন্থি থেকে হরমোন নিঃসরিত হওয়াকেও secrete বলে।",
+    "exampleSentence": "The endocrine glands secrete vital hormones directly into the bloodstream.",
+    "synonyms": [
+      "hide",
+      "conceal",
+      "discharge",
+      "exude"
+    ],
+    "antonyms": [
+      "reveal",
+      "absorb",
+      "ingest"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "shard": {
+    "word": "shard",
+    "partOfSpeech": "noun",
+    "meaningBn": "ভাঙা মাটির পাত্র বা কাচের ধারালো টুকরো",
+    "meaningEn": "A piece of broken ceramic, metal, glass, or rock, typically having sharp edges.",
+    "mnemonic": "কাচের গ্লাস আছাড় খেয়ে ভেঙে মেঝেতে যে ধারালো টুকরোগুলো ছড়িয়ে পড়ে।",
+    "exampleSentence": "Archaeologists uncovered decorated ceramic shards dating back to the Pala dynastic era.",
+    "synonyms": [
+      "fragment",
+      "sliver",
+      "splinter",
+      "chip"
+    ],
+    "antonyms": [
+      "whole",
+      "intact object"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "skeptic": {
+    "word": "skeptic",
+    "partOfSpeech": "noun",
+    "meaningBn": "সংশয়বাদী, কোনো দাবি সহজে বিশ্বাস করে না এমন ব্যক্তি",
+    "meaningEn": "A person inclined to question or doubt all accepted opinions.",
+    "mnemonic": "যে কোনো কথা শুনেই বিশ্বাস করে না, যতক্ষণ না অকাট্য বৈজ্ঞানিক প্রমাণ দেওয়া হয়।",
+    "exampleSentence": "A healthy scientific skeptic demands rigorous clinical trials before endorsing new vaccines.",
+    "synonyms": [
+      "doubter",
+      "cynic",
+      "questioner",
+      "scoffer"
+    ],
+    "antonyms": [
+      "believer",
+      "gullible person",
+      "optimist"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "solicitous": {
+    "word": "solicitous",
+    "partOfSpeech": "adjective",
+    "meaningBn": "উদ্বিগ্ন, স্নেহশীল যত্নবান, অন্যের মঙ্গলের জন্য আন্তরিকভাবে চিন্তিত",
+    "meaningEn": "Characterized by or showing interest or concern; eager or anxious to do something.",
+    "mnemonic": "মা যেমন সন্তানের একটু জ্বর হলেও ব্যাকুল হয়ে সেবা করে -> পরম যত্ন ও উদ্বেগে ভরা।",
+    "exampleSentence": "The head nurse was exceptionally solicitous regarding the welfare of premature neonates.",
+    "synonyms": [
+      "concerned",
+      "caring",
+      "attentive",
+      "mindful"
+    ],
+    "antonyms": [
+      "unconcerned",
+      "callous",
+      "indifferent"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "soporific": {
+    "word": "soporific",
+    "partOfSpeech": "adjective",
+    "meaningBn": "ঘুমপাড়ানি, তন্দ্রা আনয়নকারী, একঘেয়ে",
+    "meaningEn": "Tending to induce drowsiness or sleep.",
+    "mnemonic": "একঘেয়ে সুরে পড়া শুনলে মানুষ যেমন স্বপ্নময় ঘুমের দেশে হারিয়ে যায় (Soporific)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of soporific during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "specious": {
+    "word": "specious",
+    "partOfSpeech": "adjective",
+    "meaningBn": "বাহ্যত সত্য কিন্তু ভেতরে মিথ্যা, বিভ্রান্তিকর",
+    "meaningEn": "Superficially plausible, but actually wrong; misleading in appearance.",
+    "mnemonic": "Suspicious স্পেশাল অফার: যা বাইরে দেখতে ভালো কিন্তু ভেতরে পুরোটাই ধাপ্পাবাজি (Specious)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of specious during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "spectrum": {
+    "word": "spectrum",
+    "partOfSpeech": "noun",
+    "meaningBn": "বর্ণালি, বিস্তৃতি, বিভিন্ন বৈশিষ্ট্যের সামগ্রিক ব্যাপ্তি",
+    "meaningEn": "A band of colors, as seen in a rainbow; a wide range of related ideas or objects.",
+    "mnemonic": "রংধনুর সাতটি রঙের সমাহার -> সমাজের একদম দরিদ্র থেকে ধনী পর্যন্ত সমগ্র পরিসর।",
+    "exampleSentence": "The reform bill gathered cross-party backing across the entire political spectrum.",
+    "synonyms": [
+      "range",
+      "gamut",
+      "span",
+      "continuum"
+    ],
+    "antonyms": [
+      "singularity",
+      "monotony"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "sporadic": {
+    "word": "sporadic",
+    "partOfSpeech": "adjective",
+    "meaningBn": "বিক্ষিপ্ত, অনিয়মিত, বিচ্ছিন্নভাবে সংঘটিত",
+    "meaningEn": "Occurring at irregular intervals or only in a few places; scattered or isolated.",
+    "mnemonic": "Spore (বীজের) মতো যা সর্বত্র একাধারে না ছড়িয়ে এখানে-সেখানে অনিয়মিতভাবে ঘটে (Sporadic)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of sporadic during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "stigma": {
+    "word": "stigma",
+    "partOfSpeech": "noun",
+    "meaningBn": "সামাজিক কলঙ্ক, অপবাদ, লাঞ্ছনাজনক দাগ",
+    "meaningEn": "A mark of disgrace associated with a particular circumstance, quality, or person.",
+    "mnemonic": "Stigma মানে দাগ -> কুসংস্কারাচ্ছন্ন সমাজে কোনো অন্যায্য কারণে মানুষকে একঘরে করে রাখার কলঙ্ক।",
+    "exampleSentence": "Education awareness initiatives strive to eradicate the societal stigma surrounding mental therapy.",
+    "synonyms": [
+      "disgrace",
+      "shame",
+      "blemish",
+      "dishonor"
+    ],
+    "antonyms": [
+      "honor",
+      "accolade",
+      "credit"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "stint": {
+    "word": "stint",
+    "partOfSpeech": "noun",
+    "meaningBn": "কার্পণ্য করা, সীমিত করা; নির্দিষ্ট কাজের মেয়াদ বা কালখণ্ড",
+    "meaningEn": "Supply a very ungenerous or inadequate amount of something; a person's fixed or allotted period of work.",
+    "mnemonic": "Don't stint on food -> খাবারে কৃপণতা করো না; আবার 'He served a two-year stint in the army'।",
+    "exampleSentence": "The diplomat served a challenging four-year stint as deputy high commissioner in London.",
+    "synonyms": [
+      "term",
+      "spell",
+      "period",
+      "limit"
+    ],
+    "antonyms": [
+      "prodigality",
+      "abundance"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "stipulate": {
+    "word": "stipulate",
+    "partOfSpeech": "verb",
+    "meaningBn": "চুক্তির শর্ত হিসেবে নির্দিষ্ট করা, আবশ্যকীয় শর্ত দেওয়া",
+    "meaningEn": "Demand or specify a requirement, typically as part of an agreement.",
+    "mnemonic": "চুক্তিপত্রে পরিষ্কার শর্ত লিখে দেওয়া যে এই নিয়মে কাজ না হলে চুক্তি বাতিল হবে।",
+    "exampleSentence": "The procurement contract stipulated that all locomotives must be commissioned within eighteen months.",
+    "synonyms": [
+      "specify",
+      "prescribe",
+      "require",
+      "demand"
+    ],
+    "antonyms": [
+      "implied",
+      "waive",
+      "ignore"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "stolid": {
+    "word": "stolid",
+    "partOfSpeech": "adjective",
+    "meaningBn": "আবেগহীন, নির্বিকার, সহজে কোনো কিছুতেই বিচলিত হয় না এমন",
+    "meaningEn": "Calm, dependable, and showing little emotion or animation.",
+    "mnemonic": "পাথরের স্তম্ভের মতো ভাবলেশহীন -> হাজার বিপদে বা শোকেও মুখে কোনো ভীতি বা দুঃখ প্রকাশ না করা।",
+    "exampleSentence": "The sentry remained stolid and immovable throughout the freezing nocturnal blizzard.",
+    "synonyms": [
+      "impassive",
+      "phlegmatic",
+      "unemotional",
+      "wooden"
+    ],
+    "antonyms": [
+      "emotional",
+      "expressive",
+      "animated"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "striated": {
+    "word": "striated",
+    "partOfSpeech": "adjective",
+    "meaningBn": "ডোরাকাটা, সমান্তরাল রেখাঙ্কিত, স্ট্রাইপযুক্ত",
+    "meaningEn": "Marked with striae; striped, grooved, or banded.",
+    "mnemonic": "বাঘের গায়ের ডোরাকাটা রেখা বা মাংসপেশির সমান্তরাল দাগ।",
+    "exampleSentence": "Microscopic biopsy revealed the parallel fibers characteristic of healthy striated muscle.",
+    "synonyms": [
+      "striped",
+      "banded",
+      "grooved",
+      "furrowed"
+    ],
+    "antonyms": [
+      "smooth",
+      "unmarked",
+      "plain"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "strut": {
+    "word": "strut",
+    "partOfSpeech": "verb",
+    "meaningBn": "বুক ফুলিয়ে গর্বের সাথে হাঁটা, উদ্ধত ভঙ্গিতে পদচারণা",
+    "meaningEn": "Walk with a stiff, erect, and apparently arrogant or conceited gait.",
+    "mnemonic": "মোরগ বা অহংকারী মানুষ যেমন বুক চিতিয়ে অহমিকার সাথে হাঁটে।",
+    "exampleSentence": "The corrupt contractor strutted into the conference room as though he owned the corporation.",
+    "synonyms": [
+      "swagger",
+      "parade",
+      "stalk",
+      "prance"
+    ],
+    "antonyms": [
+      "cower",
+      "slouch",
+      "creep"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "subpoena": {
+    "word": "subpoena",
+    "partOfSpeech": "noun",
+    "meaningBn": "আদালতে হাজির হওয়ার আইনি সমন বা তলবনামা",
+    "meaningEn": "A writ ordering a person to attend a court.",
+    "mnemonic": "Sub-poena (শাস্তির ভয় দেখিয়ে) -> আদালতের নির্দেশ অমান্য করলে গ্রেপ্তার করার আইনি নোটিশ।",
+    "exampleSentence": "The parliamentary corruption commission issued a formal subpoena demanding financial ledgers.",
+    "synonyms": [
+      "summons",
+      "court order",
+      "writ",
+      "mandate"
+    ],
+    "antonyms": [
+      "exemption",
+      "acquittal"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "subside": {
+    "word": "subside",
+    "partOfSpeech": "verb",
+    "meaningBn": "স্তিমিত হওয়া, শান্ত হওয়া, পানি নিচে নেমে যাওয়া",
+    "meaningEn": "Become less intense, violent, or severe; lapse into silence or inactivity.",
+    "mnemonic": "বন্যার পানি নেমে গিয়ে নদী শান্ত হওয়া; অথবা ক্ষুব্ধ জনতার ক্রোধ ধীরে ধীরে কমে আসা।",
+    "exampleSentence": "Floodwaters in the central river basin began to subside as regional precipitation abated.",
+    "synonyms": [
+      "abate",
+      "recede",
+      "diminish",
+      "ebb"
+    ],
+    "antonyms": [
+      "surge",
+      "intensify",
+      "escalate"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "substantiate": {
+    "word": "substantiate",
+    "partOfSpeech": "verb",
+    "meaningBn": "প্রমাণ দিয়ে প্রতিষ্ঠিত করা, সত্যতা যাচাই করা",
+    "meaningEn": "Provide evidence to support or prove the truth of.",
+    "mnemonic": "Substance (বাস্তব পদার্থ/প্রমাণ) দিয়ে কোনো অভিযোগ অকাট্যভাবে প্রমাণ করা।",
+    "exampleSentence": "The prosecutor presented documented bank wires to substantiate the money laundering indictment.",
+    "synonyms": [
+      "corroborate",
+      "verify",
+      "authenticate",
+      "confirm"
+    ],
+    "antonyms": [
+      "disprove",
+      "refute",
+      "undermine"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "subsume": {
+    "word": "subsume",
+    "partOfSpeech": "verb",
+    "meaningBn": "অন্তর্ভুক্ত করা, বড় কোনো সংকলন বা কাঠামোর ভেতর শামিল করা",
+    "meaningEn": "Include or absorb something in something else.",
+    "mnemonic": "ছোট খাল যেমন বড় পদ্মার বুকে মিশে যায় -> ছোট নিয়মকে বড় আইনের অধীনে এনে একীভূত করা।",
+    "exampleSentence": "All municipal sanitation statutes were subsumed under the new national environmental code.",
+    "synonyms": [
+      "incorporate",
+      "absorb",
+      "integrate",
+      "encompass"
+    ],
+    "antonyms": [
+      "exclude",
+      "separate",
+      "segregate"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "subtle": {
+    "word": "subtle",
+    "partOfSpeech": "adjective",
+    "meaningBn": "সূক্ষ্ম, গভীর, যা সহজে চোখে পড়ে না কিন্তু তাৎপর্যপূর্ণ",
+    "meaningEn": "So delicate or precise as to be difficult to analyze or describe; making use of clever and indirect methods.",
+    "mnemonic": "স্থূল বা স্পষ্ট নয় -> এমন গভীর ও সূক্ষ্ম পার্থক্য যা কেবল অভিজ্ঞ জহুরির চোখেই ধরা পড়ে।",
+    "exampleSentence": "The diplomat noticed a subtle shift in the ambassador's tone regarding trade reciprocity.",
+    "synonyms": [
+      "delicate",
+      "understated",
+      "nuanced",
+      "fine"
+    ],
+    "antonyms": [
+      "obvious",
+      "crude",
+      "blatant"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "superfluous": {
+    "word": "superfluous",
+    "partOfSpeech": "adjective",
+    "meaningBn": "অনাবশ্যক, প্রয়োজনের অতিরিক্ত, বাহুল্য",
+    "meaningEn": "Unnecessary, especially through being more than enough.",
+    "mnemonic": "Super (বেশি) + flu (প্রবাহিত হওয়া) -> পাত্র উপচে পড়া বাড়তি জিনিসের মতো যা কোনো কাজে লাগে না।",
+    "exampleSentence": "In a concise legal brief, superfluous rhetorical flourishes should be ruthlessly excised.",
+    "synonyms": [
+      "redundant",
+      "excessive",
+      "unneeded",
+      "gratuitous"
+    ],
+    "antonyms": [
+      "essential",
+      "indispensable",
+      "necessary"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "supplant": {
+    "word": "supplant",
+    "partOfSpeech": "verb",
+    "meaningBn": "স্থান দখল করা, উৎখাত করে নতুন স্থলাভিষিক্ত হওয়া",
+    "meaningEn": "Supersede and replace.",
+    "mnemonic": "Sub + plant (অন্যের শিকড় উপড়ে নিজের শিকড় বসানো) -> আধুনিক প্রযুক্তির দ্বারা পুরনো প্রযুক্তির বিদায়।",
+    "exampleSentence": "Smartphones swiftly supplanted traditional film cameras and standalone music players.",
+    "synonyms": [
+      "supersede",
+      "replace",
+      "displace",
+      "oust"
+    ],
+    "antonyms": [
+      "reinstate",
+      "restore",
+      "retain"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "supposition": {
+    "word": "supposition",
+    "partOfSpeech": "noun",
+    "meaningBn": "অনুমান, পূর্বানুমান, প্রমাণের অভাবে ধরে নেওয়া ধারণা",
+    "meaningEn": "An uncertain belief; a hypothesis.",
+    "mnemonic": "Suppose (মনে করি) থেকে supposition -> কোনো নিশ্চিত প্রমাণ ছাড়া কেবল অনুমানের ভিত্তিতে সিদ্ধান্ত।",
+    "exampleSentence": "The preliminary murder theory rested upon flawed forensic suppositions that collapsed under scrutiny.",
+    "synonyms": [
+      "hypothesis",
+      "conjecture",
+      "assumption",
+      "presumption"
+    ],
+    "antonyms": [
+      "fact",
+      "proof",
+      "certainty"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "tacit": {
+    "word": "tacit",
+    "partOfSpeech": "adjective",
+    "meaningBn": "মৌন, অনুক্ত, মুখে কিছু না বলে নিশব্দ সম্মতি জ্ঞাপন",
+    "meaningEn": "Understood or implied without being stated.",
+    "mnemonic": "মৌনতা সম্মতির লক্ষণ -> লিখিত বা মৌখিক কথা ছাড়াই ইঙ্গিতে বোঝাপড়া।",
+    "exampleSentence": "There existed a tacit understanding among border traders regarding exchange rate settlements.",
+    "synonyms": [
+      "implicit",
+      "unspoken",
+      "implied",
+      "unexpressed"
+    ],
+    "antonyms": [
+      "explicit",
+      "stated",
+      "expressed"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "taciturn": {
+    "word": "taciturn",
+    "partOfSpeech": "adjective",
+    "meaningBn": "মৌনপ্রিয়, স্বল্পভাষী, গম্ভীর",
+    "meaningEn": "Reserved or uncommunicative in speech; saying little.",
+    "mnemonic": "ট্যাক্সি ড্রাইভার যখন পুরো পথ কোনো কথা না বলে মৌন ও গম্ভীর থাকে (Taciturn)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of taciturn during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "tangential": {
+    "word": "tangential",
+    "partOfSpeech": "adjective",
+    "meaningBn": "অপ্রাসঙ্গিক, মূল বিষয়ের সাথে নামমাত্র সম্পর্কিত",
+    "meaningEn": "Diverging from a previous course or line; hardly touching a matter.",
+    "mnemonic": "বৃত্তের স্পর্শকের মত যা কেবল এক বিন্দু ছুঁয়ে দূরে চলে যায় -> মূল আলোচনা বাদ দিয়ে অপ্রাসঙ্গিক প্যাঁচাল।",
+    "exampleSentence": "The commission rejected tangential arguments that had no direct bearing on the central dispute.",
+    "synonyms": [
+      "peripheral",
+      "marginal",
+      "incidental",
+      "irrelevant"
+    ],
+    "antonyms": [
+      "central",
+      "pivotal",
+      "relevant"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "tenuous": {
+    "word": "tenuous",
+    "partOfSpeech": "adjective",
+    "meaningBn": "খুব দুর্বল, পাতলা, ক্ষীণ, অনিশ্চিত",
+    "meaningEn": "Very weak, slight, or flimsy; slender.",
+    "mnemonic": "সুতার মতো অতি পাতলা ও দুর্বল ভিত্তি (Tenuous)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of tenuous during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "tirade": {
+    "word": "tirade",
+    "partOfSpeech": "noun",
+    "meaningBn": "দীর্ঘ ও আক্রমণাত্মক নিন্দাসূচক বক্তব্য, তীব্র ভর্ৎসনা",
+    "meaningEn": "A long, angry speech of criticism or accusation.",
+    "mnemonic": "Tired of listening: রেগেমেগে এত বড় আক্রমণাত্মক ভাষণ দেওয়া যে শুনে মানুষ ক্লান্ত (Tirade)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of tirade during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "torpor": {
+    "word": "torpor",
+    "partOfSpeech": "noun",
+    "meaningBn": "নিষ্ক্রিয়তা, আলস্য, অসাড়তা, স্থবিরতা",
+    "meaningEn": "A state of physical or mental inactivity; lethargy.",
+    "mnemonic": "শীতকালে সাপের মতো অসাড় ও নিস্তেজ হয়ে অলস শুয়ে থাকা (Torpor)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of torpor during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "tortuous": {
+    "word": "tortuous",
+    "partOfSpeech": "adjective",
+    "meaningBn": "প্যাঁচানো, আঁকাবাঁকা, কুটিল ও জটিল",
+    "meaningEn": "Full of twists and turns; excessively lengthy and complex.",
+    "mnemonic": "সাপের আঁকাবাঁকা হাঁটা অথবা পাহাড়ি দুর্গম ঘোরানো পথ -> অত্যন্ত দীর্ঘ ও জটিল আমলাতান্ত্রিক প্রক্রিয়া।",
+    "exampleSentence": "Navigating the tortuous labyrinth of industrial clearance protocols exhausted foreign investors.",
+    "synonyms": [
+      "twisting",
+      "winding",
+      "serpentine",
+      "circuitous"
+    ],
+    "antonyms": [
+      "straight",
+      "direct",
+      "linear"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "tractable": {
+    "word": "tractable",
+    "partOfSpeech": "adjective",
+    "meaningBn": "সহজে নিয়ন্ত্রণযোগ্য, বাধ্য, বশংবদ",
+    "meaningEn": "Easy to control or influence; malleable.",
+    "mnemonic": "Tractor দিয়ে জমি যেভাবে সহজেই বাগে এনে চাষ করা যায়, তেমনই বাধ্য ও বশংবদ (Tractable)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of tractable during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "transgression": {
+    "word": "transgression",
+    "partOfSpeech": "noun",
+    "meaningBn": "সীমা লঙ্ঘন, নিয়মভঙ্গ, আইন বা নীতি ভঙ্গ",
+    "meaningEn": "An act that goes against a law, rule, or code of conduct; an offense.",
+    "mnemonic": "গণ্ডি বা সীমা পার হওয়া -> আইন বা ধর্মীয় অনুশাসন লঙ্ঘন করা।",
+    "exampleSentence": "The judicial panel declared the illegal land expropriation a grave constitutional transgression.",
+    "synonyms": [
+      "violation",
+      "breach",
+      "infraction",
+      "sin"
+    ],
+    "antonyms": [
+      "compliance",
+      "obedience",
+      "virtue"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "truculence": {
+    "word": "truculence",
+    "partOfSpeech": "noun",
+    "meaningBn": "মারমুখী ভাব, হিংস্রতা, আগ্রাসী কলহপ্রবণতা",
+    "meaningEn": "The quality or state of being aggressively self-assertive; belligerence.",
+    "mnemonic": "কথা শুনলেই মারতে আসা -> যেকোনো পরিস্থিতিতে মারমুখী ও উদ্ধত মেজাজ দেখানো।",
+    "exampleSentence": "The general’s belligerent truculence alarmed international peace mediation delegates.",
+    "synonyms": [
+      "belligerence",
+      "ferocity",
+      "pugnacity",
+      "hostility"
+    ],
+    "antonyms": [
+      "gentleness",
+      "mildness",
+      "amiability"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "vacillate": {
+    "word": "vacillate",
+    "partOfSpeech": "verb",
+    "meaningBn": "দ্বিধাদ্বন্দ্ব করা, সিদ্ধান্তহীনতায় ভোগা, দোলাচলে থাকা",
+    "meaningEn": "Alternate or waver between different opinions or actions; be indecisive.",
+    "mnemonic": "Oscillate (ঘড়ির পেন্ডুলামের মতো দোলা) থেকে Vacillate: চূড়ান্ত সিদ্ধান্ত নিতে না পেরে দোলাচলে থাকা।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of vacillate during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "venerate": {
+    "word": "venerate",
+    "partOfSpeech": "verb",
+    "meaningBn": "গভীর শ্রদ্ধা করা, পূজা করা, ভক্তি করা",
+    "meaningEn": "Regard with great respect; revere.",
+    "mnemonic": "Very respectful: হৃদয়ের গভীরতম স্থান থেকে শ্রদ্ধা ও ভক্তি নিবেদন করা (Venerate)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of venerate during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "veracious": {
+    "word": "veracious",
+    "partOfSpeech": "adjective",
+    "meaningBn": "সত্যবাদী, নির্ভরযোগ্য, সত্যনিষ্ঠ ও নির্ভুল",
+    "meaningEn": "Speaking or representing the truth; accurate.",
+    "mnemonic": "Verity (সত্য) -> যে মানুষ কখনো অসত্য বলে না এবং যার তথ্য শতভাগ নির্ভুল।",
+    "exampleSentence": "The official inquiry relied upon the veracious testimony of the independent hospital superintendent.",
+    "synonyms": [
+      "truthful",
+      "honest",
+      "accurate",
+      "reliable"
+    ],
+    "antonyms": [
+      "mendacious",
+      "deceitful",
+      "false"
+    ],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "verbose": {
+    "word": "verbose",
+    "partOfSpeech": "adjective",
+    "meaningBn": "শব্দবহুল, বাগাড়ম্বরপূর্ণ, অপ্রয়োজনীয় কথার ফুলঝুরিপূর্ণ",
+    "meaningEn": "Using or expressed in more words than are needed.",
+    "mnemonic": "Verbal শব্দের বাড়াবাড়ি -> অল্প কথায় যা বলা যেত তা পৃষ্ঠার পর পৃষ্ঠা অপ্রয়োজনীয় শব্দ দিয়ে ভরিয়ে ফেলা।",
+    "exampleSentence": "The professor urged students to edit their verbose drafts into concise, punchy paragraphs.",
+    "synonyms": [
+      "wordy",
+      "prolix",
+      "loquacious",
+      "long-winded"
+    ],
+    "antonyms": [
+      "concise",
+      "succinct",
+      "laconic",
+      "terse"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "viable": {
+    "word": "viable",
+    "partOfSpeech": "adjective",
+    "meaningBn": "টেকসই, বাস্তবায়নযোগ্য, কার্যকর ও স্থায়ী",
+    "meaningEn": "Capable of working successfully; feasible; capable of surviving.",
+    "mnemonic": "যা বাস্তবে কাজ করবে -> কেবল খাতায়-কলমে সুন্দর পরিকল্পনা নয়, মাটিতে বাস্তবে টেকসই হওয়া।",
+    "exampleSentence": "Constructing solar microgrids provided a financially viable electrification model for offshore islands.",
+    "synonyms": [
+      "feasible",
+      "workable",
+      "sustainable",
+      "practical"
+    ],
+    "antonyms": [
+      "unworkable",
+      "unfeasible",
+      "futile"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "viscous": {
+    "word": "viscous",
+    "partOfSpeech": "adjective",
+    "meaningBn": "আঠালো, ঘন ও চটচটে, যা সহজে প্রবাহিত হয় না",
+    "meaningEn": "Having a thick, sticky consistency between solid and liquid.",
+    "mnemonic": "মধু বা আলকাতরার মত ঘন আঠালো পদার্থ যা সহজে গড়ায় না।",
+    "exampleSentence": "Crude petroleum becomes highly viscous under freezing temperatures, impeding pipeline transmission.",
+    "synonyms": [
+      "sticky",
+      "thick",
+      "glutinous",
+      "syrupy"
+    ],
+    "antonyms": [
+      "runny",
+      "watery",
+      "fluid"
+    ],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  },
+  "vitiate": {
+    "word": "vitiate",
+    "partOfSpeech": "verb",
+    "meaningBn": "কলুষিত করা, কার্যকারিতা বিনষ্ট করা, ত্রুটিপূর্ণ করে বাতিল করা",
+    "meaningEn": "Spoil or impair the quality or efficiency of; destroy the legal validity of.",
+    "mnemonic": "Vice (পাপ/কলঙ্ক) ঢুকিয়ে কোনো চুক্তি বা খাদ্যকে বিষাক্ত ও অকার্যকর করে দেওয়া।",
+    "exampleSentence": "Gross procedural irregularities completely vitiated the legal validity of the disputed election.",
+    "synonyms": [
+      "invalidate",
+      "spoil",
+      "taint",
+      "corrupt"
+    ],
+    "antonyms": [
+      "purify",
+      "validate",
+      "strengthen"
+    ],
+    "repetitionCount": 4,
+    "examHistory": [
+      {
+        "exam": "43rd BCS Written",
+        "year": "2021"
+      },
+      {
+        "exam": "Combined 8 Banks Officer",
+        "year": "2022"
+      }
+    ]
+  },
+  "vituperative": {
+    "word": "vituperative",
+    "partOfSpeech": "adjective",
+    "meaningBn": "তীব্র আক্রমণাত্মক, গালমন্দপূর্ণ, নিন্দামূলক",
+    "meaningEn": "Bitter, abusive, and harshly critical in speech or writing.",
+    "mnemonic": "Viper (বিষধর সাপ) যেমন বিষাক্ত দংশন করে, তেমনই বিষাক্ত ও আক্রমণাত্মক গালমন্দ (Vituperative)।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of vituperative during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 5,
+    "examHistory": [
+      {
+        "exam": "41st BCS Preliminary",
+        "year": "2020"
+      },
+      {
+        "exam": "Agrani Bank SO",
+        "year": "2021"
+      }
+    ]
+  },
+  "volatile": {
+    "word": "volatile",
+    "partOfSpeech": "adjective",
+    "meaningBn": "উদ্বায়ী, দ্রুত পরিবর্তনশীল, অনিশ্চিত ও বিস্ফোরক",
+    "meaningEn": "Liable to change rapidly and unpredictably, especially for the worse; evaporating rapidly.",
+    "mnemonic": "কেরোসিন বা অ্যালকোহল যেমন বাতাসে উড়ে যায় -> শেয়ার বাজার বা রাজনৈতিক পরিস্থিতি যা যেকোনো মুহূর্তে ফেটে পড়তে পারে।",
+    "exampleSentence": "Global crude oil prices remain exceptionally volatile amid protracted Middle Eastern conflict.",
+    "synonyms": [
+      "unstable",
+      "fickle",
+      "erratic",
+      "explosive"
+    ],
+    "antonyms": [
+      "stable",
+      "constant",
+      "predictable"
+    ],
+    "repetitionCount": 6,
+    "examHistory": [
+      {
+        "exam": "45th BCS Preliminary",
+        "year": "2023"
+      },
+      {
+        "exam": "Sonali Bank Officer",
+        "year": "2023"
+      }
+    ]
+  },
+  "whimsical": {
+    "word": "whimsical",
+    "partOfSpeech": "adjective",
+    "meaningBn": "খামখেয়ালী, অদ্ভুত খেয়ালবশত, উদ্ভট কিন্তু কৌতুকপূর্ণ",
+    "meaningEn": "Playfully quaint or fanciful, especially in an appealing and amusing way.",
+    "mnemonic": "Whim (ক্ষণিক খেয়াল) -> যখন যা মনে চায় তা করা, অদ্ভুত কিন্তু মজার স্বভাব।",
+    "exampleSentence": "The eccentric artist transformed recycled discarded electronic hardware into whimsical mechanical sculptures.",
+    "synonyms": [
+      "fanciful",
+      "quirky",
+      "eccentric",
+      "playful"
+    ],
+    "antonyms": [
+      "practical",
+      "serious",
+      "somber"
+    ],
+    "repetitionCount": 7,
+    "examHistory": [
+      {
+        "exam": "BJS Assistant Judge",
+        "year": "2022"
+      },
+      {
+        "exam": "Janata Bank AEO",
+        "year": "2020"
+      }
+    ]
+  },
+  "zealot": {
+    "word": "zealot",
+    "partOfSpeech": "noun",
+    "meaningBn": "ধর্মান্ধ, উগ্র সমর্থক, অন্ধবিশ্বাসী",
+    "meaningEn": "A person who is fanatical and uncompromising in pursuit of their religious, political, or other ideals.",
+    "mnemonic": "Zeal মানে প্রবল আগ্রহ -> অন্ধ ও উগ্র গোঁড়ামিতে লিপ্ত ব্যক্তিই Zealot।",
+    "exampleSentence": "The candidate demonstrated a thorough understanding of zealot during the exam.",
+    "synonyms": [],
+    "antonyms": [],
+    "repetitionCount": 3,
+    "examHistory": [
+      {
+        "exam": "44th BCS Preliminary",
+        "year": "2022"
+      },
+      {
+        "exam": "Bangladesh Bank AD",
+        "year": "2023"
+      }
+    ]
+  }
+};

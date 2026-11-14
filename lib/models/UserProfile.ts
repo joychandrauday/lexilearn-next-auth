@@ -4,6 +4,8 @@ export interface IUserProfile extends Document {
   email: string;
   name: string;
   image?: string;
+  passwordHash?: string;
+  role?: string;
   targetExam?: string;
   preparationStage?: 'প্রিলিমিনারি' | 'রিটেন' | 'ভাইভা' | 'বিগিনার';
   district?: string;
@@ -12,6 +14,9 @@ export interface IUserProfile extends Document {
   address?: string;
   dailyGoal?: number;
   bio?: string;
+  streakCount?: number;
+  lastActiveAt?: Date;
+  legacySynced?: boolean;
   contributionPoints?: number;
   contributionsCount?: number;
   examTagsCount?: number;
@@ -46,6 +51,27 @@ const userProfileSchema = new Schema<IUserProfile>(
     image: {
       type: String,
       default: '',
+    },
+    passwordHash: {
+      type: String,
+      default: '',
+    },
+    role: {
+      type: String,
+      default: 'STUDENT',
+      enum: ['STUDENT', 'ADMIN'],
+    },
+    streakCount: {
+      type: Number,
+      default: 0,
+    },
+    lastActiveAt: {
+      type: Date,
+      default: null,
+    },
+    legacySynced: {
+      type: Boolean,
+      default: false,
     },
     targetExam: {
       type: String,
@@ -137,4 +163,5 @@ const userProfileSchema = new Schema<IUserProfile>(
 const UserProfile: Model<IUserProfile> =
   mongoose.models.UserProfile || mongoose.model<IUserProfile>('UserProfile', userProfileSchema);
 
+export { UserProfile as User };
 export default UserProfile;

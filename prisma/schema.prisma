@@ -1,0 +1,134 @@
+// Unified LexiLearn Database Schema
+// Supporting Barron's High Frequency 333 & Translation Practice & Learning Studio
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGODB_URI")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ==========================================
+// 1. STUDENT ACCOUNTS & AUTHENTICATION
+// ==========================================
+model User {
+  id                  String                @id @default(auto()) @map("_id") @db.ObjectId
+  name                String?
+  email               String                @unique
+  passwordHash        String?               // For Credentials provider
+  image               String?
+  role                String                @default("STUDENT") // STUDENT | ADMIN
+  targetExam          String?               @default("BANK_BCS") // BCS, Bank AD, BJS, GRE
+  streakCount         Int                   @default(0)
+  lastActiveAt        DateTime?
+  legacySynced        Boolean               @default(false)      // Tracks one-time localStorage migration
+
+  // Module Relations
+  vocabSessions       LearningSession[]
+  wordProgress        UserWordProgress[]
+  translationAttempts TranslationAttempt[]
+
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+}
+
+// ==========================================
+// 2. HIGH FREQUENCY 333 (STATE-LOCKED VOCAB)
+// ==========================================
+model VocabWord {
+  id              String             @id @default(auto()) @map("_id") @db.ObjectId
+  deckSlug        String             @default("barron-333") // Scalable for future lists
+  word            String
+  partOfSpeech    String
+  meaningBn       String
+  meaningEn       String
+  mnemonic        String?
+  exampleSentence String?
+  synonyms        String[]
+  antonyms        String[]
+
+  // Exam History & Repetition Metadata
+  repetitionCount Int                @default(1) // Total appearances in past exams
+  examHistory     Json               // e.g., [{"exam": "BCS", "year": "44th"}, {"exam": "BB AD", "year": "2023"}]
+
+  userProgress    UserWordProgress[]
+  createdAt       DateTime           @default(now())
+
+  @@unique([deckSlug, word])
+  @@index([deckSlug])
+}
+
+// Tracks mastered words so they NEVER repeat in future random batches
+model UserWordProgress {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wordId      String    @db.ObjectId
+  word        VocabWord @relation(fields: [wordId], references: [id], onDelete: Cascade)
+  status      String    @default("MASTERED") // MASTERED
+  completedAt DateTime  @default(now())
+
+  @@unique([userId, wordId])
+  @@index([userId])
+}
+
+// The Batch Lock Mechanism: Holds current 5-10 words across 1-2+ days until "Finish" is clicked
+model LearningSession {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  deckSlug      String    @default("barron-333")
+  status        String    @default("IN_PROGRESS") // IN_PROGRESS | COMPLETED
+  wordIds       String[]  // Array of 5-10 VocabWord IDs locked for this session
+  flippedIds    String[]  @default([]) // Tracks which cards in the current batch the student has viewed
+  batchSize     Int       @default(7)
+  startedAt     DateTime  @default(now())
+  completedAt   DateTime?
+
+  @@index([userId, deckSlug, status])
+}
+
+// ==========================================
+// 3. TRANSLATION PRACTICE & LEARNING STUDIO
+// ==========================================
+model TranslationChallenge {
+  id               String               @id @default(auto()) @map("_id") @db.ObjectId
+  direction        String               // "BN_TO_EN" | "EN_TO_BN"
+  difficulty       String               // "SENTENCE_DRILL" | "EDITORIAL_PASSAGE"
+  category         String               // "Economy", "Geopolitics", "Environment", "Previous Exam"
+  sourceText       String
+  modelTranslation String
+  examReference    String?              // e.g., "Bangladesh Bank AD 2022", "43rd BCS Written"
+
+  // Learning Scaffolds (Shown before or after submission)
+  keyVocabulary    Json                 // [{"source": "মূল্যস্ফীতি", "target": "Inflation", "pos": "Noun"}]
+  grammarStructure String?              // Breakdown of clauses, appositives, or connectors
+
+  attempts         TranslationAttempt[]
+  createdAt        DateTime             @default(now())
+
+  @@index([direction, difficulty, category])
+}
+
+model TranslationAttempt {
+  id            String               @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String
+  user          User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  challengeId   String               @db.ObjectId
+  challenge     TranslationChallenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+
+  submittedText String
+  status        String               @default("COMPLETED") // DRAFT | COMPLETED
+
+  // Evaluation Metrics
+  score         Int?                 // Scored out of 10
+  aiFeedback    Json?                // {"grammarFixes": [], "betterPhrasing": "", "missingKeywords": []}
+  selfRating    String?              // "NEEDS_REVISION" | "GOOD" | "MASTERED"
+
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+
+  @@index([userId, challengeId])
+}

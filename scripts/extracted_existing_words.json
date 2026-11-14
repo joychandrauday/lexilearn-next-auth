@@ -1,0 +1,772 @@
+{
+  "aberrant": {
+    "word": "aberrant",
+    "meaningBn": "বিপথগামী, নীতিচ্যুত, স্বাভাবিক নিয়মের বাইরে",
+    "meaningEn": "Departing from an accepted standard or normal type.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Ab (দূরে) + errant (ভুল পথে চলা) -> স্বাভাবিক ও সঠিক পথ থেকে দূরে সরে যাওয়া।"
+  },
+  "abeyance": {
+    "word": "abeyance",
+    "meaningBn": "স্থগিতাবস্থা, সাময়িক নিষ্ক্রিয়তা, মুলতবি",
+    "meaningEn": "A state of temporary disuse, suspension, or inactivity.",
+    "partOfSpeech": "noun",
+    "mnemonic": "Abey (অবেলায়) কাজ স্থগিত রাখা বা মুলতবি (in abeyance) করে রাখা।"
+  },
+  "alacrity": {
+    "word": "alacrity",
+    "meaningBn": "তৎপরতা, সানন্দ আগ্রহ, চটপটে ভাব",
+    "meaningEn": "Brisk and cheerful readiness, eagerness, or willingness.",
+    "partOfSpeech": "noun",
+    "mnemonic": "Ala (আল্লাহর) নামে খুশিমনে ও সানন্দ তৎপরতার (Alacrity) সাথে কাজ শুরু করা।"
+  },
+  "ameliorate": {
+    "word": "ameliorate",
+    "meaningBn": "উন্নতি সাধন করা, পরিস্থিতির উন্নয়ন ঘটানো",
+    "meaningEn": "Make something bad or unsatisfactory better or more tolerable.",
+    "partOfSpeech": "verb",
+    "mnemonic": "Ameli-orate: তেঁতুল (Imli) খেলে যেমন হজমের সমস্যা দূর হয়ে পেট ভালো হয়, তেমনই পরিস্থিতির উন্নয়ন (Ameliorate)।"
+  },
+  "anomalous": {
+    "word": "anomalous",
+    "meaningBn": "ব্যতিক্রমী, অস্বাভাবিক, নিয়মের বাইরে",
+    "meaningEn": "Deviating from what is standard, normal, or expected.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Anomaly মানে ত্রুটি বা ব্যতিক্রম -> Anomalous মানেই প্রচলিত নিয়মের ব্যত্যয়।"
+  },
+  "assiduous": {
+    "word": "assiduous",
+    "meaningBn": "অধ্যবসায়ী, কঠোর পরিশ্রমী, যত্নবান",
+    "meaningEn": "Showing great care, attention, and persistent effort.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Ass (গাধার মতো) নিরলস ও একনিষ্ঠ পরিশ্রমী ব্যক্তিই Assiduous।"
+  },
+  "audacious": {
+    "word": "audacious",
+    "meaningBn": "দুঃসাহসী, নির্ভীক, বেপরোয়া",
+    "meaningEn": "Showing a willingness to take surprisingly bold risks; impudent.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Audi গাড়ি যেমন হাইওয়েতে দুর্বার ও নির্ভীক গতিতে চলে, তেমনই দুঃসাহসী (Audacious)।"
+  },
+  "capricious": {
+    "word": "capricious",
+    "meaningBn": "খামখেয়ালী, পরিবর্তনশীল, অস্থিরমতি",
+    "meaningEn": "Given to sudden and unaccountable changes of mood or behavior; fickle.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Car-price: শেয়ার বাজারের গাড়ির মূল্যের মতো যা হুটহাট পরিবর্তনশীল ও খামখেয়ালী (Capricious)।"
+  },
+  "castigation": {
+    "word": "castigation",
+    "meaningBn": "তীব্র ভর্ৎসনা, কঠোর তিরস্কার বা দণ্ড",
+    "meaningEn": "Severe criticism, harsh scolding, or punishment.",
+    "partOfSpeech": "noun",
+    "mnemonic": "Castigate: জাত (Caste) বা অন্যায় নিয়ে কাউকে চরম ভর্ৎসনা বা তিরস্কার করা।"
+  },
+  "chicanery": {
+    "word": "chicanery",
+    "meaningBn": "প্রতারণা, রাজনৈতিক বা আইনি চাতুরি, ফাঁকিবাজি",
+    "meaningEn": "The use of trickery, deceit, or underhanded methods to achieve a political, financial, or legal purpose.",
+    "partOfSpeech": "noun",
+    "mnemonic": "Shikari (শিকারি) যেমন ফাঁদ পেতে শিকার করে, তেমনই ধূর্ত প্রতারণা ও চাতুরি (Chicanery)।"
+  },
+  "cogent": {
+    "word": "cogent",
+    "meaningBn": "অকাট্য, যুক্তিযুক্ত, বিশ্বাসযোগ্য",
+    "meaningEn": "Clear, logical, and convincing in argument or thought.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Co + Agent: বিজ্ঞ আইনজীবী এজেন্টের যুক্তি এত অকাট্য (Cogent) যে বিচারক গ্রহণ করতে বাধ্য হলেন।"
+  },
+  "deleterious": {
+    "word": "deleterious",
+    "meaningBn": "ক্ষতিকর, হানিকর, অনিষ্টকর",
+    "meaningEn": "Causing harm, damage, or detriment, especially in a gradual manner.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Delete করার যোগ্য: ক্ষতিকর ভাইরাস যেমন ফাইল নষ্ট করে তাই Delete করতে হয়, তেমনই হানিকর (Deleterious)।"
+  },
+  "diffident": {
+    "word": "diffident",
+    "meaningBn": "আত্মবিশ্বাসহীন, লাজুক, দ্বিধাগ্রস্ত",
+    "meaningEn": "Modest or shy because of a lack of self-confidence.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Confident এর বিপরীত হলো Diffident (আত্মবিশ্বাসহীন ও লাজুক)।"
+  },
+  "disparate": {
+    "word": "disparate",
+    "meaningBn": "সম্পূর্ণ ভিন্ন, অসদৃশ, তুলনাহীন",
+    "meaningEn": "Essentially different in kind; not allowing comparison.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Dis + Separate: যা সম্পূর্ণ আলাদা ও পৃথক বৈশিষ্ট্যের অধিকারী (Disparate)।"
+  },
+  "eclectic": {
+    "word": "eclectic",
+    "meaningBn": "বিভিন্ন উৎস থেকে বাছাইকৃত, উদার সংগ্রাহক",
+    "meaningEn": "Deriving ideas, style, or taste from a broad and diverse range of sources.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Elect + Select: বিভিন্ন ক্ষেত্র থেকে সেরা অংশগুলো নির্বাচন করা (Eclectic)।"
+  },
+  "ebullient": {
+    "word": "ebullient",
+    "meaningBn": "উচ্ছ্বসিত, উল্লাসিত, উৎসাহে টগবগে",
+    "meaningEn": "Cheerful and full of energy; exuberant.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Boiled পানি যেমন বুদবুদ তুলে উপচে পড়ে, তেমনই উৎসাহে টগবগ ও উচ্ছ্বসিত (Ebullient)।"
+  },
+  "enervate": {
+    "word": "enervate",
+    "meaningBn": "দুর্বল করা, শক্তিহীন করা, নিস্তেজ করা",
+    "meaningEn": "Cause someone to feel drained of energy or vitality; weaken.",
+    "partOfSpeech": "verb",
+    "mnemonic": "Energy + Out: শরীর থেকে সমস্ত Energy নিঃশেষ হয়ে দুর্বল হয়ে পড়া (Enervate)।"
+  },
+  "equivocate": {
+    "word": "equivocate",
+    "meaningBn": "দ্ব্যর্থক কথা বলা, সত্য পাশ কাটিয়ে ধোঁয়াশা তৈরি করা",
+    "meaningEn": "Use ambiguous language so as to conceal the truth or avoid committing oneself.",
+    "partOfSpeech": "verb",
+    "mnemonic": "Equal + Voice: এমনভাবে কথা বলা যার দুই রকম অর্থ দাঁড়ায় (Equivocate)।"
+  },
+  "erudite": {
+    "word": "erudite",
+    "meaningBn": "পণ্ডিত, বিদগ্ধ, প্রজ্ঞাবান, সুশিক্ষিত",
+    "meaningEn": "Having or showing great knowledge, learning, or scholarship.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Rude এর বিপরীত হলো Erudite (সুশিক্ষিত ও বিদগ্ধ পণ্ডিত)।"
+  },
+  "esoteric": {
+    "word": "esoteric",
+    "meaningBn": "গুহ্য, গোপন, গুটিকয়েক বিশেষজ্ঞের বোধগম্য",
+    "meaningEn": "Intended for or likely to be understood by only a small number of people with a specialized knowledge.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "ঐতিহাসিক গোপন বিদ্যা যা কেবল সাধকদের জানা (Esoteric)।"
+  },
+  "eulogy": {
+    "word": "eulogy",
+    "meaningBn": "প্রশংসাসূচক বক্তৃতা, গুণগান, স্তুতি",
+    "meaningEn": "A speech or piece of writing that praises someone or something highly, typically someone who has just died.",
+    "partOfSpeech": "noun",
+    "mnemonic": "Eu (ভালো) + Logos (কথা): কারো অবদান নিয়ে আন্তরিক প্রশংসাসূচক স্তুতিবাণী (Eulogy)।"
+  },
+  "exacerbate": {
+    "word": "exacerbate",
+    "meaningBn": "পরিস্থিতি আরও খারাপ করা, তীব্র বা তিক্ত করা",
+    "meaningEn": "Make a problem, bad situation, or negative feeling worse.",
+    "partOfSpeech": "verb",
+    "mnemonic": "Ex + Bitter: কোনো সমস্যাকে আরও তিক্ত ও খারাপ করে তোলা (Exacerbate)।"
+  },
+  "fastidious": {
+    "word": "fastidious",
+    "meaningBn": "খুঁতখুঁতে, খামখেয়ালী, অতি যত্নবান, সহজে সন্তুষ্ট নয় এমন",
+    "meaningEn": "Very attentive to and concerned about accuracy and detail; hard to please.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Fasting (রোজা) থাকলে মানুষ যেমন সামান্য ত্রুটিতেও অসন্তুষ্ট হয় বা অতি খুঁতখুঁতে হয়ে ওঠে (Fastidious)।"
+  },
+  "garrulous": {
+    "word": "garrulous",
+    "meaningBn": "বাচাল, অনর্গল অপ্রয়োজনীয় কথা বলে এমন",
+    "meaningEn": "Excessively talkative, especially on trivial matters.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Girls are talkative (কথিত প্রবাদ) -> অতিরিক্ত কথা বলা বা বাচাল স্বভাবের (Garrulous)।"
+  },
+  "gregarious": {
+    "word": "gregarious",
+    "meaningBn": "মিশুক, সামাজিক, দলপ্রিয়",
+    "meaningEn": "Fond of company; sociable; living in flocks or loose communities.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Group: যারা একা না থেকে Group বা দলবদ্ধ হয়ে থাকতে ভালোবাসে (Gregarious)।"
+  },
+  "harangue": {
+    "word": "harangue",
+    "meaningBn": "দীর্ঘ ও আক্রমণাত্মক কর্কশ বক্তৃতা, তিরস্কারপূর্ণ ভাষণ",
+    "meaningEn": "A lengthy and aggressive speech or tirade delivered before a crowd.",
+    "partOfSpeech": "noun",
+    "mnemonic": "He arranged a speech to scold everyone: চিৎকার-চেঁচামেচি করে তিরস্কারপূর্ণ ভাষণ (Harangue)।"
+  },
+  "iconoclast": {
+    "word": "iconoclast",
+    "meaningBn": "প্রচলিত অন্ধবিশ্বাস বা ঐতিহ্য ভঙ্গকারী, সংস্কারমুক্ত ব্যক্তি",
+    "meaningEn": "A person who attacks cherished beliefs or institutions; someone who opposes conventional customs.",
+    "partOfSpeech": "noun",
+    "mnemonic": "Icon (মূর্তি/প্রথা) + Clast (ভাঙা): প্রচলিত কুসংস্কার ভেঙে নতুন যুগের প্রবর্তনকারী (Iconoclast)।"
+  },
+  "inimical": {
+    "word": "inimical",
+    "meaningBn": "ক্ষতিকর, ক্ষতিকারক, শত্রুভাবাপন্ন",
+    "meaningEn": "Tending to obstruct or harm; hostile or unfavorable.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Inimical শব্দটি এসেছে Enemy (শত্রু) থেকে; শত্রুর মতো ক্ষতিকর বা প্রতিকূল।"
+  },
+  "insipid": {
+    "word": "insipid",
+    "meaningBn": "স্বাদহীন, নিরস, পানসে, একঘেয়ে",
+    "meaningEn": "Lacking flavor, vigor, or interest; dull or tasteless.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "In-sip: চায়ের কাপে এক চুমুক (Sip) দিতেই কোনো স্বাদ পাওয়া গেল না, অর্থাৎ পানসে বা নিরস (Insipid)।"
+  },
+  "intransigent": {
+    "word": "intransigent",
+    "meaningBn": "আপসহীন, অনমনীয়, একগুঁয়ে",
+    "meaningEn": "Unwilling or refusing to change one\\",
+    "partOfSpeech": "adjective",
+    "mnemonic": "In (না) + Transaction: সমঝোতা বা লেনদেনে আসতে সম্পূর্ণ অস্বীকৃতি জানানো (Intransigent)।"
+  },
+  "loquacious": {
+    "word": "loquacious",
+    "meaningBn": "বাচাল, অত্যধিক কথা বলতে পছন্দ করে এমন",
+    "meaningEn": "Tending to talk a great deal; talkative.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Loquacity = বাগ্মিতা বা বেশি কথা বলা; যে সারাক্ষণ অনর্গল কথা বলে (Loquacious)।"
+  },
+  "lucid": {
+    "word": "lucid",
+    "meaningBn": "সহজে বোধগম্য, স্পষ্ট, প্রাঞ্জল, স্বচ্ছ",
+    "meaningEn": "Expressed clearly; easy to understand; bright or luminous.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Lucid মানেই আলোকময় ও স্বচ্ছ; যা কোনোপ্রকার দ্বিধাদ্বন্দ্ব ছাড়াই সহজে বোঝা যায়।"
+  },
+  "magnanimous": {
+    "word": "magnanimous",
+    "meaningBn": "উদারমনা, মহৎপ্রাণ, ক্ষমাশীল",
+    "meaningEn": "Generous or forgiving, especially toward a rival or less powerful person.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Magna (বিশাল) + Animus (মন বা আত্মা): যার হৃদয় বিশাল ও উদার (Magnanimous)।"
+  },
+  "mendacious": {
+    "word": "mendacious",
+    "meaningBn": "মিথ্যাবাদী, অসত্যপূর্ণ, প্রতারণামূলক",
+    "meaningEn": "Not telling the truth; lying or deceitful.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Mend: মিথ্যাবাদী লোকদের স্বভাব সংশোধন (Mend) করা দরকার।"
+  },
+  "mitigate": {
+    "word": "mitigate",
+    "meaningBn": "হ্রাস করা, উপশম করা, তীব্রতা কমানো",
+    "meaningEn": "Make less severe, serious, or painful.",
+    "partOfSpeech": "verb",
+    "mnemonic": "Mitti (মাটি) দিয়ে আগুন বা তীব্রতাকে উপশম বা প্রশমিত করা (Mitigate)।"
+  },
+  "obdurate": {
+    "word": "obdurate",
+    "meaningBn": "একগুঁয়ে, অনমনীয়, হৃদয়হীন, অবাধ্য",
+    "meaningEn": "Stubbornly refusing to change one\\",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Ob (অবাধ্য) + Durable (কঠিন): যার মনোভাব ভাঙা যায় না, এমন একগুঁয়ে ও অনমনীয় (Obdurate)।"
+  },
+  "ostentatious": {
+    "word": "ostentatious",
+    "meaningBn": "আড়ম্বরপূর্ণ, লোকদেখানো, প্রদর্শনকামী",
+    "meaningEn": "Characterized by vulgar or pretentious display; designed to impress or attract notice.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Stunt বা দেখনদারি দেখানো: অহংকারপূর্ণ প্রদর্শনকামী লোক (Ostentatious)।"
+  },
+  "paucity": {
+    "word": "paucity",
+    "meaningBn": "স্বল্পতা, অভাব, অপ্রতুলতা, ঘাটতি",
+    "meaningEn": "The presence of something only in small or insufficient quantities or amounts; scarcity.",
+    "partOfSpeech": "noun",
+    "mnemonic": "City (শহরে) বিশুদ্ধ বাতাসের অভাব বা অপ্রতুলতা (Paucity)।"
+  },
+  "perfunctory": {
+    "word": "perfunctory",
+    "meaningBn": "দায়সারাভাবে করা, আগ্রহহীন, গতানুগতিক",
+    "meaningEn": "Carried out with a minimum of effort or reflection; superficial.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Function পালন: দায় মেটানোর জন্য শুধুমাত্র নিয়ম রক্ষার খাতিরে কোনো কাজ দায়সারাভাবে করা (Perfunctory)।"
+  },
+  "pervasive": {
+    "word": "pervasive",
+    "meaningBn": "সর্বত্র বিস্তৃত, পরিব্যপ্ত, সর্বব্যাপী",
+    "meaningEn": "Spreading widely throughout an area or a group of people, especially an unwelcome influence.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Pervade থেকে Pervasive: সুবাস বা ক্ষতিকর বিষবাষ্পের মতো যা সর্বত্র ছড়িয়ে পড়ে।"
+  },
+  "placate": {
+    "word": "placate",
+    "meaningBn": "শান্ত করা, সন্তুষ্ট করা, ক্রোধ প্রশমন করা",
+    "meaningEn": "Make someone less angry or hostile; appease.",
+    "partOfSpeech": "verb",
+    "mnemonic": "Please + Calm: কাউকে আদর ও বিনয়ের সাথে শান্ত বা তুষ্ট করা (Placate)।"
+  },
+  "pragmatic": {
+    "word": "pragmatic",
+    "meaningBn": "বাস্তবধর্মী, বাস্তববাদী, প্রায়োগিক",
+    "meaningEn": "Dealing with things sensibly and realistically in a way that is based on practical rather than theoretical considerations.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Practical thinking: অলীক কল্পনায় না ভেসে বাস্তবতার নিরিখে সিদ্ধান্ত নেওয়া (Pragmatic)।"
+  },
+  "prevaricate": {
+    "word": "prevaricate",
+    "meaningBn": "সত্য গোপন করা, পাশ কাটিয়ে চলা, ছলচাতুরি করা",
+    "meaningEn": "Speak or act in an evasive way; equivocate.",
+    "partOfSpeech": "verb",
+    "mnemonic": "Pre + Fabricate: আগে থেকেই বানিয়ে ঘুরিয়ে-পেঁচিয়ে মিথ্যা বলা বা ছলচাতুরি করা (Prevaricate)।"
+  },
+  "prolific": {
+    "word": "prolific",
+    "meaningBn": "প্রচুর উৎপাদনশীল, সৃজনশীল, ফলপ্রসূ",
+    "meaningEn": "Producing much fruit, foliage, or many works of art, literature, or offspring.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Pro + Life: জীবনঘনিষ্ঠ প্রচুর সৃষ্টিশীল রচনা তৈরি করার সক্ষমতা (Prolific)।"
+  },
+  "recalcitrant": {
+    "word": "recalcitrant",
+    "meaningBn": "অবাধ্য, বিশৃঙ্খল, শাসনাতীত, একগুঁয়ে",
+    "meaningEn": "Having an obstinately uncooperative attitude toward authority or discipline.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "ক্যালকুলেশন বা সরকারি নিয়ম মানতে সম্পূর্ণ অস্বীকৃতি জানানো অবাধ্য দল (Recalcitrant)।"
+  },
+  "reticent": {
+    "word": "reticent",
+    "meaningBn": "স্বল্পভাষী, চাপা স্বভাবের, নীরব",
+    "meaningEn": "Not revealing one\\",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Reticent: কম কথা বলা ও কথা গোপন রাখা চাপা স্বভাবের মানুষ।"
+  },
+  "sycophant": {
+    "word": "sycophant",
+    "meaningBn": "চাটুকার, মোসাহেব, তোষামোদকারী",
+    "meaningEn": "A person who acts obsequiously toward someone important in order to gain advantage; a flatterer.",
+    "partOfSpeech": "noun",
+    "mnemonic": "Psycho + Elephant: নিজের স্বার্থে ক্ষমতার পেছনে অন্ধ তোষামোদ বা তৈলমর্দনকারী (Sycophant)।"
+  },
+  "taciturn": {
+    "word": "taciturn",
+    "meaningBn": "মৌনপ্রিয়, স্বল্পভাষী, গম্ভীর",
+    "meaningEn": "Reserved or uncommunicative in speech; saying little.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "ট্যাক্সি ড্রাইভার যখন পুরো পথ কোনো কথা না বলে মৌন ও গম্ভীর থাকে (Taciturn)।"
+  },
+  "tirade": {
+    "word": "tirade",
+    "meaningBn": "দীর্ঘ ও আক্রমণাত্মক নিন্দাসূচক বক্তব্য, তীব্র ভর্ৎসনা",
+    "meaningEn": "A long, angry speech of criticism or accusation.",
+    "partOfSpeech": "noun",
+    "mnemonic": "Tired of listening: রেগেমেগে এত বড় আক্রমণাত্মক ভাষণ দেওয়া যে শুনে মানুষ ক্লান্ত (Tirade)।"
+  },
+  "vacillate": {
+    "word": "vacillate",
+    "meaningBn": "দ্বিধাদ্বন্দ্ব করা, সিদ্ধান্তহীনতায় ভোগা, দোলাচলে থাকা",
+    "meaningEn": "Alternate or waver between different opinions or actions; be indecisive.",
+    "partOfSpeech": "verb",
+    "mnemonic": "Oscillate (ঘড়ির পেন্ডুলামের মতো দোলা) থেকে Vacillate: চূড়ান্ত সিদ্ধান্ত নিতে না পেরে দোলাচলে থাকা।"
+  },
+  "venerate": {
+    "word": "venerate",
+    "meaningBn": "গভীর শ্রদ্ধা করা, পূজা করা, ভক্তি করা",
+    "meaningEn": "Regard with great respect; revere.",
+    "partOfSpeech": "verb",
+    "mnemonic": "Very respectful: হৃদয়ের গভীরতম স্থান থেকে শ্রদ্ধা ও ভক্তি নিবেদন করা (Venerate)।"
+  },
+  "vituperative": {
+    "word": "vituperative",
+    "meaningBn": "তীব্র আক্রমণাত্মক, গালমন্দপূর্ণ, নিন্দামূলক",
+    "meaningEn": "Bitter, abusive, and harshly critical in speech or writing.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Viper (বিষধর সাপ) যেমন বিষাক্ত দংশন করে, তেমনই বিষাক্ত ও আক্রমণাত্মক গালমন্দ (Vituperative)।"
+  },
+  "zealot": {
+    "word": "zealot",
+    "meaningBn": "ধর্মান্ধ, উগ্র সমর্থক, অন্ধবিশ্বাসী",
+    "meaningEn": "A person who is fanatical and uncompromising in pursuit of their religious, political, or other ideals.",
+    "partOfSpeech": "noun",
+    "mnemonic": "Zeal মানে প্রবল আগ্রহ -> অন্ধ ও উগ্র গোঁড়ামিতে লিপ্ত ব্যক্তিই Zealot।"
+  },
+  "apathy": {
+    "word": "apathy",
+    "meaningBn": "উদাসীনতা, অনীহা, সহমর্মিতাহীনতা",
+    "meaningEn": "Lack of interest, enthusiasm, or concern.",
+    "partOfSpeech": "noun",
+    "mnemonic": "A (না) + Pathy (অনুভূতি): কোনোপ্রকার অনুভূতি বা আগ্রহ না থাকা, অর্থাৎ উদাসীনতা (Apathy)।"
+  },
+  "cacophony": {
+    "word": "cacophony",
+    "meaningBn": "কর্কশ বা বেসুরো শব্দের তীব্র বিশৃঙ্খলা",
+    "meaningEn": "A harsh, discordant mixture of sounds.",
+    "partOfSpeech": "noun",
+    "mnemonic": "Caco (খারাপ) + Phony (শব্দ): কানের জন্য কষ্টদায়ক কর্কশ বিশৃঙ্খলা (Cacophony)।"
+  },
+  "diatribe": {
+    "word": "diatribe",
+    "meaningBn": "তীব্র ও তিক্ত আক্রমণাত্মক সমালোচনা বা গালাগালি",
+    "meaningEn": "A forceful and bitter verbal attack against someone or something.",
+    "partOfSpeech": "noun",
+    "mnemonic": "Tribe (গোত্র) নিয়ে একে অপরকে তীব্র ভাষায় আক্রমণ ও গালিগালাজ করা (Diatribe)।"
+  },
+  "abjure": {
+    "word": "abjure",
+    "meaningBn": "শপথপূর্বক পরিত্যাগ করা, অস্বীকার করা",
+    "meaningEn": "Solemnly renounce (a belief, cause, or claim).",
+    "partOfSpeech": "verb",
+    "mnemonic": "Jury (বিচারকদের) সামনে দাঁড়িয়ে অতীত অন্যায় শপথ করে পরিত্যাগ (Abjure) করা।"
+  },
+  "adulterate": {
+    "word": "adulterate",
+    "meaningBn": "ভেজাল মেশানো, অপদ্রব্য মিশিয়ে মানহীন করা",
+    "meaningEn": "Render (something) poorer in quality by adding another substance, typically an inferior one.",
+    "partOfSpeech": "verb",
+    "mnemonic": "Adult হওয়ার পর কিছু অসাধু ব্যবসায়ী খাঁটি পণ্যে ভেজাল (Adulterate) মেশায়।"
+  },
+  "aggrandize": {
+    "word": "aggrandize",
+    "meaningBn": "ক্ষমতা বা মর্যাদা বৃদ্ধি করা, বাড়িয়ে বলা",
+    "meaningEn": "Increase the power, status, or wealth of; enhance the reputation of someone beyond what is justified.",
+    "partOfSpeech": "verb",
+    "mnemonic": "Grand (বিশাল) করা: নিজের ক্ষমতা বা পদমর্যাদাকে বিশাল করে তোলা (Aggrandize)।"
+  },
+  "amalgamate": {
+    "word": "amalgamate",
+    "meaningBn": "একত্রিত করা, মিশ্রিত করা, সংমিশ্রণ ঘটানো",
+    "meaningEn": "Combine or unite to form one organization or structure.",
+    "partOfSpeech": "verb",
+    "mnemonic": "Gam (আঠা) দিয়ে একাধিক ভিন্ন উপাদানকে জোড়া দিয়ে এক করে নেওয়া (Amalgamate)।"
+  },
+  "antipathy": {
+    "word": "antipathy",
+    "meaningBn": "তীব্র বিদ্বেষ, তীব্র ঘৃণা, অনীহা",
+    "meaningEn": "A deep-seated feeling of dislike, aversion, or hostility.",
+    "partOfSpeech": "noun",
+    "mnemonic": "Anti (বিরুদ্ধে) + Pathy (অনুভূতি): কারো প্রতি মনে গভীর বিদ্বেষ বা ঘৃণা পুষে রাখা (Antipathy)।"
+  },
+  "approbation": {
+    "word": "approbation",
+    "meaningBn": "অনুমোদন, প্রশংসা, সাধুবাদ",
+    "meaningEn": "Approval or praise, especially formal or official sanction.",
+    "partOfSpeech": "noun",
+    "mnemonic": "Approve করা থেকে Approbation: আনুষ্ঠানিকভাবে প্রশংসা ও স্বীকৃতি প্রদান।"
+  },
+  "arduous": {
+    "word": "arduous",
+    "meaningBn": "কঠোর পরিশ্রমসাধ্য, দুরূহ, কষ্টকর",
+    "meaningEn": "Involving or requiring strenuous effort; difficult and tiring.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Hard for us: যা আমাদের জন্য অনেক কষ্টসাধ্য ও শ্রমসাধ্য (Arduous)।"
+  },
+  "ascetic": {
+    "word": "ascetic",
+    "meaningBn": "তপস্বী, কৃচ্ছ্রসাধনকারী, ভোগবিলাস বর্জনকারী",
+    "meaningEn": "Characterized by or suggesting the practice of severe self-discipline and abstention from all forms of indulgence.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "সাধু সন্ন্যাসীদের কঠোর ত্যাগী জীবনযাত্রা (Ascetic)।"
+  },
+  "austere": {
+    "word": "austere",
+    "meaningBn": "কঠোর, অনাড়ম্বর, অত্যন্ত সাদামাটা",
+    "meaningEn": "Severe or strict in manner, attitude, or appearance; having no comforts or luxuries.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Australia-র শুষ্ক বিরান অঞ্চলের মতো কঠোর ও অনাড়ম্বর জীবন (Austere)।"
+  },
+  "bolster": {
+    "word": "bolster",
+    "meaningBn": "জোরদার করা, সমর্থন দেওয়া, বলীয়ান করা",
+    "meaningEn": "Support or strengthen; prop up.",
+    "partOfSpeech": "verb",
+    "mnemonic": "কোলবালিশ (Bolster) যেমন পিঠকে হেলান দিয়ে সাপোর্ট বা জোরদার করে (Bolster)।"
+  },
+  "bombastic": {
+    "word": "bombastic",
+    "meaningBn": "বাগাড়ম্বরপূর্ণ, ফাঁপা আড়ম্বরযুক্ত, চটকদার কিন্তু অর্থহীন",
+    "meaningEn": "High-sounding but with little meaning; inflated or pompous.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "বোমার (Bomb) মতো বিশাল শব্দ কিন্তু বিস্ফোরণ শেষে ভেতরে কোনো সারবস্তু নেই (Bombastic)।"
+  },
+  "caustic": {
+    "word": "caustic",
+    "meaningBn": "তীব্র দগ্ধকারী, ব্যঙ্গাত্মক, তীব্র কটূক্তিমূলক",
+    "meaningEn": "Sarcastic in a scathing and bitter way; able to burn or corrode organic tissue by chemical action.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Caustic Soda যেমন চামড়া পুড়িয়ে দেয়, তেমনই তীব্র দহনকারী তীক্ষ্ণ কথা (Caustic)।"
+  },
+  "condone": {
+    "word": "condone",
+    "meaningBn": "উপেক্ষা করে ক্ষমা করা, প্রশ্রয় দেওয়া",
+    "meaningEn": "Accept and allow (behavior that is considered morally wrong or offensive) to continue.",
+    "partOfSpeech": "verb",
+    "mnemonic": "Continue On: অন্যায়কে দেখেও না দেখার ভান করে চালিয়ে যেতে দেওয়া বা প্রশ্রয় দেওয়া (Condone)।"
+  },
+  "craven": {
+    "word": "craven",
+    "meaningBn": "কাপুরুষোচিত, ভীরু, চরম কাপুরুষ",
+    "meaningEn": "Contemptibly lacking in courage; cowardly.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Cry in fear: বিপদের মুখে লড়াই না করে ভয়ে কান্না করা কাপুরুষ (Craven)।"
+  },
+  "decorum": {
+    "word": "decorum",
+    "meaningBn": "শালীনতা, শিষ্টাচার, শোভন আচরণ",
+    "meaningEn": "Behavior in keeping with good taste and propriety; etiquette.",
+    "partOfSpeech": "noun",
+    "mnemonic": "Decoration of manners: ভালো ভদ্র আচরণের অলংকারই হলো Decorum।"
+  },
+  "delineate": {
+    "word": "delineate",
+    "meaningBn": "সুনির্দিষ্টভাবে বর্ণনা করা, রূপরেখা আঁকা",
+    "meaningEn": "Describe or portray (something) precisely; indicate the exact position of a boundary.",
+    "partOfSpeech": "verb",
+    "mnemonic": "Draw a Line: রেখা টেনে সুস্পষ্টভাবে চিহ্নিত ও বর্ণনা করা (Delineate)।"
+  },
+  "derision": {
+    "word": "derision",
+    "meaningBn": "উপহাস, ব্যঙ্গবিদ্রূপ, উপহাসপূর্ণ অবজ্ঞা",
+    "meaningEn": "Contemptuous ridicule or mockery.",
+    "partOfSpeech": "noun",
+    "mnemonic": "Ridicule করা থেকে Derision: কাউকে নিয়ে তাচ্ছিল্য বা খাটো করে হাসাহাসি করা।"
+  },
+  "desiccate": {
+    "word": "desiccate",
+    "meaningBn": "সম্পূর্ণ শুকিয়ে ফেলা, আর্দ্রতাহীন করা, প্রাণহীন করা",
+    "meaningEn": "Remove the moisture from (something, typically food, typically in order to preserve it); dry out completely.",
+    "partOfSpeech": "verb",
+    "mnemonic": "মরুভূমির খরতাপ যেমন সমস্ত রস শুষে নিয়ে কাঠখোট্টা করে ফেলে (Desiccate)।"
+  },
+  "disabuse": {
+    "word": "disabuse",
+    "meaningBn": "ভ্রান্ত ধারণা দূর করা, মোহমুক্তি ঘটানো",
+    "meaningEn": "Persuade (someone) that an idea or belief is mistaken.",
+    "partOfSpeech": "verb",
+    "mnemonic": "Dis + Abuse: কোনো ভুল বিশ্বাস বা ভ্রান্তি দূর করে প্রকৃত সত্য বুঝিয়ে দেওয়া (Disabuse)।"
+  },
+  "dissonance": {
+    "word": "dissonance",
+    "meaningBn": "অনৈক্য, মতবিরোধ, বেসুরো ভাব, অমিল",
+    "meaningEn": "A tension or clash resulting from the combination of two disharmonious or unsuitable elements.",
+    "partOfSpeech": "noun",
+    "mnemonic": "Discordant sound: একাধিক বিষয়ের মাঝে সুরের অমিল বা গভীর মতপার্থক্য (Dissonance)।"
+  },
+  "dogmatic": {
+    "word": "dogmatic",
+    "meaningBn": "গোঁড়া, মতান্ধ, স্বৈরাচারী মতামতসম্পন্ন",
+    "meaningEn": "Inclined to lay down principles as incontrovertibly true, without consideration of evidence or the opinions of others.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Dogma মানে অন্ধবিশ্বাস -> নিজের যুক্তিহীন মতকে গোঁড়ামির সাথে আঁকড়ে থাকা (Dogmatic)।"
+  },
+  "elicit": {
+    "word": "elicit",
+    "meaningBn": "তথ্য বা প্রতিক্রিয়া বের করে আনা, প্রকাশ করানো",
+    "meaningEn": "Evoke or draw out (a response, answer, or fact) from someone in reaction to one\\",
+    "partOfSpeech": "verb",
+    "mnemonic": "কৌশলী প্রশ্নের মাধ্যমে মনের ভেতরের লুকানো সত্য বাইরে বের করে আনা (Elicit)।"
+  },
+  "embellish": {
+    "word": "embellish",
+    "meaningBn": "অলংকৃত করা, সজ্জিত করা, বাড়িয়ে বলা",
+    "meaningEn": "Make (something) more attractive by the addition of decorative details or features; exaggerate.",
+    "partOfSpeech": "verb",
+    "mnemonic": "Bell বা অলংকার দিয়ে কোনো কিছুকে চোখধাঁধানোভাবে সাজানো (Embellish)।"
+  },
+  "empirical": {
+    "word": "empirical",
+    "meaningBn": "অভিজ্ঞতালব্ধ, পর্যবেক্ষণমূলক, বাস্তব প্রমাণভিত্তিক",
+    "meaningEn": "Based on, concerned with, or verifiable by observation or experience rather than theory or pure logic.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Empire-র বাস্তব পরিস্থিতি: খাতাকলমের অলীক থিওরি না দেখে মাঠে গিয়ে বাস্তব তথ্য সংগ্রহ করা (Empirical)।"
+  },
+  "emulate": {
+    "word": "emulate",
+    "meaningBn": "অনুকরণ করা, সমকক্ষ হওয়ার চেষ্টা করা",
+    "meaningEn": "Match or surpass (a person or achievement), typically by imitation.",
+    "partOfSpeech": "verb",
+    "mnemonic": "কাউকে রোল মডেল বানিয়ে তার গুণাবলি নিজের জীবনে অনুকরণ করা (Emulate)।"
+  },
+  "enigma": {
+    "word": "enigma",
+    "meaningBn": "ধাঁধা, রহস্যময় ব্যক্তি বা বস্তু",
+    "meaningEn": "A person or thing that is mysterious, puzzling, or difficult to understand.",
+    "partOfSpeech": "noun",
+    "mnemonic": "যা সমাধান করা অত্যন্ত দুরূহ এবং যার ভেতরে গভীর রহস্য লুকানো (Enigma)।"
+  },
+  "exculpate": {
+    "word": "exculpate",
+    "meaningBn": "অভিযোগ বা দোষ থেকে মুক্ত করা, নির্দোষ প্রমাণ করা",
+    "meaningEn": "Show or declare that (someone) is not guilty of wrongdoing.",
+    "partOfSpeech": "verb",
+    "mnemonic": "Culpable মানে অপরাধী -> Ex + Culpate মানে অপরাধ বা দায় থেকে সম্পূর্ণরূপে খালাস দেওয়া।"
+  },
+  "frugal": {
+    "word": "frugal",
+    "meaningBn": "মিতব্যয়ী, হিসেবী, সাশ্রয়ী",
+    "meaningEn": "Sparing or economical with regard to money or food; simple and plain and costing little.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "ফলমূল (Fruit) খেয়ে যারা পরিমিত ও হিসেবী জীবনযাপন করে অপচয় এড়ায় (Frugal)।"
+  },
+  "gullible": {
+    "word": "gullible",
+    "meaningBn": "সহজেই প্রতারিত হয় এমন, অতিবিশ্বাসী, হাবাগোবা",
+    "meaningEn": "Easily persuaded to believe something; credulous.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "যে কারো কথাই চোখ বন্ধ করে গিলে ফেলে এবং প্রতারিত হয় (Gullible)।"
+  },
+  "hyperbole": {
+    "word": "hyperbole",
+    "meaningBn": "অত্যুক্তি, অতিরঞ্জন, বাড়িয়ে বলা অলংকার",
+    "meaningEn": "Exaggerated statements or claims not meant to be taken literally.",
+    "partOfSpeech": "noun",
+    "mnemonic": "Hyper + Bole: স্বাভাবিকের চেয়ে বহুগুণ বাড়িয়ে বা ফুলিয়ে-ফাঁপিয়ে বলা (Hyperbole)।"
+  },
+  "immutable": {
+    "word": "immutable",
+    "meaningBn": "অপরিবর্তনীয়, স্থায়ী, চিরন্তন",
+    "meaningEn": "Unchanging over time or unable to be changed.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Mutate (পরিবর্তন হওয়া) এর উল্টো হলো Immutable: যা কখনো পরিবর্তিত হয় না।"
+  },
+  "implacable": {
+    "word": "implacable",
+    "meaningBn": "শান্ত বা তুষ্ট করা যায় না এমন, অপ্রতিরোধ্য, কঠোর",
+    "meaningEn": "Unable to be placated, appeased, or mollified; relentless.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "In + Placate: যাকে কোনোভাবেই খুশি বা শান্ত করা যায় না (Implacable)।"
+  },
+  "inchoate": {
+    "word": "inchoate",
+    "meaningBn": "প্রাথমিক পর্যায়ের, অপরিণত, মাত্র শুরু হওয়া",
+    "meaningEn": "Just begun and so not fully formed or developed; rudimentary.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Inchoate: প্রাথমিক সূচনা যা এখনো সুসংগঠিত রূপ নেয়নি।"
+  },
+  "ingenuous": {
+    "word": "ingenuous",
+    "meaningBn": "সরল, অকপট, ছলহীন, নিষ্পাপ",
+    "meaningEn": "Innocent and unsuspecting; frank and candid.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Genuine মানুষ সবসময় সৎ ও অকপট (Ingenuous) হয়।"
+  },
+  "laconic": {
+    "word": "laconic",
+    "meaningBn": "অল্পভাষী, মিতবাক, সংক্ষিপ্ত ও সারগর্ভ",
+    "meaningEn": "Using very few words; concise to the point of seeming rude or mysterious.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Lack of words: কথায় বাহুল্য না রেখে অত্যন্ত সংক্ষেপে সারবত্তা তুলে ধরা (Laconic)।"
+  },
+  "malleable": {
+    "word": "malleable",
+    "meaningBn": "নমনীয়, ধাতু পিটিয়ে পাতলা করা যায় এমন, সহজে প্রভাবিত",
+    "meaningEn": "Able to be hammered or pressed permanently out of shape without breaking or cracking; easily influenced.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Mallet (হাতুড়ি) দিয়ে আঘাত করে যার আকার পরিবর্তন করা যায় (Malleable)।"
+  },
+  "maverick": {
+    "word": "maverick",
+    "meaningBn": "স্বতন্ত্র চিন্তাবিদ, প্রথাভাঙা ব্যক্তি, দলীয় শৃঙ্খলামুক্ত",
+    "meaningEn": "An unorthodox or independent-minded person who refuses to conform to prevailing norms.",
+    "partOfSpeech": "noun",
+    "mnemonic": "দলের বাধা নিয়ম না মেনে নিজস্ব স্বাধীন মতাদর্শে চলা নির্ভীক ব্যক্তি (Maverick)।"
+  },
+  "mollify": {
+    "word": "mollify",
+    "meaningBn": "শান্ত করা, কোমল করা, ক্রোধ বা ক্ষোভ প্রশমন করা",
+    "meaningEn": "Appease the anger or anxiety of (someone); soften.",
+    "partOfSpeech": "verb",
+    "mnemonic": "Mollify: ক্ষুব্ধ মানুষের মন গলিয়ে নরম ও শান্ত করা।"
+  },
+  "mundane": {
+    "word": "mundane",
+    "meaningBn": "পার্থিব, গতানুগতিক, জাগতিক, সাধারণ",
+    "meaningEn": "Lacking interest or excitement; dull; of this earthly world rather than a heavenly or spiritual one.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Monday morning routine: সোমবার সকালে নিত্যদিনের গতানুগতিক ও একঘেয়ে কাজে ফেরা (Mundane)।"
+  },
+  "neophyte": {
+    "word": "neophyte",
+    "meaningBn": "নবীন, শিক্ষানবিস, দীক্ষার্থী",
+    "meaningEn": "A person who is new to a subject, skill, or belief; a novice.",
+    "partOfSpeech": "noun",
+    "mnemonic": "Neo (নতুন) + Phyte (উদ্ভিদ): নতুন চারাগাছের মতো নবীন শিক্ষানবিস (Neophyte)।"
+  },
+  "nadir": {
+    "word": "nadir",
+    "meaningBn": "সর্বনিম্ন বিন্দু, চরম পতনের সীমা",
+    "meaningEn": "The lowest point in the fortunes of a person or organization.",
+    "partOfSpeech": "noun",
+    "mnemonic": "Zenith (শীর্ষবিন্দু) এর উল্টো হলো Nadir (সর্বনিম্ন পতনের তলদেশ)।"
+  },
+  "pedantic": {
+    "word": "pedantic",
+    "meaningBn": "পাণ্ডিত্য প্রদর্শনকারী, অহেতুক ক্ষুদ্র নিয়মে খুঁতখুঁতে",
+    "meaningEn": "Excessively concerned with minor details, rules, or with displaying academic learning.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "পণ্ডিতি দেখানো: বইয়ের ক্ষুদ্রাতিক্ষুদ্র নিয়মে অযথা আটকে থেকে পাণ্ডিত্য ফলানো (Pedantic)।"
+  },
+  "penury": {
+    "word": "penury",
+    "meaningBn": "চরম দারিদ্র্য, নিঃস্ব অবস্থা, নিদারুণ অর্থকষ্ট",
+    "meaningEn": "Extreme poverty; destitution.",
+    "partOfSpeech": "noun",
+    "mnemonic": "যার কাছে একটি পেনিও (Penny) নেই, এমন নিঃস্ব চরম দারিদ্র্য (Penury)।"
+  },
+  "plethora": {
+    "word": "plethora",
+    "meaningBn": "আধিক্য, অতিরিক্ত প্রাচুর্য, মাত্রাতিরিক্ত পরিমাণ",
+    "meaningEn": "A large or excessive amount of (something); an overabundance.",
+    "partOfSpeech": "noun",
+    "mnemonic": "Plenty + Flora: প্রয়োজনের তুলনায় অতিরিক্ত প্রাচুর্য বা আধিক্য (Plethora)।"
+  },
+  "plummet": {
+    "word": "plummet",
+    "meaningBn": "খাড়াভাবে দ্রুত নিচে পড়ে যাওয়া, ধস নামা",
+    "meaningEn": "Fall or drop straight down at high speed; decrease rapidly.",
+    "partOfSpeech": "verb",
+    "mnemonic": "পাথর যেমন খাড়াভাবে ওপর থেকে নিচে আছড়ে পড়ে, তেমনই হুট করে ধস নামা (Plummet)।"
+  },
+  "salubrious": {
+    "word": "salubrious",
+    "meaningBn": "স্বাস্থ্যকর, হিতকর, রোগমুক্তিকর",
+    "meaningEn": "Health-giving; healthy; pleasant and not rundown.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "সকালে খোলা বাতাসে প্রাণভরে শ্বাস নিলে শরীর যেমন স্বাস্থ্যকর ও সতেজ থাকে (Salubrious)।"
+  },
+  "soporific": {
+    "word": "soporific",
+    "meaningBn": "ঘুমপাড়ানি, তন্দ্রা আনয়নকারী, একঘেয়ে",
+    "meaningEn": "Tending to induce drowsiness or sleep.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "একঘেয়ে সুরে পড়া শুনলে মানুষ যেমন স্বপ্নময় ঘুমের দেশে হারিয়ে যায় (Soporific)।"
+  },
+  "specious": {
+    "word": "specious",
+    "meaningBn": "বাহ্যত সত্য কিন্তু ভেতরে মিথ্যা, বিভ্রান্তিকর",
+    "meaningEn": "Superficially plausible, but actually wrong; misleading in appearance.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Suspicious স্পেশাল অফার: যা বাইরে দেখতে ভালো কিন্তু ভেতরে পুরোটাই ধাপ্পাবাজি (Specious)।"
+  },
+  "sporadic": {
+    "word": "sporadic",
+    "meaningBn": "বিক্ষিপ্ত, অনিয়মিত, বিচ্ছিন্নভাবে সংঘটিত",
+    "meaningEn": "Occurring at irregular intervals or only in a few places; scattered or isolated.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Spore (বীজের) মতো যা সর্বত্র একাধারে না ছড়িয়ে এখানে-সেখানে অনিয়মিতভাবে ঘটে (Sporadic)।"
+  },
+  "surfeit": {
+    "word": "surfeit",
+    "meaningBn": "অতিভোজন, অতিরিক্ত প্রাচুর্য, মাত্রাতিরিক্ত সেবন",
+    "meaningEn": "An excessive amount of something; cause someone to desire no more of something as a result of having consumed too much.",
+    "partOfSpeech": "noun",
+    "mnemonic": "Sure-Eat: প্রয়োজনের অতিরিক্ত নিশ্চিত খাওয়া, যার ফলে অস্বস্তি ও অরুচি দেখা দেয় (Surfeit)।"
+  },
+  "tenuous": {
+    "word": "tenuous",
+    "meaningBn": "খুব দুর্বল, পাতলা, ক্ষীণ, অনিশ্চিত",
+    "meaningEn": "Very weak, slight, or flimsy; slender.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "সুতার মতো অতি পাতলা ও দুর্বল ভিত্তি (Tenuous)।"
+  },
+  "torpor": {
+    "word": "torpor",
+    "meaningBn": "নিষ্ক্রিয়তা, আলস্য, অসাড়তা, স্থবিরতা",
+    "meaningEn": "A state of physical or mental inactivity; lethargy.",
+    "partOfSpeech": "noun",
+    "mnemonic": "শীতকালে সাপের মতো অসাড় ও নিস্তেজ হয়ে অলস শুয়ে থাকা (Torpor)।"
+  },
+  "tractable": {
+    "word": "tractable",
+    "meaningBn": "সহজে নিয়ন্ত্রণযোগ্য, বাধ্য, বশংবদ",
+    "meaningEn": "Easy to control or influence; malleable.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "Tractor দিয়ে জমি যেভাবে সহজেই বাগে এনে চাষ করা যায়, তেমনই বাধ্য ও বশংবদ (Tractable)।"
+  },
+  "wary": {
+    "word": "wary",
+    "meaningBn": "সতর্ক, সাবধানী, বিপদাশঙ্কাপূর্ণ",
+    "meaningEn": "Feeling or showing caution about possible dangers or problems.",
+    "partOfSpeech": "adjective",
+    "mnemonic": "War (যুদ্ধের) ময়দানে সৈন্য যেমন চারদিকে চোখ রেখে সতর্ক থাকে (Wary)।"
+  }
+}

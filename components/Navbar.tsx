@@ -50,10 +50,12 @@ export default function Navbar() {
 
   // Primary navigation – most used features
 const primaryNavLinks = [
-  { key: 'home', label: 'হোম', href: '/', icon: <HomeOutlined /> },
-  { key: 'daily-capsule', label: 'দৈনিক ক্যাপসুল', href: '/daily-capsule', icon: <FireOutlined /> },
+  { key: 'dashboard', label: 'ড্যাশবোর্ড', href: '/dashboard', icon: <HomeOutlined /> },
+  { key: 'hf-333', label: 'ব্যারন ৩৩৩', href: '/high-frequency-333', icon: <FireOutlined /> },
+  { key: 'translation', label: 'অনুবাদ স্টুডিও', href: '/translation', icon: <ReadOutlined /> },
+  { key: 'daily-capsule', label: 'দৈনিক ক্যাপসুল', href: '/daily-capsule', icon: <ThunderboltOutlined /> },
   { key: 'question-bank', label: 'স্মার্ট প্রশ্নব্যাংক', href: '/question-bank', icon: <BookOutlined /> },
-  { key: 'battle', label: '১‑vs‑১ কুইজ ডুয়েল', href: '/battle', icon: <ThunderboltOutlined /> },
+  { key: 'battle', label: '১‑vs‑১ কুইজ ডুয়েল', href: '/battle', icon: <ThunderboltFilled /> },
   { key: 'planner', label: 'স্টাডি প্ল্যানার', href: '/planner', icon: <CalendarOutlined /> },
 ];
 
@@ -86,6 +88,21 @@ const navLinks = [...primaryNavLinks, ...secondaryNavLinks];
       disabled: true,
     },
     { type: 'divider' },
+    {
+      key: 'dashboard',
+      label: <Link href="/dashboard">স্টুডেন্ট ড্যাশবোর্ড (Dashboard)</Link>,
+      icon: <HomeOutlined />,
+    },
+    {
+      key: 'hf-333',
+      label: <Link href="/high-frequency-333">ব্যারন ৩৩৩ ভোকাবুলারি (Barron's 333)</Link>,
+      icon: <FireOutlined />,
+    },
+    {
+      key: 'translation',
+      label: <Link href="/translation">অনুবাদ প্র্যাকটিস স্টুডিও (Translation Studio)</Link>,
+      icon: <ReadOutlined />,
+    },
     {
       key: 'profile',
       label: <Link href="/profile">আমার প্রোফাইল (My Profile)</Link>,
