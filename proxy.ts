@@ -8,7 +8,7 @@ const PROTECTED_PREFIXES = [
   '/profile',
 ];
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // 1. API CORS handling
@@ -18,7 +18,7 @@ export function middleware(request: NextRequest) {
       response.headers.set('Access-Control-Allow-Origin', '*');
       response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
       response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
-      response.headers.set('Access-Control-Max-Age', '86400');
+      response.headers.set('Access-Control-Allow-Max-Age', '86400');
       return response;
     }
 

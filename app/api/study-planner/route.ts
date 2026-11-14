@@ -98,10 +98,7 @@ export async function GET(req: NextRequest) {
       });
     }
 
-    // Fetch user profile for stats
-    const profile = await UserProfile.findOne({ email: userEmail }).lean();
-
-    // Fetch past 7 days history for weekly heatmap
+    // Fetch user profile and past 7 days history in parallel
     const pastDays: string[] = [];
     for (let i = 6; i >= 0; i--) {
       const d = new Date();
@@ -109,10 +106,13 @@ export async function GET(req: NextRequest) {
       pastDays.push(d.toISOString().split('T')[0]);
     }
 
-    const pastRoutines = await StudyRoutine.find({
-      userEmail,
-      date: { $in: pastDays },
-    }).lean();
+    const [profile, pastRoutines] = await Promise.all([
+      UserProfile.findOne({ email: userEmail }).lean(),
+      StudyRoutine.find({
+        userEmail,
+        date: { $in: pastDays },
+      }).lean(),
+    ]);
 
     const historyMap = new Map<string, any>();
     pastRoutines.forEach((r) => historyMap.set(r.date, r));

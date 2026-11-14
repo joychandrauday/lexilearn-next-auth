@@ -51,14 +51,19 @@ export async function GET(req: NextRequest) {
       query.$or = [{ status: 'approved' }, { status: { $exists: false } }];
     }
 
-    // Fetch candidate posts from database pool
-    const rawPosts = await FeedPost.find(query)
+    // Phase 1: fetch only the fields needed for ranking. Heavy fields such as
+    // content/vocabData/mcqData are deliberately excluded so we don't transfer
+    // the whole feed (hundreds of KB) just to rank it.
+    const rankFields =
+      'isPinned tags category createdAt likes bookmarks viewsCount type';
+    const candidates = await FeedPost.find(query)
+      .select(rankFields)
       .sort({ isPinned: -1, createdAt: -1 })
       .limit(150)
       .lean();
 
     // Rank posts by interest score + preference shuffle jitter
-    let scoredPosts = rawPosts.map((post: any) => {
+    const scoredPosts = candidates.map((post: any) => {
       let score = 0;
       if (post.isPinned) score += 5000;
 
@@ -88,24 +93,41 @@ export async function GET(req: NextRequest) {
       // Engagement factor
       score += (post.likes || 0) * 1.5 + (post.bookmarks || 0) * 2 + (post.viewsCount || 0) * 0.05;
 
-      return {
-        ...post,
-        _score: score,
-        isLiked: userEmail ? post.likedBy?.includes(userEmail) : false,
-        isBookmarked: userEmail ? post.bookmarkedBy?.includes(userEmail) : false,
-      };
+      return { id: String(post._id), score };
     });
 
-    scoredPosts.sort((a, b) => b._score - a._score);
+    scoredPosts.sort((a, b) => b.score - a.score);
 
-    const paginated = scoredPosts.slice(skip, skip + limit);
+    const total = scoredPosts.length;
+    const pageEntries = scoredPosts.slice(skip, skip + limit);
+    const pageIds = pageEntries.map((entry) => entry.id);
+    const scoreById = new Map(pageEntries.map((entry) => [entry.id, entry.score]));
+
+    // Phase 2: fetch full documents only for the current page.
+    const pagePosts = pageIds.length
+      ? await FeedPost.find({ _id: { $in: pageIds } }).lean()
+      : [];
+    const postById = new Map(pagePosts.map((post: any) => [String(post._id), post]));
+
+    const paginated = pageIds
+      .map((id) => {
+        const post: any = postById.get(id);
+        if (!post) return null;
+        return {
+          ...post,
+          _score: scoreById.get(id),
+          isLiked: userEmail ? post.likedBy?.includes(userEmail) : false,
+          isBookmarked: userEmail ? post.bookmarkedBy?.includes(userEmail) : false,
+        };
+      })
+      .filter(Boolean);
 
     return NextResponse.json({
       success: true,
       page,
       limit,
-      total: scoredPosts.length,
-      hasMore: skip + limit < scoredPosts.length,
+      total,
+      hasMore: skip + limit < total,
       posts: paginated,
     });
   } catch (error: any) {
