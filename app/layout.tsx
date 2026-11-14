@@ -140,8 +140,6 @@ export const hindSiliguri = Hind_Siliguri({
   display: 'swap',
 });
 
-import FirebaseInit from './firebaseInit';
-
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="bn" className={hindSiliguri.variable}>
@@ -153,7 +151,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body className="bg-gray-50 text-gray-900 min-h-screen flex flex-col font-sans">
         <Providers>
-          <FirebaseInit />
           <PwaRegister />
           <Navbar />
           <main className="flex-1 pb-20 md:pb-6">{children}</main>

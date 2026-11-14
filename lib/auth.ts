@@ -131,6 +131,25 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
   },
 
+  logger: {
+    error(error: any) {
+      try {
+        const fs = require('node:fs');
+        fs.appendFileSync(
+          '/tmp/nextauth-err.log',
+          `[${new Date().toISOString()}] ${error?.name}: ${error?.message}\n${error?.stack || ''}\ncause: ${error?.cause ? (error.cause.stack || JSON.stringify(error.cause)) : 'none'}\n\n`,
+        );
+      } catch {}
+      console.error('❌ Auth Error:', error);
+    },
+    warn(code: any) {
+      console.warn(code);
+    },
+    debug(code: any) {
+      if (process.env.NODE_ENV === 'development') console.debug(code);
+    },
+  },
+
   pages: {
     signIn: "/login",
     error: "/auth/error",

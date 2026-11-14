@@ -13,7 +13,6 @@
     "antd": "^5.28.0",
     "axios": "^1.13.2",
     "dayjs": "^1.11.19",
-    "firebase": "^13.2.0",
     "framer-motion": "^12.23.24",
     "lucide-react": "^0.553.0",
     "mongoose": "^8.6.0",
