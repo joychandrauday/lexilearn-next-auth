@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { connectDb } from '@/lib/db';
 import UserProfile from '@/lib/models/UserProfile';
 import SubscriberLead from '@/lib/models/SubscriberLead';
+import { signMobileToken } from '@/lib/jwt';
 
 export async function POST(req: Request) {
   try {
@@ -59,7 +60,12 @@ export async function POST(req: Request) {
       { upsert: true }
     );
 
-    const accessToken = `owl_mob_${sub || cleanEmail}_${Date.now()}`;
+    const accessToken = await signMobileToken({
+      id: userProfile._id.toString(),
+      email: cleanEmail,
+      name: fullName,
+      role: userProfile.role || 'STUDENT',
+    });
 
     return NextResponse.json({
       accessToken,
