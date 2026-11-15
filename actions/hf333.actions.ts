@@ -129,8 +129,9 @@ export async function getOrStartSession(batchSize: number = 7): Promise<{ succes
     }
 
     // Shuffle unseen words
+    const safeBatchSize = Math.max(1, Math.min(Number(batchSize) || 7, 50));
     const shuffled = [...unseenWords].sort(() => Math.random() - 0.5);
-    const chosenSlice = shuffled.slice(0, Math.min(batchSize, shuffled.length));
+    const chosenSlice = shuffled.slice(0, Math.min(safeBatchSize, shuffled.length));
     const chosenIds = chosenSlice.map((w: any) => w._id);
 
     const newSession = await LearningSession.create({
@@ -369,5 +370,129 @@ export async function getMasteredWordsList(search: string = '', page: number = 1
   } catch (err) {
     console.error('getMasteredWordsList error:', err);
     return { words: [], total: 0 };
+  }
+}
+
+export interface UserBatchHistoryItem {
+  sessionId: string;
+  batchNumber: number;
+  completedAt: string;
+  batchSize: number;
+  words: SerializedVocabWord[];
+}
+
+export interface UserBatchHistoryResponse {
+  success: boolean;
+  userEmail?: string;
+  batches: UserBatchHistoryItem[];
+  totalMasteredWords: number;
+  totalBatches: number;
+  error?: string;
+}
+
+export async function getUserBatchHistory(deckSlug: string = 'barron-333'): Promise<UserBatchHistoryResponse> {
+  try {
+    const session = await auth();
+    if (!session?.user?.email) {
+      return {
+        success: false,
+        error: 'অনুগ্রহ করে প্রথমে সাইন ইন করুন',
+        batches: [],
+        totalMasteredWords: 0,
+        totalBatches: 0,
+      };
+    }
+
+    await connectDb();
+    const userId = session.user.email.toLowerCase().trim();
+
+    // 1. Fetch completed sessions
+    const completedSessions = await LearningSession.find({
+      userId,
+      deckSlug,
+      status: 'COMPLETED',
+    })
+      .sort({ completedAt: 1 })
+      .lean();
+
+    // 2. Fetch all mastered word progress
+    const allMastered = await UserWordProgress.find({ userId, deckSlug }).lean();
+    const totalMasteredWords = allMastered.length;
+
+    // Set of session words
+    const sessionWordIdSet = new Set<string>();
+    completedSessions.forEach((s: any) => {
+      s.wordIds?.forEach((id: any) => sessionWordIdSet.add(id.toString()));
+    });
+
+    // Detect legacy mastered words not bound to any session
+    const legacyWordIds = allMastered
+      .filter((p: any) => !sessionWordIdSet.has(p.wordId.toString()))
+      .map((p: any) => p.wordId);
+
+    // Collect all word IDs needed
+    const allTargetWordIds = new Set<string>();
+    sessionWordIdSet.forEach((id) => allTargetWordIds.add(id));
+    legacyWordIds.forEach((id) => allTargetWordIds.add(id.toString()));
+
+    const vocabDocs = await VocabWord.find({
+      _id: { $in: Array.from(allTargetWordIds).map((id) => new mongoose.Types.ObjectId(id)) },
+    }).lean();
+
+    const vocabMap = new Map(vocabDocs.map((w: any) => [w._id.toString(), sanitizeWord(w)]));
+
+    const batches: UserBatchHistoryItem[] = [];
+
+    // Prepend legacy batch if exists
+    if (legacyWordIds.length > 0) {
+      const legacyWords = legacyWordIds
+        .map((id) => vocabMap.get(id.toString()))
+        .filter(Boolean) as SerializedVocabWord[];
+
+      batches.push({
+        sessionId: 'legacy-batch-1',
+        batchNumber: 1,
+        completedAt: allMastered[0]?.completedAt
+          ? new Date(allMastered[0].completedAt).toISOString()
+          : new Date().toISOString(),
+        batchSize: legacyWords.length,
+        words: legacyWords,
+      });
+    }
+
+    // Append completed sessions with sequential batch numbers
+    completedSessions.forEach((s: any, idx: number) => {
+      const words = (s.wordIds || [])
+        .map((id: any) => vocabMap.get(id.toString()))
+        .filter(Boolean) as SerializedVocabWord[];
+
+      batches.push({
+        sessionId: s._id.toString(),
+        batchNumber: batches.length + 1,
+        completedAt: s.completedAt ? new Date(s.completedAt).toISOString() : new Date().toISOString(),
+        batchSize: words.length,
+        words,
+      });
+    });
+
+    // Reverse to show most recent batch first
+    batches.reverse();
+
+    return {
+      success: true,
+      userEmail: userId,
+      batches,
+      totalMasteredWords,
+      totalBatches: batches.length,
+    };
+  } catch (err: any) {
+    console.error('getUserBatchHistory error:', err);
+    return {
+      success: false,
+      error: err.message || 'ব্যাচ হিস্টোরি লোড করতে ব্যর্থ হয়েছে',
+      batches: [],
+      totalMasteredWords: 0,
+      totalBatches: 0,
+    };
   }
 }

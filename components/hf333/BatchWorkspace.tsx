@@ -42,6 +42,34 @@ export default function BatchWorkspace({
   });
 
   const currentWord = words[currentIndex];
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [touchStartY, setTouchStartY] = useState<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX);
+    setTouchStartY(e.touches[0].clientY);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null || touchStartY === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const touchEndY = e.changedTouches[0].clientY;
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+
+    // Minimum swipe threshold 50px, horizontal > vertical to prevent scroll collision
+    if (Math.abs(deltaX) > 50 && Math.abs(deltaX) > Math.abs(deltaY)) {
+      if (deltaX < 0) {
+        // Swiped Left -> Next Card
+        handleNext();
+      } else {
+        // Swiped Right -> Previous Card
+        handlePrev();
+      }
+    }
+    setTouchStartX(null);
+    setTouchStartY(null);
+  };
 
   // Mark word as flipped locally and trigger debounced server action
   const handleFlipToggle = useCallback(() => {
@@ -144,8 +172,12 @@ export default function BatchWorkspace({
         </div>
       </div>
 
-      {/* 3D Flip Card */}
-      <div className="my-6">
+      {/* 3D Flip Card with Touch Swipe Handlers */}
+      <div
+        className="my-6 touch-pan-y"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         <FlipCard
           word={currentWord}
           isFlipped={isFlipped}
@@ -162,6 +194,7 @@ export default function BatchWorkspace({
             onClick={handlePrev}
             icon={<LeftOutlined />}
             className="rounded-xl font-bold"
+            title="পূর্ববর্তী শব্দ (অথবা ডানে সোয়াইপ করুন)"
           >
             পূর্ববর্তী
           </Button>
@@ -181,6 +214,7 @@ export default function BatchWorkspace({
             onClick={handleNext}
             icon={<RightOutlined />}
             className="rounded-xl font-bold"
+            title="পরবর্তী শব্দ (অথবা বামে সোয়াইপ করুন)"
           >
             পরবর্তী
           </Button>
@@ -198,11 +232,14 @@ export default function BatchWorkspace({
         />
       </div>
 
-      {/* Keyboard Shortcuts Helper */}
-      <div className="text-center text-xs text-gray-400 mt-4 flex items-center justify-center gap-4">
+      {/* Keyboard Shortcuts & Swipe Gestures Helper */}
+      <div className="text-center text-xs text-gray-400 mt-4 flex items-center justify-center flex-wrap gap-3">
         <span><kbd className="px-1.5 py-0.5 bg-gray-100 border border-gray-200 rounded text-gray-600 font-mono">Space</kbd> ফ্লিপ</span>
         <span><kbd className="px-1.5 py-0.5 bg-gray-100 border border-gray-200 rounded text-gray-600 font-mono">←</kbd> পূর্ববর্তী</span>
         <span><kbd className="px-1.5 py-0.5 bg-gray-100 border border-gray-200 rounded text-gray-600 font-mono">→</kbd> পরবর্তী</span>
+        <span className="text-emerald-700 font-semibold inline-flex items-center gap-1 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200/60">
+          📱 👈 বামে সোয়াইপে নেক্সট | ডানে সোয়াইপে প্রিভিয়াস 👉
+        </span>
       </div>
 
       {/* Celebration Modal */}

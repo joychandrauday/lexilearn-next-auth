@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Button, Card, Radio } from 'antd';
-import { FireFilled, RocketOutlined, TrophyOutlined, CheckCircleFilled } from '@ant-design/icons';
+import React, { useState, useEffect } from 'react';
+import { Button, Card, InputNumber } from 'antd';
+import { FireFilled, RocketOutlined, TrophyOutlined, CheckCircleFilled, EditOutlined } from '@ant-design/icons';
 
 interface BatchStarterCardProps {
   totalWords: number;
@@ -12,6 +12,8 @@ interface BatchStarterCardProps {
   loading: boolean;
 }
 
+const PRESET_BATCHES = [5, 7, 10, 15];
+
 export default function BatchStarterCard({
   totalWords,
   masteredCount,
@@ -19,8 +21,45 @@ export default function BatchStarterCard({
   onStart,
   loading,
 }: BatchStarterCardProps) {
-  const [selectedBatch, setSelectedBatch] = useState<number>(7);
+  const [selectedBatch, setSelectedBatch] = useState<number>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('prepowl_hf333_batch_size');
+      if (saved && !isNaN(Number(saved))) return Number(saved);
+    }
+    return 7;
+  });
+
+  const [isCustomMode, setIsCustomMode] = useState(false);
+  const [customValue, setCustomValue] = useState<number>(selectedBatch);
+
+  useEffect(() => {
+    if (!PRESET_BATCHES.includes(selectedBatch)) {
+      setIsCustomMode(true);
+      setCustomValue(selectedBatch);
+    }
+  }, [selectedBatch]);
+
+  const handleSelectPreset = (size: number) => {
+    setSelectedBatch(size);
+    setIsCustomMode(false);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('prepowl_hf333_batch_size', String(size));
+    }
+  };
+
+  const handleApplyCustom = (val: number | null) => {
+    if (val && val > 0) {
+      const clamped = Math.min(Math.max(val, 1), Math.max(remainingCount, 1));
+      setCustomValue(clamped);
+      setSelectedBatch(clamped);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('prepowl_hf333_batch_size', String(clamped));
+      }
+    }
+  };
+
   const progressPercent = totalWords > 0 ? Math.round((masteredCount / totalWords) * 100) : 0;
+  const effectiveBatch = isCustomMode ? customValue : selectedBatch;
 
   return (
     <div className="max-w-2xl mx-auto py-8 px-4">
@@ -56,28 +95,67 @@ export default function BatchStarterCard({
           </div>
         </div>
 
-        {/* Batch Size Selector */}
+        {/* Batch Size Preference Selector */}
         <div className="my-6">
-          <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-3">
-            নতুন সেশনের ব্যাচ সাইজ নির্বাচন করুন
-          </label>
-          <div className="flex justify-center gap-3">
-            {[5, 7, 10].map((size) => (
+          <div className="flex items-center justify-between mb-3 px-2">
+            <label className="text-xs font-bold uppercase tracking-wider text-gray-500">
+              আপনার পছন্দের ব্যাচ সাইজ নির্বাচন করুন
+            </label>
+            <span className="text-xs font-bold text-emerald-700">
+              {effectiveBatch}টি শব্দ / ব্যাচ
+            </span>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
+            {PRESET_BATCHES.map((size) => (
               <button
                 key={size}
                 type="button"
-                onClick={() => setSelectedBatch(size)}
-                className={`flex-1 max-w-[110px] py-3 px-4 rounded-2xl border-2 font-bold text-sm transition-all duration-200 ${
-                  selectedBatch === size
+                onClick={() => handleSelectPreset(size)}
+                className={`flex-1 min-w-[70px] max-w-[100px] py-3 px-3 rounded-2xl border-2 font-bold text-sm transition-all duration-200 ${
+                  !isCustomMode && selectedBatch === size
                     ? 'border-emerald-500 bg-emerald-50 text-emerald-800 shadow-sm scale-105'
                     : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
                 }`}
               >
                 <div className="text-lg font-black">{size}</div>
-                <div className="text-[11px] font-normal text-gray-500">শব্দ/ব্যাচ</div>
+                <div className="text-[10px] font-normal text-gray-500">শব্দ/ব্যাচ</div>
               </button>
             ))}
+
+            <button
+              type="button"
+              onClick={() => setIsCustomMode(true)}
+              className={`flex-1 min-w-[90px] max-w-[120px] py-3 px-3 rounded-2xl border-2 font-bold text-sm transition-all duration-200 ${
+                isCustomMode
+                  ? 'border-emerald-500 bg-emerald-50 text-emerald-800 shadow-sm scale-105'
+                  : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
+              }`}
+            >
+              <div className="text-lg font-black flex items-center justify-center gap-1">
+                <EditOutlined className="text-sm" /> {isCustomMode ? customValue : 'কাস্টম'}
+              </div>
+              <div className="text-[10px] font-normal text-gray-500">ইচ্ছামত সংখ্যা</div>
+            </button>
           </div>
+
+          {/* Custom Batch Input Panel */}
+          {isCustomMode && (
+            <div className="mt-3 p-3 bg-emerald-50/70 border border-emerald-200/60 rounded-2xl flex items-center justify-center gap-3">
+              <span className="text-xs font-bold text-emerald-950">কতটি শব্দ আয়ত্ত করতে চান?</span>
+              <InputNumber
+                min={1}
+                max={Math.min(50, Math.max(remainingCount, 1))}
+                value={customValue}
+                onChange={handleApplyCustom}
+                className="w-24 font-black text-center rounded-xl"
+              />
+              <span className="text-[11px] text-gray-500 font-medium">
+                (১ থেকে {Math.min(50, remainingCount)} এর মধ্যে)
+              </span>
+            </div>
+          )}
+
           <p className="text-xs text-gray-400 mt-3">
             📌 এই ব্যাচটি সম্পন্ন না করা পর্যন্ত লক থাকবে এবং কোনো শব্দ মিস হবে না।
           </p>
@@ -87,11 +165,11 @@ export default function BatchStarterCard({
           type="primary"
           size="large"
           loading={loading}
-          onClick={() => onStart(selectedBatch)}
+          onClick={() => onStart(effectiveBatch)}
           icon={<RocketOutlined />}
           className="w-full sm:w-auto px-8 h-13 rounded-2xl bg-emerald-600 hover:!bg-emerald-700 font-bold text-base shadow-lg shadow-emerald-200"
         >
-          {selectedBatch}টি শব্দের নতুন ব্যাচ শুরু করুন
+          {effectiveBatch}টি শব্দের নতুন ব্যাচ শুরু করুন
         </Button>
       </Card>
     </div>
