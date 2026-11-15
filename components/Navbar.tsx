@@ -23,6 +23,7 @@ import {
   CrownOutlined,
   RobotOutlined,
   SafetyCertificateOutlined,
+  BankOutlined,
 } from '@ant-design/icons';
 import { siteConfig } from '../lib/config/site';
 
@@ -51,10 +52,11 @@ export default function Navbar() {
   // Primary navigation – most used features
 const primaryNavLinks = [
   { key: 'dashboard', label: 'ড্যাশবোর্ড', href: '/dashboard', icon: <HomeOutlined /> },
+  { key: 'focus-writing', label: 'ব্যাংক ফোকাস রাইটিং', href: '/focus-writing', icon: <BankOutlined /> },
   { key: 'hf-333', label: 'ব্যারন ৩৩৩', href: '/high-frequency-333', icon: <FireOutlined /> },
   { key: 'translation', label: 'অনুবাদ স্টুডিও', href: '/translation', icon: <ReadOutlined /> },
   { key: 'daily-capsule', label: 'দৈনিক ক্যাপসুল', href: '/daily-capsule', icon: <ThunderboltOutlined /> },
-  { key: 'question-bank', label: 'স্মার্ট প্রশ্নব্যাংক', href: '/question-bank', icon: <BookOutlined /> },
+  // { key: 'question-bank', label: 'স্মার্ট প্রশ্নব্যাংক', href: '/question-bank', icon: <BookOutlined /> },
   { key: 'battle', label: '১‑vs‑১ কুইজ ডুয়েল', href: '/battle', icon: <ThunderboltFilled /> },
   { key: 'planner', label: 'স্টাডি প্ল্যানার', href: '/planner', icon: <CalendarOutlined /> },
 ];
@@ -97,6 +99,11 @@ const navLinks = [...primaryNavLinks, ...secondaryNavLinks];
       key: 'hf-333',
       label: <Link href="/high-frequency-333">ব্যারন ৩৩৩ ভোকাবুলারি (Barron's 333)</Link>,
       icon: <FireOutlined />,
+    },
+    {
+      key: 'focus-writing',
+      label: <Link href="/focus-writing">ব্যাংক ফোকাস রাইটিং (Focus Writing Studio)</Link>,
+      icon: <BankOutlined />,
     },
     {
       key: 'translation',

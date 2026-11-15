@@ -1,0 +1,1400 @@
+[
+  {
+    "indicatorKey": "npl-total-defaulted-loans",
+    "titleEn": "Total Non-Performing Loans (NPLs) in Banking Sector",
+    "titleBn": "ব্যাংকিং খাতে মোট খেলাপি ঋণ ও অনুপাত",
+    "benchmarkData": "৳6.44 lakh crore (~35.7% of total loans)",
+    "benchmarkDataBn": "৬.৪৪ লাখ কোটি টাকা (মোট ঋণের ৩৫.৭%)",
+    "timeframe": "Late 2025 (BB DOS Report, Nov 2025)",
+    "timeframeBn": "২০২৫ এর শেষার্ধ (বাংলাদেশ ব্যাংক ডিওএস রিপোর্ট)",
+    "source": "Bangladesh Bank (Department of Off-Site Supervision)",
+    "sourceUrl": "https://www.bb.org.bd",
+    "category": "BANKING",
+    "examRelevance": "CRITICAL_HIGH",
+    "historicalTrajectory": "2023: ৳1.45T (9.0%) → Jun 2024: ৳2.11T (12.56%) → Dec 2024: ৳3.45T (20.2%) → late 2025: ৳6.44T (35.7%) post-forensic audit by Governor Ahsan H. Mansur.",
+    "historicalTrajectoryBn": "২০২৩: ১.৪৫ লাখ কোটি (৯.০%) → জুন ২০২৪: ২.১১ লাখ কোটি (১২.৫৬%) → ডিসেম্বর ২০২৪: ৩.৪৫ লাখ কোটি (২০.২%) → শেষ ২০২৫: ৬.৪৪ লাখ কোটি (৩৫.৭%) গভর্নর আহসান এইচ মনসুরের নিরীক্ষার পর।",
+    "examTip": "Bangladesh Bank examiners specifically look for this post-reform audited figure (35.7%). Citing older 9-10% suppressed figures results in mark deduction.",
+    "examTipBn": "বাংলাদেশ ব্যাংক এডি বা অফিসার পরীক্ষায় পুরোনো ৯% বা ১.৪৫ লাখ কোটির বদলে ২০২৪/২৫ সালের সংস্কার-পরবর্তী প্রকৃত খেলাপি ঋণ (৩৫.৭%) উল্লেখ করলে পরীক্ষকের কাছে গভীর সচেতনতা প্রমাণ হয়।",
+    "relatedTopicNumbers": [
+      3,
+      27,
+      30
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "BCS_WRITTEN",
+      "BANKING_REFORM"
+    ],
+    "isVerified": true,
+    "order": 1
+  },
+  {
+    "indicatorKey": "npl-socb-vs-pcb-disparity",
+    "titleEn": "State-Owned Commercial Banks (SOCBs) vs Private Banks NPL Share",
+    "titleBn": "রাষ্ট্রায়ত্ত বাণিজ্যিক ব্যাংক (SOCB) বনাম বেসরকারি ব্যাংকের খেলাপির হার",
+    "benchmarkData": "SOCBs: >42.5% vs PCBs: ~18.5% (Concentrated in scam-hit PCBs: 40%+)",
+    "benchmarkDataBn": "রাষ্ট্রায়ত্ত ব্যাংক: ৪২.৫% এর বেশি বনাম বেসরকারি ব্যাংক: ~১৮.৫%",
+    "timeframe": "FY 2024-25",
+    "timeframeBn": "অর্থবছর ২০২৪-২৫",
+    "source": "Bangladesh Bank Financial Stability Assessment",
+    "sourceUrl": "https://www.bb.org.bd",
+    "category": "BANKING",
+    "examRelevance": "CRITICAL_HIGH",
+    "historicalTrajectory": "Historically SOCBs held 25-28% defaults; post-2024 unmasking revealed severe capital erosion and over 40% toxic loans across major state lenders (Sonali, Janata, Agrani, Rupali).",
+    "historicalTrajectoryBn": "পূর্বে রাষ্ট্রায়ত্ত ব্যাংকে ২৫-২৮% দেখানো হতো; ২০২৪ পরবর্তী নিরীক্ষায় জনতা, অগ্রণী, সোনালী ও রূপালী ব্যাংকে খেলাপি ৪০% ছাড়ায়।",
+    "examTip": "Highlight the structural gap: Governance failure and directed lending make state banks chronic capital sinks requiring government recapitalization bonds.",
+    "examTipBn": "উত্তরে উল্লেখ করুন—রাজনৈতিক প্রভাব ও দুর্বল সুশাসনের কারণে রাষ্ট্রায়ত্ত ব্যাংকে মূলধন ঘাটতি তৈরি হয় যা বাজেটের জনগণের টাকায় পূরণ করতে হয়।",
+    "relatedTopicNumbers": [
+      3,
+      27
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "BANKING_REFORM"
+    ],
+    "isVerified": true,
+    "order": 2
+  },
+  {
+    "indicatorKey": "repo-policy-rate",
+    "titleEn": "Central Bank Policy Rate (Repo Rate)",
+    "titleBn": "বাংলাদেশ ব্যাংকের নীতি সুদহার (রেপো রেট)",
+    "benchmarkData": "10.00% (Aggressive Contractionary Stance)",
+    "benchmarkDataBn": "১০.০০% (মুদ্রাস্ফীতি নিয়ন্ত্রণে সংকোচনমূলক নীতি)",
+    "timeframe": "Late 2024 - 2025/2026",
+    "timeframeBn": "২০২৪ এর শেষ - ২০২৫/২০২৬",
+    "source": "Bangladesh Bank Monetary Policy Department",
+    "sourceUrl": "https://www.bb.org.bd",
+    "category": "BANKING",
+    "examRelevance": "CRITICAL_HIGH",
+    "historicalTrajectory": "2022: 5.75% → 2023: 7.75% → May 2024: 8.50% → Sep 2024: 9.00% → Oct 2024: 10.00% to combat stubborn 10%+ inflation.",
+    "historicalTrajectoryBn": "২০২২ সালে ৫.৭৫% থেকে দফায় দফায় বাড়িয়ে ২০২৪ সালের অক্টোবরে ১০.০০% এ উন্নীত করা হয় উচ্চ মূল্যস্ফীতি নিয়ন্ত্রণে।",
+    "examTip": "Explain the transmission channel: High policy rate raises interbank call money rate (up to 10-11%) and treasury bill yields, dampening private sector credit growth.",
+    "examTipBn": "ব্যাখ্যা করুন: নীতি সুদহার বাড়ার ফলে কলমানি রেট ও ট্রেজারি বিল ইল্ড বাড়ে, যা বেসরকারি ঋণ প্রবৃদ্ধি কমিয়ে মুদ্রাস্ফীতি হ্রাস করে।",
+    "relatedTopicNumbers": [
+      1,
+      3,
+      25
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "MONETARY_POLICY"
+    ],
+    "isVerified": true,
+    "order": 3
+  },
+  {
+    "indicatorKey": "interest-rate-corridor-sdf-slf",
+    "titleEn": "Interest Rate Corridor (SDF & SLF Rates)",
+    "titleBn": "সুদহার করিডোর: এসডিএফ (ফ্লোর) ও এসএলএফ (সিলিং)",
+    "benchmarkData": "SDF (Reverse Repo Floor): 8.00% | SLF (Lending Ceiling): 11.50%",
+    "benchmarkDataBn": "এসডিএফ (ফ্লোর): ৮.০০% | এসএলএফ (সিলিং): ১১.৫০%",
+    "timeframe": "2024-2025/2026",
+    "timeframeBn": "২০২৪-২০২৫/২০২৬",
+    "source": "Bangladesh Bank Monetary Policy Framework",
+    "sourceUrl": "https://www.bb.org.bd",
+    "category": "BANKING",
+    "examRelevance": "HIGH",
+    "historicalTrajectory": "Shifted from rigid reverse repo tools to an IMF-recommended symmetrical +/- 150-200 bps corridor around the central policy repo rate.",
+    "historicalTrajectoryBn": "আইএমএফ শর্তানুযায়ী কেন্দ্রীয় ব্যাংকের রেপো রেটকে কেন্দ্র করে একটি সুনির্দিষ্ট করিডোর ব্যবস্থা কার্যকর করা হয়।",
+    "examTip": "Crucial for monetary policy focus essays: The corridor bounds interbank volatility and anchors short-term liquidity expectations.",
+    "examTipBn": "মানি মার্কেট সংক্রান্ত প্রশ্নে এসডিএফ (৮%) ও এসএলএফ (১১.৫০%) করিডোর উল্লেখ করলে লেখার মান পেশাদার হয়।",
+    "relatedTopicNumbers": [
+      1,
+      3,
+      25
+    ],
+    "tags": [
+      "BB_AD",
+      "MONETARY_POLICY"
+    ],
+    "isVerified": true,
+    "order": 4
+  },
+  {
+    "indicatorKey": "smart-interest-rate-abolition",
+    "titleEn": "Abolition of SMART Lending Rate & Shift to Market Pricing",
+    "titleBn": "স্মার্ট (SMART) সুদহার বাতিল ও বাজারভিত্তিক ঋণ সুদহার প্রবর্তন",
+    "benchmarkData": "Abolished on May 8, 2024 (BRPD Circular 10); Weighted Lending: 11.5% - 13.5%",
+    "benchmarkDataBn": "৮ মে ২০২৪ এ বাতিল; বর্তমানে বাজারভিত্তিক ঋণ সুদহার গড়ে ১১.৫% - ১৩.৫%",
+    "timeframe": "May 8, 2024 onwards",
+    "timeframeBn": "৮ মে ২০২৪ হতে কার্যকর",
+    "source": "Bangladesh Bank BRPD Circular No. 10",
+    "sourceUrl": "https://www.bb.org.bd",
+    "category": "BANKING",
+    "examRelevance": "CRITICAL_HIGH",
+    "historicalTrajectory": "Jul 2020: 9/6% rigid cap → Jul 2023: SMART benchmark (6-mo T-bill average + margin) → May 2024: Complete deregulation to demand-supply market pricing.",
+    "historicalTrajectoryBn": "২০২০ এর ৯/৬% ক্যাপ → জুলাই ২০২৩ এর স্মার্ট রেট → ৮ মে ২০২৪ এ সম্পূর্ণ বাজারভিত্তিক স্বাধীন সুদহার চালু।",
+    "examTip": "Do NOT write that SMART is currently active! Clearly state BB deregulated lending rates, permitting risk-based pricing (+/- 1% around bank declared base rate).",
+    "examTipBn": "কখনোই লিখবেন না স্মার্ট রেট এখনো চালু আছে। লিখতে হবে মে ২০২৪ থেকে বাজারভিত্তিক রেট চলছে।",
+    "relatedTopicNumbers": [
+      3,
+      27
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "BANKING_REFORM"
+    ],
+    "isVerified": true,
+    "order": 5
+  },
+  {
+    "indicatorKey": "capital-adequacy-crar-basel-iii",
+    "titleEn": "Capital to Risk-Weighted Assets Ratio (CRAR) - Basel III",
+    "titleBn": "ঝুঁকিভিত্তিক মূলধন পর্যাপ্ততা অনুপাত (CRAR / ব্যাসেল-৩)",
+    "benchmarkData": "Industry Average: ~8.5% (Regulatory Minimum Requirement: 10.0%)",
+    "benchmarkDataBn": "খাতভিত্তিক গড়: ~৮.৫% (ব্যাসেল-৩ বাধ্যবাধকতা: ১০.০%)",
+    "timeframe": "2024-2025",
+    "timeframeBn": "২০২৪-২০২৫",
+    "source": "Bangladesh Bank Financial Stability Report",
+    "sourceUrl": "https://www.bb.org.bd",
+    "category": "BANKING",
+    "examRelevance": "HIGH",
+    "historicalTrajectory": "SOCBs fell into negative capital territory (-0.5% to -5%) due to loan-loss provisioning shortfalls, while compliant private foreign banks maintained >14%.",
+    "historicalTrajectoryBn": "রাষ্ট্রায়ত্ত ব্যাংকগুলোতে বড় অঙ্কের প্রভিশন ঘাটতির কারণে সিআরএআর ঋণাত্মক হয়ে পড়ে, অন্যদিকে বিদেশি ব্যাংকগুলো ১৪% ধরে রাখে।",
+    "examTip": "Link CRAR deficit directly to unprovisioned NPLs: When NPLs are recognized, mandatory provisioning directly depletes Tier-1 equity capital.",
+    "examTipBn": "সিআরএআর ঘাটতির কারণ হিসেবে খেলাপি ঋণের বিপরীতে প্রভিশন সংরক্ষণের প্রয়োজনীয়তা এবং টিয়ার-১ ক্যাপিটাল ক্ষয়ের বিষয়টি যুক্ত করুন।",
+    "relatedTopicNumbers": [
+      3,
+      27
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO"
+    ],
+    "isVerified": true,
+    "order": 6
+  },
+  {
+    "indicatorKey": "banking-sector-task-force-governor-mansur",
+    "titleEn": "Task Force on Banking Sector Reforms & Board Restructuring",
+    "titleBn": "ব্যাংকিং খাত সংস্কারে টাস্কফোর্স ও ১১টি ব্যাংকের পরিচালনা পর্ষদ পুনর্গঠন",
+    "benchmarkData": "Formed Sep 2024 under BB; 11 Scam-hit private bank boards restructured",
+    "benchmarkDataBn": "সেপ্টেম্বর ২০২৪ এ গঠিত; ১১টি সমস্যাপীড়িত ব্যাংকের পর্ষদ পুনর্গঠন ও সম্পদ নিরীক্ষা (AQR)",
+    "timeframe": "September 2024 onwards",
+    "timeframeBn": "সেপ্টেম্বর ২০২৪ থেকে চলমান",
+    "source": "Bangladesh Bank Press Releases",
+    "sourceUrl": "https://www.bb.org.bd",
+    "category": "BANKING",
+    "examRelevance": "CRITICAL_HIGH",
+    "historicalTrajectory": "Post-August 2024, BB dismantled S. Alam Group control over Islami Bank, Social Islami, Global Islami, National Bank, Union Bank, and injected liquidity guarantees.",
+    "historicalTrajectoryBn": "এস আলম গ্রুপ ও অসাধু চক্রের নিয়ন্ত্রণাধীন ইসলামী ব্যাংক, সোশ্যাল ইসলামীসহ ১১টি ব্যাংকের পরিচালনা পর্ষদ পুনর্গঠন এবং বিশেষ তারল্য সহায়তা প্রদান।",
+    "examTip": "Essential recommendation point: Advocate for independent Asset Quality Review (AQR), Asset Management Company (AMC) enactment, and merging non-viable NBFIs/banks.",
+    "examTipBn": "সংস্কারের সুপারিশে আন্তর্জাতিক অডিট ফার্ম দিয়ে অ্যাসেট কোয়ালিটি রিভিউ (AQR) এবং অ্যাসেট ম্যানেজমেন্ট কোম্পানি (AMC) আইনের কথা উল্লেখ করুন।",
+    "relatedTopicNumbers": [
+      3,
+      27
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "BANKING_REFORM"
+    ],
+    "isVerified": true,
+    "order": 7
+  },
+  {
+    "indicatorKey": "advance-deposit-ratio-adr",
+    "titleEn": "Advance-to-Deposit Ratio (ADR) Limits",
+    "titleBn": "ঋণ-আমানত অনুপাত (এডিআর ও আইডিআর সীমা)",
+    "benchmarkData": "Conventional Banks: 87.0% Max | Islamic Sharia Banks (IDR): 92.0% Max",
+    "benchmarkDataBn": "প্রচলিত ব্যাংক: সর্বোচ্চ ৮৭.০% | ইসলামী ব্যাংক: সর্বোচ্চ ৯২.০%",
+    "timeframe": "Regulatory Benchmark 2024-2025",
+    "timeframeBn": "বাংলাদেশ ব্যাংক নীতিমালা ২০২৪-২০২৫",
+    "source": "Bangladesh Bank DOS / BRPD Circulars",
+    "sourceUrl": "https://www.bb.org.bd",
+    "category": "BANKING",
+    "examRelevance": "MEDIUM",
+    "historicalTrajectory": "Several aggressive private and Sharia banks breached 100%+ ADR during 2022-2024, triggering acute liquidity crunches and central bank borrowing penalties.",
+    "historicalTrajectoryBn": "কিছু ইসলামী ও বেসরকারি ব্যাংক ১০০% এর বেশি ঋণ বিতরণ করায় মারাত্মক তারল্য সংকটে পড়েছিল।",
+    "examTip": "Cite ADR enforcement as the core tool to prevent banks from over-leveraging and maintain depositor safety buffers.",
+    "examTipBn": "আমানতকারীদের সুরক্ষায় এবং তারল্য সংকট এড়াতে এডিআর ৮৭% ও আইডিআর ৯২% এর মধ্যে সীমাবদ্ধ রাখার বাধ্যবাধকতা উল্লেখ করুন।",
+    "relatedTopicNumbers": [
+      3
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO"
+    ],
+    "isVerified": true,
+    "order": 8
+  },
+  {
+    "indicatorKey": "forex-reserves-bpm6-vs-gross",
+    "titleEn": "Foreign Exchange Reserves (Gross vs IMF BPM6 Standard)",
+    "titleBn": "বৈদেশিক মুদ্রার রিজার্ভ (গ্রস বনাম আইএমএফ বিপিএম-৬ মানদণ্ড)",
+    "benchmarkData": "BPM6 Net Usable: ~9.5B – 1.0B | Gross Reserves: ~5.0B – 8.0B",
+    "benchmarkDataBn": "বিপিএম-৬ নিট ব্যবহারযোগ্য: ~$১৯.৫ – ২১.০ বিলিয়ন | গ্রস রিজার্ভ: ~$২৫.০ – ২৮.০ বিলিয়ন",
+    "timeframe": "2024 - 2025/2026",
+    "timeframeBn": "২০২৪ - ২০২৫/২০২৬",
+    "source": "Bangladesh Bank Forex Reserve Statistics (BPM6 Compliance)",
+    "sourceUrl": "https://www.bb.org.bd",
+    "category": "EXTERNAL_SECTOR",
+    "examRelevance": "CRITICAL_HIGH",
+    "historicalTrajectory": "Peak Aug 2021: 8.06B (Gross) → May 2024: 8.7B (BPM6) → late 2024/2025 stabilized to 9.5B-1B after import contraction and remittance rebound.",
+    "historicalTrajectoryBn": "আগস্ট ২০২১ এ রেকর্ড ৪৮.০৬ বিলিয়ন (গ্রস) থেকে কমে মে ২০২৪ এ ১৮.৭ বিলিয়নে নামে; পরবর্তীতে রেমিট্যান্সের জোয়ারে ১৯.৫-২১ বিলিয়নে স্থিতিশীল হয়।",
+    "examTip": "Always differentiate Gross vs BPM6: BPM6 excludes illiquid assets (EDF loans, sovereign guarantees, ACU liabilities). Citing BPM6 proves central bank exam standard.",
+    "examTipBn": "গ্রস এবং বিপিএম-৬ রিজার্ভের পার্থক্য তুলে ধরুন। বিপিএম-৬ নিট রিজার্ভই আন্তর্জাতিকভাবে স্বীকৃত পরিমাপ।",
+    "relatedTopicNumbers": [
+      4,
+      7,
+      26
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "BCS_WRITTEN",
+      "EXTERNAL_SECTOR"
+    ],
+    "isVerified": true,
+    "order": 9
+  },
+  {
+    "indicatorKey": "crawling-peg-exchange-rate",
+    "titleEn": "Crawling Peg Exchange Rate & Interbank Dollar Rate",
+    "titleBn": "ক্রলিং পেগ মুদ্রা বিনিময় হার ও আন্তঃব্যাংক ডলার দর",
+    "benchmarkData": "Mid-Rate Introduced: ৳117/$ (May 2024); Interbank Market: ৳121 – ৳123 / $",
+    "benchmarkDataBn": "ক্রলিং পেগ মধ্যবর্তী দর: ৳১১৭/$ (মে ২০২৪); আন্তঃব্যাংক বাজার দর: ৳১২১ – ৳১২৩/$",
+    "timeframe": "May 2024 - 2025/2026",
+    "timeframeBn": "মে ২০২৪ হতে কার্যকর",
+    "source": "Bangladesh Bank FEPD Circular No. 01 / Foreign Exchange Operations",
+    "sourceUrl": "https://www.bb.org.bd",
+    "category": "EXTERNAL_SECTOR",
+    "examRelevance": "CRITICAL_HIGH",
+    "historicalTrajectory": "Pre-2022: ৳85/$ → Multiple artificial rates (BAFEDA/ABB) ৳110/$ → May 2024: Crawling Peg at ৳117/$ → Transitioning toward unified market rate at ~৳122/$.",
+    "historicalTrajectoryBn": "২০২২ এর ৮৫ টাকা থেকে ক্রলিং পেগে ১১৭ টাকা মধ্যবর্তী দর নির্ধারণ এবং বর্তমানে বাজারভিত্তিক ১২১-১২৩ টাকায় স্থিতিশীল।",
+    "examTip": "Discuss Crawling Peg: A currency mechanism providing a band/corridor around a mid-rate to prevent speculative arbitrage and curb kerb-market (hundi) spreads.",
+    "examTipBn": "ক্রলিং পেগ হচ্ছে এমন একটি ব্যান্ড যেখানে ডলারের দাম ধাপে ধাপে বাজারের সাথে সমন্বয় হয়, যা হুন্ডি ও খোলা বাজারের ব্যবধান কমায়।",
+    "relatedTopicNumbers": [
+      4,
+      7,
+      26
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "MONETARY_POLICY"
+    ],
+    "isVerified": true,
+    "order": 10
+  },
+  {
+    "indicatorKey": "remittance-inflow-fy24-fy25-record",
+    "titleEn": "Annual & Monthly Remittance Inflow (FY24 vs FY25 Record)",
+    "titleBn": "প্রবাসী আয় / রেমিট্যান্স প্রবাহ (অর্থবছর ২৪ বনাম অর্থবছর ২৫ এর ঐতিহাসিক রেকর্ড)",
+    "benchmarkData": "FY25 Historic High: 0.33 Billion (+26.8% YoY) | FY24: 3.91 Billion",
+    "benchmarkDataBn": "অর্থবছর ২৫ এ সর্বকালের রেকর্ড: ৩০.৩৩ বিলিয়ন ডলার (+২৬.৮%) | অর্থবছর ২৪: ২৩.৯১ বিলিয়ন ডলার",
+    "timeframe": "FY 2024-25 (July 2024 - June 2025)",
+    "timeframeBn": "অর্থবছর ২০২৪-২৫",
+    "source": "Bangladesh Bank Statistics Department",
+    "sourceUrl": "https://www.bb.org.bd",
+    "category": "EXTERNAL_SECTOR",
+    "examRelevance": "CRITICAL_HIGH",
+    "historicalTrajectory": "FY23: 1.61B → FY24: 3.91B → FY25: 0.33B. Single-month record was broken in March 2025 at .295 billion (over .30B).",
+    "historicalTrajectoryBn": "অর্থবছর ২৩ এ ২১.৬১ বিলিয়ন → ২৪ এ ২৩.৯১ বিলিয়ন → ২৫ এ প্রথমবারের মতো ৩০ বিলিয়ন ছাড়িয়ে ৩০.৩৩ বিলিয়নে পৌঁছায়।",
+    "examTip": "Key analytical factors: Competitive exchange rates (closing kerb market gap), restored banking confidence post-Aug 2024, and clampdowns on digital hundi syndicates.",
+    "examTipBn": "রেমিট্যান্স বৃদ্ধির মূল কারণ: ব্যাংকিং চ্যানেলে ডলারের আকর্ষণীয় মূল্য, হুন্ডি চ্যানেলে কড়াকড়ি এবং প্রবাসীদের আস্থা বৃদ্ধি।",
+    "relatedTopicNumbers": [
+      7,
+      4,
+      26
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "BCS_WRITTEN"
+    ],
+    "isVerified": true,
+    "order": 11
+  },
+  {
+    "indicatorKey": "epb-bb-export-data-reconciliation",
+    "titleEn": "EPB vs Bangladesh Bank Export Mismatch & Reconciliation",
+    "titleBn": "রপ্তানি উন্নয়ন ব্যুরো (EPB) ও বাংলাদেশ ব্যাংক রপ্তানি উপাত্তের গরমিল ও সমন্বয়",
+    "benchmarkData": "Discrepancy: ~4 Billion gap resolved; FY24 Reconciled Exports: ~4.47 Billion",
+    "benchmarkDataBn": "গরমিল: ~$১৪ বিলিয়ন ব্যবধান সংশোধন; অর্থবছর ২৪ এর সমন্বিত প্রকৃত রপ্তানি: ~$৪৪.৪৭ বিলিয়ন",
+    "timeframe": "July 2024 Correction (FY 2023-24)",
+    "timeframeBn": "জুলাই ২০২৪ এ সমন্বয়",
+    "source": "Joint Committee: Bangladesh Bank, EPB, NBR & Ministry of Commerce",
+    "sourceUrl": "https://www.bb.org.bd",
+    "category": "EXTERNAL_SECTOR",
+    "examRelevance": "CRITICAL_HIGH",
+    "historicalTrajectory": "EPB reported 7.47B in 10 months of FY24 while actual banking proceeds were only 3.68B due to duplicate ASYCUDA entries, sample double-counts, and CMT miscalculations.",
+    "historicalTrajectoryBn": "কাস্টমসের অ্যাসিকাডা সিস্টেমে ডুপ্লিকেট এন্ট্রি এবং সিএমটি হিসাবের ভুলে ইপিবি রপ্তানি বাড়িয়ে দেখাচ্ছিল, যা জুলাই ২০২৪ এ সংশোধন করা হয়।",
+    "examTip": "High-scoring analytical point: Overstated export numbers historically created fictitious current account surpluses and disguised actual capital flight.",
+    "examTipBn": "রপ্তানির কৃত্রিম তথ্যের কারণে দীর্ঘকাল জাতীয় আয় ও ব্যালেন্স অব পেমেন্টে বিভ্রান্তি ছিল এবং অর্থপাচারের বাস্তবতা আড়াল হয়েছিল।",
+    "relatedTopicNumbers": [
+      4,
+      15,
+      26
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "BCS_WRITTEN"
+    ],
+    "isVerified": true,
+    "order": 12
+  },
+  {
+    "indicatorKey": "rmg-export-share-concentration",
+    "titleEn": "Ready-Made Garments (RMG) Share in Total Exports",
+    "titleBn": "মোট রপ্তানিতে তৈরি পোশাক (RMG) খাতের হিস্যা",
+    "benchmarkData": "83.5% – 84.5% of Total National Export Earnings",
+    "benchmarkDataBn": "মোট জাতীয় রপ্তানি আয়ের ৮৩.৫% – ৮৪.৫%",
+    "timeframe": "FY 2024-25",
+    "timeframeBn": "অর্থবছর ২০২৪-২৫",
+    "source": "BGMEA / Export Promotion Bureau (EPB)",
+    "sourceUrl": "https://www.epb.gov.bd",
+    "category": "EXTERNAL_SECTOR",
+    "examRelevance": "HIGH",
+    "historicalTrajectory": "Consistently between 82% and 85% for over a decade, underscoring high product concentration risk ahead of 2026 LDC graduation.",
+    "historicalTrajectoryBn": "এক দশকেরও বেশি সময় ধরে ৮২-৮৫% এ অবস্থান করছে, যা ২০২৬ সালের এলডিসি উত্তরণের আগে মারাত্মক পণ্য কেন্দ্রীভবন ঝুঁকি নির্দেশ করে।",
+    "examTip": "Use this to urge export basket diversification: Non-RMG sectors (Leather & Footwear, Jute, Agro-processing, Pharmaceuticals, Light Engineering) need equal bonded warehouse facility.",
+    "examTipBn": "রপ্তানি বহুমুখীকরণে চামড়া, পাট, ওষুধ ও কৃষি প্রক্রিয়াজাত পণ্যে তৈরি পোশাকের ন্যায় বন্ডেড ওয়্যারহাউস সুবিধা দেওয়ার সুপারিশ করুন।",
+    "relatedTopicNumbers": [
+      15,
+      4,
+      26
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "BCS_WRITTEN"
+    ],
+    "isVerified": true,
+    "order": 13
+  },
+  {
+    "indicatorKey": "imf-loan-facility-ecf-eff",
+    "titleEn": "IMF .7 Billion Extended Credit Facility (ECF/EFF/RSF)",
+    "titleBn": "আইএমএফ-এর ৪.৭ বিলিয়ন ডলার ঋণ কর্মসূচি ও সংস্কার শর্তাবলি",
+    "benchmarkData": "Total Approved: .7 Billion in 7 Tranches; ~.3B+ Disbursed by Late 2024",
+    "benchmarkDataBn": "অনুমোদিত: ৪.৭ বিলিয়ন ডলার (৭ কিস্তিতে); ২০২৪ এর শেষ নাগাদ ~$২.৩ বিলিয়ন ছাড়",
+    "timeframe": "2023 - 2026 Programme Horizon",
+    "timeframeBn": "২০২৩-২০২৬ মেয়াদি কর্মসূচি",
+    "source": "International Monetary Fund (IMF) Press Releases",
+    "sourceUrl": "https://www.imf.org",
+    "category": "EXTERNAL_SECTOR",
+    "examRelevance": "HIGH",
+    "historicalTrajectory": "Tranche 1: 76M (Feb 2023) → Tranche 2: 89M (Dec 2023) → Tranche 3: .15B (Jun 2024). Governed key structural reforms (BPM6, market interest rates, crawling peg).",
+    "historicalTrajectoryBn": "আইএমএফ শর্ত বাস্তবায়নের অংশ হিসেবেই বিপিএম-৬ রিজার্ভ হিসাবায়ন, ক্রলিং পেগ ডলার দর এবং বাজারভিত্তিক সুদহার কার্যকর করা হয়।",
+    "examTip": "Demonstrate policy linkage: IMF conditions catalyzed Bangladesh Bank’s transition toward market-oriented macroeconomic management.",
+    "examTipBn": "আইএমএফ ঋণের শর্তাবলি কেন্দ্রীয় ব্যাংকের কাঠামোগত সংস্কারের গতি ত্বরান্বিত করেছে—এ বিষয়ে যুক্তি উপস্থাপন করুন।",
+    "relatedTopicNumbers": [
+      4,
+      3,
+      26
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO"
+    ],
+    "isVerified": true,
+    "order": 14
+  },
+  {
+    "indicatorKey": "trade-deficit-current-account-balance",
+    "titleEn": "Trade Deficit & Current Account Balance Trajectory",
+    "titleBn": "বাণিজ্য ঘাটতি ও চলতি হিসাবের ভারসাম্য (Current Account Balance)",
+    "benchmarkData": "Trade Deficit: ~8.0B – 0.0B | Current Account: Moving toward balance/surplus",
+    "benchmarkDataBn": "বাণিজ্য ঘাটতি: ~$১৮.০ – ২০.০ বিলিয়ন | চলতি হিসাব: ঘাটতি কমে ভারসাম্যের পথে",
+    "timeframe": "FY 2024-25",
+    "timeframeBn": "অর্থবছর ২০২৪-২৫",
+    "source": "Bangladesh Bank Balance of Payments Summary",
+    "sourceUrl": "https://www.bb.org.bd",
+    "category": "EXTERNAL_SECTOR",
+    "examRelevance": "HIGH",
+    "historicalTrajectory": "FY22 historic deficit: -8.6B → FY23: -.3B → FY24: -.5B → FY25 improved substantially supported by 26.8% remittance surge and import compression.",
+    "historicalTrajectoryBn": "অর্থবছর ২২ এর ১৮.৬ বিলিয়ন ডলারের রেকর্ড ঘাটতি থেকে সংকোচনমূলক আমদানি নীতি ও রেমিট্যান্সের কারণে চলতি হিসাবের ভারসাম্য উল্লেখযোগ্যভাবে উন্নত হয়েছে।",
+    "examTip": "Mention that while current account improved, the Financial Account deficit remained an issue due to slow foreign direct investment (FDI) and debt service outflows.",
+    "examTipBn": "চলতি হিসাব উন্নত হলেও প্রত্যক্ষ বিদেশি বিনিয়োগ (FDI) ঘাটতি ও ঋণ পরিশোধের চাপে ফাইন্যান্সিয়াল অ্যাকাউন্টে চাপ রয়ে গেছে।",
+    "relatedTopicNumbers": [
+      4,
+      7,
+      26
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO"
+    ],
+    "isVerified": true,
+    "order": 15
+  },
+  {
+    "indicatorKey": "gdp-size-current-market-prices",
+    "titleEn": "Gross Domestic Product (GDP) Size at Current Market Prices",
+    "titleBn": "বর্তমান মূল্যে মোট দেশজ উৎপাদন (GDP) এর আকার",
+    "benchmarkData": "FY25 Final: ৳55,15,026 crore (~56 Billion) | FY24: ৳50,02,654 crore (~50B)",
+    "benchmarkDataBn": "অর্থবছর ২৫ চূড়ান্ত: ৫৫,১৫,০২৬ কোটি টাকা (~$৪৫৬ বিলিয়ন) | অর্থবছর ২৪: ৫০,০২,৬৫৪ কোটি টাকা",
+    "timeframe": "FY 2024-25 (BBS Final Accounts)",
+    "timeframeBn": "অর্থবছর ২০২৪-২৫ (বিবিএস চূড়ান্ত হিসাব)",
+    "source": "Bangladesh Bureau of Statistics (BBS)",
+    "sourceUrl": "http://www.bbs.gov.bd",
+    "category": "MACROECONOMY",
+    "examRelevance": "CRITICAL_HIGH",
+    "historicalTrajectory": "FY20: ৳31.7L Cr → FY22: ৳39.7L Cr → FY23: ৳44.9L Cr → FY24: ৳50.0L Cr → FY25: ৳55.15L Cr.",
+    "historicalTrajectoryBn": "টাকার অঙ্কে জিডিপির আকার প্রতি বছর বাড়লেও টাকার অবমূল্যায়নের কারণে ডলারে আকার প্রায় ৪৫০-৪৫৬ বিলিয়নে স্থিতিশীল রয়েছে।",
+    "examTip": "Quote both BDT (৳55.15 lakh crore) and USD (56B) to demonstrate completeness. Note that currency depreciation impacted USD-denominated expansion.",
+    "examTipBn": "উত্তরে টাকা (৫৫.১৫ লাখ কোটি) এবং ডলার ($৪৫৬ বিলিয়ন) উভয় এককে উল্লেখ করা বাঞ্ছনীয়।",
+    "relatedTopicNumbers": [
+      1,
+      24
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "BCS_WRITTEN"
+    ],
+    "isVerified": true,
+    "order": 16
+  },
+  {
+    "indicatorKey": "gdp-real-growth-rate",
+    "titleEn": "Real GDP Growth Rate (FY24 vs FY25 Slowdown)",
+    "titleBn": "প্রকৃত জিডিপি প্রবৃদ্ধির হার (অর্থবছর ২৪ বনাম ২৫ এর মন্থরতা)",
+    "benchmarkData": "FY25 Final: 3.49% | FY24 Final: 4.22% (Stabilization Phase)",
+    "benchmarkDataBn": "অর্থবছর ২৫ চূড়ান্ত: ৩.৪৯% | অর্থবছর ২৪ চূড়ান্ত: ৪.২২% (সংস্কার ও স্থিতিশীলতা পর্ব)",
+    "timeframe": "BBS Final Accounts (FY 2024-25)",
+    "timeframeBn": "বিবিএস চূড়ান্ত হিসাব (অর্থবছর ২০২৪-২৫)",
+    "source": "Bangladesh Bureau of Statistics (BBS) National Accounts",
+    "sourceUrl": "http://www.bbs.gov.bd",
+    "category": "MACROECONOMY",
+    "examRelevance": "CRITICAL_HIGH",
+    "historicalTrajectory": "FY19 peak: 7.88% → FY20 Covid: 3.45% → FY22: 7.10% → FY23: 5.78% → FY24: 4.22% → FY25: 3.49% due to monetary tightening and political transition.",
+    "historicalTrajectoryBn": "কোভিড পূর্ববর্তী ৭-৮% প্রবৃদ্ধি থেকে মুদ্রাস্ফীতি নিয়ন্ত্রণ, উচ্চ সুদহার ও আমদানিতে রাশ টানার কারণে প্রবৃদ্ধি ৩.৪৯%-৪.২২% এ নেমে আসে।",
+    "examTip": "Explain the trade-off: The growth moderation was an intentional economic cost of contractionary policy to tame runaway inflation and rebuild forex buffers.",
+    "examTipBn": "লিখুন—উচ্চ মূল্যস্ফীতি রোধ ও বৈদেশিক রিজার্ভ রক্ষায় সংকোচনমূলক আর্থিক নীতির কারণে স্বল্পমেয়াদে প্রবৃদ্ধি কিছুটা ধীর হয়েছে।",
+    "relatedTopicNumbers": [
+      1,
+      24
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "BCS_WRITTEN"
+    ],
+    "isVerified": true,
+    "order": 17
+  },
+  {
+    "indicatorKey": "per-capita-national-income-gni",
+    "titleEn": "Per Capita National Income (GNI per Capita)",
+    "titleBn": "মাথাপিছু জাতীয় আয় (GNI Per Capita)",
+    "benchmarkData": "FY25 Final: ৳334,511 (,769 USD) | FY24: ৳304,102 (,738 USD)",
+    "benchmarkDataBn": "অর্থবছর ২৫: ৩,৩৪,৫১১ টাকা ($২,৭৬৯) | অর্থবছর ২৪: ৩,০৪,১০২ টাকা ($২,৭৩৮)",
+    "timeframe": "FY 2024-25 (BBS Final Report)",
+    "timeframeBn": "অর্থবছর ২০২৪-২৫",
+    "source": "Bangladesh Bureau of Statistics (BBS)",
+    "sourceUrl": "http://www.bbs.gov.bd",
+    "category": "MACROECONOMY",
+    "examRelevance": "CRITICAL_HIGH",
+    "historicalTrajectory": "FY21: ,591 → FY22: ,793 → FY23: ,749 → FY24: ,738 → FY25: ,769. Dollar income stagnated due to ~35% Taka depreciation against USD since 2022.",
+    "historicalTrajectoryBn": "টাকার অবমূল্যায়নের কারণে ডলারে মাথাপিছু আয় বিগত তিন বছর প্রায় ২৭০০-২৭৭০ ডলারে আটকে ছিল।",
+    "examTip": "Differentiate Per Capita GNI (,769) from Per Capita GDP (,625). GNI includes net primary income from abroad (remittance flows).",
+    "examTipBn": "মাথাপিছু জিডিপি ($২,৬২৫) এবং মাথাপিছু জিএনআই ($২,৭৬৯) এর পার্থক্য মনে রাখুন; জিএনআই রেমিট্যান্স অন্তর্ভুক্ত করে।",
+    "relatedTopicNumbers": [
+      1,
+      24
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "BCS_WRITTEN"
+    ],
+    "isVerified": true,
+    "order": 18
+  },
+  {
+    "indicatorKey": "inflation-peak-annual-average",
+    "titleEn": "Headline & Annual Average Inflation Trajectory",
+    "titleBn": "সার্বিক মূল্যস্ফীতি ও বার্ষিক গড় মূল্যস্ফীতির গতিধারা",
+    "benchmarkData": "2024 Peak: 11.66% (Jul 2024); 2024 Annual Avg: 10.47% → 2025/26 Eased to 8.2% - 8.5%",
+    "benchmarkDataBn": "২০২৪ এ সর্বোচ্চ: ১১.৬৬% (জুলাই ২০২৪); ২০২৪ গড়: ১০.৪৭% → ২০২৫/২৬ এ নেমে এসেছে ৮.২% - ৮.৫%",
+    "timeframe": "2024 - 2025/2026",
+    "timeframeBn": "২০২৪ - ২০২৫/২০২৬",
+    "source": "Bangladesh Bureau of Statistics (BBS) Consumer Price Index",
+    "sourceUrl": "http://www.bbs.gov.bd",
+    "category": "MACROECONOMY",
+    "examRelevance": "CRITICAL_HIGH",
+    "historicalTrajectory": "Inflation remained stubbornly above 9.5% for over 20 consecutive months before tight 10% policy rates and supply-chain normalization began cooling it below 8.5%.",
+    "historicalTrajectoryBn": "টানা ২০ মাসের বেশি সময় ৯.৫% এর উপরে থাকার পর সংকোচনমূলক মুদ্রানীতির কারণে ৮.২-৮.৫% এ নামতে শুরু করে।",
+    "examTip": "Crucial exam concept: Persistent high inflation acts as a regressive tax on fixed-income and working-class families, eroding real wages.",
+    "examTipBn": "মূল্যস্ফীতিকে পরোক্ষ কর (Regressive Tax) হিসেবে অভিহিত করুন যা নিম্ন ও মধ্যবিত্তের প্রকৃত আয় হ্রাস করে।",
+    "relatedTopicNumbers": [
+      1
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "BCS_WRITTEN"
+    ],
+    "isVerified": true,
+    "order": 19
+  },
+  {
+    "indicatorKey": "food-inflation-historical-peak",
+    "titleEn": "Food Inflation (All-Time High vs Gradual Moderation)",
+    "titleBn": "খাদ্য মূল্যস্ফীতি (সর্বকালের সর্বোচ্চ বনাম বর্তমান প্রবণতা)",
+    "benchmarkData": "All-Time Peak: 14.10% (July 2024) → Moderated to ~6.4% - 7.7% in 2025/2026",
+    "benchmarkDataBn": "সর্বোচ্চ রেকর্ড: ১৪.১০% (জুলাই ২০২৪) → ২০২৫/২৬ এ কমে ৬.৪% – ৭.৭% এ হ্রাস",
+    "timeframe": "BBS Monthly CPI Releases",
+    "timeframeBn": "বিবিএস ভোক্তা মূল্য সূচক প্রতিবেদন",
+    "source": "Bangladesh Bureau of Statistics (BBS)",
+    "sourceUrl": "http://www.bbs.gov.bd",
+    "category": "MACROECONOMY",
+    "examRelevance": "CRITICAL_HIGH",
+    "historicalTrajectory": "Driven by floods in eastern districts, import LC bottlenecks, and middleman syndicate extortion, food inflation breached 14% in mid-2024 before harvest arrivals cooled it.",
+    "historicalTrajectoryBn": "বন্যা, এলসি জটিলতা এবং সিন্ডিকেটের দৌরাত্ম্যে ২০২৪ সালের মাঝামাঝি খাদ্য মূল্যস্ফীতি ১৪% ছাড়িয়েছিল।",
+    "examTip": "Highlight policy solutions: Duty-free import of essentials (rice, onion, edible oil, potatoes), breaking market syndicates through open-market sales (OMS / TCB smart cards).",
+    "examTipBn": "খাদ্য মূল্যস্ফীতি নিয়ন্ত্রণে শুল্ক প্রত্যাহার, টিসিবি স্মার্টকার্ডে পণ্য সরবরাহ এবং চাঁদাবাজি বন্ধের সুপারিশ দিন।",
+    "relatedTopicNumbers": [
+      1,
+      16
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "BCS_WRITTEN"
+    ],
+    "isVerified": true,
+    "order": 20
+  },
+  {
+    "indicatorKey": "national-budget-fy25-outlay",
+    "titleEn": "National Budget Outlay & Expenditure Size (FY 2024-25)",
+    "titleBn": "জাতীয় বাজেটের আকার ও মোট ব্যয় (অর্থবছর ২০২৪-২৫)",
+    "benchmarkData": "Total Outlay: ৳7,97,000 crore (~6.4 Billion | ~14.4% of GDP)",
+    "benchmarkDataBn": "মোট ব্যয়: ৭,৯৭,০০০ কোটি টাকা (~১৪.৪% জিডিপি)",
+    "timeframe": "FY 2024-25 Approved Budget",
+    "timeframeBn": "অর্থবছর ২০২৪-২৫",
+    "source": "Ministry of Finance, Government of Bangladesh",
+    "sourceUrl": "https://mof.gov.bd",
+    "category": "FISCAL_POLICY",
+    "examRelevance": "CRITICAL_HIGH",
+    "historicalTrajectory": "FY23: ৳6.78L Cr → FY24: ৳7.61L Cr → FY25: ৳7.97L Cr. Growth slowed to single digits (~4.7%) reflecting austerity and realistic revenue projection.",
+    "historicalTrajectoryBn": "বিগত বছরগুলোর ১০-১৫% উচ্চাভিলাষী বৃদ্ধির বিপরীতে অর্থবছর ২৫ এ প্রবৃদ্ধি মাত্র ৪.৭% এ সীমিত রেখে কৃচ্ছ্রতাসাধন বাজেট দেওয়া হয়।",
+    "examTip": "Highlight the budget structure: Operating expenditure consumes over 60%, with interest payments on debt surpassing education or health individual shares.",
+    "examTipBn": "বাজেটের পরিচালন ব্যয় ৬০% ছাড়িয়ে যাওয়া এবং ঋণের সুদ পরিশোধেই বাজেটের বড় অংশ ব্যয় হওয়ার সীমাবদ্ধতা নির্দেশ করুন।",
+    "relatedTopicNumbers": [
+      8,
+      1
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "BCS_WRITTEN"
+    ],
+    "isVerified": true,
+    "order": 21
+  },
+  {
+    "indicatorKey": "annual-development-programme-adp",
+    "titleEn": "Annual Development Programme (ADP) Allocation",
+    "titleBn": "বার্ষিক উন্নয়ন কর্মসূচি (এডিপি / ADP) বরাদ্দ",
+    "benchmarkData": "৳2,65,000 crore (Targeted Rationalization & Project Scrutiny)",
+    "benchmarkDataBn": "২,৬৫,০০০ কোটি টাকা (অনাবশ্যক প্রকল্প কাটছাঁট ও অগ্রাধিকারভিত্তিক বরাদ্দ)",
+    "timeframe": "FY 2024-25",
+    "timeframeBn": "অর্থবছর ২০২৪-২৫",
+    "source": "Planning Commission / Ministry of Planning",
+    "sourceUrl": "https://plandiv.gov.bd",
+    "category": "FISCAL_POLICY",
+    "examRelevance": "HIGH",
+    "historicalTrajectory": "Post-August 2024, the interim government pruned politically motivated unviable megaprojects to prioritize completion of high-return infrastructure.",
+    "historicalTrajectoryBn": "অযৌক্তিক রাজনৈতিক মেগা প্রকল্পগুলো কাটছাঁট করে স্বাস্থ্য, শিক্ষা ও জনবান্ধব প্রকল্পে অগ্রাধিকার দেওয়া হয়।",
+    "examTip": "Key issue to discuss: Historic under-utilization in first 6 months (often <25% implementation) followed by rush spending in May-June compromising project quality.",
+    "examTipBn": "এডিপি বাস্তবায়নের দীর্ঘদিনের সমস্যা: প্রথম ৬ মাসে ধীরগতি এবং জুন মাসে তড়িঘড়ি করে অর্থ খরচ যা অপচয় বাড়ায়।",
+    "relatedTopicNumbers": [
+      8,
+      14
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO"
+    ],
+    "isVerified": true,
+    "order": 22
+  },
+  {
+    "indicatorKey": "tax-to-gdp-ratio",
+    "titleEn": "Tax-to-GDP Ratio (Revenue Mobilization Bottleneck)",
+    "titleBn": "কর-জিডিপি অনুপাত (রাজস্ব আদায়ের বড় চ্যালেঞ্জ)",
+    "benchmarkData": "7.3% – 7.8% of GDP (Among Lowest in South Asia & Global Average of 15%)",
+    "benchmarkDataBn": "জিডিপির ৭.৩% – ৭.৮% (দক্ষিণ এশিয়া ও বৈশ্বিক গড় ১৫% এর তুলনায় সর্বনিম্ন)",
+    "timeframe": "2024-2025",
+    "timeframeBn": "২০২৪-২০২৫",
+    "source": "National Board of Revenue (NBR) & World Bank / IMF",
+    "sourceUrl": "https://nbr.gov.bd",
+    "category": "FISCAL_POLICY",
+    "examRelevance": "CRITICAL_HIGH",
+    "historicalTrajectory": "Stagnated between 7.5% and 8.5% for two decades. Peer countries: Nepal ~18%, India ~17%, Vietnam ~18%.",
+    "historicalTrajectoryBn": "দুই দশক ধরে ৭-৮% এ স্থবির। নেপালে ১৮%, ভারতে ১৭%, ভিয়েতনামে ১৮%।",
+    "examTip": "Crucial reform recommendations: Automation of NBR tax filings, phasing out opaque corporate tax exemptions, separating tax policy from tax collection functions.",
+    "examTipBn": "রাজস্ব সংস্কারে জাতীয় রাজস্ব বোর্ডের (এনবিআর) অটোমেশন, কর ছাড় সংস্কৃতি বন্ধ এবং কর নীতি ও কর আদায় বিভাগ পৃথকীকরণের ওপর জোর দিন।",
+    "relatedTopicNumbers": [
+      8,
+      14
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "BCS_WRITTEN"
+    ],
+    "isVerified": true,
+    "order": 23
+  },
+  {
+    "indicatorKey": "budget-fiscal-deficit-target",
+    "titleEn": "Fiscal Deficit Target (Percentage of GDP)",
+    "titleBn": "বাজেট ঘাটতি ও জিডিপির শতকরা হার",
+    "benchmarkData": "৳2,56,000 crore (~4.6% of GDP | Below 5% Prudential Benchmark)",
+    "benchmarkDataBn": "২,৫৬,০০০ কোটি টাকা (~৪.৬% জিডিপি | আন্তর্জাতিক প্রমিত ৫% এর নিচে)",
+    "timeframe": "FY 2024-25",
+    "timeframeBn": "অর্থবছর ২০২৪-২৫",
+    "source": "Ministry of Finance Budget Overview",
+    "sourceUrl": "https://mof.gov.bd",
+    "category": "FISCAL_POLICY",
+    "examRelevance": "HIGH",
+    "historicalTrajectory": "Deficit has traditionally been targeted around 5.0% to 5.2% of GDP and financed via domestic banking borrowing, National Savings Certificates (NSC), and external aid.",
+    "historicalTrajectoryBn": "ঘাটতি জিডিপির ৪.৬-৫.২% এর মধ্যে সীমাবদ্ধ রাখা হয় এবং ব্যাংক ঋণ, সঞ্চয়পত্র ও বৈদেশিক সহায়তায় অর্থায়ন করা হয়।",
+    "examTip": "Caution against high bank borrowing: When the government borrows excessively from commercial banks, it crowds out private investment.",
+    "examTipBn": "ঘাটতি পূরণে সরকার অতিরিক্ত ব্যাংক ঋণ নিলে বেসরকারি খাতে ঋণ প্রবাহে নেতিবাচক প্রভাব (Crowding Out Effect) পড়ে।",
+    "relatedTopicNumbers": [
+      8,
+      3
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO"
+    ],
+    "isVerified": true,
+    "order": 24
+  },
+  {
+    "indicatorKey": "public-debt-to-gdp-ratio",
+    "titleEn": "Total Public Debt to GDP (External vs Domestic Debt)",
+    "titleBn": "মোট সরকারি ঋণ-জিডিপি অনুপাত (বৈদেশিক ও অভ্যন্তরীণ ঋণ)",
+    "benchmarkData": "37.5% – 39.0% of GDP (External: ~04B | Domestic: ~৳10 Lakh Cr)",
+    "benchmarkDataBn": "জিডিপির ৩৭.৫% – ৩৯.০% (বৈদেশিক: ~$১০৪ বিলিয়ন | অভ্যন্তরীণ: ~১০ লাখ কোটি টাকা)",
+    "timeframe": "2024-2025",
+    "timeframeBn": "২০২৪-২০২৫",
+    "source": "Ministry of Finance Debt Bulletin & World Bank",
+    "sourceUrl": "https://mof.gov.bd",
+    "category": "FISCAL_POLICY",
+    "examRelevance": "HIGH",
+    "historicalTrajectory": "While overall debt remains within IMF’s 55% safe threshold, the debt-service-to-revenue ratio has deteriorated alarmingly due to low tax collection.",
+    "historicalTrajectoryBn": "আইএমএফের ৫৫% সীমার মধ্যে থাকলেও সরকারের রাজস্ব আয়ের প্রায় ৩০-৩৫% চলে যাচ্ছে শুধু ঋণের সুদ পরিশোধে।",
+    "examTip": "Distinguish debt solvency from debt liquidity: Bangladesh is not at solvency risk, but faces liquidity pressure due to front-loaded megaproject debt amortization.",
+    "examTipBn": "বাংলাদেশ দেউলিয়া হওয়ার ঝুঁকিতে না থাকলেও মেগা প্রকল্পের ঋণ পরিশোধের কারণে তারল্যের ওপর চাপ তৈরি হয়েছে।",
+    "relatedTopicNumbers": [
+      8,
+      4
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO"
+    ],
+    "isVerified": true,
+    "order": 25
+  },
+  {
+    "indicatorKey": "sovereign-credit-rating-moodys-fitch",
+    "titleEn": "Sovereign Credit Ratings (Moody’s, Fitch & S&P Adjustments)",
+    "titleBn": "সার্বভৌম ঋণমান / ক্রেডিট রেটিং (মুডি’স, ফিচ ও এসঅ্যান্ডপি মূল্যায়ন)",
+    "benchmarkData": "Moody’s: B3 (Negative) | Fitch: B+ (Stable) | S&P: B+ (Negative)",
+    "benchmarkDataBn": "মুডি’স: B3 (নেতিবাচক) | ফিচ: B+ (স্থিতিশীল) | এসঅ্যান্ডপি: B+ (নেতিবাচক)",
+    "timeframe": "Late 2024 - 2025",
+    "timeframeBn": "২০২৪ এর শেষ - ২০২৫",
+    "source": "Global Credit Rating Agencies (Moody’s Investors Service, S&P, Fitch)",
+    "sourceUrl": "https://www.moodys.com",
+    "category": "FISCAL_POLICY",
+    "examRelevance": "MEDIUM",
+    "historicalTrajectory": "Moody’s downgraded Bangladesh from B1 to B2 in 2023, and further to B3 in late 2024 citing heightened political risks and external vulnerability.",
+    "historicalTrajectoryBn": "উচ্চ খেলাপি ঋণ, রাজনৈতিক রূপান্তর এবং বৈদেশিক রিজার্ভের চাপের কারণে আন্তর্জাতিক রেটিং সংস্থাগুলো মান অবনমন করে।",
+    "examTip": "Credit downgrades increase foreign borrowing costs and raise Letter of Credit (LC) confirmation charges for local banks.",
+    "examTipBn": "ক্রেডিট রেটিং কমলে আন্তর্জাতিক ব্যাংকগুলোর এলসি কনফার্মেশন ফি বৃদ্ধি পায় এবং বিদেশি অর্থায়নের ব্যয় বাড়ে।",
+    "relatedTopicNumbers": [
+      3,
+      4
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO"
+    ],
+    "isVerified": true,
+    "order": 26
+  },
+  {
+    "indicatorKey": "mfs-monthly-transaction-volume",
+    "titleEn": "Mobile Financial Services (MFS) Monthly Transaction Volume",
+    "titleBn": "মোবাইল ফিন্যান্সিয়াল সার্ভিস (MFS) মাসিক লেনদেনের পরিমাণ",
+    "benchmarkData": "৳1,50,000 – ৳1,71,664 crore per month (~3B – 5B Monthly)",
+    "benchmarkDataBn": "প্রতি মাসে ১,৫০,০০০ – ১,৭১,৬৬৪ কোটি টাকা (~$১৩ – ১৫ বিলিয়ন)",
+    "timeframe": "2024-2025 (BB Monthly MFS Data)",
+    "timeframeBn": "২০২৪-২০২৫ (বাংলাদেশ ব্যাংক পেমেন্ট সিস্টেম বিভাগ)",
+    "source": "Bangladesh Bank Payment Systems Department (PSD)",
+    "sourceUrl": "https://www.bb.org.bd",
+    "category": "FINTECH",
+    "examRelevance": "CRITICAL_HIGH",
+    "historicalTrajectory": "2020: ~৳45,000 Cr/mo → 2022: ~৳90,000 Cr/mo → 2024: ৳1,40,000 Cr/mo → early 2025 peak: ৳1,71,664 Cr/mo (Jan 2025). Daily avg > ৳5,500 crore.",
+    "historicalTrajectoryBn": "২০২০ এর ৪৫ হাজার কোটি থেকে বেড়ে ২০২৫ সালের জানুয়ারিতে ১.৭১ লাখ কোটি টাকার ঐতিহাসিক মাইলফলক স্পর্শ করে। দৈনিক গড়ে ৫৫০০ কোটি টাকা লেনদেন।",
+    "examTip": "Cite MFS as the engine of financial inclusion: Shifting from simple P2P transfers to merchant payments, utility bills, salary disbursements, and digital microloans.",
+    "examTipBn": "এমএফএস কেবল টাকা পাঠানোর মাধ্যম নয়; বেতন প্রদান, ইউটিলিটি বিল, মার্চেন্ট পেমেন্ট ও ডিজিটাল ঋণের চালিকাশক্তি।",
+    "relatedTopicNumbers": [
+      9,
+      28
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "BCS_WRITTEN",
+      "FINTECH"
+    ],
+    "isVerified": true,
+    "order": 27
+  },
+  {
+    "indicatorKey": "mfs-registered-accounts-market-share",
+    "titleEn": "MFS Registered Accounts & bKash Market Share",
+    "titleBn": "এমএফএস নিবন্ধিত হিসাব সংখ্যা ও বিকাশের বাজার অংশীদারিত্ব",
+    "benchmarkData": "Total Accounts: 240 – 250 Million | bKash Market Share: ~67%",
+    "benchmarkDataBn": "মোট নিবন্ধিত হিসাব: ২৪০ – ২৫০ মিলিয়ন | বিকাশের বাজার অংশীদারিত্ব: ~৬৭%",
+    "timeframe": "2024-2025",
+    "timeframeBn": "২০২৪-২০২৫",
+    "source": "Bangladesh Bank & Industry Reports",
+    "sourceUrl": "https://www.bb.org.bd",
+    "category": "FINTECH",
+    "examRelevance": "HIGH",
+    "historicalTrajectory": "Accounts exceed total population (170M) because many users maintain dual wallets (e.g. bKash + Nagad). Active accounts stand around 85-95 million.",
+    "historicalTrajectoryBn": "একাধিক সিম ব্যবহারের কারণে নিবন্ধিত হিসাব ২৪ কোটি ছাড়ালেও সক্রিয় হিসাবের সংখ্যা প্রায় ৮.৫-৯.৫ কোটি।",
+    "examTip": "Discuss interoperability challenges: High merchant fees and lack of seamless zero-fee cross-wallet transfers remain hurdles to full cashless adoption.",
+    "examTipBn": "ক্যাশলেস অর্থনীতি প্রতিষ্ঠায় আন্তঃলেনদেন চার্জ কমানো এবং ক্ষুদ্র ব্যবসায়ীদের কম খরচে কিউআর কোড ব্যবহারের সুবিধার কথা লিখুন।",
+    "relatedTopicNumbers": [
+      9,
+      28
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "FINTECH"
+    ],
+    "isVerified": true,
+    "order": 28
+  },
+  {
+    "indicatorKey": "agent-banking-deposits-accounts",
+    "titleEn": "Agent Banking Network Growth & Rural Deposit Mobilization",
+    "titleBn": "এজেন্ট ব্যাংকিং এর বিস্তার ও গ্রামীণ আমানত সংগ্রহ",
+    "benchmarkData": "Accounts: > 2.25 Crore | Total Deposits: > ৳36,500 Crore (Rural Share: ~82%)",
+    "benchmarkDataBn": "হিসাব: ২.২৫ কোটির বেশি | মোট আমানত: > ৩৬,৫০০ কোটি টাকা (গ্রামীণ হিস্যা: ~৮২%)",
+    "timeframe": "2024-2025",
+    "timeframeBn": "২০২৪-২০২৫",
+    "source": "Bangladesh Bank Financial Inclusion Department",
+    "sourceUrl": "https://www.bb.org.bd",
+    "category": "FINTECH",
+    "examRelevance": "HIGH",
+    "historicalTrajectory": "Launched in 2013; revolutionized rural banking by bringing formal deposit and inward remittance collection booths into remote union parishads.",
+    "historicalTrajectoryBn": "২০১৩ সালে যাত্রা শুরুর পর গ্রামীণ এলাকায় প্রচলিত শাখা ছাড়াই প্রাতিষ্ঠানিক আমানত ও বৈধ রেমিট্যান্সের মূল কেন্দ্রে পরিণত হয়েছে।",
+    "examTip": "Highlight gender inclusion: Over 50% of rural agent banking accounts belong to women entrepreneurs and household managers.",
+    "examTipBn": "এজেন্ট ব্যাংকিংয়ে ৫০% এর বেশি হিসাব গ্রামীণ নারীদের, যা আর্থিক ক্ষমতায়নে বৈপ্লবিক ভূমিকা রাখছে।",
+    "relatedTopicNumbers": [
+      9,
+      28,
+      7
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO"
+    ],
+    "isVerified": true,
+    "order": 29
+  },
+  {
+    "indicatorKey": "bangla-qr-binimoy-idtp-interoperability",
+    "titleEn": "Bangla QR & Interoperable Digital Transaction Platform (Binimoy)",
+    "titleBn": "বাংলা কিউআর (Bangla QR) ও আন্তঃলেনদেন প্ল্যাটফর্ম ‘বিনিময়’ (IDTP)",
+    "benchmarkData": "Standardized Unified QR Code for All Banks & MFS; Micro-Merchant Ceiling: ৳20,000/day",
+    "benchmarkDataBn": "সকল ব্যাংক ও এমএফএস এর একক কিউআর কোড; ক্ষুদ্র বিক্রেতাদের দৈনিক সীমা ২০,০০০ টাকা",
+    "timeframe": "2024-2025 Cashless Bangladesh Push",
+    "timeframeBn": "ক্যাশলেস বাংলাদেশ কর্মসূচি ২০২৪-২০২৫",
+    "source": "Bangladesh Bank Payment Systems Policy",
+    "sourceUrl": "https://www.bb.org.bd",
+    "category": "FINTECH",
+    "examRelevance": "HIGH",
+    "historicalTrajectory": "BB mandated Bangla QR to eliminate fragmented POS machines, enabling tea stalls and rickshaw pullers to accept digital payments from any bank app or wallet.",
+    "historicalTrajectoryBn": "ভিন্ন ভিন্ন ব্যাংকের আলাদা কিউআর কোডের বদলে সব অ্যাপের জন্য একক ‘বাংলা কিউআর’ চালু করা হয়।",
+    "examTip": "Recommend for Cashless focus essay: Waiving digital transaction taxes for micro-merchants to incentivize digital receipts and deter cash economy.",
+    "examTipBn": "মুদি দোকানদার ও ফুটপাতের বিক্রেতাদের ক্যাশলেসে উৎসাহিত করতে লেনদেন ফি মওকুফের সুপারিশ দিন।",
+    "relatedTopicNumbers": [
+      9,
+      28
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "FINTECH"
+    ],
+    "isVerified": true,
+    "order": 30
+  },
+  {
+    "indicatorKey": "labor-force-female-participation-rate",
+    "titleEn": "Total Labour Force & Female Labour Force Participation (FLFP)",
+    "titleBn": "মোট শ্রমশক্তি ও নারী শ্রমশক্তি অংশগ্রহণের হার",
+    "benchmarkData": "Total Labour Force: 73.5 Million | Female Participation (FLFP): 42.7%",
+    "benchmarkDataBn": "মোট শ্রমশক্তি: ৭৩.৫ মিলিয়ন | নারী শ্রমশক্তি অংশগ্রহণ: ৪২.৭%",
+    "timeframe": "BBS Labour Force Survey (LFS 2022/2024 Updates)",
+    "timeframeBn": "বিবিএস শ্রমশক্তি জরিপ (LFS)",
+    "source": "Bangladesh Bureau of Statistics (BBS)",
+    "sourceUrl": "http://www.bbs.gov.bd",
+    "category": "LABOR_DEMOGRAPHY",
+    "examRelevance": "HIGH",
+    "historicalTrajectory": "Female participation rose from 23.9% in 2000 to 36.3% in 2016, and crossed 42% in latest BBS findings, propelled by garment manufacturing and poultry/microcredit.",
+    "historicalTrajectoryBn": "তৈরি পোশাক ও ক্ষুদ্রঋণের হাত ধরে ২০০০ সালের ২৩.৯% থেকে বর্তমানে নারীদের অংশগ্রহণ ৪২.৭% এ উন্নীত হয়েছে।",
+    "examTip": "Contrast with South Asian average: Bangladesh has higher female participation than India (~37%) or Pakistan (~24%), but women remain largely trapped in low-wage informal roles.",
+    "examTipBn": "দক্ষিণ এশিয়ার অন্যান্য দেশের চেয়ে এগিয়ে থাকলেও নারীদের বেশিরভাগই কম বেতনের অনানুষ্ঠানিক খাতে নিয়োজিত।",
+    "relatedTopicNumbers": [
+      2,
+      10,
+      24
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "BCS_WRITTEN"
+    ],
+    "isVerified": true,
+    "order": 31
+  },
+  {
+    "indicatorKey": "informal-employment-share",
+    "titleEn": "Informal Sector Employment Dominance",
+    "titleBn": "অনানুষ্ঠানিক খাতে কর্মসংস্থানের বিশাল হিস্যা",
+    "benchmarkData": "84.9% of Total Employed Workforce in Informal Sector",
+    "benchmarkDataBn": "মোট নিযুক্ত শ্রমশক্তির ৮৪.৯% অনানুষ্ঠানিক খাতে কর্মরত",
+    "timeframe": "BBS Labour Force Survey Findings",
+    "timeframeBn": "বিবিএস শ্রমশক্তি জরিপ",
+    "source": "Bangladesh Bureau of Statistics (BBS)",
+    "sourceUrl": "http://www.bbs.gov.bd",
+    "category": "LABOR_DEMOGRAPHY",
+    "examRelevance": "HIGH",
+    "historicalTrajectory": "Over 85% of workers lack formal employment contracts, paid leave, health insurance, or pension safety nets.",
+    "historicalTrajectoryBn": "শ্রমশক্তির প্রায় ৮৫% কোনো নিয়োগপত্র, স্বাস্থ্যবীমা বা পেনশন সুবিধা ছাড়াই দৈনিক ভিত্তিতে কাজ করে।",
+    "examTip": "Crucial for social protection essays: Informal workers suffer first and worst during inflation spikes because their wages do not automatically adjust to CPI.",
+    "examTipBn": "মূল্যস্ফীতির অভিঘাত অনানুষ্ঠানিক খাতের শ্রমিকদের ওপরই সবচেয়ে বেশি পড়ে কারণ তাদের মজুরি স্বয়ংক্রিয়ভাবে বাড়ে না।",
+    "relatedTopicNumbers": [
+      2,
+      1
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO"
+    ],
+    "isVerified": true,
+    "order": 32
+  },
+  {
+    "indicatorKey": "youth-demographic-dividend-neet",
+    "titleEn": "Youth Demographic Dividend & NEET (Youth Not in Employment or Education)",
+    "titleBn": "যুব ডেমোগ্রাফিক ডিভিডেন্ড ও কর্মহীন যুবসমাজ (NEET)",
+    "benchmarkData": "Youth (15–29 yrs): ~38 Million (28% of population) | NEET Rate: ~39.8% (Female NEET: ~61%)",
+    "benchmarkDataBn": "যুবসমাজ: ~৩৮ মিলিয়ন (জনসংখ্যার ২৮%) | নিট (NEET) হার: ~৩৯.৮% (নারী: ~৬১%)",
+    "timeframe": "BBS LFS & World Bank Human Capital Reports",
+    "timeframeBn": "বিবিএস ও বিশ্বব্যাংক প্রতিবেদন",
+    "source": "Bangladesh Bureau of Statistics & ILO",
+    "sourceUrl": "http://www.bbs.gov.bd",
+    "category": "LABOR_DEMOGRAPHY",
+    "examRelevance": "CRITICAL_HIGH",
+    "historicalTrajectory": "The demographic dividend window will close around 2040 as the population begins aging. Educated youth unemployment remains acute (over 12% among tertiary degree holders).",
+    "historicalTrajectoryBn": "২০৪০ সালের মধ্যে ডেমোগ্রাফিক ডিভিডেন্ডের সুবর্ণ সুযোগ শেষ হবে। উচ্চশিক্ষিত তরুণদের মধ্যে বেকারত্ব ১২% এর বেশি।",
+    "examTip": "Highlight policy urgency: Transitioning from rote-learning curricula to technical TVET vocational skills, AI/coding, and supporting startup entrepreneurship financing.",
+    "examTipBn": "কারিগরি ও ভোকেশনাল শিক্ষা (TVET), আইটি দক্ষতা এবং স্টার্টআপ উদ্যোগে সহজ শর্তে জামানতবিহীন ঋণের সুপারিশ করুন।",
+    "relatedTopicNumbers": [
+      2,
+      33
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "BCS_WRITTEN"
+    ],
+    "isVerified": true,
+    "order": 33
+  },
+  {
+    "indicatorKey": "rice-foodgrain-production-annual",
+    "titleEn": "Annual Foodgrain Production (Rice Self-Sufficiency Benchmark)",
+    "titleBn": "বার্ষিক খাদ্যশস্য উৎপাদন ও চালে স্বয়ম্ভরতা",
+    "benchmarkData": "Total Rice Production: ~4.02 – 4.05 Crore Metric Tons (FY 2023-24 / FY 2024-25)",
+    "benchmarkDataBn": "মোট চাল উৎপাদন: ~৪.০২ – ৪.০৫ কোটি মেট্রিক টন",
+    "timeframe": "FY 2024-25",
+    "timeframeBn": "অর্থবছর ২০২৪-২৫",
+    "source": "Department of Agricultural Extension (DAE) & BBS",
+    "sourceUrl": "https://dae.gov.bd",
+    "category": "AGRI_CLIMATE",
+    "examRelevance": "HIGH",
+    "historicalTrajectory": "1971: ~1.1 Crore MT → 2024: Over 4.0 Crore MT (nearly fourfold increase on shrinking arable land due to BRRI/BINA high-yielding seeds).",
+    "historicalTrajectoryBn": "১৯৭১ এর ১.১ কোটি টন থেকে চার গুণ বৃদ্ধি পেয়ে ৪ কোটি টন ছাড়িয়েছে, যা কৃষিবিজ্ঞানীদের অনন্য অর্জন।",
+    "examTip": "Despite self-sufficiency in rice, Bangladesh remains heavily import-dependent on wheat (6M MT), edible oil (2M MT), and lentils.",
+    "examTipBn": "চালে উদ্বৃত্ত হলেও গম (৬০ লাখ টন), ভোজ্যতেল (২০ লাখ টন) ও ডাল আমদানিতে বৈদেশিক মুদ্রার বড় অংশ ব্যয় হয়।",
+    "relatedTopicNumbers": [
+      16
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "BCS_WRITTEN"
+    ],
+    "isVerified": true,
+    "order": 34
+  },
+  {
+    "indicatorKey": "climate-change-gdp-annual-loss",
+    "titleEn": "Climate Vulnerability & Annual Economic Loss (% of GDP)",
+    "titleBn": "জলবায়ু ঝুঁকি ও বার্ষিক অর্থনৈতিক ক্ষয়ক্ষতি (জিডিপির শতকরা হার)",
+    "benchmarkData": "Annual Loss: 1.5% – 2.0% of National GDP (Could rise to 9% by 2050 without adaptation)",
+    "benchmarkDataBn": "বার্ষিক ক্ষতি: জিডিপির ১.৫% – ২.০% (অভিযোজন না হলে ২০৫০ নাগাদ ৯% ক্ষতির ঝুঁকি)",
+    "timeframe": "World Bank Country Climate and Development Report (CCDR)",
+    "timeframeBn": "বিশ্বব্যাংক সিসিডিআর রিপোর্ট",
+    "source": "World Bank & Ministry of Environment, Forest and Climate Change",
+    "sourceUrl": "https://moef.gov.bd",
+    "category": "AGRI_CLIMATE",
+    "examRelevance": "CRITICAL_HIGH",
+    "historicalTrajectory": "Ranked 7th most climate-vulnerable country on Germanwatch Global Climate Risk Index over past two decades.",
+    "historicalTrajectoryBn": "জার্মানওয়াচ ক্লাইমেট রিস্ক ইনডেক্সে দীর্ঘকাল ধরে বিশ্বের ৭ম সর্বাধিক ক্ষতিগ্রস্ত দেশ হিসেবে চিহ্নিত।",
+    "examTip": "Essential for Green Banking: Highlight BB’s Green Transformation Fund (GTF), 5% mandatory green finance quota for banks, and climate-resilient agriculture.",
+    "examTipBn": "গ্রিন ব্যাংকিং ও জলবায়ু বিষয়ক রচনায় বাংলাদেশ ব্যাংকের ৫% গ্রিন ফাইন্যান্স কোটা এবং সবুজ রূপান্তর তহবিলের কথা লিখুন।",
+    "relatedTopicNumbers": [
+      6,
+      32
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "BCS_WRITTEN"
+    ],
+    "isVerified": true,
+    "order": 35
+  },
+  {
+    "indicatorKey": "national-adaptation-plan-nap-investment",
+    "titleEn": "National Adaptation Plan (NAP) Investment Requirement",
+    "titleBn": "জাতীয় অভিযোজন পরিকল্পনা (NAP) অর্থায়ন চাহিদা",
+    "benchmarkData": "30 Billion Required Across 113 Priority Interventions (2023–2050)",
+    "benchmarkDataBn": "২৩০ বিলিয়ন ডলার প্রয়োজন (২০২৩–২০৫০ মেয়াদে ১১৩টি প্রকল্পে)",
+    "timeframe": "NAP (2023–2050 Implementation Timeline)",
+    "timeframeBn": "২০২৩-২০৫০ বাস্তবায়ন পরিকল্পনা",
+    "source": "Ministry of Environment, Forest and Climate Change (MoEFCC)",
+    "sourceUrl": "https://moef.gov.bd",
+    "category": "AGRI_CLIMATE",
+    "examRelevance": "HIGH",
+    "historicalTrajectory": "Bangladesh currently mobilizes only –1.5 billion annually from domestic budget and multilateral grants, creating a massive + billion annual climate financing gap.",
+    "historicalTrajectoryBn": "বার্ষিক মাত্র ১-১.৫ বিলিয়ন ডলার সংস্থান হওয়ায় প্রতি বছর ৭ বিলিয়ন ডলারের বেশি জলবায়ু অর্থায়ন ঘাটতি থেকে যাচ্ছে।",
+    "examTip": "Advocate for international climate justice: Demand loss and damage fund operationalization and debt-for-climate swaps under global COP frameworks.",
+    "examTipBn": "কপ (COP) ফ্রেমওয়ার্কে লস অ্যান্ড ড্যামেজ ফান্ড দ্রুত ছাড় এবং ঋণ মওকুফ (Debt-for-Climate Swap) এর দাবি জোরদার করার সুপারিশ দিন।",
+    "relatedTopicNumbers": [
+      6,
+      32
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO"
+    ],
+    "isVerified": true,
+    "order": 36
+  },
+  {
+    "indicatorKey": "renewable-energy-share-target",
+    "titleEn": "Renewable Energy Share in Total Power Generation",
+    "titleBn": "মোট বিদ্যুৎ উৎপাদনে নবায়নযোগ্য জ্বালানির হিস্যা ও লক্ষ্যমাত্রা",
+    "benchmarkData": "Current Share: ~4.5% – 5.0% (~1,300 MW) | National Target: 40% Clean Energy by 2041",
+    "benchmarkDataBn": "বর্তমান হিস্যা: ~৪.৫% – ৫.০% (~১,৩০০ মেগাওয়াট) | ২০৪১ সালের জাতীয় লক্ষ্যমাত্রা: ৪০%",
+    "timeframe": "2024-2025 (SREDA Status)",
+    "timeframeBn": "২০২৪-২০২৫ (স্রেডা প্রতিবেদন)",
+    "source": "Sustainable and Renewable Energy Development Authority (SREDA)",
+    "sourceUrl": "http://www.sreda.gov.bd",
+    "category": "AGRI_CLIMATE",
+    "examRelevance": "MEDIUM",
+    "historicalTrajectory": "Lagged behind older targets (10% by 2020 was missed). Rooftop solar net-metering and agricultural solar irrigation pumps are driving recent increments.",
+    "historicalTrajectoryBn": "২০২০ সালের মধ্যে ১০% অর্জনের লক্ষ্য পূরণ না হলেও রুফটপ সোলার ও সৌর সেচ পাম্প সম্প্রসারণে নতুন গতি এসেছে।",
+    "examTip": "Highlight energy import dependence: Heavy reliance on imported LNG and coal strains foreign exchange reserves during global commodity price spikes.",
+    "examTipBn": "আমদানিকৃত এলএনজি ও কয়লার ওপর অতিরিক্ত নির্ভরশীলতা বৈদেশিক মুদ্রার ওপর চাপ সৃষ্টি করে, যার টেকসই সমাধান নবায়নযোগ্য জ্বালানি।",
+    "relatedTopicNumbers": [
+      6,
+      32
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO"
+    ],
+    "isVerified": true,
+    "order": 37
+  },
+  {
+    "indicatorKey": "ldc-graduation-timeline-loss-of-dfqf",
+    "titleEn": "LDC Graduation Timeline (November 2026) & Duty-Free Quota-Free (DFQF) Loss",
+    "titleBn": "এলডিসি উত্তরণ সময়সীমা (নভেম্বর ২০২৬) ও শুল্কমুক্ত বাজার সুবিধা প্রত্যাহারের ঝুঁকি",
+    "benchmarkData": "Official UN Graduation Date: November 2026; Projected Export Loss: 8% – 14%",
+    "benchmarkDataBn": "জাতিসংঘ নির্ধারিত উত্তরণ: নভেম্বর ২০২৬; সম্ভাব্য রপ্তানি ক্ষতি: ৮% – ১৪%",
+    "timeframe": "November 2026 Milestone",
+    "timeframeBn": "নভেম্বর ২০২৬",
+    "source": "UN Committee for Development Policy (CDP) & WTO / CPD",
+    "sourceUrl": "https://www.un.org",
+    "category": "EXTERNAL_SECTOR",
+    "examRelevance": "CRITICAL_HIGH",
+    "historicalTrajectory": "Recommended by UN in 2021 after meeting all three criteria (GNI, Human Assets HAI, Economic Vulnerability EVI). EU EBA transition provides 3-year grace to 2029.",
+    "historicalTrajectoryBn": "জাতিসংঘের তিনটি শর্ত পূরণ করে ২০২১ এ সুপারিশপ্রাপ্ত; ইউরোপীয় ইউনিয়ন ২০২৯ পর্যন্ত শুল্কমুক্ত সুবিধা বজায় রাখবে।",
+    "examTip": "Crucial Focus Writing topic: Recommend negotiating bilateral Free Trade Agreements (FTAs), CEPA with India/Japan, and qualifying for EU GSP+ by ratifying 32 conventions.",
+    "examTipBn": "এলডিসি উত্তরণের ক্ষতি মোকাবেলায় দ্বিপাক্ষিক এফটিএ (FTA), সেপা (CEPA) চুক্তি এবং ইইউ-র জিএসপি প্লাস (GSP+) প্রাপ্তির জন্য ৩২টি আন্তর্জাতিক কনভেনশন অনুসরণের সুপারিশ দিন।",
+    "relatedTopicNumbers": [
+      26,
+      15,
+      4
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "BCS_WRITTEN"
+    ],
+    "isVerified": true,
+    "order": 38
+  },
+  {
+    "indicatorKey": "private-sector-credit-growth-rate",
+    "titleEn": "Private Sector Credit Growth (Target vs Actual)",
+    "titleBn": "বেসরকারি খাতে ঋণ প্রবৃদ্ধি (লক্ষ্যমাত্রা বনাম অর্জিত হার)",
+    "benchmarkData": "Actual: ~6.5% – 7.5% YoY (Central Bank Target: 9.8% – 10.0%)",
+    "benchmarkDataBn": "প্রকৃত প্রবৃদ্ধি: ~৬.৫% – ৭.৫% (বাংলাদেশ ব্যাংকের লক্ষ্যমাত্রা: ৯.৮% – ১০.০%)",
+    "timeframe": "FY 2024-25",
+    "timeframeBn": "অর্থবছর ২০২৪-২৫",
+    "source": "Bangladesh Bank Monetary Policy Operations",
+    "sourceUrl": "https://www.bb.org.bd",
+    "category": "BANKING",
+    "examRelevance": "HIGH",
+    "historicalTrajectory": "Plummeted from 13.9% in FY22 down to 6.5-7.5% due to high lending rates, import constraints, and cautious risk assessment by commercial banks.",
+    "historicalTrajectoryBn": "উচ্চ সুদহার এবং ব্যাংকের সতর্ক অবস্থানের কারণে ২০২২ এর প্রায় ১৪% থেকে কমে ৬.৫-৭.৫% এ নেমে আসে।",
+    "examTip": "Explain that credit growth slowdown directly impacts private fixed investment, explaining the moderation in GDP growth.",
+    "examTipBn": "বেসরকারি ঋণ প্রবৃদ্ধি কমে যাওয়ার ফলেই শিল্পখাতে নতুন বিনিয়োগ স্থবির হয়ে জিডিপি প্রবৃদ্ধি কিছুটা ধীর হয়েছে।",
+    "relatedTopicNumbers": [
+      3,
+      1
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "MONETARY_POLICY"
+    ],
+    "isVerified": true,
+    "order": 39
+  },
+  {
+    "indicatorKey": "call-money-interbank-rate",
+    "titleEn": "Interbank Call Money Interest Rate",
+    "titleBn": "আন্তঃব্যাংক কলমানি রেট / স্বল্পমেয়াদী ধার করার সুদহার",
+    "benchmarkData": "Weighted Average: 9.75% – 10.25% (Peak Spike: 10.50%)",
+    "benchmarkDataBn": "ভারযুক্ত গড়: ৯.৭৫% – ১০.২৫% (সর্বোচ্চ স্পাইক: ১০.৫০%)",
+    "timeframe": "2024-2025",
+    "timeframeBn": "২০২৪-২০২৫",
+    "source": "Bangladesh Bank Financial Markets Department",
+    "sourceUrl": "https://www.bb.org.bd",
+    "category": "BANKING",
+    "examRelevance": "HIGH",
+    "historicalTrajectory": "Hovered at 2.5-3.0% in 2021 before liquidity tightness and repeated policy repo hikes pushed it into double digits in 2024/2025.",
+    "historicalTrajectoryBn": "২০২১ সালের ৩% থেকে বেড়ে তারল্য সংকট ও ১০% রেপো রেটের প্রভাবে ১০% এর উপরে উঠে আসে।",
+    "examTip": "Call money spikes indicate acute liquidity divergence: Healthy liquid banks lend to cash-starved weak banks at maximum allowable rates.",
+    "examTipBn": "কলমানি রেট বেড়ে যাওয়া প্রমাণ করে কিছু দুর্বল ব্যাংকে তীব্র নগদ তারল্যের সংকট রয়েছে।",
+    "relatedTopicNumbers": [
+      3
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO"
+    ],
+    "isVerified": true,
+    "order": 40
+  },
+  {
+    "indicatorKey": "poverty-headcount-ratio-hies",
+    "titleEn": "National Poverty Rate & Extreme Poverty Rate",
+    "titleBn": "জাতীয় দারিদ্র্যের হার ও চরম দারিদ্র্যের হার",
+    "benchmarkData": "Upper Poverty Line: 18.7% | Extreme (Lower) Poverty Line: 5.6%",
+    "benchmarkDataBn": "উচ্চ দারিদ্র্য রেখা: ১৮.৭% | চরম (নিম্ন) দারিদ্র্য রেখা: ৫.৬%",
+    "timeframe": "BBS Household Income and Expenditure Survey (HIES)",
+    "timeframeBn": "বিবিএস খানা আয় ও ব্যয় জরিপ (HIES)",
+    "source": "Bangladesh Bureau of Statistics (BBS)",
+    "sourceUrl": "http://www.bbs.gov.bd",
+    "category": "MACROECONOMY",
+    "examRelevance": "CRITICAL_HIGH",
+    "historicalTrajectory": "2000: 48.9% (extreme 34.3%) → 2010: 31.5% → 2016: 24.3% → Latest HIES: 18.7% (extreme 5.6%). However, high inflation pushed millions close to the vulnerable borderline.",
+    "historicalTrajectoryBn": "২০০০ সালের ৪৮.৯% থেকে কমে ১৮.৭% এ নামলেও সাম্প্রতিক উচ্চ মূল্যস্ফীতিতে অনেকে নতুন করে দারিদ্র্যসীমার কাছাকাছি পৌঁছেছে।",
+    "examTip": "Highlight urban poverty challenges: Urban poverty dropped slower than rural poverty due to high living and housing costs in Dhaka and Chattogram.",
+    "examTipBn": "শহরে জীবনযাত্রার খরচ ও বাড়িভাড়া বেশি হওয়ায় পল্লী অঞ্চলের চেয়ে শহুরে দারিদ্র্য হ্রাসের গতি ধীর।",
+    "relatedTopicNumbers": [
+      1,
+      24
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "BCS_WRITTEN"
+    ],
+    "isVerified": true,
+    "order": 41
+  },
+  {
+    "indicatorKey": "gini-coefficient-income-inequality",
+    "titleEn": "Gini Coefficient (Income & Wealth Inequality)",
+    "titleBn": "জিনি সহগ / আয় বৈষম্যের নির্দেশক (Gini Coefficient)",
+    "benchmarkData": "National Gini: 0.499 (Approaching Severe Inequality Threshold of 0.50)",
+    "benchmarkDataBn": "জাতীয় জিনি সহগ: ০.৪৯৯ (চরম বৈষম্যের নির্দেশক ০.৫০ এর দ্বারপ্রান্তে)",
+    "timeframe": "BBS HIES Key Findings",
+    "timeframeBn": "বিবিএস সর্বশেষ প্রতিবেদন",
+    "source": "Bangladesh Bureau of Statistics (BBS)",
+    "sourceUrl": "http://www.bbs.gov.bd",
+    "category": "MACROECONOMY",
+    "examRelevance": "CRITICAL_HIGH",
+    "historicalTrajectory": "2010: 0.458 → 2016: 0.482 → latest: 0.499. The richest 10% own over 41% of national income, while the bottom 10% receive only 1.31%.",
+    "historicalTrajectoryBn": "২০১০ এর ০.৪৫৮ থেকে বেড়ে ০.৪৯৯ এ উন্নীত হয়েছে; শীর্ষ ১০% জনগোষ্ঠীর হাতে মোট আয়ের ৪১% এর বেশি পুঞ্জীভূত।",
+    "examTip": "High-scoring analytical concept: While poverty dropped, inequality surged drastically—demanding progressive wealth taxes and universal social protection.",
+    "examTipBn": "দারিদ্র্য কমলেও বৈষম্য বেড়েছে—এই বৈপরীত্য দূর করতে প্রগতিশীল সম্পদ কর ও বৈষম্যবিরোধী সামাজিক সুরক্ষার সুপারিশ করুন।",
+    "relatedTopicNumbers": [
+      1,
+      24
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "BCS_WRITTEN"
+    ],
+    "isVerified": true,
+    "order": 42
+  },
+  {
+    "indicatorKey": "external-debt-servicing-amortization",
+    "titleEn": "Annual External Debt Servicing (Principal + Interest Outflow)",
+    "titleBn": "বার্ষিক বৈদেশিক ঋণ পরিশোধ (আসল ও সুদ বাবদ বৈদেশিক মুদ্রার বহির্গমন)",
+    "benchmarkData": "Annual Servicing: ~.3B – .8B (Projected to Cross .5B by 2026/27)",
+    "benchmarkDataBn": "বার্ষিক পরিশোধ: ~$৩.৩ – ৩.৮ বিলিয়ন (২০২৬/২৭ নাগাদ $৪.৫ বিলিয়ন ছাড়ানোর পূর্বাভাস)",
+    "timeframe": "Economic Relations Division (ERD) Reports",
+    "timeframeBn": "অর্থনৈতিক সম্পর্ক বিভাগ (ERD)",
+    "source": "Economic Relations Division (ERD), Ministry of Finance",
+    "sourceUrl": "https://erd.gov.bd",
+    "category": "EXTERNAL_SECTOR",
+    "examRelevance": "HIGH",
+    "historicalTrajectory": "Grace periods for megaprojects (Rooppur, Metro Rail, Karnaphuli Tunnel, Padma Rail Link) have ended or are concluding, triggering heavier annual repayment obligations.",
+    "historicalTrajectoryBn": "রূপপুর, মেট্রোরেলসহ মেগা প্রকল্পগুলোর গ্রেস পিরিয়ড শেষ হয়ে যাওয়ায় বার্ষিক ঋণ পরিশোধের দায় দ্বিগুণ হয়েছে।",
+    "examTip": "Connect directly to forex reserves: Debt servicing directly drains central bank foreign reserves unless export receipts and remittance grow proportionately.",
+    "examTipBn": "রপ্তানি ও রেমিট্যান্স পর্যাপ্ত না বাড়লে বৈদেশিক ঋণ পরিশোধের বাধ্যবাধকতা সরাসরি বৈদেশিক রিজার্ভে টান সৃষ্টি করে।",
+    "relatedTopicNumbers": [
+      4,
+      8,
+      26
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO"
+    ],
+    "isVerified": true,
+    "order": 43
+  },
+  {
+    "indicatorKey": "microfinance-sector-mra-outreach",
+    "titleEn": "Microfinance Sector (MRA) Outreach & Loan Outstanding",
+    "titleBn": "ক্ষুদ্রঋণ খাত (MRA) ঋণ স্থিতি ও গ্রাহক সংখ্যা",
+    "benchmarkData": "Total Outstanding Loans: > ৳1,65,000 Crore | Active Borrowers: ~3.8 Crore",
+    "benchmarkDataBn": "মোট ঋণ স্থিতি: > ১,৬৫,০০০ কোটি টাকা | সক্রিয় ঋণগ্রহীতা: ~৩.৮ কোটি",
+    "timeframe": "2024-2025 (MRA Annual Report)",
+    "timeframeBn": "মাইক্রোক্রেডিট রেগুলেটরি অথরিটি (MRA)",
+    "source": "Microcredit Regulatory Authority (MRA)",
+    "sourceUrl": "https://www.mra.gov.bd",
+    "category": "BANKING",
+    "examRelevance": "HIGH",
+    "historicalTrajectory": "Dominated by top MFIs (BRAC, ASA, BURO, TMSS); recovery rate remains remarkably high at 97-98% despite economic turbulence, contrasting sharply with banking NPLs.",
+    "historicalTrajectoryBn": "ব্যাংকগুলোর খেলাপি ঋণের বিপরীতে ব্র্যাক, আশার মতো শীর্ষ ক্ষুদ্রঋণ প্রতিষ্ঠানের আদায় হার ৯৭-৯৮% এর ওপরে।",
+    "examTip": "Brilliant comparative point: While commercial bank corporate lending suffers 35% default, grassroots microfinance maintains near 98% recovery through group accountability.",
+    "examTipBn": "করপোরেট ব্যাংক ঋণে ৩৫% খেলাপি হলেও প্রান্তিক ক্ষুদ্রঋণে সামাজিক দায়বদ্ধতার কারণে ৯৮% আদায় বজায় থাকে—এই বৈপরীত্য পরীক্ষার জন্য অত্যন্ত আকর্ষণীয়।",
+    "relatedTopicNumbers": [
+      3,
+      27,
+      9
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO"
+    ],
+    "isVerified": true,
+    "order": 44
+  },
+  {
+    "indicatorKey": "universal-pension-scheme-subscribers",
+    "titleEn": "Universal Pension Scheme (Prattay, Progoti, Shurokkha, Samata)",
+    "titleBn": "সর্বজনীন পেনশন স্কিম (প্রগতি, সুরক্ষা, সমতা ও প্রত্যয়)",
+    "benchmarkData": "Active Registered Subscribers: ~3.75 Lakh+ (Fund Mobilized: > ৳125 Crore)",
+    "benchmarkDataBn": "সক্রিয় নিবন্ধিত গ্রাহক: ~৩.৭৫ লাখের বেশি (সংগৃহীত তহবিল: > ১২৫ কোটি টাকা)",
+    "timeframe": "National Pension Authority (NPA) Updates",
+    "timeframeBn": "জাতীয় পেনশন কর্তৃপক্ষ",
+    "source": "National Pension Authority (NPA), Ministry of Finance",
+    "sourceUrl": "https://upension.gov.bd",
+    "category": "FISCAL_POLICY",
+    "examRelevance": "HIGH",
+    "historicalTrajectory": "Inaugurated Aug 17, 2023 with four packages; Prattay scheme for autonomous university teachers was rolled back in Aug 2024 following nationwide protests.",
+    "historicalTrajectoryBn": "১৭ আগস্ট ২০২৩ এ চালুর পর স্বায়ত্তশাসিত প্রতিষ্ঠানের জন্য ‘প্রত্যয়’ স্কিম আন্দোলনের মুখে বাতিল করা হয়।",
+    "examTip": "Highlight long-term fiscal benefits: Universal pension builds deep domestic sovereign capital for infrastructure while offering social security to aging citizens.",
+    "examTipBn": "সর্বজনীন পেনশন প্রবীণ বয়সের সামাজিক সুরক্ষার পাশাপাশি দীর্ঘমেয়াদী অভ্যন্তরীণ তহবিল গঠনে সহায়ক।",
+    "relatedTopicNumbers": [
+      8,
+      2
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "BCS_WRITTEN"
+    ],
+    "isVerified": true,
+    "order": 45
+  },
+  {
+    "indicatorKey": "power-generation-capacity-vs-peak-demand",
+    "titleEn": "Installed Power Generation Capacity vs Actual Peak Demand",
+    "titleBn": "বিদ্যুৎ উৎপাদন সক্ষমতা বনাম সর্বোচ্চ প্রকৃত চাহিদা",
+    "benchmarkData": "Installed Capacity: ~27,500 – 30,000 MW | Peak Demand Generation: ~15,000 – 16,500 MW",
+    "benchmarkDataBn": "উৎপাদন সক্ষমতা: ~২৭,৫০০ – ৩০,০০০ মেগাওয়াট | সর্বোচ্চ চাহিদা উৎপাদন: ~১৫,০০০ – ১৬,৫০০ মেগাওয়াট",
+    "timeframe": "2024-2025 (BPDB Status)",
+    "timeframeBn": "বিপিডিবি প্রতিবেদন ২০২৪-২০২৫",
+    "source": "Bangladesh Power Development Board (BPDB)",
+    "sourceUrl": "https://bpdb.gov.bd",
+    "category": "AGRI_CLIMATE",
+    "examRelevance": "HIGH",
+    "historicalTrajectory": "Capacity surged from 5,000 MW in 2009 to nearly 30,000 MW, but overcapacity and costly capacity charges paid to idle Independent Power Producers (IPPs) drained public revenue.",
+    "historicalTrajectoryBn": "সক্ষমতা ৩০ হাজার মেগাওয়াট হলেও গ্যাস ও কয়লা সংকটে অলস বসে থাকা রেন্টাল বিদ্যুৎকেন্দ্রকে বিপুল অঙ্কের ক্যাপাসিটি চার্জ দিতে হয়েছে।",
+    "examTip": "Crucial governance issue: Re-negotiating \"No Electricity, No Payment\" contracts and phasing out predatory private rental power contracts to reduce tariff burdens.",
+    "examTipBn": "অযৌক্তিক ক্যাপাসিটি চার্জ বন্ধ এবং ‘নো ইলেকট্রিসিটি, নো পেমেন্ট’ নীতিতে চুক্তি সংশোধনের সুপারিশ দিন।",
+    "relatedTopicNumbers": [
+      6,
+      8
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "BCS_WRITTEN"
+    ],
+    "isVerified": true,
+    "order": 46
+  },
+  {
+    "indicatorKey": "green-banking-transformation-fund",
+    "titleEn": "Green Banking Finance & Refinance Fund (BB GTF)",
+    "titleBn": "সবুজ ব্যাংকিং অর্থায়ন ও বাংলাদেশ ব্যাংকের রূপান্তর তহবিল (GTF)",
+    "benchmarkData": "Total Green Transformation Fund: 00M & €200M | Mandatory Green Lending: 5% of Total Term Loans",
+    "benchmarkDataBn": "সবুজ রূপান্তর তহবিল: $৪০০ মিলিয়ন ও €২০০ মিলিয়ন | বাধ্যতামূলক গ্রিন লেন্ডিং: মোট মেয়াদী ঋণের ৫%",
+    "timeframe": "Sustainable Finance Department (SFD) Policy",
+    "timeframeBn": "টেকসই অর্থায়ন বিভাগ, বাংলাদেশ ব্যাংক",
+    "source": "Bangladesh Bank Sustainable Finance Department",
+    "sourceUrl": "https://www.bb.org.bd",
+    "category": "BANKING",
+    "examRelevance": "HIGH",
+    "historicalTrajectory": "Bangladesh Bank is among global pioneers in issuing green banking guidelines (2011) and establishing low-cost refinancing for effluent treatment (ETP) and LEED-certified factories.",
+    "historicalTrajectoryBn": "বাংলাদেশ তৈরি পোশাকে বিশ্বের সর্বোচ্চ সংখ্যক পরিবেশবান্ধব LEED-সার্টিফাইড কারখানার অধিকারী, যেখানে গ্রিন অর্থায়ন মূল ভূমিকা রেখেছে।",
+    "examTip": "Point out achievement: Bangladesh boasts over 220+ USGBC LEED-certified green garment factories (including 80+ Platinum), the highest in the world.",
+    "examTipBn": "বিশ্বের সর্বোচ্চ ২২০টির বেশি পরিবেশবান্ধব লিড (LEED) সার্টিফাইড গ্রিন গার্মেন্ট কারখানা বাংলাদেশে অবস্থিত—এ তথ্যটি যোগ করুন।",
+    "relatedTopicNumbers": [
+      6,
+      15,
+      32
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "BANKING_REFORM"
+    ],
+    "isVerified": true,
+    "order": 47
+  },
+  {
+    "indicatorKey": "broad-money-m2-growth-target",
+    "titleEn": "Broad Money (M2) Growth Trajectory",
+    "titleBn": "ব্যাপক মুদ্রা সরবরাহ প্রবৃদ্ধি (Broad Money / M2)",
+    "benchmarkData": "Actual Growth: ~7.5% – 8.5% YoY (Central Bank Projection: 9.7%)",
+    "benchmarkDataBn": "প্রকৃত প্রবৃদ্ধি: ~৭.৫% – ৮.৫% (বাংলাদেশ ব্যাংক প্রক্ষেপণ: ৯.৭%)",
+    "timeframe": "FY 2024-25 Monetary Framework",
+    "timeframeBn": "অর্থবছর ২০২৪-২৫",
+    "source": "Bangladesh Bank Monetary Policy Department",
+    "sourceUrl": "https://www.bb.org.bd",
+    "category": "BANKING",
+    "examRelevance": "MEDIUM",
+    "historicalTrajectory": "Controlled money supply growth reflects deliberate efforts by BB to end currency printing (de-monetization of treasury bills) that previously fueled double-digit inflation.",
+    "historicalTrajectoryBn": "কেন্দ্রীয় ব্যাংক কর্তৃক সরকারের জন্য নতুন টাকা ছাপানো বন্ধ করায় এবং সংকোচনমূলক নীতি নেওয়ায় মানি সাপ্লাই প্রবৃদ্ধি হ্রাস পায়।",
+    "examTip": "Mention that central bank halted direct overdraft lending to government, reducing inflationary monetization of the fiscal deficit.",
+    "examTipBn": "ঘাটতি মেটাতে কেন্দ্রীয় ব্যাংক থেকে নতুন টাকা ছাপিয়ে সরকারকে ঋণ দেওয়া বন্ধ করার সংস্কারটি বিস্তারিত করুন।",
+    "relatedTopicNumbers": [
+      1,
+      3
+    ],
+    "tags": [
+      "BB_AD",
+      "MONETARY_POLICY"
+    ],
+    "isVerified": true,
+    "order": 48
+  },
+  {
+    "indicatorKey": "fdi-foreign-direct-investment-net-inflow",
+    "titleEn": "Foreign Direct Investment (FDI) Net Inflows",
+    "titleBn": "প্রত্যক্ষ বিদেশি বিনিয়োগের নিট প্রবাহ (Net FDI)",
+    "benchmarkData": "Net Annual Inflow: ~.4B – .6B (~0.35% of GDP | Below 1% Global Peer Benchmark)",
+    "benchmarkDataBn": "বার্ষিক নিট প্রবাহ: ~$১.৪ – ১.৬ বিলিয়ন (জিডিপির ~০.৩৫% | বৈশ্বিক ১% এর নিচে)",
+    "timeframe": "2024-2025 (BIDA / BB Data)",
+    "timeframeBn": "বিডা ও বাংলাদেশ ব্যাংক প্রতিবেদন",
+    "source": "Bangladesh Investment Development Authority (BIDA) & BB",
+    "sourceUrl": "https://bida.gov.bd",
+    "category": "EXTERNAL_SECTOR",
+    "examRelevance": "HIGH",
+    "historicalTrajectory": "FDI has historically lagged far behind Vietnam (0B+) and India (0B+) due to bureaucratic red tape, tax complexity, and foreign currency repatriation delays.",
+    "historicalTrajectoryBn": "আমলাতান্ত্রিক জটিলতা, লজিস্টিক ঘাটতি ও মুনাফা প্রত্যাবাসনে বাধার কারণে ভিয়েতনামের ($২০ বিলিয়ন) তুলনায় বাংলাদেশ অনেক পিছিয়ে।",
+    "examTip": "Recommendation for focus essays: Implement a genuine National Single Window (NSW) for investors and streamline BIDA one-stop clearance services.",
+    "examTipBn": "বিনিয়োগ আকর্ষণে জাতীয় একক বাতায়ন (National Single Window) কার্যকর করা ও লজিস্টিক সক্ষমতা বাড়ানোর পরামর্শ দিন।",
+    "relatedTopicNumbers": [
+      4,
+      14,
+      26
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO"
+    ],
+    "isVerified": true,
+    "order": 49
+  },
+  {
+    "indicatorKey": "foreign-employment-manpower-migration",
+    "titleEn": "Annual Overseas Employment & Manpower Migration",
+    "titleBn": "বার্ষিক বৈদেশিক কর্মসংস্থান ও অভিবাসী শ্রমিক সংখ্যা",
+    "benchmarkData": "Annual Departures: ~10.5 – 12.0 Lakh Migrant Workers (Middle East Dominates: 80%+)",
+    "benchmarkDataBn": "বার্ষিক বিদেশ গমন: ~১০.৫ – ১২.০ লাখ অভিবাসী কর্মী (মধ্যপ্রাচ্যের হিস্যা: ৮০%+)",
+    "timeframe": "BMET Official Records (2023 - 2024/2025)",
+    "timeframeBn": "জনশক্তি, কর্মসংস্থান ও প্রশিক্ষণ ব্যুরো (BMET)",
+    "source": "Bureau of Manpower, Employment and Training (BMET)",
+    "sourceUrl": "http://www.bmet.gov.bd",
+    "category": "LABOR_DEMOGRAPHY",
+    "examRelevance": "HIGH",
+    "historicalTrajectory": "Record outflow of over 1.2 million workers in 2023 and 1.0+ million in 2024, yet over 70% remain low-skilled manual laborers earning minimal wages.",
+    "historicalTrajectoryBn": "প্রতি বছর ১০-১২ লাখ কর্মী বিদেশে গেলেও তাদের ৭০% এর বেশি অদক্ষ হওয়ায় প্রত্যাশিত উচ্চ রেমিট্যান্স আয় সম্ভব হচ্ছে না।",
+    "examTip": "Strong analytical policy argument: Shifting focus from exporting low-wage physical labor to certified skilled technicians (caregivers, electricians, programmers) to boost remittance per worker.",
+    "examTipBn": "অদক্ষ শ্রমিকের পরিবর্তে দক্ষ ও কারিগরি সনদপ্রাপ্ত কর্মী বিদেশে পাঠালে রেমিট্যান্স প্রবাহ দ্বিগুণ করা সম্ভব।",
+    "relatedTopicNumbers": [
+      7,
+      2
+    ],
+    "tags": [
+      "BB_AD",
+      "COMBINED_SO",
+      "BCS_WRITTEN"
+    ],
+    "isVerified": true,
+    "order": 50
+  }
+]

@@ -60,18 +60,23 @@ export default function MobileGoogleBridgeClient({
       {targetUrl && (
         <a
           href={targetUrl}
+          onClick={() => {
+            window.location.href = targetUrl;
+          }}
           style={{
-            marginTop: '20px',
-            padding: '10px 20px',
+            display: 'inline-block',
+            marginTop: '24px',
+            padding: '14px 28px',
             backgroundColor: '#059669',
             color: '#ffffff',
-            borderRadius: '8px',
+            borderRadius: '12px',
             textDecoration: 'none',
-            fontSize: '14px',
-            fontWeight: '600',
+            fontSize: '16px',
+            fontWeight: '700',
+            boxShadow: '0 4px 12px rgba(5, 150, 105, 0.25)',
           }}
         >
-          সরাসরি অ্যাপে ফিরে যান
+          🚀 PrepOwl অ্যাপে প্রবেশ করুন
         </a>
       )}
     </div>

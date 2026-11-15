@@ -14,9 +14,12 @@ import {
   UserOutlined,
   CheckCircleFilled,
   ClockCircleOutlined,
+  BankOutlined,
+  ThunderboltFilled,
 } from '@ant-design/icons';
 import { getHF333Stats } from '../../actions/hf333.actions';
 import { getTranslationStats } from '../../actions/translation.actions';
+import { getFocusWritingStats } from '../../actions/focus-writing.actions';
 import { getCurrentStudent } from '../../actions/auth.actions';
 
 export default function StudentDashboardPage() {
@@ -24,13 +27,20 @@ export default function StudentDashboardPage() {
   const [student, setStudent] = useState<any>(null);
   const [hfStats, setHfStats] = useState<any>(null);
   const [transStats, setTransStats] = useState<any>(null);
+  const [focusStats, setFocusStats] = useState<any>(null);
 
   useEffect(() => {
-    Promise.all([getCurrentStudent(), getHF333Stats(), getTranslationStats()])
-      .then(([stu, hf, tr]) => {
+    Promise.all([
+      getCurrentStudent(),
+      getHF333Stats(),
+      getTranslationStats(),
+      getFocusWritingStats(),
+    ])
+      .then(([stu, hf, tr, fo]) => {
         setStudent(stu);
         setHfStats(hf);
         setTransStats(tr);
+        setFocusStats(fo);
       })
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
@@ -250,6 +260,58 @@ export default function StudentDashboardPage() {
             </div>
           </Card>
         </div>
+
+        {/* ENGINE 3: Bank Job Focus Writing Studio Spotlight */}
+        <Card className="rounded-3xl border border-blue-100 shadow-md p-6 sm:p-8 bg-linear-to-r from-blue-900 via-indigo-950 to-slate-900 text-white relative overflow-hidden">
+          <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+            <div>
+              <div className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-300 bg-blue-500/20 px-3 py-1 rounded-full mb-3 border border-blue-400/30">
+                <BankOutlined /> NEW • BANGLADESH BANK & COMBINED BANK FOCUS WRITING
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+                ব্যাংক ফোকাস রাইটিং স্টুডিও ও ডেটা ভল্ট
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-300 mt-2 max-w-2xl leading-relaxed">
+                বাংলাদেশ ব্যাংকের উপ-পরিচালক প্রবাল চক্রবর্তী নির্দেশিত শীর্ষ ৩৮টি ফোকাস রাইটিং টপিক। মডেল বিশ্লেষণ, অফিশিয়াল উপাত্ত ফ্ল্যাশকার্ড এবং ১৫ মিনিটের রিয়েল-টাইম সিমুলেটর।
+              </p>
+
+              <div className="flex flex-wrap items-center gap-4 mt-4 text-xs font-semibold">
+                <span className="bg-white/10 px-3 py-1.5 rounded-xl border border-white/15">
+                  📚 ৩৮টি টপিক ({focusStats?.completedTopics || 0} সম্পন্ন)
+                </span>
+                <span className="bg-white/10 px-3 py-1.5 rounded-xl border border-white/15">
+                  🏆 গড় স্কোর: {focusStats?.averageScore > 0 ? `${focusStats.averageScore}/25` : 'N/A'}
+                </span>
+                <span className="bg-white/10 px-3 py-1.5 rounded-xl border border-white/15">
+                  ⚡ ব্যাংক রেডিনেস: {focusStats?.bankReadiness || 0}%
+                </span>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+              <Link href="/focus-writing/stat-vault">
+                <Button
+                  size="large"
+                  icon={<ThunderboltFilled className="text-amber-400" />}
+                  className="bg-white/10 hover:bg-white/20 text-white border-white/30 rounded-xl font-bold h-12 px-5 w-full sm:w-auto"
+                >
+                  স্ট্যাট ভল্ট ড্রিল
+                </Button>
+              </Link>
+
+              <Link href="/focus-writing">
+                <Button
+                  type="primary"
+                  size="large"
+                  icon={<RightOutlined />}
+                  className="bg-blue-500 hover:bg-blue-600 border-none text-white rounded-xl font-black h-12 px-6 w-full sm:w-auto shadow-lg"
+                >
+                  স্টুডিওতে যান
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </Card>
 
         {/* Quick Links Footer */}
         <div className="bg-white rounded-3xl border border-gray-100 p-6 shadow-sm flex flex-col sm:flex-row justify-between items-center gap-4">

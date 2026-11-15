@@ -29,6 +29,7 @@ model User {
   vocabSessions       LearningSession[]
   wordProgress        UserWordProgress[]
   translationAttempts TranslationAttempt[]
+  focusAttempts       FocusAttempt[]
 
   createdAt           DateTime              @default(now())
   updatedAt           DateTime              @updatedAt
@@ -131,4 +132,60 @@ model TranslationAttempt {
   updatedAt     DateTime             @updatedAt
 
   @@index([userId, challengeId])
+}
+
+// ==========================================
+// 4. BANK JOB FOCUS WRITING STUDIO
+// ==========================================
+model FocusTopic {
+  id              String         @id @default(auto()) @map("_id") @db.ObjectId
+  topicNumber     Int            @unique
+  title           String
+  titleBn         String?
+  language        String         // "EN" | "BN"
+  category        String         // "BANKING" | "MACROECONOMY" | "FINTECH" | "GOVERNANCE"
+  targetExams     String[]       // ["BB_AD", "COMBINED_SO", "BCS"]
+  
+  quotation       Json           // { "quote": string, "author": string, "reference": string }
+  introduction    String
+  indicators      Json           // [{ "indicator": string, "data": string, "source": string }]
+  prospects       Json           // [{ "title": string, "explanation": string }]
+  challenges      Json           // [{ "title": string, "explanation": string }]
+  recommendations Json           // [{ "title": string, "explanation": string }]
+  conclusion      String
+  keyVocabulary   Json           // [{ "termEn": string, "termBn": string, "context": string }]
+  fullText        String?
+  intactMarkdown  String?
+  sourceCredit    String?        @default("P2A Academy (p2a.academy)")
+  curator         String?        @default("Probal Chakraborty, Deputy Director, Bangladesh Bank & P2A Mentor Team")
+  sourceUrl       String?        @default("https://www.p2a.academy")
+
+  attempts        FocusAttempt[]
+  createdAt       DateTime       @default(now())
+
+  @@index([language, category])
+}
+
+model FocusAttempt {
+  id                String      @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String
+  user              User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  topicId           String      @db.ObjectId
+  topic             FocusTopic  @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  mode              String      @default("TIMED_SIMULATION") // "TIMED_SIMULATION" | "OUTLINE_BUILDER" | "FREE_PRACTICE"
+  submittedText     String
+  wordCount         Int
+  timeSpentSeconds  Int
+  status            String      @default("COMPLETED") // "DRAFT" | "COMPLETED"
+
+  // AI Examiner Evaluation
+  score             Int?        // Total out of 25 or 30
+  rubricScores      Json?       // { structure: 4, dataUsage: 4, economicAnalysis: 4, policyRecs: 4, language: 4 }
+  aiFeedback        Json?       // { strengths: [], weaknesses: [], missingStats: [], grammarFixes: [], betterPhrasing: "" }
+
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  @@index([userId, topicId])
 }
