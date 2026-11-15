@@ -19,12 +19,11 @@ import {
   CheckCircleFilled,
   CalendarOutlined,
   HomeOutlined,
-  MoreOutlined,
-  CrownOutlined,
-  RobotOutlined,
-  SafetyCertificateOutlined,
   BankOutlined,
   CalculatorOutlined,
+  TrophyOutlined,
+  DownOutlined,
+  AppstoreOutlined,
 } from '@ant-design/icons';
 import { siteConfig } from '../lib/config/site';
 
@@ -50,35 +49,247 @@ export default function Navbar() {
     }
   }, [session]);
 
-  // Primary navigation – most used features
-const primaryNavLinks = [
-  { key: 'dashboard', label: 'ড্যাশবোর্ড', href: '/dashboard', icon: <HomeOutlined /> },
-  { key: 'focus-writing', label: 'ব্যাংক ফোকাস রাইটিং', href: '/focus-writing', icon: <BankOutlined /> },
-  { key: 'hf-333', label: 'ব্যারন ৩৩৩', href: '/high-frequency-333', icon: <FireOutlined /> },
-  { key: 'translation', label: 'অনুবাদ স্টুডিও', href: '/translation', icon: <ReadOutlined /> },
-  { key: 'math', label: 'গণিত প্রস্তুতি', href: '/math', icon: <CalculatorOutlined /> },
-  { key: 'daily-capsule', label: 'দৈনিক ক্যাপসুল', href: '/daily-capsule', icon: <ThunderboltOutlined /> },
-  // { key: 'question-bank', label: 'স্মার্ট প্রশ্নব্যাংক', href: '/question-bank', icon: <BookOutlined /> },
-  { key: 'battle', label: '১‑vs‑১ কুইজ ডুয়েল', href: '/battle', icon: <ThunderboltFilled /> },
-  { key: 'planner', label: 'স্টাডি প্ল্যানার', href: '/planner', icon: <CalendarOutlined /> },
-];
+  // Dropdown Items: Preparation / Subject Modules
+  const prepDropdownItems: MenuProps['items'] = [
+    {
+      key: 'focus-writing',
+      icon: <BankOutlined className="text-emerald-600 text-sm" />,
+      label: (
+        <Link href="/focus-writing" className="font-semibold text-gray-700 text-xs py-1 block">
+          ব্যাংক ফোকাস রাইটিং
+        </Link>
+      ),
+    },
+    {
+      key: 'math',
+      icon: <CalculatorOutlined className="text-blue-600 text-sm" />,
+      label: (
+        <Link href="/math" className="font-semibold text-gray-700 text-xs py-1 block">
+          গণিত প্রস্তুতি
+        </Link>
+      ),
+    },
+    {
+      key: 'translation',
+      icon: <ReadOutlined className="text-indigo-600 text-sm" />,
+      label: (
+        <Link href="/translation" className="font-semibold text-gray-700 text-xs py-1 block">
+          অনুবাদ স্টুডিও
+        </Link>
+      ),
+    },
+    {
+      key: 'hf-333',
+      icon: <FireOutlined className="text-amber-500 text-sm" />,
+      label: (
+        <Link href="/high-frequency-333" className="font-semibold text-gray-700 text-xs py-1 block">
+          ব্যারন ৩৩৩ ভোকাবুলারি
+        </Link>
+      ),
+    },
+    {
+      key: 'words',
+      icon: <BookOutlined className="text-teal-600 text-sm" />,
+      label: (
+        <Link href="/words" className="font-semibold text-gray-700 text-xs py-1 block">
+          ভোকাবুলারি হাব
+        </Link>
+      ),
+    },
+    {
+      key: 'baghdhara',
+      icon: <BookOutlined className="text-rose-500 text-sm" />,
+      label: (
+        <Link href="/bangla/baghdhara" className="font-semibold text-gray-700 text-xs py-1 block">
+          বাংলা বাগধারা
+        </Link>
+      ),
+    },
+  ];
 
-// Secondary navigation – hidden under a "More" dropdown
-const secondaryNavLinks = [
-  { key: 'news-archive', label: 'পত্রিকা আর্কাইভ', href: '/news-archive', icon: <ReadOutlined /> },
-  { key: 'feed', label: 'প্রস্তুতি ফিড', href: '/feed', icon: <ThunderboltFilled /> },
-  { key: 'notebook', label: 'প্রস্তুতি নোটবুক', href: '/notebook', icon: <BookOutlined /> },
-  { key: 'campaign', label: 'ক্যাম্পেইন', href: '/campaign', icon: <CrownOutlined /> },
-  { key: 'words', label: 'ভোকাবুলারি', href: '/words', icon: <BookOutlined /> },
-  { key: 'cloze', label: 'ক্লজ টেস্ট', href: '/cloze', icon: <BookOutlined /> },
-  { key: 'spelling', label: 'বানান শুদ্ধিকরণ', href: '/spelling', icon: <BookOutlined /> },
-  { key: 'flashcards', label: 'রিভিশন কার্ড', href: '/flashcards', icon: <BookOutlined /> },
-  { key: 'baghdhara', label: 'বাগধারা', href: '/bangla/baghdhara', icon: <BookOutlined /> },
-  { key: 'quiz', label: 'মডেল টেস্ট', href: '/quiz', icon: <BookOutlined /> },
-  { key: 'about', label: 'আমাদের সম্পর্কে', href: '/about', icon: <BookOutlined /> },
-];
+  // Dropdown Items: Practice & Tests
+  const practiceDropdownItems: MenuProps['items'] = [
+    {
+      key: 'battle',
+      icon: <ThunderboltFilled className="text-amber-500 text-sm" />,
+      label: (
+        <Link href="/battle" className="font-semibold text-gray-700 text-xs py-1 block">
+          ১‑vs‑১ কুইজ ডুয়েল
+        </Link>
+      ),
+    },
+    {
+      key: 'quiz',
+      icon: <TrophyOutlined className="text-emerald-600 text-sm" />,
+      label: (
+        <Link href="/quiz" className="font-semibold text-gray-700 text-xs py-1 block">
+          মডেল টেস্ট
+        </Link>
+      ),
+    },
+    {
+      key: 'flashcards',
+      icon: <FireOutlined className="text-purple-600 text-sm" />,
+      label: (
+        <Link href="/flashcards" className="font-semibold text-gray-700 text-xs py-1 block">
+          রিভিশন ফ্ল্যাশকার্ড
+        </Link>
+      ),
+    },
+    {
+      key: 'cloze',
+      icon: <ReadOutlined className="text-cyan-600 text-sm" />,
+      label: (
+        <Link href="/cloze" className="font-semibold text-gray-700 text-xs py-1 block">
+          ক্লজ টেস্ট
+        </Link>
+      ),
+    },
+    {
+      key: 'spelling',
+      icon: <CheckCircleFilled className="text-emerald-500 text-sm" />,
+      label: (
+        <Link href="/spelling" className="font-semibold text-gray-700 text-xs py-1 block">
+          বানান শুদ্ধিকরণ
+        </Link>
+      ),
+    },
+    {
+      key: 'question-bank',
+      icon: <BookOutlined className="text-blue-500 text-sm" />,
+      label: (
+        <Link href="/question-bank" className="font-semibold text-gray-700 text-xs py-1 block">
+          স্মার্ট প্রশ্নব্যাংক
+        </Link>
+      ),
+    },
+  ];
 
-const navLinks = [...primaryNavLinks, ...secondaryNavLinks];
+  // Dropdown Items: Resources & Tools
+  const resourceDropdownItems: MenuProps['items'] = [
+    {
+      key: 'planner',
+      icon: <CalendarOutlined className="text-emerald-600 text-sm" />,
+      label: (
+        <Link href="/planner" className="font-semibold text-gray-700 text-xs py-1 block">
+          দৈনিক পড়ার রুটিন ও প্ল্যানার
+        </Link>
+      ),
+    },
+    {
+      key: 'notebook',
+      icon: <BookOutlined className="text-amber-600 text-sm" />,
+      label: (
+        <Link href="/notebook" className="font-semibold text-gray-700 text-xs py-1 block">
+          প্রস্তুতি নোটবুক
+        </Link>
+      ),
+    },
+    {
+      key: 'news-archive',
+      icon: <ReadOutlined className="text-blue-600 text-sm" />,
+      label: (
+        <Link href="/news-archive" className="font-semibold text-gray-700 text-xs py-1 block">
+          পত্রিকা আর্কাইভ
+        </Link>
+      ),
+    },
+    {
+      key: 'feed',
+      icon: <ThunderboltFilled className="text-violet-600 text-sm" />,
+      label: (
+        <Link href="/feed" className="font-semibold text-gray-700 text-xs py-1 block">
+          প্রস্তুতি ফিড
+        </Link>
+      ),
+    },
+    {
+      key: 'mistakes',
+      icon: <ReadOutlined className="text-rose-500 text-sm" />,
+      label: (
+        <Link href="/mistakes" className="font-semibold text-gray-700 text-xs py-1 block">
+          ভুলের খাতা (Mistake Vault)
+        </Link>
+      ),
+    },
+    {
+      key: 'panic-sheet',
+      icon: <ThunderboltOutlined className="text-orange-500 text-sm" />,
+      label: (
+        <Link href="/panic-sheet" className="font-semibold text-gray-700 text-xs py-1 block">
+          পরীক্ষার রিভিশন শিট
+        </Link>
+      ),
+    },
+    { type: 'divider' },
+    {
+      key: 'about',
+      icon: <BookOutlined className="text-gray-500 text-sm" />,
+      label: (
+        <Link href="/about" className="font-semibold text-gray-700 text-xs py-1 block">
+          আমাদের সম্পর্কে
+        </Link>
+      ),
+    },
+  ];
+
+  // Drawer Sections for Mobile
+  const drawerSections = [
+    {
+      title: 'প্রধান মেনু',
+      links: [
+        { key: 'dashboard', label: 'ড্যাশবোর্ড', href: '/dashboard', icon: <HomeOutlined /> },
+        { key: 'daily-capsule', label: 'দৈনিক ক্যাপসুল', href: '/daily-capsule', icon: <ThunderboltOutlined /> },
+      ],
+    },
+    {
+      title: 'বিষয়ভিত্তিক প্রস্তুতি',
+      links: [
+        { key: 'focus-writing', label: 'ব্যাংক ফোকাস রাইটিং', href: '/focus-writing', icon: <BankOutlined /> },
+        { key: 'math', label: 'গণিত প্রস্তুতি', href: '/math', icon: <CalculatorOutlined /> },
+        { key: 'translation', label: 'অনুবাদ স্টুডিও', href: '/translation', icon: <ReadOutlined /> },
+        { key: 'hf-333', label: 'ব্যারন ৩৩৩ ভোকাবুলারি', href: '/high-frequency-333', icon: <FireOutlined /> },
+        { key: 'words', label: 'ভোকাবুলারি হাব', href: '/words', icon: <BookOutlined /> },
+        { key: 'baghdhara', label: 'বাংলা বাগধারা', href: '/bangla/baghdhara', icon: <BookOutlined /> },
+      ],
+    },
+    {
+      title: 'অনুশীলন ও টেস্ট',
+      links: [
+        { key: 'battle', label: '১‑vs‑১ কুইজ ডুয়েল', href: '/battle', icon: <ThunderboltFilled /> },
+        { key: 'quiz', label: 'মডেল টেস্ট', href: '/quiz', icon: <TrophyOutlined /> },
+        { key: 'flashcards', label: 'রিভিশন ফ্ল্যাশকার্ড', href: '/flashcards', icon: <FireOutlined /> },
+        { key: 'cloze', label: 'ক্লজ টেস্ট', href: '/cloze', icon: <ReadOutlined /> },
+        { key: 'spelling', label: 'বানান শুদ্ধিকরণ', href: '/spelling', icon: <CheckCircleFilled /> },
+        { key: 'question-bank', label: 'স্মার্ট প্রশ্নব্যাংক', href: '/question-bank', icon: <BookOutlined /> },
+      ],
+    },
+    {
+      title: 'স্টাডি টুলস ও রিসোর্স',
+      links: [
+        { key: 'planner', label: 'স্টাডি প্ল্যানার', href: '/planner', icon: <CalendarOutlined /> },
+        { key: 'notebook', label: 'প্রস্তুতি নোটবুক', href: '/notebook', icon: <BookOutlined /> },
+        { key: 'news-archive', label: 'পত্রিকা আর্কাইভ', href: '/news-archive', icon: <ReadOutlined /> },
+        { key: 'feed', label: 'প্রস্তুতি ফিড', href: '/feed', icon: <ThunderboltFilled /> },
+        { key: 'mistakes', label: 'ভুলের খাতা', href: '/mistakes', icon: <ReadOutlined /> },
+        { key: 'panic-sheet', label: 'পরীক্ষার রিভিশন শিট', href: '/panic-sheet', icon: <ThunderboltOutlined /> },
+        { key: 'about', label: 'আমাদের সম্পর্কে', href: '/about', icon: <BookOutlined /> },
+      ],
+    },
+  ];
+
+  // Active state detectors for desktop navbar
+  const isDashboardActive = pathname === '/dashboard' || pathname.startsWith('/dashboard/');
+  const isCapsuleActive = pathname === '/daily-capsule' || pathname.startsWith('/daily-capsule/');
+  const isPrepActive = ['/focus-writing', '/math', '/translation', '/high-frequency-333', '/words', '/bangla'].some(
+    (p) => pathname === p || pathname.startsWith(p + '/')
+  );
+  const isPracticeActive = ['/battle', '/quiz', '/flashcards', '/cloze', '/spelling', '/question-bank'].some(
+    (p) => pathname === p || pathname.startsWith(p + '/')
+  );
+  const isResourcesActive = ['/planner', '/notebook', '/news-archive', '/feed', '/mistakes', '/panic-sheet', '/about'].some(
+    (p) => pathname === p || pathname.startsWith(p + '/')
+  );
 
   const userMenuItems: MenuProps['items'] = [
     {
@@ -93,59 +304,14 @@ const navLinks = [...primaryNavLinks, ...secondaryNavLinks];
     },
     { type: 'divider' },
     {
-      key: 'dashboard',
-      label: <Link href="/dashboard">স্টুডেন্ট ড্যাশবোর্ড (Dashboard)</Link>,
-      icon: <HomeOutlined />,
-    },
-    {
-      key: 'hf-333',
-      label: <Link href="/high-frequency-333">ব্যারন ৩৩৩ ভোকাবুলারি (Barron's 333)</Link>,
-      icon: <FireOutlined />,
-    },
-    {
-      key: 'focus-writing',
-      label: <Link href="/focus-writing">ব্যাংক ফোকাস রাইটিং (Focus Writing Studio)</Link>,
-      icon: <BankOutlined />,
-    },
-    {
-      key: 'translation',
-      label: <Link href="/translation">অনুবাদ প্র্যাকটিস স্টুডিও (Translation Studio)</Link>,
-      icon: <ReadOutlined />,
-    },
-    {
       key: 'profile',
       label: <Link href="/profile">আমার প্রোফাইল (My Profile)</Link>,
       icon: <UserOutlined />,
     },
     {
-      key: 'daily-capsule',
-      label: <Link href="/daily-capsule">দৈনিক এক্সাম ক্যাপসুল (Daily Capsule)</Link>,
-      icon: <FireOutlined />,
-    },
-    {
-      key: 'news-archive',
-      label: <Link href="/news-archive">পত্রিকা আর্কাইভ (News Archive)</Link>,
-      icon: <ReadOutlined />,
-    },
-    {
-      key: 'question-bank',
-      label: <Link href="/question-bank">স্মার্ট প্রশ্নব্যাংক (Question Bank)</Link>,
-      icon: <BookOutlined />,
-    },
-    {
-      key: 'battle',
-      label: <Link href="/battle">১-vs-১ কুইজ ডুয়েল (Aspirant Duel)</Link>,
-      icon: <ThunderboltOutlined />,
-    },
-    {
-      key: 'planner',
-      label: <Link href="/planner">দৈনিক পড়ার রুটিন ও প্ল্যানার (Study Planner)</Link>,
-      icon: <CalendarOutlined />,
-    },
-    {
-      key: 'notebook',
-      label: <Link href="/notebook">প্রস্তুতি নোটবুক (Saved Topics)</Link>,
-      icon: <BookOutlined />,
+      key: 'dashboard',
+      label: <Link href="/dashboard">স্টুডেন্ট ড্যাশবোর্ড (Dashboard)</Link>,
+      icon: <HomeOutlined />,
     },
     {
       key: 'my-words',
@@ -206,50 +372,87 @@ const navLinks = [...primaryNavLinks, ...secondaryNavLinks];
             </Link>
           </div>
 
-          {/* Center: Desktop Navigation Links */}
-          <div className="hidden md:flex items-center gap-2">
-            {primaryNavLinks.map((link) => {
-              const isActive =
-                link.href === '/'
-                  ? pathname === '/'
-                  : pathname === link.href || pathname.startsWith(link.href + '/');
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                    isActive
-                      ? 'bg-emerald-50 text-emerald-700 font-black shadow-xs'
-                      : 'text-gray-600 hover:text-emerald-700 hover:bg-gray-50'
-                  }`}
-                >
-                  {link.icon}
-                  <span className="ml-1">{link.label}</span>
-                </Link>
-              );
-            })}
-            <Dropdown
-              menu={{
-                items: secondaryNavLinks.map((link) => ({
-                  key: link.key,
-                  label: (
-                    <Link href={link.href} className="flex items-center">
-                      {link.icon}
-                      <span className="ml-2">{link.label}</span>
-                    </Link>
-                  ),
-                })),
-              }}
-              trigger={['click']}
+          {/* Center: Desktop Navigation Links (Clean & Spacious) */}
+          <div className="hidden md:flex items-center gap-1 lg:gap-2">
+            {/* Dashboard */}
+            <Link
+              href="/dashboard"
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                isDashboardActive
+                  ? 'bg-emerald-50 text-emerald-700 font-black shadow-xs'
+                  : 'text-gray-600 hover:text-emerald-700 hover:bg-gray-50'
+              }`}
             >
-              <Button type="text" icon={<MoreOutlined />} className="text-gray-600 hover:text-emerald-700" />
+              <HomeOutlined />
+              <span>ড্যাশবোর্ড</span>
+            </Link>
+
+            {/* Preparation Modules Dropdown */}
+            <Dropdown menu={{ items: prepDropdownItems }} placement="bottom" trigger={['hover', 'click']}>
+              <button
+                type="button"
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer border-none bg-transparent ${
+                  isPrepActive
+                    ? 'bg-emerald-50 text-emerald-700 font-black shadow-xs'
+                    : 'text-gray-600 hover:text-emerald-700 hover:bg-gray-50'
+                }`}
+              >
+                <BookOutlined />
+                <span>প্রস্তুতি</span>
+                <DownOutlined className="text-[9px] opacity-60" />
+              </button>
+            </Dropdown>
+
+            {/* Daily Capsule */}
+            <Link
+              href="/daily-capsule"
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                isCapsuleActive
+                  ? 'bg-emerald-50 text-emerald-700 font-black shadow-xs'
+                  : 'text-gray-600 hover:text-emerald-700 hover:bg-gray-50'
+              }`}
+            >
+              <ThunderboltOutlined className="text-amber-500" />
+              <span>দৈনিক ক্যাপসুল</span>
+            </Link>
+
+            {/* Practice & Tests Dropdown */}
+            <Dropdown menu={{ items: practiceDropdownItems }} placement="bottom" trigger={['hover', 'click']}>
+              <button
+                type="button"
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer border-none bg-transparent ${
+                  isPracticeActive
+                    ? 'bg-emerald-50 text-emerald-700 font-black shadow-xs'
+                    : 'text-gray-600 hover:text-emerald-700 hover:bg-gray-50'
+                }`}
+              >
+                <TrophyOutlined />
+                <span>অনুশীলন</span>
+                <DownOutlined className="text-[9px] opacity-60" />
+              </button>
+            </Dropdown>
+
+            {/* Tools & Resources Dropdown */}
+            <Dropdown menu={{ items: resourceDropdownItems }} placement="bottom" trigger={['hover', 'click']}>
+              <button
+                type="button"
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer border-none bg-transparent ${
+                  isResourcesActive
+                    ? 'bg-emerald-50 text-emerald-700 font-black shadow-xs'
+                    : 'text-gray-600 hover:text-emerald-700 hover:bg-gray-50'
+                }`}
+              >
+                <AppstoreOutlined />
+                <span>রিসোর্স</span>
+                <DownOutlined className="text-[9px] opacity-60" />
+              </button>
             </Dropdown>
           </div>
 
           {/* Right: Quick Add + Streak + Profile */}
           <div className="flex items-center gap-2">
-            {/* Quick Add Word Button */}
-            <Link href="/add" className="hidden sm:inline-block">
+            {/* Quick Add Word Button (visible on lg+) */}
+            <Link href="/add" className="hidden lg:inline-block">
               <Button
                 type="primary"
                 icon={<PlusOutlined />}
@@ -309,35 +512,47 @@ const navLinks = [...primaryNavLinks, ...secondaryNavLinks];
         placement="left"
         onClose={toggleDrawer}
         open={visible}
-        width={280}
+        width={300}
         closeIcon={<CloseOutlined className="text-gray-700" />}
       >
-        <div className="flex flex-col h-full justify-between pb-6">
-          <nav className="flex flex-col gap-1.5 mt-2">
-            {navLinks.map((item) => {
-              const isActive =
-                item.href === '/'
-                  ? pathname === '/'
-                  : pathname === item.href || pathname.startsWith(item.href + '/');
+        <div className="flex flex-col h-full justify-between pb-4">
+          {/* Categorized Drawer Navigation */}
+          <div className="overflow-y-auto flex-1 pr-1 space-y-4 mt-1">
+            {drawerSections.map((sec) => (
+              <div key={sec.title}>
+                <div className="px-3 pb-1 text-[10px] font-black uppercase tracking-wider text-gray-400">
+                  {sec.title}
+                </div>
+                <nav className="flex flex-col gap-1">
+                  {sec.links.map((item) => {
+                    const isActive =
+                      item.href === '/'
+                        ? pathname === '/'
+                        : pathname === item.href || pathname.startsWith(item.href + '/');
 
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={toggleDrawer}
-                  className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${
-                    isActive
-                      ? 'bg-emerald-600 text-white shadow-xs'
-                      : 'text-gray-700 hover:bg-gray-100'
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-          </nav>
+                    return (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={toggleDrawer}
+                        className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold transition-all ${
+                          isActive
+                            ? 'bg-emerald-600 text-white shadow-xs'
+                            : 'text-gray-700 hover:bg-gray-100'
+                        }`}
+                      >
+                        <span className={isActive ? 'text-white' : 'text-gray-500'}>{item.icon}</span>
+                        <span>{item.label}</span>
+                      </Link>
+                    );
+                  })}
+                </nav>
+              </div>
+            ))}
+          </div>
 
-          <div className="border-t border-gray-100 pt-4">
+          {/* User Auth Section in Drawer Footer */}
+          <div className="border-t border-gray-100 pt-4 mt-2">
             {session?.user ? (
               <div className="space-y-3">
                 <div className="flex items-center gap-2.5 px-2">
