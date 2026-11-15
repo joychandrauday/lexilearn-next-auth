@@ -24,6 +24,7 @@ import {
   RobotOutlined,
   SafetyCertificateOutlined,
   BankOutlined,
+  CalculatorOutlined,
 } from '@ant-design/icons';
 import { siteConfig } from '../lib/config/site';
 
@@ -55,6 +56,7 @@ const primaryNavLinks = [
   { key: 'focus-writing', label: 'ব্যাংক ফোকাস রাইটিং', href: '/focus-writing', icon: <BankOutlined /> },
   { key: 'hf-333', label: 'ব্যারন ৩৩৩', href: '/high-frequency-333', icon: <FireOutlined /> },
   { key: 'translation', label: 'অনুবাদ স্টুডিও', href: '/translation', icon: <ReadOutlined /> },
+  { key: 'math', label: 'গণিত প্রস্তুতি', href: '/math', icon: <CalculatorOutlined /> },
   { key: 'daily-capsule', label: 'দৈনিক ক্যাপসুল', href: '/daily-capsule', icon: <ThunderboltOutlined /> },
   // { key: 'question-bank', label: 'স্মার্ট প্রশ্নব্যাংক', href: '/question-bank', icon: <BookOutlined /> },
   { key: 'battle', label: '১‑vs‑১ কুইজ ডুয়েল', href: '/battle', icon: <ThunderboltFilled /> },
