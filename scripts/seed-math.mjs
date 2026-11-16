@@ -1,24 +1,23 @@
 import mongoose from 'mongoose';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
-// 1. Resolve MONGODB_URI
-const envPath = path.resolve(process.cwd(), '.env.local');
-let mongoUri = process.env.MONGODB_URI;
+// 1. Resolve MONGODB_URI Helper
+function getMongoUri() {
+  const envPath = path.resolve(process.cwd(), '.env.local');
+  let mongoUri = process.env.MONGODB_URI;
 
-if (!mongoUri && fs.existsSync(envPath)) {
-  const content = fs.readFileSync(envPath, 'utf8');
-  for (const line of content.split('\n')) {
-    if (line.startsWith('MONGODB_URI=')) {
-      mongoUri = line.substring(line.indexOf('=') + 1).trim();
-      break;
+  if (!mongoUri && fs.existsSync(envPath)) {
+    const content = fs.readFileSync(envPath, 'utf8');
+    for (const line of content.split('\n')) {
+      if (line.startsWith('MONGODB_URI=')) {
+        mongoUri = line.substring(line.indexOf('=') + 1).trim();
+        break;
+      }
     }
   }
-}
-
-if (!mongoUri) {
-  console.error('MONGODB_URI not found in environment or .env.local');
-  process.exit(1);
+  return mongoUri;
 }
 
 // 2. Define Mongoose Schemas
@@ -74,8 +73,8 @@ const MathFormulaVaultSchema = new mongoose.Schema(
 const MathProblem = mongoose.models.MathProblem || mongoose.model('MathProblem', MathProblemSchema);
 const MathFormulaVault = mongoose.models.MathFormulaVault || mongoose.model('MathFormulaVault', MathFormulaVaultSchema);
 
-// 3. Rich Dataset
-const PROBLEMS = [
+// 3. Rich Dataset Curated for Bank, BCS, & Primary Jobs
+export const PROBLEMS = [
   // ========================================================
   // 🏦 STREAM: BANK MATH (English Medium - IBA/BIBM Pattern)
   // ========================================================
@@ -109,7 +108,7 @@ const PROBLEMS = [
     options: ['15%', '20%', '25%', '30%'],
     correctAnswer: '20%',
     shortcutSolution: 'Required Reduction% = $\\frac{r}{100 + r} \\times 100\\% = \\frac{25}{125} \\times 100\\% = \\frac{1}{5} \\times 100\\% = 20\\%$.',
-    detailedSolution: 'Let the initial price of 100 units of sugar be $100.\nNew price after 25% increase = $125.\nTo keep the expenditure at $100, the household must buy $100 worth of sugar at the new rate of $125.\nReduction needed = $125 - 100 = 25$.\nPercentage reduction = $\\frac{25}{125} \\times 100\\% = 20\\%$.\nHence, consumption must be decreased by 20%.',
+    detailedSolution: 'Let the initial price of 100 units of sugar be $100.\nNew price after 25% increase = $125.\nTo keep expenditure at $100, consumption must be reduced by 25 units from 125.\nPercentage reduction = $\\frac{25}{125} \\times 100\\% = 20\\%$.',
     formulaUsed: ['Reduction% = (r / (100 + r)) * 100%'],
     examTags: ['Janata Bank Officer 2020', 'BB AD 2019'],
     repeatCount: 11,
@@ -119,18 +118,54 @@ const PROBLEMS = [
     stream: 'bank',
     language: 'en',
     category: 'arithmetic',
+    topic: 'profit_loss',
+    subtopic: 'markup_discount',
+    difficulty: 'medium',
+    tier: 'preli_mcq',
+    question: 'A trader marks his goods 30% above the cost price and allows a discount of 15% on the marked price. What is his net gain percentage?',
+    options: ['10%', '10.5%', '12%', '15%'],
+    correctAnswer: '10.5%',
+    shortcutSolution: 'Net Gain% = $\\text{Markup} - \\text{Discount} - \\frac{\\text{Markup} \\times \\text{Discount}}{100} = 30 - 15 - \\frac{450}{100} = 15 - 4.5 = 10.5\\%$.',
+    detailedSolution: 'Let the Cost Price (CP) = $100.\nMarked Price (MP) = $100 + 30% of $100 = $130.\nDiscount = 15% on $130 = $0.15 \\times 130 = $19.50.\nSelling Price (SP) = $130 - $19.50 = $110.50.\nNet Gain = $110.50 - $100 = $10.50, which is 10.5%.',
+    formulaUsed: ['Net Gain% = a - b - (ab/100)'],
+    examTags: ['Bangladesh Bank AD 2022', 'Combined 8 Banks 2023'],
+    repeatCount: 8,
+    isTopFrequent: true,
+  },
+  {
+    stream: 'bank',
+    language: 'en',
+    category: 'arithmetic',
     topic: 'simple_compound_interest',
-    subtopic: 'ci_si_difference',
+    subtopic: 'ci_si_difference_2yr',
     difficulty: 'hard',
     tier: 'both',
     question: 'The difference between simple interest and compound interest compounded annually on a certain sum of money for 2 years at 10% per annum is $65. Find the principal sum.',
     options: ['$6,000', '$6,500', '$7,000', '$7,500'],
     correctAnswer: '$6,500',
     shortcutSolution: 'For 2 years: $\\text{Difference} = P \\times \\left(\\frac{r}{100}\\right)^2$.\n$65 = P \\times \\left(\\frac{10}{100}\\right)^2 = P \\times \\frac{1}{100} \\implies P = 65 \\times 100 = 6,500$.',
-    detailedSolution: 'Let the principal sum be $P$.\nSimple Interest for 2 years at 10%:\n$SI = \\frac{P \\times r \\times t}{100} = \\frac{P \\times 10 \\times 2}{100} = 0.20P$.\n\nCompound Interest for 2 years at 10%:\n$CI = P \\left(1 + \\frac{r}{100}\\right)^t - P = P(1.10)^2 - P = 1.21P - P = 0.21P$.\n\nGiven difference:\n$CI - SI = 65$\n$0.21P - 0.20P = 65 \\implies 0.01P = 65$\n$P = \\frac{65}{0.01} = 6,500$.\nHence, the principal sum is $6,500.',
+    detailedSolution: 'Let principal sum be $P$.\nSimple Interest for 2 years at 10% = $\\frac{P \\times 10 \\times 2}{100} = 0.20P$.\nCompound Interest for 2 years at 10% = $P(1.10)^2 - P = 1.21P - P = 0.21P$.\nDifference = $0.21P - 0.20P = 0.01P = 65 \\implies P = \\frac{65}{0.01} = $6,500.',
     formulaUsed: ['Diff for 2 yrs = P*(r/100)^2'],
     examTags: ['Bangladesh Bank AD 2023', 'Agrani Bank Officer 2020'],
     repeatCount: 9,
+    isTopFrequent: true,
+  },
+  {
+    stream: 'bank',
+    language: 'en',
+    category: 'arithmetic',
+    topic: 'simple_compound_interest',
+    subtopic: 'ci_si_difference_3yr',
+    difficulty: 'hard',
+    tier: 'both',
+    question: 'The difference between compound interest and simple interest on a sum of money for 3 years at 10% per annum is $93. Find the principal sum.',
+    options: ['$2,800', '$3,000', '$3,200', '$3,500'],
+    correctAnswer: '$3,000',
+    shortcutSolution: '3-year CI-SI difference: $D_3 = P \\left(\\frac{r}{100}\\right)^2 \\left(3 + \\frac{r}{100}\\right)$.\n$93 = P \\left(\\frac{10}{100}\\right)^2 \\left(3 + 0.1\\right) = P(0.01)(3.1) = 0.031P \\implies P = \\frac{93}{0.031} = 3,000$.',
+    detailedSolution: 'Given $r = 10\\%, t = 3$ years, $D_3 = $93.\nSimple Interest $SI = \\frac{P \\times 10 \\times 3}{100} = 0.30P$.\nCompound Interest $CI = P(1.10)^3 - P = 1.331P - P = 0.331P$.\nDifference = $0.331P - 0.30P = 0.031P = 93 \\implies P = \\frac{93}{0.031} = $3,000.',
+    formulaUsed: ['D3 = P * (r/100)^2 * (3 + r/100)'],
+    examTags: ['Bangladesh Bank AD 2022', 'Combined 9 Banks 2023'],
+    repeatCount: 6,
     isTopFrequent: true,
   },
   {
@@ -145,10 +180,46 @@ const PROBLEMS = [
     options: ['4/9', '5/9', '1/3', '2/9'],
     correctAnswer: '4/9',
     shortcutSolution: 'LCM of 12 and 18 = 36 units (total work).\nA rate = 3 units/day, B rate = 2 units/day. Total = 5 units/day.\nIn 4 days: $4 \\times 5 = 20$ units done. Left = $36 - 20 = 16$ units.\nFraction unfinished = $16 / 36 = 4/9$.',
-    detailedSolution: 'Work done by A in 1 day = $1/12$.\nWork done by B in 1 day = $1/18$.\nCombined work done in 1 day = $\\frac{1}{12} + \\frac{1}{18} = \\frac{3 + 2}{36} = \\frac{5}{36}$.\nIn 4 days, work completed = $4 \\times \\frac{5}{36} = \\frac{20}{36} = \\frac{5}{9}$.\nTherefore, remaining work = $1 - \\frac{5}{9} = \\frac{4}{9}$.',
+    detailedSolution: 'Work done by A in 1 day = $1/12$.\nWork done by B in 1 day = $1/18$.\nCombined work done in 1 day = $\\frac{1}{12} + \\frac{1}{18} = \\frac{5}{36}$.\nIn 4 days, work completed = $4 \\times \\frac{5}{36} = \\frac{20}{36} = \\frac{5}{9}$.\nTherefore, remaining work = $1 - \\frac{5}{9} = \\frac{4}{9}$.',
     formulaUsed: ['Combined Rate = 1/A + 1/B'],
     examTags: ['Sonali Bank Officer 2022', 'Combined Senior Officer 2021'],
     repeatCount: 8,
+    isTopFrequent: true,
+  },
+  {
+    stream: 'bank',
+    language: 'en',
+    category: 'time_motion',
+    topic: 'time_work',
+    subtopic: 'alternate_days',
+    difficulty: 'hard',
+    tier: 'written',
+    question: 'A can complete a project in 20 days and B can complete it in 30 days. If they work on alternate days starting with A, in how many days will the work be completed?',
+    options: ['22 days', '24 days', '25 days', '26 days'],
+    correctAnswer: '24 days',
+    shortcutSolution: 'Total work = $\\text{LCM}(20, 30) = 60$ units.\nA efficiency = 3 units/day; B efficiency = 2 units/day.\nIn 2 days (A + B) = $3 + 2 = 5$ units.\nTo complete 60 units: $\\frac{60}{5} = 12$ cycles of 2 days = $12 \\times 2 = 24$ days.',
+    detailedSolution: 'Let the total work be 60 units.\nA does $\\frac{60}{20} = 3$ units per day.\nB does $\\frac{60}{30} = 2$ units per day.\nDay 1 (A): 3 units done.\nDay 2 (B): 2 units done.\nEvery 2-day block: $3 + 2 = 5$ units of work completed.\nTotal blocks needed = $\\frac{60}{5} = 12$ blocks.\nTotal time taken = $12 \\times 2 = 24$ days.',
+    formulaUsed: ['Cycle method for alternate days'],
+    examTags: ['Combined Senior Officer Written 2023', 'BB AD 2021'],
+    repeatCount: 6,
+    isTopFrequent: false,
+  },
+  {
+    stream: 'bank',
+    language: 'en',
+    category: 'time_motion',
+    topic: 'pipes_cisterns',
+    subtopic: 'fill_and_leak',
+    difficulty: 'medium',
+    tier: 'both',
+    question: 'A tap can fill an empty cistern in 8 hours, but due to a leak at the bottom, it takes 10 hours to fill it. If the cistern is completely full, in how many hours will the leak empty it alone?',
+    options: ['32 hours', '36 hours', '40 hours', '45 hours'],
+    correctAnswer: '40 hours',
+    shortcutSolution: 'Emptying time = $\\frac{x \\times y}{y - x} = \\frac{8 \\times 10}{10 - 8} = \\frac{80}{2} = 40$ hours.',
+    detailedSolution: 'Work done by the inlet tap in 1 hour = $1/8$.\nNet work done by inlet tap + leak in 1 hour = $1/10$.\nWork done by leak in 1 hour = $\\frac{1}{8} - \\frac{1}{10} = \\frac{5 - 4}{40} = \\frac{1}{40}$.\nTherefore, the leak alone will empty the full cistern in 40 hours.',
+    formulaUsed: ['Time = xy / (y - x)'],
+    examTags: ['Bangladesh Bank AD 2020', 'Sonali Bank Officer 2022'],
+    repeatCount: 7,
     isTopFrequent: true,
   },
   {
@@ -181,11 +252,29 @@ const PROBLEMS = [
     options: ['1 km/h', '2 km/h', '3 km/h', '4 km/h'],
     correctAnswer: '2 km/h',
     shortcutSolution: 'Downstream speed $D = 24/2 = 12$ km/h. Upstream speed $U = 16/2 = 8$ km/h.\nStream Speed = $\\frac{D - U}{2} = \\frac{12 - 8}{2} = 2$ km/h.',
-    detailedSolution: 'Let the speed of the boat in still water be $u$ km/h and speed of the stream be $v$ km/h.\nDownstream speed: $u + v = \\frac{24}{2} = 12$ km/h ... (i)\nUpstream speed: $u - v = \\frac{16}{2} = 8$ km/h ... (ii)\nSubtracting equation (ii) from (i):\n$(u + v) - (u - v) = 12 - 8$\n$2v = 4 \\implies v = 2$ km/h.\nThus, the speed of the water current is 2 km/h.',
+    detailedSolution: 'Let speed in still water be $u$ and stream speed be $v$.\n$u + v = 24/2 = 12$\n$u - v = 16/2 = 8$\nSubtracting: $2v = 12 - 8 = 4 \\implies v = 2$ km/h.',
     formulaUsed: ['Stream Speed = (Downstream - Upstream) / 2'],
     examTags: ['Combined Senior Officer 2022', 'BB AD 2018'],
     repeatCount: 6,
     isTopFrequent: false,
+  },
+  {
+    stream: 'bank',
+    language: 'en',
+    category: 'arithmetic',
+    topic: 'mixtures_alligations',
+    subtopic: 'alligation_ratio',
+    difficulty: 'medium',
+    tier: 'both',
+    question: 'In what ratio must a grocer mix tea costing $60 per kg with tea costing $65 per kg so that by selling the mixture at $68.20 per kg he makes a profit of 10%?',
+    options: ['3 : 2', '2 : 3', '3 : 4', '4 : 3'],
+    correctAnswer: '3 : 2',
+    shortcutSolution: 'Mean Cost Price = $\\frac{68.20}{1.10} = $62$.\nBy Alligation: $\\frac{65 - 62}{62 - 60} = \\frac{3}{2}$. Ratio is 3 : 2.',
+    detailedSolution: 'Selling price of mixture = $68.20 at 10% profit.\nCost Price of mixture = $\\frac{68.20}{1 + 0.10} = \\frac{68.20}{1.1} = $62 per kg.\nUsing rule of alligation:\nCheaper rate = $60, Dearer rate = $65, Mean rate = $62.\n$\\frac{\\text{Quantity of Cheaper}}{\\text{Quantity of Dearer}} = \\frac{65 - 62}{62 - 60} = \\frac{3}{2}$.\nHence, the required ratio is 3 : 2.',
+    formulaUsed: ['Alligation: (d - m) / (m - c)'],
+    examTags: ['Bangladesh Bank AD 2023', 'Janata Bank 2021'],
+    repeatCount: 7,
+    isTopFrequent: true,
   },
   {
     stream: 'bank',
@@ -217,34 +306,52 @@ const PROBLEMS = [
     options: ['1/11', '1/22', '2/11', '3/22'],
     correctAnswer: '1/11',
     shortcutSolution: 'Total balls = 12. Blue balls = 4.\n$P(\\text{both blue}) = \\frac{4}{12} \\times \\frac{3}{11} = \\frac{1}{3} \\times \\frac{3}{11} = \\frac{1}{11}$.',
-    detailedSolution: 'Total number of balls = $5 + 4 + 3 = 12$.\nNumber of ways to choose any 2 balls from 12 = $^{12}C_2 = \\frac{12 \\times 11}{2 \\times 1} = 66$.\nNumber of ways to choose 2 blue balls from 4 = $^4C_2 = \\frac{4 \\times 3}{2 \\times 1} = 6$.\nProbability = $\\frac{^4C_2}{^{12}C_2} = \\frac{6}{66} = \\frac{1}{11}$.\nHence, the required probability is 1/11.',
+    detailedSolution: 'Total number of balls = $5 + 4 + 3 = 12$.\nTotal ways to pick 2 balls = $^{12}C_2 = 66$.\nWays to pick 2 blue balls = $^4C_2 = 6$.\nProbability = $6 / 66 = 1/11$.',
     formulaUsed: ['P(Event) = Favorable / Total Combinations'],
     examTags: ['Bangladesh Bank AD 2020', 'Combined 9 Banks 2023'],
     repeatCount: 7,
     isTopFrequent: true,
   },
-  {
-    stream: 'bank',
-    language: 'en',
-    category: 'algebra',
-    topic: 'linear_quadratic_eq',
-    subtopic: 'roots_ratio',
-    difficulty: 'hard',
-    tier: 'written',
-    question: 'Solve for x: $\\frac{x + 2}{x - 2} + \\frac{x - 2}{x + 2} = \\frac{10}{3}$, where $x \\ne \\pm 2$.',
-    options: ['x = ±4', 'x = ±3', 'x = ±5', 'x = ±1'],
-    correctAnswer: 'x = ±4',
-    shortcutSolution: 'Let $y = \\frac{x+2}{x-2}$. Then $y + \\frac{1}{y} = \\frac{10}{3} \\implies y = 3$ or $1/3$.\nIf $\\frac{x+2}{x-2} = 3 \\implies x+2 = 3x - 6 \\implies 2x = 8 \\implies x = 4$.\nIf $\\frac{x+2}{x-2} = 1/3 \\implies 3x+6 = x-2 \\implies 2x = -8 \\implies x = -4$.\nSolution: $x = \\pm 4$.',
-    detailedSolution: 'Given equation: $\\frac{x + 2}{x - 2} + \\frac{x - 2}{x + 2} = \\frac{10}{3}$\nStep 1: Substitute $y = \\frac{x + 2}{x - 2}$. The equation becomes:\n$y + \\frac{1}{y} = \\frac{10}{3}$\n$\\frac{y^2 + 1}{y} = \\frac{10}{3} \\implies 3y^2 + 3 = 10y$\n$3y^2 - 10y + 3 = 0$\n$3y^2 - 9y - y + 3 = 0$\n$3y(y - 3) - 1(y - 3) = 0$\n$(3y - 1)(y - 3) = 0 \\implies y = 3 \\text{ or } y = \\frac{1}{3}$.\n\nCase 1: When $y = 3$:\n$\\frac{x + 2}{x - 2} = 3 \\implies x + 2 = 3x - 6 \\implies 2x = 8 \\implies x = 4$.\n\nCase 2: When $y = 1/3$:\n$\\frac{x + 2}{x - 2} = \\frac{1}{3} \\implies 3x + 6 = x - 2 \\implies 2x = -8 \\implies x = -4$.\nTherefore, the solutions are $x = \\pm 4$.',
-    formulaUsed: ['Substitution method for reciprocal equations'],
-    examTags: ['Combined Senior Officer Written 2021', 'BB AD Written 2019'],
-    repeatCount: 6,
-    isTopFrequent: false,
-  },
 
   // ========================================================
   // 🏛️ STREAM: BCS MATH (Bengali Medium - BPSC Syllabus)
   // ========================================================
+  {
+    stream: 'bcs',
+    language: 'bn',
+    category: 'arithmetic',
+    topic: 'percentage',
+    subtopic: 'price_expenditure',
+    difficulty: 'easy',
+    tier: 'preli_mcq',
+    question: 'চিনির মূল্য ২৫% বৃদ্ধি পাওয়াতে একটি পরিবার চিনির ব্যবহার এমনভাবে কমালো যাতে চিনি বাবদ খরচ অপরিবর্তিত থাকে। পরিবারটি চিনির ব্যবহার শতকরা কত কমালো?',
+    options: ['20%', '25%', '16.67%', '15%'],
+    correctAnswer: '20%',
+    shortcutSolution: 'ব্যবহার হ্রাসের হার = $\\frac{R}{100 + R} \\times 100\\% = \\frac{25}{125} \\times 100\\% = 20\\%$।',
+    detailedSolution: 'ধরি, পূর্বে ১০০ টাকায় পাওয়া যেত ১০০ কেজি চিনি।\nবর্তমানে চিনির মূল্য ২৫% বেড়ে হওয়ায় ১০০ কেজি চিনির দাম ১২৫ টাকা।\nখরচ অপরিবর্তিত রাখতে ১২৫ টাকার বদলে খরচ করতে হবে ১০০ টাকা।\nসুতরাং চিনি কম ব্যবহার করতে হবে = ১২৫ - ১০০ = ২৫ কেজি।\nব্যবহার হ্রাসের শতকরা হার = $\\frac{২৫}{১২৫} \\times ১০০\\% = ২০\\%$।',
+    formulaUsed: ['হ্রাস% = (R / (100 + R)) * 100%'],
+    examTags: ['৪৩তম বিসিএস প্রিলিমিনারি', '৩৫তম বিসিএস'],
+    repeatCount: 16,
+    isTopFrequent: true,
+  },
+  {
+    stream: 'bcs',
+    language: 'bn',
+    category: 'arithmetic',
+    topic: 'profit_loss',
+    subtopic: 'unit_price_trick',
+    difficulty: 'easy',
+    tier: 'preli_mcq',
+    question: 'টাকায় ৩টি করে লেবু কিনে টাকায় ২টি করে বিক্রি করলে শতকরা কত লাভ হবে?',
+    options: ['33.33%', '50%', '25%', '60%'],
+    correctAnswer: '50%',
+    shortcutSolution: 'টাকায় ক্রয়-বিক্রয়ের শর্টকাট: লাভ% = $\\frac{\\text{ক্রয় সংখ্যা} - \\text{বিক্রয় সংখ্যা}}{\\text{বিক্রয় সংখ্যা}} \\times 100\\% = \\frac{3 - 2}{2} \\times 100\\% = 50\\%$।',
+    detailedSolution: '৩টি লেবুর ক্রয়মূল্য = ১ টাকা $\\implies$ ১টি লেবুর ক্রয়মূল্য = ১/৩ টাকা।\n২টি লেবুর বিক্রয়মূল্য = ১ টাকা $\\implies$ ১টি লেবুর বিক্রয়মূল্য = ১/২ টাকা।\nমোট লাভ = $\\frac{১}{২} - \\frac{১}{৩} = \\frac{৩ - ২}{৬} = \\frac{১}{৬}$ টাকা।\nশতকরা লাভ = $\\frac{১/৬}{১/৩} \\times ১০০\\% = \\frac{৩}{৬} \\times ১০০\\% = ৫০\\%$।',
+    formulaUsed: ['Profit% = ((Buy Count - Sell Count) / Sell Count) * 100%'],
+    examTags: ['৪০তম বিসিএস প্রিলিমিনারি', '৩৭তম বিসিএস'],
+    repeatCount: 18,
+    isTopFrequent: true,
+  },
   {
     stream: 'bcs',
     language: 'bn',
@@ -257,7 +364,7 @@ const PROBLEMS = [
     options: ['4', '6', '8', '9'],
     correctAnswer: '8',
     shortcutSolution: '$81 = 3^4 = (\\sqrt{3}^2)^4 = (\\sqrt{3})^8$। অতএব, $\\log_{\\sqrt{3}} (\\sqrt{3})^8 = 8$।',
-    detailedSolution: 'ধরি, $\\log_{\\sqrt{3}} 81 = x$\nলগারিদমের সংজ্ঞা অনুযায়ী: $(\\sqrt{3})^x = 81$\n$\\implies (3^{1/2})^x = 3^4$\n$\\implies 3^{x/2} = 3^4$\nউভয়পক্ষের ভিত্তি ৩ হওয়ায় সূচক সমান হবে:\n$\\implies \\frac{x}{2} = 4 \\implies x = 8$\nসুতরাং নির্ণেয় মান হলো ৮।',
+    detailedSolution: 'ধরি, $\\log_{\\sqrt{3}} 81 = x$\nলগারিদমের সংজ্ঞা অনুযায়ী: $(\\sqrt{3})^x = 81$\n$\\implies (3^{1/2})^x = 3^4 \\implies 3^{x/2} = 3^4$\n$\\implies \\frac{x}{2} = 4 \\implies x = 8$।',
     formulaUsed: ['log_a (a^x) = x', 'sqrt(a) = a^(1/2)'],
     examTags: ['৪৪তম বিসিএস প্রিলিমিনারি', '৩৭তম বিসিএস প্রিলিমিনারি'],
     repeatCount: 11,
@@ -275,7 +382,7 @@ const PROBLEMS = [
     options: ['18', '27', '36', '9'],
     correctAnswer: '18',
     shortcutSolution: 'যদি $x + \\frac{1}{x} = k$ হয়, তবে $x^3 + \\frac{1}{x^3} = k^3 - 3k$।\nএখানে $k = 3$, সুতরাং $3^3 - 3(3) = 27 - 9 = 18$।',
-    detailedSolution: 'আমরা জানি, $a^3 + b^3 = (a + b)^3 - 3ab(a + b)$\nএখানে $a = x$ এবং $b = \\frac{1}{x}$ বসিয়ে পাই:\n$x^3 + \\frac{1}{x^3} = \\left(x + \\frac{1}{x}\\right)^3 - 3 \\cdot x \\cdot \\frac{1}{x} \\left(x + \\frac{1}{x}\\right)$\n$= (3)^3 - 3(1)(3) = 27 - 9 = 18$\nঅতএব নির্ণেয় মান ১৮।',
+    detailedSolution: 'আমরা জানি, $a^3 + b^3 = (a + b)^3 - 3ab(a + b)$\nএখানে $a = x$ এবং $b = 1/x$:\n$x^3 + \\frac{1}{x^3} = (3)^3 - 3(1)(3) = 27 - 9 = 18$।',
     formulaUsed: ['a^3 + b^3 = (a+b)^3 - 3ab(a+b)', 'k^3 - 3k shortcut'],
     examTags: ['৪৫তম বিসিএস প্রিলিমিনারি', '৪১তম বিসিএস প্রিলিমিনারি'],
     repeatCount: 14,
@@ -284,91 +391,73 @@ const PROBLEMS = [
   {
     stream: 'bcs',
     language: 'bn',
-    category: 'modern_math',
-    topic: 'set_venn',
-    subtopic: 'union_intersection',
-    difficulty: 'medium',
+    category: 'algebra',
+    topic: 'series_progressions',
+    subtopic: 'natural_number_sum',
+    difficulty: 'easy',
     tier: 'preli_mcq',
-    question: '৫০ জন শিক্ষার্থীর মধ্যে ৩৫ জন ইংরেজিতে এবং ২৫ জন বাংলায় পাস করেছে। উভয় বিষয়ে ১৫ জন পাস করলে, কতজন শিক্ষার্থী উভয় বিষয়েই ফেল করেছে?',
-    options: ['5 জন', '10 জন', '15 জন', '8 জন'],
-    correctAnswer: '5 জন',
-    shortcutSolution: 'অন্তত একটি বিষয়ে পাস = $n(E \\cup B) = 35 + 25 - 15 = 45$ জন।\nউভয় বিষয়ে ফেল = মোট - পাস = $50 - 45 = 5$ জন।',
-    detailedSolution: 'সার্বিক সেট $n(U) = ৫০$\nইংরেজি পাস শিক্ষার্থীর সেট $n(E) = ৩৫$\nবাংলা পাস শিক্ষার্থীর সেট $n(B) = ২৫$\nউভয় বিষয়ে পাস $n(E \\cap B) = ১৫$\n\nআমরা জানি, অন্তত একটি বিষয়ে পাস শিক্ষার্থীর সংখ্যা:\n$n(E \\cup B) = n(E) + n(B) - n(E \\cap B)$\n$= ৩৫ + ২৫ - ১৫ = ৪৫ জন।\n\nসুতরাং কোনো বিষয়ে পাস করেনি বা উভয় বিষয়ে ফেল করেছে:\n$n(E \\cup B)^c = n(U) - n(E \\cup B) = ৫০ - ৪৫ = ৫$ জন।',
-    formulaUsed: ['n(A U B) = n(A) + n(B) - n(A n B)'],
-    examTags: ['৪০তম বিসিএস প্রিলিমিনারি', '৩৮তম বিসিএস'],
-    repeatCount: 9,
+    question: '১ + ২ + ৩ + ৪ + ... + ৫০ = কত?',
+    options: ['1225', '1250', '1275', '1300'],
+    correctAnswer: '1275',
+    shortcutSolution: '১ থেকে $n$ পর্যন্ত স্বাভাবিক সংখ্যার সমষ্টি = $\\frac{n(n + 1)}{2} = \\frac{50 \\times 51}{2} = 25 \\times 51 = 1275$।',
+    detailedSolution: 'সমান্তর ধারার ১ম পদ $a = 1$, সাধারণ অন্তর $d = 1$, পদসংখ্যা $n = 50$।\nসমষ্টি $S_n = \\frac{n(n + 1)}{2}$\n$S_{50} = \\frac{50(50 + 1)}{2} = \\frac{50 \\times 51}{2} = 25 \\times 51 = 1275$।',
+    formulaUsed: ['Sum of first n natural numbers = n(n+1)/2'],
+    examTags: ['৪৪তম বিসিএস প্রিলিমিনারি', '৩৮তম বিসিএস'],
+    repeatCount: 15,
     isTopFrequent: true,
   },
   {
     stream: 'bcs',
     language: 'bn',
     category: 'geometry',
-    topic: 'lines_angles_triangles',
-    subtopic: 'polygon_angles',
+    topic: 'triangles_polygons',
+    subtopic: 'equilateral_triangle',
     difficulty: 'medium',
     tier: 'preli_mcq',
-    question: 'একটি সুষম পঞ্চভুজের প্রতিটি অন্তঃকোণের মান কত ডিগ্রি?',
-    options: ['108°', '120°', '72°', '135°'],
-    correctAnswer: '108°',
-    shortcutSolution: 'প্রতিটি বহিঃকোণ = $\\frac{360^\\circ}{n} = \\frac{360^\\circ}{5} = 72^\\circ$।\nপ্রতিটি অন্তঃকোণ = $180^\\circ - 72^\\circ = 108^\\circ$।',
-    detailedSolution: '$n$ বাহুবিশিষ্ট সুষম বহুভুজের অন্তঃকোণগুলোর সমষ্টি = $(2n - 4) \\times 90^\\circ$\nপঞ্চভুজের ক্ষেত্রে $n = 5$:\nমোট অন্তঃকোণের সমষ্টি = $(2 \\times 5 - 4) \\times 90^\\circ = 6 \\times 90^\\circ = 540^\\circ$\nযেহেতু সুষম পঞ্চভুজের ৫টি কোণই সমান:\nপ্রতিটি অন্তঃকোণের মান = $\\frac{540^\\circ}{5} = 108^\\circ$।',
-    formulaUsed: ['Total Angle = (2n - 4) * 90°', 'Interior = 180° - (360°/n)'],
-    examTags: ['৪২তম বিসিএস', '৩৮তম বিসিএস প্রিলিমিনারি'],
-    repeatCount: 7,
-    isTopFrequent: true,
-  },
-  {
-    stream: 'bcs',
-    language: 'bn',
-    category: 'mental_ability',
-    topic: 'numerical_ability',
-    subtopic: 'number_series',
-    difficulty: 'easy',
-    tier: 'preli_mcq',
-    question: '১, ৪, ৯, ১৬, ২৫, ... ধারাটির পরবর্তী পদটি কত?',
-    options: ['30', '36', '49', '32'],
-    correctAnswer: '36',
-    shortcutSolution: 'ধারার পদগুলো হলো স্বাভাবিক সংখ্যার বর্গ: $1^2, 2^2, 3^2, 4^2, 5^2, \\dots$\nপরবর্তী পদ = $6^2 = 36$।',
-    detailedSolution: 'ধারাটির বিশ্লেষণ:\n১ম পদ = $1^2 = 1$\n২য় পদ = $2^2 = 4$\n৩য় পদ = $3^2 = 9$\n৪র্থ পদ = $4^2 = 16$\n৫ম পদ = $5^2 = 25$\nঅতএব ৬ষ্ঠ পদ হবে = $6^2 = 36$।',
-    formulaUsed: ['Square Series: n^2'],
-    examTags: ['৪৪তম বিসিএস মানসিক দক্ষতা', '৩৫তম বিসিএস'],
-    repeatCount: 12,
-    isTopFrequent: true,
-  },
-  {
-    stream: 'bcs',
-    language: 'bn',
-    category: 'mental_ability',
-    topic: 'mechanical_reasoning',
-    subtopic: 'clock_angle',
-    difficulty: 'medium',
-    tier: 'preli_mcq',
-    question: 'দুপুর ২টা ১৫ মিনিটে ঘড়ির ঘণ্টার কাঁটা ও মিনিটের কাঁটার মধ্যবর্তী কোণ কত ডিগ্রি?',
-    options: ['22.5°', '30°', '37.5°', '45°'],
-    correctAnswer: '22.5°',
-    shortcutSolution: 'ঘড়ির কাঁটার কোণ নির্ণয়ের সূত্র: $\\theta = \\left| \\frac{60H - 11M}{2} \\right|$\nএখানে $H = 2, M = 15$:\n$\\theta = \\left| \\frac{60(2) - 11(15)}{2} \\right| = \\left| \\frac{120 - 165}{2} \\right| = \\left| \\frac{-45}{2} \\right| = 22.5^\\circ$।',
-    detailedSolution: 'ঘড়ির ঘণ্টার কাঁটা ৬০ মিনিটে যায় ৩০ ডিগ্রি এবং মিনিটের কাঁটা মিনিটে যায় ৬ ডিগ্রি।\nসরাসরি প্রমিত সূত্রের সাহায্যে:\nকোণ $\\theta = \\left| \\frac{60H - 11M}{2} \\right|$\nযেখানে ঘণ্টা $H = 2$ এবং মিনিট $M = 15$\n$\\theta = \\left| \\frac{60 \\times 2 - 11 \\times 15}{2} \\right|$\n$= \\left| \\frac{120 - 165}{2} \\right| = \\frac{45}{2} = 22.5^\\circ$\nঅতএব নির্ণেয় কোণ হলো ২২.৫ ডিগ্রি।',
-    formulaUsed: ['Clock Angle: |(60H - 11M) / 2|'],
-    examTags: ['৪৩তম বিসিএস মানসিক দক্ষতা', '৩৭তম বিসিএস'],
-    repeatCount: 10,
-    isTopFrequent: true,
-  },
-  {
-    stream: 'bcs',
-    language: 'bn',
-    category: 'arithmetic',
-    topic: 'real_numbers_primes',
-    subtopic: 'prime_counting',
-    difficulty: 'easy',
-    tier: 'preli_mcq',
-    question: '৩০ থেকে ৫০ এর মধ্যবর্তী মৌলিক সংখ্যাগুলোর যোগফল কত?',
-    options: ['199', '180', '197', '201'],
-    correctAnswer: '199',
-    shortcutSolution: '৩০ থেকে ৫০ এর মধ্যে মৌলিক সংখ্যা রয়েছে ৫টি: ৩১, ৩৭, ৪১, ৪৩, ৪৭।\nযোগফল = $31 + 37 + 41 + 43 + 47 = 199$।',
-    detailedSolution: '৩০ থেকে ৫০ এর মধ্যকার সংখ্যাগুলো বিবেচনা করি:\n• ৩১ (মৌলিক)\n• ৩৭ (মৌলিক)\n• ৪১ (মৌলিক)\n• ৪৩ (মৌলিক)\n• ৪৭ (মৌলিক)\nমোট ৫টি মৌলিক সংখ্যা পাওয়া গেল।\nএদের যোগফল = $৩১ + ৩৭ + ৪১ + ৪৩ + ৪৭ = ১৯৯$।',
-    formulaUsed: ['Prime number identification rules'],
+    question: 'একটি সমবাহু ত্রিভুজের বাহুর দৈর্ঘ্য ৪ সেমি হলে এর ক্ষেত্রফল কত বর্গ সেমি?',
+    options: ['4√3', '8√3', '12√3', '16√3'],
+    correctAnswer: '4√3',
+    shortcutSolution: 'সমবাহু ত্রিভুজের ক্ষেত্রফল = $\\frac{\\sqrt{3}}{4} a^2 = \\frac{\\sqrt{3}}{4} \\times 4^2 = 4\\sqrt{3}$ বর্গ সেমি।',
+    detailedSolution: 'সমবাহু ত্রিভুজের প্রতিটি বাহুর দৈর্ঘ্য $a = ৪$ সেমি।\nক্ষেত্রফলের প্রমিত সূত্র:\n$\\text{Area} = \\frac{\\sqrt{3}}{4} a^2 = \\frac{\\sqrt{3}}{4} \\times 16 = 4\\sqrt{3}$ বর্গ সেমি।',
+    formulaUsed: ['Area of equilateral triangle = (sqrt(3)/4) * a^2'],
     examTags: ['৪৬তম বিসিএস প্রিলিমিনারি', '৪১তম বিসিএস'],
-    repeatCount: 8,
+    repeatCount: 13,
+    isTopFrequent: true,
+  },
+  {
+    stream: 'bcs',
+    language: 'bn',
+    category: 'geometry',
+    topic: 'triangles_polygons',
+    subtopic: 'pythagoras_triplet',
+    difficulty: 'easy',
+    tier: 'preli_mcq',
+    question: 'একটি সমকোণী ত্রিভুজের লম্ব ও ভূমির দৈর্ঘ্য যথাক্রমে ৬ সেমি ও ৮ সেমি হলে, এর অতিভুজের দৈর্ঘ্য কত সেমি?',
+    options: ['9 সেমি', '10 সেমি', '12 সেমি', '14 সেমি'],
+    correctAnswer: '10 সেমি',
+    shortcutSolution: 'পিথাগোরাসের ৩ : ৪ : ৫ ত্রয়ী দ্বিগুণ হয়ে ৬ : ৮ : ১০ হয়েছে। অতএব অতিভুজ = ১০ সেমি।',
+    detailedSolution: 'পিথাগোরাসের উপপাদ্য অনুযায়ী:\n$\\text{অতিভুজ}^২ = \\text{লম্ব}^২ + \\text{ভূমি}^২ = ৬^২ + ৮^২ = ৩৬ + ৬৪ = ১০০$\n$\\implies \\text{অতিভুজ} = \\sqrt{১০০} = ১০$ সেমি।',
+    formulaUsed: ['Hypotenuse^2 = Base^2 + Perpendicular^2'],
+    examTags: ['৪৪তম বিসিএস প্রিলিমিনারি', '৩৯তম বিসিএস'],
+    repeatCount: 14,
+    isTopFrequent: true,
+  },
+  {
+    stream: 'bcs',
+    language: 'bn',
+    category: 'modern_math',
+    topic: 'permutation_combination',
+    subtopic: 'handshake_problem',
+    difficulty: 'easy',
+    tier: 'preli_mcq',
+    question: 'একটি অনুষ্ঠানে ১০ জন অতিথি উপস্থিত ছিলেন। প্রত্যেকে প্রত্যেকের সাথে একবার করে হ্যান্ডশেক করলে মোট কতটি হ্যান্ডশেক হবে?',
+    options: ['45 টি', '90 টি', '100 টি', '50 টি'],
+    correctAnswer: '45 টি',
+    shortcutSolution: 'হ্যান্ডশেক সংখ্যা = $^{n}C_2 = \\frac{n(n - 1)}{2} = \\frac{10 \\times 9}{2} = 45$ টি।',
+    detailedSolution: '১টি হ্যান্ডশেক হতে যেকোনো ২ জন ব্যক্তির প্রয়োজন হয়।\n১০ জন থেকে যেকোনো ২ জনকে বাছাই করার উপায় = $^{10}C_2$\n$= \\frac{10!}{2! (10 - 2)!} = \\frac{10 \\times 9}{2 \\times 1} = 45$ টি।',
+    formulaUsed: ['Handshakes = n(n-1)/2'],
+    examTags: ['৪২তম বিসিএস প্রিলিমিনারি', '৩৬তম বিসিএস'],
+    repeatCount: 12,
     isTopFrequent: true,
   },
 
@@ -387,28 +476,10 @@ const PROBLEMS = [
     options: ['১০ জন', '১২ জন', '২৫ জন', '১০ জন অতিরিক্ত'],
     correctAnswer: '১০ জন অতিরিক্ত',
     shortcutSolution: '$M_1 D_1 = M_2 D_2 \\implies 15 \\times 20 = M_2 \\times 12 \\implies M_2 = \\frac{300}{12} = 25$ জন।\nঅতিরিক্ত লোক = $25 - 15 = 10$ জন।',
-    detailedSolution: 'ঐকিক নিয়মের সমাধান:\n২০ দিনে কাজটি সম্পন্ন করতে লাগে = ১৫ জন লোক\n১ দিনে কাজটি সম্পন্ন করতে লাগবে = $(15 \\times 20)$ জন লোক\n১২ দিনে কাজটি সম্পন্ন করতে লাগবে = $\\frac{15 \\times 20}{12} = \\frac{300}{12} = 25$ জন লোক।\n\nপূর্বের লোকসংখ্যা ছিল ১৫ জন।\nসুতরাং অতিরিক্ত লোকের প্রয়োজন = $25 - 15 = 10$ জন।',
+    detailedSolution: 'ঐকিক নিয়মের সমাধান:\n২০ দিনে কাজটি সম্পন্ন করতে লাগে = ১৫ জন লোক\n১ দিনে লাগবে = $(15 \\times 20)$ জন\n১২ দিনে লাগবে = $\\frac{15 \\times 20}{12} = 25$ জন লোক।\nঅতিরিক্ত লোকের প্রয়োজন = $25 - 15 = 10$ জন।',
     formulaUsed: ['M1 * D1 = M2 * D2'],
     examTags: ['প্রাথমিক সহকারী শিক্ষক নিয়োগ ২০২৩', '১৭তম শিক্ষক নিবন্ধন (NTRCA)'],
     repeatCount: 16,
-    isTopFrequent: true,
-  },
-  {
-    stream: 'primary_ntrca',
-    language: 'bn',
-    category: 'arithmetic',
-    topic: 'profit_loss',
-    subtopic: 'selling_price',
-    difficulty: 'easy',
-    tier: 'preli_mcq',
-    question: 'একটি কলম ৫০ টাকায় ক্রয় করে ৫৬ টাকায় বিক্রি করলে শতকরা কত লাভ হবে?',
-    options: ['10%', '12%', '14%', '15%'],
-    correctAnswer: '12%',
-    shortcutSolution: 'লাভ = $56 - 50 = 6$ টাকা। শতকরা লাভ = $\\frac{6}{50} \\times 100\\% = 12\\%$।',
-    detailedSolution: 'ক্রয়মূল্য = ৫০ টাকা\nবিক্রয়মূল্য = ৫৬ টাকা\nলাভ = বিক্রয়মূল্য - ক্রয়মূল্য = $৫৬ - ৫০ = ৬$ টাকা।\n৫০ টাকায় লাভ হয় = ৬ টাকা\n১০০ টাকায় লাভ হয় = $\\frac{৬ \\times ১০০}{৫০} = ১২$ টাকা।\nঅতএব শতকরা লাভ ১২%।',
-    formulaUsed: ['Profit% = (Profit / CP) * 100%'],
-    examTags: ['প্রাথমিক সহকারী শিক্ষক নিয়োগ ২০২২', '১৬তম শিক্ষক নিবন্ধন'],
-    repeatCount: 18,
     isTopFrequent: true,
   },
   {
@@ -423,46 +494,10 @@ const PROBLEMS = [
     options: ['20%', '25%', '15%', '30%'],
     correctAnswer: '25%',
     shortcutSolution: 'সুদ-আসল $n$ গুণ হওয়ার শর্টকাট: সুদের হার $r = \\frac{n - 1}{t} \\times 100\\%$।\nএখানে $n = 3, t = 8$:\n$r = \\frac{3 - 1}{8} \\times 100\\% = \\frac{2}{8} \\times 100\\% = 25\\%$।',
-    detailedSolution: 'ধরি, মূলধন (আসল) $P = ১০০$ টাকা।\n৮ বছরে সুদে-আসলে ৩ গুণ হলে, সুদ-আসল $A = ১০০ \\times ৩ = ৩০০$ টাকা।\nমোট সুদ $I = A - P = ৩০০ - ১০০ = ২০০$ টাকা।\nসময় $t = ৮$ বছর।\nআমরা জানি, $I = \\frac{P \\times r \\times t}{100}$\n$\\implies ২০০ = \\frac{১০০ \\times r \\times ৮}{১০০}$\n$\\implies ২০০ = ৮r \\implies r = \\frac{২০০}{৮} = ২৫\\%$\nঅতএব বার্ষিক সুদের হার ২৫%।',
+    detailedSolution: 'ধরি, আসল $P = ১০০$ টাকা। সুদে-আসলে ৩ গুণ হলে $A = ৩০০$ টাকা।\nসুদ $I = ৩০০ - ১০০ = ২০০$ টাকা।\nআমরা জানি, $I = \\frac{P \\times r \\times t}{100} \\implies ২০০ = \\frac{১০০ \\times r \\times ৮}{১০০} \\implies ৮r = ২০০ \\implies r = ২৫\\%$।',
     formulaUsed: ['Rate r = (n-1)/t * 100%'],
     examTags: ['১৮তম শিক্ষক নিবন্ধন (স্কুল)', 'প্রাথমিক সহকারী শিক্ষক ২০২০'],
     repeatCount: 15,
-    isTopFrequent: true,
-  },
-  {
-    stream: 'primary_ntrca',
-    language: 'bn',
-    category: 'geometry',
-    topic: 'angles_triangles',
-    subtopic: 'triangle_angles',
-    difficulty: 'easy',
-    tier: 'preli_mcq',
-    question: 'একটি সমকোণী ত্রিভুজের সূক্ষ্মকোণদ্বয়ের অনুপাত ২ : ৩ হলে, ক্ষুদ্রতম কোণটির মান কত?',
-    options: ['30°', '36°', '45°', '54°'],
-    correctAnswer: '36°',
-    shortcutSolution: 'সমকোণী ত্রিভুজের সূক্ষ্মকোণদ্বয়ের সমষ্টি $90^\\circ$।\nঅনুপাতের যোগফল = $2 + 3 = 5$।\nক্ষুদ্রতম কোণ = $90^\\circ \\times \\frac{2}{5} = 36^\\circ$।',
-    detailedSolution: 'সমকোণী ত্রিভুজের একটি কোণ সমকোণ বা $90^\\circ$।\nযেহেতু ত্রিভুজের তিন কোণের সমষ্টি $180^\\circ$, তাই অপর সূক্ষ্মকোণ দুটির সমষ্টি $= 180^\\circ - 90^\\circ = 90^\\circ$।\nদেওয়া আছে সূক্ষ্মকোণ দুটির অনুপাত ২ : ৩।\nধরি কোণ দুটি যথাক্রমে $2x$ এবং $3x$।\nপ্রশ্নমতে, $2x + 3x = 90^\\circ \\implies 5x = 90^\\circ \\implies x = 18^\\circ$\nক্ষুদ্রতম কোণটির মান = $2x = 2 \\times 18^\\circ = 36^\\circ$।',
-    formulaUsed: ['Acute angles sum in right triangle = 90°'],
-    examTags: ['প্রাথমিক নিয়োগ পরীক্ষা ২০২১', '১৫তম শিক্ষক নিবন্ধন'],
-    repeatCount: 13,
-    isTopFrequent: true,
-  },
-  {
-    stream: 'primary_ntrca',
-    language: 'bn',
-    category: 'algebra',
-    topic: 'square_cube_formulas',
-    subtopic: 'ab_formula',
-    difficulty: 'medium',
-    tier: 'preli_mcq',
-    question: 'যদি $a + b = 7$ এবং $a - b = 3$ হয়, তবে $ab$ এর মান কত?',
-    options: ['10', '12', '14', '16'],
-    correctAnswer: '10',
-    shortcutSolution: '$ab = \\left(\\frac{a+b}{2}\\right)^2 - \\left(\\frac{a-b}{2}\\right)^2 = \\left(\\frac{7}{2}\\right)^2 - \\left(\\frac{3}{2}\\right)^2 = \\frac{49 - 9}{4} = \\frac{40}{4} = 10$।',
-    detailedSolution: 'আমরা জানি, $ab$ এর বীজগণিতীয় অনুসিদ্ধান্ত সূত্র:\n$ab = \\left(\\frac{a + b}{2}\\right)^2 - \\left(\\frac{a - b}{2}\\right)^2$\nমান বসিয়ে পাই:\n$ab = \\left(\\frac{7}{2}\\right)^2 - \\left(\\frac{3}{2}\\right)^2 = \\frac{49}{4} - \\frac{9}{4} = \\frac{40}{4} = 10$\nসুতরাং $ab$ এর মান ১০।',
-    formulaUsed: ['ab = ((a+b)/2)^2 - ((a-b)/2)^2'],
-    examTags: ['হিসাব মহানিয়ন্ত্রক (CGA) ২০২২', '১৭তম শিক্ষক নিবন্ধন'],
-    repeatCount: 14,
     isTopFrequent: true,
   },
   {
@@ -477,7 +512,7 @@ const PROBLEMS = [
     options: ['308', '298', '318', '288'],
     correctAnswer: '308',
     shortcutSolution: 'অপর সংখ্যা = $\\frac{\\text{লসাগু} \\times \\text{গসাগু}}{\\text{একটি সংখ্যা}} = \\frac{7700 \\times 11}{275} = \\frac{7700}{25} = 308$।',
-    detailedSolution: 'আমরা জানি, দুটি সংখ্যার গুণফল = সংখ্যাদ্বয়ের লসাগু × সংখ্যাদ্বয়ের গসাগু।\n$\\text{একটি সংখ্যা} \\times \\text{অপর সংখ্যা} = \\text{লসাগু} \\times \\text{গসাগু}$\n$\\implies ২৭৫ \\times \\text{অপর সংখ্যা} = ৭৭০০ \\times ১১$\n$\\implies \\text{অপর সংখ্যা} = \\frac{৭৭০০ \\times ১১}{২৭৫}$\nলব ও হরকে ১১ দিয়ে ভাগ করলে:\n$\\implies \\text{অপর সংখ্যা} = \\frac{৭৭০০}{২৫} = ৩০৮$\nঅতএব অপর সংখ্যাটি হলো ৩০৮।',
+    detailedSolution: 'আমরা জানি, সংখ্যা দুটির গুণফল = লসাগু × গসাগু।\n$\\text{একটি সংখ্যা} \\times \\text{অপর সংখ্যা} = ৭৭০০ \\times ১১$\n$\\implies \\text{অপর সংখ্যা} = \\frac{৭৭০০ \\times ১১}{২৭৫} = ৩০৮$।',
     formulaUsed: ['Number1 * Number2 = LCM * GCD'],
     examTags: ['প্রাথমিক সহকারী শিক্ষক নিয়োগ ২০১৯', '১৪তম শিক্ষক নিবন্ধন'],
     repeatCount: 17,
@@ -495,7 +530,7 @@ const PROBLEMS = [
     options: ['35 বছর', '40 বছর', '42 বছর', '45 বছর'],
     correctAnswer: '35 বছর',
     shortcutSolution: 'অনুপাতের ব্যবধান উভয় ক্ষেত্রে ১ ($8-7 = 1$ এবং $3-2 = 1$)।\n১ অনুপাত = ৫ বছর।\nপিতার বর্তমান বয়স = $7 \\times 5 = 35$ বছর।',
-    detailedSolution: 'ধরি, পিতার বর্তমান বয়স = $7x$ বছর\nএবং পুত্রের বর্তমান বয়স = $2x$ বছর।\n৫ বছর পর তাদের বয়স হবে যথাক্রমে $(7x + 5)$ এবং $(2x + 5)$ বছর।\nপ্রশ্নমতে,\n$\\frac{7x + 5}{2x + 5} = \\frac{8}{3}$\n$\\implies 3(7x + 5) = 8(2x + 5)$\n$\\implies 21x + 15 = 16x + 40$\n$\\implies 21x - 16x = 40 - 15$\n$\\implies 5x = 25 \\implies x = 5$\nপিতার বর্তমান বয়স = $7x = 7 \\times 5 = 35$ বছর।',
+    detailedSolution: 'ধরি, পিতার বয়স $7x$ ও পুত্রের বয়স $2x$।\n৫ বছর পর অনুপাত:\n$\\frac{7x + 5}{2x + 5} = \\frac{8}{3} \\implies 3(7x + 5) = 8(2x + 5)$\n$\\implies 21x + 15 = 16x + 40 \\implies 5x = 25 \\implies x = 5$\nপিতার বর্তমান বয়স = $7 \\times 5 = 35$ বছর।',
     formulaUsed: ['Age ratio linear equation'],
     examTags: ['প্রাথমিক শিক্ষক নিয়োগ ২০২২ (২য় ধাপ)', '১৮তম শিক্ষক নিবন্ধন'],
     repeatCount: 15,
@@ -503,69 +538,254 @@ const PROBLEMS = [
   },
 ];
 
-const FORMULA_VAULTS = [
-  // Bank Formulas
+// 4. Comprehensive Formula Vaults (14 Topics for Bank, BCS & Primary)
+export const FORMULA_VAULTS = [
+  // ==========================================
+  // BANK FORMULA VAULTS
+  // ==========================================
   {
     stream: 'bank',
     category: 'arithmetic',
     topic: 'percentage',
-    title: 'Percentage & Commercial Math Formulas',
-    titleBn: 'শতকরা ও বাণিজ্যিক গণিত সূত্রাবলী',
+    title: 'Percentage, Markup & Discount Formulas',
+    titleBn: 'শতকরা, মার্কআপ ও ক্রমান্বয়িক ছাড়ের সূত্রাবলি',
     formulas: [
       {
         name: 'Successive Percentage Change',
-        latex: '\\text{Net Change} = a + b + \\frac{ab}{100}',
-        explanation: 'Use + for increase/profit and - for decrease/loss/discount.',
-        shortcutHack: 'If value increases by x% and then decreases by x%, there is always a net loss of (x^2 / 100)%.',
-        sampleApplication: 'Price +20% then -20% -> Loss of 400/100 = 4%.',
+        latex: '\\text{Net Change}\\% = a + b + \\frac{a \\times b}{100}',
+        explanation: 'Use positive (+) for increase/markup and negative (-) for discount/reduction.',
+        shortcutHack: 'If a value is increased by x% and then decreased by x%, there is always a net loss of (x² / 100)%.',
+        sampleApplication: 'Price increases 20% then drops 20% -> Net loss = 400/100 = 4%.',
       },
       {
-        name: 'Difference between CI and SI for 2 Years',
-        latex: '\\text{Diff}_2 = P \\times \\left(\\frac{r}{100}\\right)^2',
-        explanation: 'Directly yields principal P when 2-year CI-SI difference is given.',
-        shortcutHack: 'Saves 2 minutes of calculating multi-step compound powers.',
-        sampleApplication: 'If diff is $65 at 10%, P = 65 * 100 = $6,500.',
+        name: 'Successive Discount on Marked Price',
+        latex: '\\text{Single Equivalent Discount} = d_1 + d_2 - \\frac{d_1 \\times d_2}{100}',
+        explanation: 'Two successive discounts d1 and d2 can be combined into one single discount percentage.',
+        shortcutHack: '20% and 10% discounts = 20 + 10 - 2 = 28% total discount.',
+        sampleApplication: 'MP = $500. Selling Price = 500 * (1 - 0.28) = $360.',
       },
     ],
     cheatSheetSummary: [
-      'Ratio method converts percentages to easy fractions: 12.5% = 1/8, 16.67% = 1/6, 33.33% = 1/3.',
-      'Always calculate Profit/Loss on Cost Price unless specified otherwise.',
+      'Fraction Equivalents: 12.5% = 1/8, 16.67% = 1/6, 20% = 1/5, 33.33% = 1/3, 37.5% = 3/8.',
+      'Discount is ALWAYS calculated on Marked Price (MP).',
+      'Profit and Loss is ALWAYS calculated on Cost Price (CP) unless specified.',
+    ],
+  },
+  {
+    stream: 'bank',
+    category: 'arithmetic',
+    topic: 'simple_compound_interest',
+    title: 'Simple & Compound Interest Studio',
+    titleBn: 'সরল ও চক্রবৃদ্ধি মুনাফার পার্থক্য ও শর্টকাট',
+    formulas: [
+      {
+        name: 'Difference between CI and SI for 2 Years',
+        latex: 'D_2 = P \\times \\left(\\frac{r}{100}\\right)^2',
+        explanation: 'Direct formula when the difference between Compound Interest and Simple Interest for 2 years is given.',
+        shortcutHack: 'Saves 2 minutes of calculating multi-step compound binomials.',
+        sampleApplication: 'If 2-year difference at 10% is $65: P = 65 / (0.10)^2 = $6,500.',
+      },
+      {
+        name: 'Difference between CI and SI for 3 Years',
+        latex: 'D_3 = P \\times \\left(\\frac{r}{100}\\right)^2 \\times \\left(3 + \\frac{r}{100}\\right)',
+        explanation: 'Calculates the 3-year CI and SI difference or principal directly.',
+        shortcutHack: 'If r = 10%, D3 = P * 0.01 * 3.1 = 0.031 * P.',
+        sampleApplication: 'If 3-year diff at 10% is $93: P = 93 / 0.031 = $3,000.',
+      },
+    ],
+    cheatSheetSummary: [
+      'Simple Interest: SI = (P * r * t) / 100.',
+      'Half-yearly compounding: r becomes r/2 and t becomes 2t.',
+      'Quarterly compounding: r becomes r/4 and t becomes 4t.',
+    ],
+  },
+  {
+    stream: 'bank',
+    category: 'time_motion',
+    topic: 'time_work',
+    title: 'Time, Work & Pipes & Cisterns',
+    titleBn: 'সময় ও কাজ এবং নল-চৌবাচ্চার কার্যক্ষমতা সূত্র',
+    formulas: [
+      {
+        name: 'Two Workers Joint Rate',
+        latex: '\\text{Time taken together} = \\frac{x \\times y}{x + y}',
+        explanation: 'When worker A takes x days and worker B takes y days to complete the same task.',
+        shortcutHack: 'Use LCM method: Total Work = LCM(x, y); add individual daily efficiencies.',
+        sampleApplication: 'A in 12 days, B in 18 days: Total work = 36 units. Rate = 5 units/day. Time = 36/5 = 7.2 days.',
+      },
+      {
+        name: 'Inlet and Leak Combined Emptying Time',
+        latex: '\\text{Emptying Time} = \\frac{x \\times y}{y - x}',
+        explanation: 'When inlet fills in x hours but takes y hours due to a leak.',
+        shortcutHack: 'Direct 1-step product over difference.',
+        sampleApplication: 'Fills in 8 hrs, leak makes it 10 hrs: 8*10 / (10-8) = 80/2 = 40 hours.',
+      },
+    ],
+    cheatSheetSummary: [
+      'Work = Rate × Time.',
+      'If efficiencies of A and B are in ratio 3 : 2, time taken is in ratio 2 : 3.',
+      'Negative work concept applies to drain pipes / leaks.',
     ],
   },
   {
     stream: 'bank',
     category: 'time_motion',
     topic: 'speed_time_distance',
-    title: 'Speed, Time, Distance & Trains Formulas',
+    title: 'Speed, Time, Distance & Trains',
     titleBn: 'গতিবেগ, দূরত্ব ও ট্রেন সংক্রান্ত সূত্রাবলী',
     formulas: [
       {
         name: 'km/h to m/s Conversion',
         latex: '1 \\text{ km/h} = \\frac{5}{18} \\text{ m/s}, \\quad 1 \\text{ m/s} = \\frac{18}{5} \\text{ km/h}',
-        explanation: 'Multiplication by 5/18 converts speed from kilometers/hour to meters/second instantly.',
-        shortcutHack: 'Multiples of 18 km/h easily translate to multiples of 5 m/s (e.g. 54 km/h = 15 m/s).',
-        sampleApplication: '72 km/h * (5/18) = 20 m/s.',
+        explanation: 'Multiplication by 5/18 converts speed from km/h to m/s instantly.',
+        shortcutHack: 'Multiples of 18 km/h correspond to multiples of 5 m/s (e.g. 54 km/h = 15 m/s, 72 km/h = 20 m/s).',
+        sampleApplication: '54 km/h * (5/18) = 15 m/s.',
       },
       {
         name: 'Relative Speed',
-        latex: 'S_{rel} = S_1 + S_2 \\text{ (Opposite Direction)}, \\quad S_{rel} = |S_1 - S_2| \\text{ (Same Direction)}',
-        explanation: 'When two objects move towards each other, speeds add up; moving in same direction, speeds subtract.',
-        shortcutHack: 'Time to cross = Total distance / Relative speed.',
-        sampleApplication: 'Two trains moving opposite at 60 and 40 km/h: S_rel = 100 km/h.',
+        latex: 'S_{\\text{rel}} = S_1 + S_2 \\text{ (Opposite)}, \\quad S_{\\text{rel}} = |S_1 - S_2| \\text{ (Same)}',
+        explanation: 'Add speeds when objects travel in opposite directions; subtract when in the same direction.',
+        shortcutHack: 'Crossing time = (Length of Train 1 + Length of Train 2) / Relative Speed.',
+        sampleApplication: 'Two trains at 60 & 40 km/h opposite: S_rel = 100 km/h.',
       },
     ],
     cheatSheetSummary: [
-      'When train crosses pole/man, distance = train length.',
-      'When train crosses platform/bridge, distance = train length + platform length.',
+      'Average Speed for equal distances: 2xy / (x + y).',
+      'When crossing a pole or standing man, distance = length of the train only.',
+      'When crossing a platform or bridge, distance = length of train + length of platform.',
+    ],
+  },
+  {
+    stream: 'bank',
+    category: 'time_motion',
+    topic: 'boats_streams',
+    title: 'Boats & Streams Speed Rules',
+    titleBn: 'নৌকা ও স্রোতের অনুকূল-প্রতিকূল বেগ সূত্রাবলী',
+    formulas: [
+      {
+        name: 'Speed in Still Water & Stream Speed',
+        latex: 'u = \\frac{D + U}{2}, \\quad v = \\frac{D - U}{2}',
+        explanation: 'Where D = Downstream speed, U = Upstream speed, u = still water speed, v = stream speed.',
+        shortcutHack: 'Still water speed is the arithmetic average of downstream and upstream speeds.',
+        sampleApplication: 'Downstream = 12 km/h, Upstream = 8 km/h -> Stream = (12-8)/2 = 2 km/h.',
+      },
+    ],
+    cheatSheetSummary: [
+      'Downstream Speed = Speed of boat in still water + Speed of stream.',
+      'Upstream Speed = Speed of boat in still water - Speed of stream.',
+    ],
+  },
+  {
+    stream: 'bank',
+    category: 'arithmetic',
+    topic: 'mixtures_alligations',
+    title: 'Mixtures & Rule of Alligation',
+    titleBn: 'মিশ্রণ ও অ্যালিগেশনের গোল্ডেন রুল',
+    formulas: [
+      {
+        name: 'Rule of Alligation',
+        latex: '\\frac{Q_{\\text{cheaper}}}{Q_{\\text{dearer}}} = \\frac{C_{\\text{dearer}} - M}{M - C_{\\text{cheaper}}}',
+        explanation: 'Calculates the ratio in which two ingredients of different prices must be mixed to produce a desired mean price M.',
+        shortcutHack: 'Draw the cross-diagonal difference diagram for instant mental arithmetic.',
+        sampleApplication: 'Cheaper $60, Dearer $65, Mean $62 -> (65-62)/(62-60) = 3/2.',
+      },
+    ],
+    cheatSheetSummary: [
+      'Alligation can be applied to profit/loss, average weights, and simple interest mixtures.',
+      'Always express mean price in the same unit and Cost Price terms.',
+    ],
+  },
+  {
+    stream: 'bank',
+    category: 'modern_math',
+    topic: 'permutation_combination',
+    title: 'Permutations, Combinations & Probability',
+    titleBn: 'বিন্যাস, সমাবেশ ও সম্ভাব্যতা সূত্রাবলী',
+    formulas: [
+      {
+        name: 'Permutations & Combinations Fundamental',
+        latex: '^{n}P_r = \\frac{n!}{(n - r)!}, \\quad ^{n}C_r = \\frac{n!}{r!(n - r)!}',
+        explanation: 'Permutations count ordered arrangements; combinations count selection of groups.',
+        shortcutHack: 'nC2 = n(n-1)/2; nCr = nC(n-r).',
+        sampleApplication: 'Choose 2 from 12 = 12 * 11 / 2 = 66.',
+      },
+      {
+        name: 'At Least One Probability Shortcut',
+        latex: 'P(\\text{At least one}) = 1 - P(\\text{None})',
+        explanation: 'Saves computing lengthy disjoint probability additions.',
+        shortcutHack: 'Instead of finding P(1) + P(2) + ..., find 1 - P(0).',
+        sampleApplication: 'At least one head in 3 flips = 1 - (1/2)^3 = 7/8.',
+      },
+    ],
+    cheatSheetSummary: [
+      'Permutations of word with repeated letters: n! / (p! * q! * r!).',
+      'Sum of all probabilities for exhaustive independent outcomes = 1.',
     ],
   },
 
-  // BCS Formulas
+  // ==========================================
+  // BCS FORMULA VAULTS
+  // ==========================================
+  {
+    stream: 'bcs',
+    category: 'arithmetic',
+    topic: 'percentage',
+    title: 'শতকরা ও লাভ-ক্ষতির শর্টকাট সূত্রাবলী',
+    titleBn: 'শতকরা ও লাভ-ক্ষতির প্রয়োজনীয় শর্টকাট',
+    formulas: [
+      {
+        name: 'মূল্য বৃদ্ধিতে খরচ অপরিবর্তিত রাখার সূত্র',
+        latex: '\\text{ব্যবহার হ্রাস}\\% = \\frac{R}{100 + R} \\times 100\\%',
+        explanation: 'কোনো দ্রব্যের মূল্য R% বৃদ্ধি পেলে খরচ একই রাখতে ব্যবহার কমানোর শতকরা হার।',
+        shortcutHack: 'মূল্য হ্রাস পেলে হরে বিয়োগ হবে: (R / (100 - R)) * 100%।',
+        sampleApplication: 'চিনির দাম ২৫% বাড়লে ব্যবহার কমাতে হবে: ২৫/১২৫ * ১০০% = ২০%।',
+      },
+      {
+        name: 'টাকায় n টি কিনে টাকায় m টি বিক্রিতে লাভ/ক্ষতি',
+        latex: '\\text{শতকরা লাভ/ক্ষতি} = \\frac{n - m}{m} \\times 100\\%',
+        explanation: 'টাকায় নির্দিষ্ট সংখ্যায় কিনে অন্য সংখ্যায় বিক্রির শর্টকাট। ধনাত্মক হলে লাভ, ঋণাত্মক হলে ক্ষতি।',
+        shortcutHack: 'টাকায় ৩টি কিনে টাকায় ২টি বিক্রি করলে: (৩ - ২)/২ * ১০০% = ৫০% লাভ।',
+        sampleApplication: '(৩ - ২)/২ * ১০০% = ৫০% লাভ।',
+      },
+    ],
+    cheatSheetSummary: [
+      'শতকরা লাভ = (লাভ / ক্রয়মূল্য) × ১০০।',
+      'শতকরা ক্ষতি = (ক্ষতি / ক্রয়মূল্য) × ১০০।',
+    ],
+  },
+  {
+    stream: 'bcs',
+    category: 'algebra',
+    topic: 'algebraic_formulas',
+    title: 'বীজগাণিতিক অনুসিদ্ধান্ত ও মান নির্ণয়',
+    titleBn: 'বীজগাণিতিক অনুসিদ্ধান্ত ও মান নির্ণয়',
+    formulas: [
+      {
+        name: 'বর্গরাশির মান নির্ণয় শর্টকাট',
+        latex: 'x^2 + \\frac{1}{x^2} = \\left(x + \\frac{1}{x}\\right)^2 - 2 = k^2 - 2',
+        explanation: 'যদি x + 1/x = k হয়, তবে বর্গ সমষ্টি সরাসরি k^2 - 2।',
+        shortcutHack: 'যদি x - 1/x = k হয়, তবে x^2 + 1/x^2 = k^2 + 2।',
+        sampleApplication: 'x + 1/x = 3 হলে 3^2 - 2 = 7।',
+      },
+      {
+        name: 'ঘনরাশির মান নির্ণয় শর্টকাট',
+        latex: 'x^3 + \\frac{1}{x^3} = \\left(x + \\frac{1}{x}\\right)^3 - 3\\left(x + \\frac{1}{x}\\right) = k^3 - 3k',
+        explanation: 'ঘন সমষ্টি সরাসরি k^3 - 3k দিয়ে ৫ সেকেন্ডে বের করা যায়।',
+        shortcutHack: 'x - 1/x = k হলে x^3 - 1/x^3 = k^3 + 3k।',
+        sampleApplication: 'k = 3 হলে 3^3 - 3(3) = 27 - 9 = 18।',
+      },
+    ],
+    cheatSheetSummary: [
+      '4ab = (a + b)^2 - (a - b)^2.',
+      'ab = ((a + b)/2)^2 - ((a - b)/2)^2.',
+      '2(a^2 + b^2) = (a + b)^2 + (a - b)^2.',
+    ],
+  },
   {
     stream: 'bcs',
     category: 'algebra',
     topic: 'indices_logarithms',
-    title: 'লগারিদম ও সূচক সূত্রাবলি',
+    title: 'লগারিদম ও সূচক সূত্রাবলী',
     titleBn: 'লগারিদম ও সূচকের প্রয়োজনীয় সূত্র',
     formulas: [
       {
@@ -576,42 +796,78 @@ const FORMULA_VAULTS = [
         sampleApplication: '\\log_2 3 * \\log_3 4 * ... * \\log_{15} 16 = \\log_2 16 = 4.',
       },
       {
-        name: 'ঘনরাশির মান নির্ণয় সূত্র',
-        latex: 'a^3 + b^3 = (a + b)^3 - 3ab(a + b)',
-        explanation: 'x + 1/x এর মান জানা থাকলে সরাসরি মান বের করা যায়।',
-        shortcutHack: 'যদি x + 1/x = k হয়, তবে x^3 + 1/x^3 = k^3 - 3k।',
-        sampleApplication: 'k = 3 হলে 3^3 - 3(3) = 27 - 9 = 18।',
+        name: 'পাওয়ার ও ভিত্তি সম্পর্ক',
+        latex: 'a^{\\log_a x} = x, \\quad \\log_a 1 = 0, \\quad \\log_a a = 1',
+        explanation: 'লগের ভিত্তি এবং সূচকীয় ভিত্তি সমান হলে সরাসরি মানটি অবশিষ্ট থাকে।',
+        shortcutHack: 'শূন্য বা ঋণাত্মক সংখ্যার বাস্তব লগারিদম নেই।',
+        sampleApplication: '3^(log_3 7) = 7.',
       },
     ],
     cheatSheetSummary: [
-      'লগারিদমে ঋণাত্মক সংখ্যা বা শূন্যের লগ সংজ্ঞায়িত নয়।',
-      'a^0 = 1 যখন a ≠ 0।',
-      'লগের গুণফল যোগে এবং ভাগফল বিয়োগে রূপান্তরিত হয়।',
+      'log(a * b) = log a + log b.',
+      'log(a / b) = log a - log b.',
+      'log(a^n) = n * log a.',
     ],
   },
   {
     stream: 'bcs',
-    category: 'mental_ability',
-    topic: 'mechanical_reasoning',
-    title: 'ঘড়ির কাঁটার কোণ নির্ণয়ের সূত্র',
-    titleBn: 'ঘড়ির কাঁটার কোণ নির্ণয়ের প্রমিত সূত্র',
+    category: 'algebra',
+    topic: 'series_progressions',
+    title: 'ধারা ও অনুক্রম (সমান্তর ও গুণোত্তর)',
+    titleBn: 'সমান্তর ও গুণোত্তর ধারার সূত্রাবলি',
     formulas: [
       {
-        name: 'ঘণ্টা ও মিনিটের কাঁটার কোণ',
-        latex: '\\theta = \\left| \\frac{60H - 11M}{2} \\right|',
-        explanation: 'যেকোনো সময় H ঘণ্টা M মিনিটে দুই কাঁটার মধ্যবর্তী উৎপন্ন কোণ সরাসরি বের হয়।',
-        shortcutHack: 'যদি কোণের মান ১৮০ ডিগ্রির বেশি হয়, তবে প্রবৃদ্ধ কোণ এড়াতে ৩৬০ থেকে বিয়োগ করুন।',
-        sampleApplication: '২টা ১৫ মিনিটে: |(60*2 - 11*15)/2| = |(120 - 165)/2| = 22.5°।',
+        name: 'স্বাভাবিক সংখ্যার সমষ্টি সূত্র',
+        latex: 'S_n = 1 + 2 + 3 + \\dots + n = \\frac{n(n + 1)}{2}',
+        explanation: '১ থেকে শুরু করে n পর্যন্ত ক্রমিক স্বাভাবিক সংখ্যার সমষ্টি।',
+        shortcutHack: 'স্বাভাবিক সংখ্যার বর্গের সমষ্টি = n(n+1)(2n+1)/6।',
+        sampleApplication: '১ থেকে ৫০ এর যোগফল: ৫০ * ৫১ / ২ = ১২৭৫।',
+      },
+      {
+        name: 'সমান্তর ধারার n-তম পদ ও সমষ্টি',
+        latex: 'T_n = a + (n - 1)d, \\quad S_n = \\frac{n}{2}[2a + (n - 1)d]',
+        explanation: '১ম পদ a এবং সাধারণ অন্তর d বিশিষ্ট ধারার ক্ষেত্রে।',
+        shortcutHack: 'পদসংখ্যা n = ((শেষ পদ - ১ম পদ) / অন্তর) + ১।',
+        sampleApplication: '৫ + ৮ + ১১ + ... এর ২০তম পদ = ৫ + ১৯(৩) = ৬২।',
       },
     ],
     cheatSheetSummary: [
-      'ঘণ্টার কাঁটা প্রতি মিনিটে ০.৫ ডিগ্রি ঘোরে।',
-      'মিনিটের কাঁটা প্রতি মিনিটে ৬ ডিগ্রি ঘোরে।',
-      'প্রতি ঘণ্টায় মিনিটের কাঁটা ঘণ্টার কাঁটা থেকে ৫.৫ ডিগ্রি বেশি ঘোরে।',
+      'গুণোত্তর ধারার অসীমতক সমষ্টি: S_inf = a / (1 - r) যখন |r| < 1.',
+      'স্বাভাবিক সংখ্যার ঘনের সমষ্টি = [n(n+1)/2]^2.',
+    ],
+  },
+  {
+    stream: 'bcs',
+    category: 'geometry',
+    topic: 'triangles_polygons',
+    title: 'জ্যামিতি, কোণ ও বহুভুজ সূত্র',
+    titleBn: 'জ্যামিতির ত্রয়ী ও বহুভুজের কোণ নির্ণয়',
+    formulas: [
+      {
+        name: 'বহুভুজের অন্তঃকোণের সমষ্টি ও প্রতিটি অন্তঃকোণ',
+        latex: '\\text{মোট অন্তঃকোণ} = (2n - 4) \\times 90^\\circ, \\quad \\text{প্রতিটি অন্তঃকোণ} = 180^\\circ - \\frac{360^\\circ}{n}',
+        explanation: 'n বাহুবিশিষ্ট সুষম বহুভুজের কোণ নির্ণয়ের আন্তর্জাতিক সূত্র।',
+        shortcutHack: 'পঞ্চভুজের প্রতিটি অন্তঃকোণ = ১৮০ - ৩৬০/৫ = ১০৮ ডিগ্রি।',
+        sampleApplication: 'ষড়ভুজ (n=6): ১৮০ - ৬০ = ১২০ ডিগ্রি।',
+      },
+      {
+        name: 'সমবাহু ত্রিভুজের ক্ষেত্রফল ও উচ্চতা',
+        latex: '\\text{Area} = \\frac{\\sqrt{3}}{4} a^2, \\quad \\text{Height} = \\frac{\\sqrt{3}}{2} a',
+        explanation: 'বাহুর দৈর্ঘ্য a দেওয়া থাকলে ক্ষেত্রফল সরাসরি নির্ণয়।',
+        shortcutHack: 'বাহুর মান দ্বিগুণ হলে ক্ষেত্রফল চারগুণ হবে।',
+        sampleApplication: 'বাহু ৪ সেমি হলে ক্ষেত্রফল = (sqrt(3)/4) * 16 = 4*sqrt(3) বর্গ সেমি।',
+      },
+    ],
+    cheatSheetSummary: [
+      'পিথাগোরাসের মূল ত্রয়ী: (৩, ৪, ৫), (৫, ১২, ১৩), (৭, ২৪, ২৫), (৮, ১৫, ১৭)।',
+      'বৃত্তের ক্ষেত্রফল = π * r^2; পরিধি = 2 * π * r।',
+      'রম্বসের ক্ষেত্রফল = (১/২) × কর্ণদ্বয়ের গুণফল।',
     ],
   },
 
-  // Primary & NTRCA Formulas
+  // ==========================================
+  // PRIMARY & NTRCA FORMULA VAULTS
+  // ==========================================
   {
     stream: 'primary_ntrca',
     category: 'arithmetic',
@@ -636,7 +892,7 @@ const FORMULA_VAULTS = [
     ],
     cheatSheetSummary: [
       'ঐকিক নিয়মে লোক বাড়লে দিন কমে, আর লোক কমলে দিন বাড়ে (ব্যস্তানুপাত)।',
-      'সুদকষায় মোট সুদ = (আসল × হার × সময়) / ১০০।',
+      'সুদকষায় মোট সুদ I = (আসল P × হার r × সময় t) / ১০০।',
     ],
   },
   {
@@ -662,13 +918,18 @@ const FORMULA_VAULTS = [
   },
 ];
 
-// 4. Seeder Execution
+// 5. Seeder Execution
 async function runSeeder() {
+  const mongoUri = getMongoUri();
+  if (!mongoUri) {
+    console.error('MONGODB_URI not found in environment or .env.local');
+    process.exit(1);
+  }
+
   console.log('Connecting to MongoDB...');
   await mongoose.connect(mongoUri);
   console.log('Connected to MongoDB successfully.');
 
-  // Clear existing math problems and formula vaults to perform a clean seed
   console.log('Clearing existing MathProblem documents...');
   await MathProblem.deleteMany({});
 
@@ -702,7 +963,10 @@ async function runSeeder() {
   process.exit(0);
 }
 
-runSeeder().catch((err) => {
-  console.error('Seeder failed with error:', err);
-  process.exit(1);
-});
+const isMain = process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1]);
+if (isMain) {
+  runSeeder().catch((err) => {
+    console.error('Seeder failed with error:', err);
+    process.exit(1);
+  });
+}

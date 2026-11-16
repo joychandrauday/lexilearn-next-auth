@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -397,8 +398,14 @@ export default function AIChatBot() {
         className="fixed bottom-6 right-6 z-40 flex items-center gap-2.5 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 text-white px-4 py-3 rounded-full shadow-2xl hover:shadow-emerald-900/40 hover:scale-105 active:scale-95 transition-all duration-300 font-bold border border-emerald-400/40 group cursor-pointer"
         aria-label={`Open ${siteConfig.bot.name}`}
       >
-        <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-sm shadow-inner group-hover:rotate-12 transition-transform">
-          🦉
+        <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center shadow-inner group-hover:rotate-12 transition-transform overflow-hidden p-0.5">
+          <Image
+            src="/iconflat.png"
+            alt="Owl AI"
+            width={22}
+            height={22}
+            className="object-contain w-full h-full"
+          />
         </div>
         <span className="text-sm font-black tracking-wide">{siteConfig.bot.name}</span>
         <span className="relative flex h-2.5 w-2.5">
@@ -433,8 +440,14 @@ export default function AIChatBot() {
                 {/* Header */}
                 <div className="p-4 bg-gradient-to-r from-slate-950 via-slate-900 to-emerald-950 text-white flex items-center justify-between shadow-md shrink-0 border-b border-emerald-900/30">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-xl shadow-inner">
-                      🦉
+                    <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center overflow-hidden p-1 shadow-inner">
+                      <Image
+                        src="/iconflat.png"
+                        alt="Owl AI"
+                        width={32}
+                        height={32}
+                        className="object-contain w-full h-full"
+                      />
                     </div>
                     <div>
                       <div className="flex items-center gap-2">

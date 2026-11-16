@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button, Input, message as antMessage } from 'antd';
 import {
   MailOutlined,
@@ -114,8 +115,14 @@ export default function Footer() {
           {/* Column 1: Brand & Mission */}
           <div className="col-span-2 md:col-span-3 lg:col-span-1 space-y-3">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-700 flex items-center justify-center text-white font-black text-base shadow-sm">
-                🦉
+              <div className="w-8 h-8 rounded-xl relative flex items-center justify-center overflow-hidden bg-white/10 p-0.5 shadow-sm">
+                <Image
+                  src="/iconflat.png"
+                  alt="OwlPrep Logo"
+                  width={32}
+                  height={32}
+                  className="object-contain w-full h-full"
+                />
               </div>
               <div>
                 <span className="font-black text-white text-lg tracking-tight block leading-none">{siteConfig.name}</span>

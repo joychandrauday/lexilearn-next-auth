@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { Button, Tag } from 'antd';
 import {
   ShareAltOutlined,
@@ -62,8 +63,14 @@ ${siteConfig.links.url} #BCS #BankJobs #${siteConfig.name}`;
       <div className="flex justify-between items-start mb-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="w-6 h-6 bg-emerald-500 text-white rounded-lg flex items-center justify-center font-black text-xs">
-              🦉
+            <span className="w-6 h-6 relative flex items-center justify-center rounded-lg overflow-hidden bg-white/10 p-0.5">
+              <Image
+                src="/iconflat.png"
+                alt="OwlPrep Logo"
+                width={24}
+                height={24}
+                className="object-contain w-full h-full"
+              />
             </span>
             <span className="font-black text-sm tracking-tight">{siteConfig.name}</span>
             <Tag color="gold" className="text-[10px] uppercase font-bold m-0 rounded">

@@ -228,7 +228,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-800 selection:bg-emerald-500 selection:text-white relative">
       {/* 1. HERO SECTION WITH DYNAMIC ENTRANCE & GLOW */}
-      <section className="relative overflow-hidden pt-12 pb-20 md:pt-20 md:pb-32 bg-gradient-to-b from-slate-950 via-slate-900 to-emerald-950 text-white">
+      <section className="relative overflow-hidden -mt-16 pt-24 pb-20 md:pt-32 md:pb-32 bg-gradient-to-b from-slate-950 via-slate-900 to-emerald-950 text-white">
         {/* Glow backdrop circles */}
         <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[700px] h-[380px] bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 right-4 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -244,10 +244,7 @@ export default function LandingPage() {
           >
             <div className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 border border-emerald-400/40 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-bold text-emerald-200 shadow-inner transition-colors">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-              <span>🦉 রাতজাগা চাকরিপ্রার্থীদের স্মার্ট লার্নিং ইকোসিস্টেম</span>
-              <span className="text-emerald-400 font-mono text-[11px] bg-emerald-950/80 px-2 py-0.5 rounded-full border border-emerald-500/30">
-                LIVE 2026
-              </span>
+              <span>⚡ ৪৭তম বিসিএস ও ২০২৬ ব্যাংক জব স্পেশাল</span>
             </div>
           </motion.div>
 
@@ -258,20 +255,20 @@ export default function LandingPage() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-center max-w-4xl mx-auto"
           >
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight mb-6 leading-[1.15] text-white">
-              চাকরি পরীক্ষার দীর্ঘ যাত্রাকে করুন{' '}
+            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight mb-6 leading-[1.18] text-white">
+              পড়ার পর ভুলে যাওয়ার ভয়?{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-200 to-amber-300">
-                সহজ, আনন্দময় ও জয়যুক্ত
+                এবার প্রস্তুতি হবে টু-দ্য-পয়েন্ট ও স্ট্রেস-ফ্রি
               </span>
             </h1>
 
-            <p className="text-sm sm:text-lg md:text-xl text-emerald-100/85 font-normal max-w-2xl mx-auto mb-10 leading-relaxed">
-              ফেসবুক স্ক্রলিংয়ের অন্তহীন সময় অপচয় বন্ধ করুন। দিনে মাত্র ৫ মিনিটেই ফেসবুক রিলস-এর মতো
-              ১ মিনিটের মাইক্রো-ক্যাপসুল, স্মার্ট স্টাডি নোটবুক এবং সার্বিক এআই মেন্টর নিয়ে এগিয়ে থাকুন সবার চেয়ে।
+            <p className="text-sm sm:text-lg md:text-xl text-emerald-100/90 font-normal max-w-3xl mx-auto mb-10 leading-relaxed">
+              নীলক্ষেতের ৫০০ পৃষ্ঠার গাইডবই মুখস্থের দিন শেষ। ফেসবুক ডুমস্ক্রলিংয়ের অপরাধবোধ ভুলে দিনে মাত্র ৫ মিনিটে
+              রিভিশন দিন মোস্ট-রিপিটেড ম্যাথ শর্টকাট, সম্পাদকীয় ভোকাব আর দেশি নেমোনিক—যা সত্যি সত্যি পরীক্ষার হলে কাজে লাগবে।
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-14">
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-12">
               <Link href="/feed">
                 <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
                   <Button
@@ -280,8 +277,20 @@ export default function LandingPage() {
                     icon={<PlayCircleFilled className="text-amber-300 text-lg" />}
                     className="bg-emerald-600 hover:!bg-emerald-500 font-black rounded-2xl h-14 px-8 text-sm sm:text-base border-0 shadow-2xl shadow-emerald-900/60 flex items-center gap-2"
                   >
-                    প্রস্তুতি ফিড শুরু করুন
+                    সরাসরি প্র্যাকটিসে ঢুকুন (ফ্রি)
                     <ArrowRight className="w-4 h-4 ml-1" />
+                  </Button>
+                </motion.div>
+              </Link>
+
+              <Link href="/math">
+                <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+                  <Button
+                    size="large"
+                    icon={<ThunderboltFilled className="text-amber-400 text-base" />}
+                    className="bg-amber-500/20 hover:!bg-amber-500/30 !text-amber-200 font-bold rounded-2xl h-14 px-7 text-sm sm:text-base border-amber-400/40 backdrop-blur-md flex items-center gap-2"
+                  >
+                    গণিত শর্টকাট ও ফর্মুলা ভল্ট
                   </Button>
                 </motion.div>
               </Link>
@@ -291,23 +300,59 @@ export default function LandingPage() {
                   <Button
                     size="large"
                     icon={<BookOpen className="w-4 h-4 text-emerald-300" />}
-                    className="bg-white/10 hover:!bg-white/20 !text-white font-bold rounded-2xl h-14 px-7 text-sm sm:text-base border-white/20 backdrop-blur-md flex items-center gap-2"
+                    className="bg-white/10 hover:!bg-white/20 !text-white font-bold rounded-2xl h-14 px-6 text-sm sm:text-base border-white/20 backdrop-blur-md flex items-center gap-2"
                   >
-                    স্টাডি নোটবুক দেখুন
+                    স্টাডি নোটবুক
                   </Button>
                 </motion.div>
               </Link>
+            </div>
+          </motion.div>
 
-              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
-                <Button
-                  size="large"
-                  icon={<Bot className="w-4 h-4 text-indigo-300" />}
-                  onClick={triggerAIMentor}
-                  className="bg-slate-800/80 hover:!bg-slate-700 !text-indigo-200 font-bold rounded-2xl h-14 px-6 text-sm sm:text-base border-indigo-400/30 backdrop-blur-md flex items-center gap-2"
-                >
-                  এআই মেন্টর
-                </Button>
-              </motion.div>
+          {/* Interactive Exam Trick Spotlight (Real dopamine teaser) */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="max-w-2xl mx-auto mb-12 bg-slate-900/80 border border-emerald-500/30 rounded-3xl p-5 sm:p-6 backdrop-blur-xl shadow-2xl"
+          >
+            <div className="flex items-center justify-between pb-3 mb-3 border-b border-emerald-500/20">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="text-xs font-black uppercase tracking-wider text-emerald-300">
+                  আজকের মোস্ট-রিপিটেড পরীক্ষার ট্রিক (Quick Teaser)
+                </span>
+              </div>
+              <span className="text-[11px] font-mono text-amber-300/90 bg-amber-500/10 px-2.5 py-0.5 rounded-full border border-amber-500/30">
+                BB AD & ৪৪-৪৬তম বিসিএস
+              </span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
+              <div className="bg-slate-950/70 p-3.5 rounded-2xl border border-slate-800">
+                <div className="flex items-center justify-between text-xs font-bold text-amber-300 mb-1">
+                  <span>📐 ব্যাংক গণিত: ২ বছরের CI ও SI পার্থক্য</span>
+                  <span className="text-[10px] bg-amber-500/20 px-1.5 py-0.5 rounded text-amber-200">৫ সেকেন্ডের ট্রিক</span>
+                </div>
+                <div className="font-mono text-xs text-emerald-300 bg-emerald-950/40 p-2 rounded-lg border border-emerald-500/20 my-1 text-center font-bold">
+                  Diff = P × (r / 100)²
+                </div>
+                <p className="text-[11px] text-gray-300 leading-normal m-0">
+                  পরীক্ষায় সরাসরি আসল (P) বের করতে সমীকরণ সমাধান না করে এই ফর্মুলায় মান বসালেই উত্তর চলে আসে।
+                </p>
+              </div>
+
+              <div className="bg-slate-950/70 p-3.5 rounded-2xl border border-slate-800">
+                <div className="flex items-center justify-between text-xs font-bold text-teal-300 mb-1">
+                  <span>💡 বিসিএস ব্যাকরণ: Subjunctive Mood</span>
+                  <span className="text-[10px] bg-teal-500/20 px-1.5 py-0.5 rounded text-teal-200">বিসিএস ট্র্যাপ</span>
+                </div>
+                <div className="text-xs text-teal-200 bg-teal-950/40 p-2 rounded-lg border border-teal-500/20 my-1 font-semibold text-center">
+                  recommend/demand that + Subject + <span className="underline decoration-amber-400">V1 (Base Form)</span>
+                </div>
+                <p className="text-[11px] text-gray-300 leading-normal m-0">
+                  Subject ৩য় ব্যক্তি একবচন (He/Patient) হলেও Verb-এর সাথে কোনো s/es বা should বসে না!
+                </p>
+              </div>
             </div>
           </motion.div>
 
@@ -320,9 +365,9 @@ export default function LandingPage() {
           >
             {[
               { icon: ShieldCheck, text: '৪৪-৪৬তম বিসিএস প্যাটার্ন' },
-              { icon: Award, text: 'বাংলাদেশ ব্যাংক ও ৮ ব্যাংক' },
-              { icon: BookmarkCheck, text: 'বাংলা একাডেমি প্রমিত বানান' },
-              { icon: Brain, text: '৯৯% ভেরিফাইড প্রশ্নব্যাংক' },
+              { icon: Award, text: 'বাংলাদেশ ব্যাংক ও কম্বাইন্ড ৮ ব্যাংক' },
+              { icon: BookmarkCheck, text: '৫ সেকেন্ডের অপশন টেস্ট শর্টকাট' },
+              { icon: Brain, text: 'SM-2 স্পেসড রিভিশন মেমোরি' },
             ].map((item, idx) => {
               const IconComp = item.icon;
               return (

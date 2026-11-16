@@ -179,20 +179,20 @@ export default function MathPreparationPage() {
           <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <span className="text-xs font-bold tracking-wide uppercase px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40">
-                  PrepOwl Math Engine
+                <span className="text-xs font-black tracking-wide uppercase px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                  PrepOwl Math Studio • নো মুখস্থ বিদ্যা
                 </span>
                 <span className="text-xs text-gray-400 font-medium">
                   {streamConfig.badge}
                 </span>
               </div>
-              <h1 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight flex items-center gap-3">
+              <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight flex items-center gap-3">
                 <CalculatorOutlined className="text-amber-400" />
-                <span>গণিত পূর্ণাঙ্গ প্রস্তুতি হাব</span>
+                <span>গণিতে ফুল মার্কসের শর্টকাট ও লিখিত সমাধান</span>
               </h1>
               <p className="text-sm sm:text-base text-gray-300 max-w-2xl mt-1 leading-relaxed">
-                ব্যাংক, বিসিএস এবং প্রাথমিক/শিক্ষক নিবন্ধনের স্বতন্ত্র সিলেবাস অনুযায়ী এমসিকিউ শর্টকাট,
-                লিখিত স্টেপ সমাধান এবং ফর্মুলা ভল্ট।
+                বাংলাদেশ ব্যাংক (IBA/BIBM প্যাটার্ন), বিসিএস প্রিলি-লিখিত ও প্রাইমারি নিয়োগের বিগত প্রশ্নব্যাংক,
+                ৫ সেকেন্ডের অপশন টেস্ট হ্যাক এবং একনজরে রিভিশন ফর্মুলা ভল্ট।
               </p>
             </div>
 
@@ -299,138 +299,148 @@ export default function MathPreparationPage() {
         </div>
 
         {/* ========================================== */}
-        {/* 3. SYLLABUS TOPIC FILTERS & SEARCH */}
+        {/* 3. SYLLABUS TOPIC FILTERS & SEARCH (Hidden in Formula Vault mode for clean UI) */}
         {/* ========================================== */}
-        <div className="bg-gray-900/40 border border-gray-800 rounded-2xl p-4 sm:p-5 space-y-4">
-          {/* Category Bar */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-thin">
-            <button
-              onClick={() => {
-                setActiveCategory('all');
-                setActiveTopic('all');
-                setPage(1);
-              }}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
-                activeCategory === 'all'
-                  ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
-                  : 'bg-gray-800 text-gray-400 hover:text-gray-200'
-              }`}
-            >
-              সকল অধ্যায় (All Categories)
-            </button>
-
-            {streamConfig.categories.map((cat) => (
+        {activeMode !== 'formulas' && (
+          <div className="bg-gray-900/40 border border-gray-800 rounded-2xl p-4 sm:p-5 space-y-4">
+            {/* Category Bar */}
+            <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-thin">
               <button
-                key={cat.key}
                 onClick={() => {
-                  setActiveCategory(cat.key);
+                  setActiveCategory('all');
                   setActiveTopic('all');
                   setPage(1);
                 }}
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
-                  activeCategory === cat.key
+                  activeCategory === 'all'
                     ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
                     : 'bg-gray-800 text-gray-400 hover:text-gray-200'
                 }`}
               >
-                {cat.labelBn}
+                সকল অধ্যায় (All Categories)
               </button>
-            ))}
+
+              {streamConfig.categories.map((cat) => (
+                <button
+                  key={cat.key}
+                  onClick={() => {
+                    setActiveCategory(cat.key);
+                    setActiveTopic('all');
+                    setPage(1);
+                  }}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
+                    activeCategory === cat.key
+                      ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
+                      : 'bg-gray-800 text-gray-400 hover:text-gray-200'
+                  }`}
+                >
+                  {cat.labelBn}
+                </button>
+              ))}
+            </div>
+
+            {/* Topic Select & Exam Tags */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              {/* Topic dropdown */}
+              <div>
+                <label className="text-[11px] font-semibold text-gray-400 block mb-1">
+                  টপিক নির্বাচন:
+                </label>
+                <Select
+                  value={activeTopic}
+                  onChange={(val) => {
+                    setActiveTopic(val);
+                    setPage(1);
+                  }}
+                  className="w-full"
+                  styles={{ popup: { root: { backgroundColor: '#111827', color: '#fff' } } }}
+                >
+                  <Option value="all">সকল টপিক</Option>
+                  {currentTopics.map((t) => (
+                    <Option key={t.key} value={t.key}>
+                      {t.labelBn} ({t.labelEn})
+                    </Option>
+                  ))}
+                </Select>
+              </div>
+
+              {/* Exam Filter */}
+              <div>
+                <label className="text-[11px] font-semibold text-gray-400 block mb-1">
+                  বিগত পরীক্ষা ফিল্টার:
+                </label>
+                <Select
+                  value={selectedExamTag}
+                  onChange={(val) => {
+                    setSelectedExamTag(val);
+                    setPage(1);
+                  }}
+                  className="w-full"
+                  styles={{ popup: { root: { backgroundColor: '#111827', color: '#fff' } } }}
+                >
+                  {streamConfig.quickFilterExams.map((exam, idx) => (
+                    <Option key={idx} value={idx === 0 ? 'all' : exam}>
+                      {exam}
+                    </Option>
+                  ))}
+                </Select>
+              </div>
+
+              {/* Difficulty Filter */}
+              <div>
+                <label className="text-[11px] font-semibold text-gray-400 block mb-1">
+                  কঠিনতা (Difficulty):
+                </label>
+                <Select
+                  value={difficulty}
+                  onChange={(val) => {
+                    setDifficulty(val);
+                    setPage(1);
+                  }}
+                  className="w-full"
+                  styles={{ popup: { root: { backgroundColor: '#111827', color: '#fff' } } }}
+                >
+                  <Option value="all">সব স্তর</Option>
+                  <Option value="easy">সহজ (Easy)</Option>
+                  <Option value="medium">মধ্যম (Medium)</Option>
+                  <Option value="hard">কঠিন (Hard)</Option>
+                </Select>
+              </div>
+
+              {/* Search Input */}
+              <div>
+                <label className="text-[11px] font-semibold text-gray-400 block mb-1">
+                  প্রশ্ন অনুসন্ধান:
+                </label>
+                <Input
+                  placeholder="অঙ্ক বা কীওয়ার্ড দিয়ে খুঁজুন..."
+                  prefix={<SearchOutlined className="text-gray-500" />}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onPressEnter={() => {
+                    setPage(1);
+                    fetchQuestions();
+                  }}
+                  className="bg-gray-900 border-gray-700 text-white rounded-lg"
+                />
+              </div>
+            </div>
           </div>
-
-          {/* Topic Select & Exam Tags */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            {/* Topic dropdown */}
-            <div>
-              <label className="text-[11px] font-semibold text-gray-400 block mb-1">
-                টপিক নির্বাচন:
-              </label>
-              <Select
-                value={activeTopic}
-                onChange={(val) => {
-                  setActiveTopic(val);
-                  setPage(1);
-                }}
-                className="w-full"
-                dropdownStyle={{ backgroundColor: '#111827', color: '#fff' }}
-              >
-                <Option value="all">সকল টপিক</Option>
-                {currentTopics.map((t) => (
-                  <Option key={t.key} value={t.key}>
-                    {t.labelBn} ({t.labelEn})
-                  </Option>
-                ))}
-              </Select>
-            </div>
-
-            {/* Exam Filter */}
-            <div>
-              <label className="text-[11px] font-semibold text-gray-400 block mb-1">
-                বিগত পরীক্ষা ফিল্টার:
-              </label>
-              <Select
-                value={selectedExamTag}
-                onChange={(val) => {
-                  setSelectedExamTag(val);
-                  setPage(1);
-                }}
-                className="w-full"
-                dropdownStyle={{ backgroundColor: '#111827', color: '#fff' }}
-              >
-                {streamConfig.quickFilterExams.map((exam, idx) => (
-                  <Option key={idx} value={idx === 0 ? 'all' : exam}>
-                    {exam}
-                  </Option>
-                ))}
-              </Select>
-            </div>
-
-            {/* Difficulty Filter */}
-            <div>
-              <label className="text-[11px] font-semibold text-gray-400 block mb-1">
-                কঠিনতা (Difficulty):
-              </label>
-              <Select
-                value={difficulty}
-                onChange={(val) => {
-                  setDifficulty(val);
-                  setPage(1);
-                }}
-                className="w-full"
-                dropdownStyle={{ backgroundColor: '#111827', color: '#fff' }}
-              >
-                <Option value="all">সব স্তর</Option>
-                <Option value="easy">সহজ (Easy)</Option>
-                <Option value="medium">মধ্যম (Medium)</Option>
-                <Option value="hard">কঠিন (Hard)</Option>
-              </Select>
-            </div>
-
-            {/* Search Input */}
-            <div>
-              <label className="text-[11px] font-semibold text-gray-400 block mb-1">
-                প্রশ্ন বা সূত্র অনুসন্ধান:
-              </label>
-              <Input
-                placeholder="অঙ্ক বা সূত্র দিয়ে খুঁজুন..."
-                prefix={<SearchOutlined className="text-gray-500" />}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                onPressEnter={() => {
-                  setPage(1);
-                  fetchQuestions();
-                }}
-                className="bg-gray-900 border-gray-700 text-white rounded-lg"
-              />
-            </div>
-          </div>
-        </div>
+        )}
 
         {/* ========================================== */}
         {/* 4. MAIN CONTENT AREA */}
         {/* ========================================== */}
         {activeMode === 'formulas' ? (
-          <MathFormulaSheet stream={activeStream} selectedTopic={activeTopic} />
+          <MathFormulaSheet
+            stream={activeStream}
+            selectedTopic={activeTopic}
+            onSelectTopicForDrill={(topic) => {
+              setActiveTopic(topic);
+              setActiveMode('drill');
+              setPage(1);
+            }}
+          />
         ) : activeMode === 'written' ? (
           loading ? (
             <div className="flex justify-center items-center py-20">

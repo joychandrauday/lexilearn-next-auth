@@ -2,6 +2,7 @@
 
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import Image from 'next/image';
 import { useEffect, useState, Suspense } from 'react';
 import { Button, Card, Spin, Input, Tabs, Select } from 'antd';
 import { GoogleOutlined, MailOutlined, LockOutlined, UserOutlined, ArrowRightOutlined } from '@ant-design/icons';
@@ -116,8 +117,15 @@ function LoginContent() {
     <div className="flex min-h-[75vh] items-center justify-center px-4 py-8 font-sans">
       <Card className="w-full max-w-md p-6 sm:p-8 rounded-3xl shadow-xl border border-gray-100">
         <div className="text-center mb-6">
-          <div className="w-16 h-16 bg-gradient-to-tr from-emerald-600 to-teal-500 text-white rounded-2xl flex items-center justify-center mx-auto mb-3 text-3xl font-black shadow-lg">
-            🦉
+          <div className="w-16 h-16 relative flex items-center justify-center mx-auto mb-3 rounded-2xl overflow-hidden shadow-lg p-1 bg-slate-50 border border-slate-100">
+            <Image
+              src="/iconflat.png"
+              alt="OwlPrep Logo"
+              width={64}
+              height={64}
+              className="object-contain w-full h-full"
+              priority
+            />
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-gray-800">OwlPrep স্টুডেন্ট পোর্টাল</h1>
           <p className="text-xs text-emerald-600 font-bold uppercase tracking-wider mt-1">

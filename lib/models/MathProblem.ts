@@ -4,6 +4,7 @@ export type MathStream = 'bank' | 'bcs' | 'primary_ntrca';
 export type MathLanguage = 'en' | 'bn';
 export type MathCategory =
   | 'arithmetic'
+  | 'time_motion'
   | 'algebra'
   | 'geometry'
   | 'mental_ability'
@@ -58,6 +59,7 @@ const MathProblemSchema = new Schema<IMathProblem>(
       type: String,
       enum: [
         'arithmetic',
+        'time_motion',
         'algebra',
         'geometry',
         'mental_ability',
