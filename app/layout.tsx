@@ -9,6 +9,7 @@ import SmartAuthPrompt from '../components/Auth/SmartAuthPrompt';
 import { Hind_Siliguri } from 'next/font/google';
 import { Toaster } from 'sonner';
 import type { Metadata } from 'next';
+import { Analytics } from '@vercel/analytics/next';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://growwithowl.com'),
@@ -158,6 +159,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <SmartAuthPrompt />
           <BottomNav />
           <Toaster richColors expand={true} position="top-center" />
+          <Analytics />
         </Providers>
       </body>
     </html>
