@@ -19,6 +19,21 @@ export interface IWord extends Document {
   pendingExamTags?: { tag: string; submittedBy: string; submittedByName?: string; createdAt?: Date }[];
   frequencyCount: number;
   isMostRepeated: boolean;
+  examHistory?: { exam: string; year?: string }[];
+
+  // Decks & Collections
+  decks: string[];
+  questionBankIds?: mongoose.Types.ObjectId[];
+
+  // View & Engagement Analytics
+  viewCount: number;
+  viewedBy: string[];
+  uniqueViewsCount: number;
+  lastViewedAt?: Date;
+
+  // Mastery Tracking
+  masteredCount: number;
+  masteredBy: string[];
 
   // Verification Strength & Community Trust
   verificationScore: number; // 0 - 100
@@ -78,6 +93,21 @@ const wordSchema = new Schema<IWord>(
     ],
     frequencyCount: { type: Number, default: 1, index: true },
     isMostRepeated: { type: Boolean, default: false, index: true },
+    examHistory: { type: [{ exam: String, year: String }], default: [] },
+
+    // Multi-Deck Categorization & SSOT Association
+    decks: { type: [String], default: [], index: true },
+    questionBankIds: [{ type: Schema.Types.ObjectId, ref: 'QuestionBank', default: [] }],
+
+    // View & Engagement Analytics
+    viewCount: { type: Number, default: 0, index: true },
+    viewedBy: { type: [String], default: [] },
+    uniqueViewsCount: { type: Number, default: 0, index: true },
+    lastViewedAt: { type: Date },
+
+    // Platform Mastery Tracking
+    masteredCount: { type: Number, default: 0 },
+    masteredBy: { type: [String], default: [] },
 
     // Verification Strength
     verificationScore: { type: Number, default: 90, min: 0, max: 100, index: true },
@@ -124,6 +154,9 @@ const wordSchema = new Schema<IWord>(
 // so declaring them again here caused duplicate-index warnings.
 wordSchema.index({ frequencyCount: -1 });
 wordSchema.index({ verificationScore: -1 });
+wordSchema.index({ decks: 1 });
+wordSchema.index({ viewCount: -1 });
+wordSchema.index({ uniqueViewsCount: -1 });
 
 const Word = (mongoose.models.Word as Model<IWord>) || mongoose.model<IWord>('Word', wordSchema);
 

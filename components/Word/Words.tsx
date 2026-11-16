@@ -28,6 +28,8 @@ import {
   SoundOutlined,
   PlusOutlined,
   FireOutlined,
+  FireFilled,
+  BookOutlined,
   SafetyCertificateFilled,
   StarFilled,
   StarOutlined,
@@ -63,7 +65,8 @@ const Words: React.FC = () => {
     total: number;
     repeatedCount: number;
     verifiedCount: number;
-  }>({ total: 0, repeatedCount: 0, verifiedCount: 0 });
+    barronCount: number;
+  }>({ total: 0, repeatedCount: 0, verifiedCount: 0, barronCount: 0 });
   const [loading, setLoading] = useState(true);
 
   // Filters & State
@@ -71,7 +74,7 @@ const Words: React.FC = () => {
   const [intensityFilter, setIntensityFilter] = useState<string | undefined>(urlIntensity);
   const [examFilter, setExamFilter] = useState<string | undefined>(urlExam);
   const [activeTab, setActiveTab] = useState<string>(urlFilter);
-  const [sortBy, setSortBy] = useState<'frequency' | 'verification' | 'alphabetical' | 'recent'>('frequency');
+  const [sortBy, setSortBy] = useState<'frequency' | 'verification' | 'alphabetical' | 'recent' | 'views'>('frequency');
   const [currentPage, setCurrentPage] = useState(urlPage);
 
   // Selected word drawer
@@ -148,6 +151,8 @@ const Words: React.FC = () => {
         params.filter = 'most-repeated';
       } else if (activeTab === 'verified') {
         params.filter = 'verified';
+      } else if (activeTab === 'barron-333') {
+        params.deck = 'barron-333';
       }
 
       const res = await axios.get('/api/words', { params });
@@ -158,6 +163,7 @@ const Words: React.FC = () => {
             total: res.data.meta.total || 0,
             repeatedCount: res.data.meta.repeatedCount || 0,
             verifiedCount: res.data.meta.verifiedCount || 0,
+            barronCount: res.data.meta.barronCount || 0,
           });
         }
       }
@@ -459,9 +465,18 @@ const Words: React.FC = () => {
               <Tag color="cyan" className="font-bold border-none text-[11px] m-0">
                 {record.partOfSpeech || 'noun'}
               </Tag>
+              {record.decks?.includes('barron-333') && (
+                <Tag color="gold" className="font-bold border-none text-[10px] m-0">
+                  Barron 333
+                </Tag>
+              )}
+              <span className="text-[10px] text-gray-500 font-semibold flex items-center gap-1">
+                👁️ {record.viewCount || 0}
+                {record.uniqueViewsCount > 0 ? ` (${record.uniqueViewsCount} জন)` : ''}
+              </span>
               {record.savedCount > 1 && (
                 <span className="text-[10px] text-gray-400 flex items-center gap-1">
-                  <TeamOutlined /> {record.savedCount} জন পড়ছে
+                  <TeamOutlined /> {record.savedCount} সেভড
                 </span>
               )}
             </div>
@@ -648,9 +663,50 @@ const Words: React.FC = () => {
     },
   ];
 
+  const trackWordView = async (wordId: string) => {
+    if (!wordId) return;
+    try {
+      const storageKey = `owlprep_viewed_word_${wordId}`;
+      if (typeof window !== 'undefined' && sessionStorage.getItem(storageKey)) {
+        return; // Already tracked in this browser tab/session
+      }
+
+      const res = await axios.post(`/api/words/${wordId}/view`);
+      if (res.data?.success) {
+        if (typeof window !== 'undefined') {
+          sessionStorage.setItem(storageKey, '1');
+        }
+        // Update local views count
+        setWords((prev) =>
+          prev.map((w) =>
+            w._id === wordId
+              ? {
+                  ...w,
+                  viewCount: res.data.viewCount,
+                  uniqueViewsCount: res.data.uniqueViewsCount,
+                }
+              : w
+          )
+        );
+        setSelectedWord((prev: any) =>
+          prev && prev._id === wordId
+            ? {
+                ...prev,
+                viewCount: res.data.viewCount,
+                uniqueViewsCount: res.data.uniqueViewsCount,
+              }
+            : prev
+        );
+      }
+    } catch {
+      // Silently catch analytics tracking
+    }
+  };
+
   const handleRowClick = (record: any) => {
     setSelectedWord(record);
     setDrawerOpen(true);
+    trackWordView(record._id);
   };
 
   return (
@@ -712,6 +768,7 @@ const Words: React.FC = () => {
           <div className="flex items-center gap-2 overflow-x-auto pt-4 pb-1 scrollbar-none">
             {[
               { key: 'all', label: `সকল শব্দ (${meta.total})` },
+              { key: 'barron-333', label: `Barron's 333 (${meta.barronCount || 331})` },
               { key: 'repeated', label: `মোস্ট রিপিটেড শব্দ (${meta.repeatedCount})` },
               { key: 'verified', label: `ভেরিফাইড শব্দকোষ (${meta.verifiedCount})` },
               ...(session?.user?.email
@@ -793,6 +850,7 @@ const Words: React.FC = () => {
               className="w-full"
             >
               <Option value="frequency">সবচেয়ে বেশি রিপিটেড</Option>
+              <Option value="views">সর্বাধিক পঠিত (Most Viewed)</Option>
               <Option value="verification">ভেরিফিকেশন স্কোর</Option>
               <Option value="alphabetical">বর্ণানুক্রমিক (A-Z)</Option>
               <Option value="recent">নতুন সংযোজিত</Option>
@@ -920,6 +978,67 @@ const Words: React.FC = () => {
                 </div>
               </div>
             </div>
+
+            {/* Word Analytics & Reader Engagement Bar */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className="bg-white border border-gray-200 p-3.5 rounded-2xl shadow-xs">
+                <div className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                  <span>👁️</span> মোট পাঠ (Views)
+                </div>
+                <div className="text-xl font-black text-gray-900">
+                  {selectedWord.viewCount || 0} <span className="text-xs font-bold text-gray-400">বার</span>
+                </div>
+              </div>
+
+              <div className="bg-white border border-gray-200 p-3.5 rounded-2xl shadow-xs">
+                <div className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                  <TeamOutlined className="text-blue-500" /> কতজন দেখেছেন
+                </div>
+                <div className="text-xl font-black text-blue-600">
+                  {selectedWord.uniqueViewsCount || (selectedWord.viewedBy?.length) || 0}{' '}
+                  <span className="text-xs font-bold text-gray-400">জন</span>
+                </div>
+              </div>
+
+              <div className="bg-white border border-gray-200 p-3.5 rounded-2xl shadow-xs">
+                <div className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                  <StarFilled className="text-amber-500" /> ডেক সেভ
+                </div>
+                <div className="text-xl font-black text-amber-600">
+                  {selectedWord.savedCount || (selectedWord.savedBy?.length) || 0}{' '}
+                  <span className="text-xs font-bold text-gray-400">জন</span>
+                </div>
+              </div>
+
+              <div className="bg-white border border-gray-200 p-3.5 rounded-2xl shadow-xs">
+                <div className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                  <FireFilled className="text-rose-500" /> পরীক্ষার ফ্রিকোয়েন্সি
+                </div>
+                <div className="text-xl font-black text-rose-600">
+                  {selectedWord.frequencyCount || 1} <span className="text-xs font-bold text-gray-400">বার</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Past Exam History Details (Barron 333 / Past Papers) */}
+            {selectedWord.examHistory && selectedWord.examHistory.length > 0 && (
+              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4">
+                <div className="text-xs font-black uppercase tracking-wider text-slate-700 mb-2 flex items-center gap-1.5">
+                  <BookOutlined className="text-slate-500" /> বিগত পরীক্ষার সুনির্দিষ্ট প্রশ্নপত্র রেকর্ড:
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {selectedWord.examHistory.map((h: any, idx: number) => (
+                    <span
+                      key={idx}
+                      className="inline-flex items-center gap-1 px-3 py-1 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-800 shadow-2xs"
+                    >
+                      <span>📜 {h.exam}</span>
+                      {h.year && <span className="text-emerald-600">({h.year})</span>}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Bangla & English Meanings */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

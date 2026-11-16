@@ -361,9 +361,9 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Top Navbar */}
+      {/* Top Navbar (Hidden on mobile web view per UX request) */}
       <header
-        className={`sticky top-0 z-40 transition-all duration-300 ${
+        className={`hidden md:block sticky top-0 z-40 transition-all duration-300 ${
           isTransparent
             ? 'bg-transparent border-transparent shadow-none'
             : 'bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-xs'

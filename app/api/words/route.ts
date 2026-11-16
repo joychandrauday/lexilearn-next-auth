@@ -14,8 +14,9 @@ export async function GET(req: Request) {
     const savedOnly = url.searchParams.get('savedOnly') === 'true';
     const intensity = url.searchParams.get('intensity');
     const exam = url.searchParams.get('exam');
-    const filter = url.searchParams.get('filter'); // 'most-repeated' | 'verified' | 'high-yield'
-    const sort = url.searchParams.get('sort') || 'frequency'; // 'frequency' | 'alphabetical' | 'verification' | 'recent'
+    const deck = url.searchParams.get('deck');
+    const filter = url.searchParams.get('filter'); // 'most-repeated' | 'verified' | 'high-yield' | 'barron-333'
+    const sort = url.searchParams.get('sort') || 'frequency'; // 'frequency' | 'alphabetical' | 'verification' | 'recent' | 'views'
     const limit = Math.min(100, Math.max(10, parseInt(url.searchParams.get('limit') || '50')));
     const page = Math.max(1, parseInt(url.searchParams.get('page') || '1'));
     const skip = (page - 1) * limit;
@@ -72,13 +73,20 @@ export async function GET(req: Request) {
       });
     }
 
-    // 5. Special Filters
+    // 5. Deck / Collection Filter (e.g., Barron 333, BCS Special)
+    if (deck && deck !== 'all') {
+      andConditions.push({ decks: deck });
+    }
+
+    // 6. Special Filters
     if (filter === 'most-repeated') {
       andConditions.push({
         $or: [{ isMostRepeated: true }, { frequencyCount: { $gte: 2 } }],
       });
     } else if (filter === 'verified') {
       andConditions.push({ verificationStatus: 'verified' });
+    } else if (filter === 'barron-333') {
+      andConditions.push({ decks: 'barron-333' });
     }
 
     const query = andConditions.length > 0 ? { $and: andConditions } : {};
@@ -91,13 +99,16 @@ export async function GET(req: Request) {
       sortObj = { verificationScore: -1, upvotes: -1 };
     } else if (sort === 'recent') {
       sortObj = { createdAt: -1 };
+    } else if (sort === 'views') {
+      sortObj = { viewCount: -1, uniqueViewsCount: -1, frequencyCount: -1 };
     }
 
-    const [words, totalCount, repeatedCount, verifiedCount] = await Promise.all([
+    const [words, totalCount, repeatedCount, verifiedCount, barronCount] = await Promise.all([
       Word.find(query).sort(sortObj).skip(skip).limit(limit).lean<IWord[]>(),
       Word.countDocuments(query),
       Word.countDocuments({ frequencyCount: { $gte: 2 } }),
       Word.countDocuments({ verificationStatus: 'verified' }),
+      Word.countDocuments({ decks: 'barron-333' }),
     ]);
 
     return NextResponse.json({
@@ -110,6 +121,7 @@ export async function GET(req: Request) {
         totalPages: Math.ceil(totalCount / limit),
         repeatedCount,
         verifiedCount,
+        barronCount,
       },
     });
   } catch (error: any) {

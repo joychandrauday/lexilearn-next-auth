@@ -2,6 +2,7 @@
 
 import { connectDb } from '../lib/db';
 import VocabWord, { IVocabWord } from '../lib/models/VocabWord';
+import Word from '../lib/models/Word';
 import UserWordProgress from '../lib/models/UserWordProgress';
 import LearningSession from '../lib/models/LearningSession';
 import UserProfile from '../lib/models/UserProfile';
@@ -26,21 +27,63 @@ export interface SerializedVocabWord {
 function sanitizeWord(w: any): SerializedVocabWord {
   const wordKey = w.word ? w.word.toLowerCase().trim() : '';
   const dict = BARRON_333_DICTIONARY[wordKey];
-  const isPlaceholder = !w.meaningBn || w.meaningBn.includes('এর অর্থ ও তাৎপর্যপূর্ণ প্রয়োগ');
+  const bn = w.meaningBn || w.bangla || '';
+  const isPlaceholder = !bn || bn.includes('এর অর্থ ও তাৎপর্যপূর্ণ প্রয়োগ');
+  const en = w.meaningEn || w.meaning || '';
+  const ex = w.exampleSentence || w.example || '';
+  const freq = w.repetitionCount || w.frequencyCount || 1;
 
   return {
     _id: w._id.toString(),
     word: w.word,
     partOfSpeech: w.partOfSpeech || dict?.partOfSpeech || '',
-    meaningBn: isPlaceholder && dict?.meaningBn ? dict.meaningBn : (w.meaningBn || dict?.meaningBn || ''),
-    meaningEn: isPlaceholder && dict?.meaningEn ? dict.meaningEn : (w.meaningEn || dict?.meaningEn || ''),
+    meaningBn: isPlaceholder && dict?.meaningBn ? dict.meaningBn : (bn || dict?.meaningBn || ''),
+    meaningEn: isPlaceholder && dict?.meaningEn ? dict.meaningEn : (en || dict?.meaningEn || ''),
     mnemonic: isPlaceholder && dict?.mnemonic ? dict.mnemonic : (w.mnemonic || dict?.mnemonic || ''),
-    exampleSentence: isPlaceholder && dict?.exampleSentence ? dict.exampleSentence : (w.exampleSentence || dict?.exampleSentence || ''),
+    exampleSentence: isPlaceholder && dict?.exampleSentence ? dict.exampleSentence : (ex || dict?.exampleSentence || ''),
     synonyms: w.synonyms?.length ? w.synonyms : (dict?.synonyms || []),
     antonyms: w.antonyms?.length ? w.antonyms : (dict?.antonyms || []),
-    repetitionCount: w.repetitionCount || dict?.repetitionCount || 1,
+    repetitionCount: freq || dict?.repetitionCount || 1,
     examHistory: w.examHistory?.length ? w.examHistory : (dict?.examHistory || []),
   };
+}
+
+async function fetchWordsByIds(ids: any[]): Promise<any[]> {
+  const objectIds = ids.map((id) => (typeof id === 'string' ? new mongoose.Types.ObjectId(id) : id));
+  // 1. Search in Word (Single Source of Truth)
+  const wordDocs = await Word.find({ _id: { $in: objectIds } }).lean();
+  if (wordDocs.length === ids.length) {
+    return wordDocs;
+  }
+  // 2. Fallback to VocabWord for any legacy IDs
+  const foundSet = new Set(wordDocs.map((w: any) => w._id.toString()));
+  const missingIds = objectIds.filter((id) => !foundSet.has(id.toString()));
+  if (missingIds.length > 0) {
+    const vocabDocs = await VocabWord.find({ _id: { $in: missingIds } }).lean();
+    return [...wordDocs, ...vocabDocs];
+  }
+  return wordDocs;
+}
+
+async function getTotalBarronWordsCount(): Promise<number> {
+  const countInWords = await Word.countDocuments({ decks: 'barron-333' });
+  if (countInWords > 0) return countInWords;
+  return await VocabWord.countDocuments({ deckSlug: 'barron-333' });
+}
+
+async function findUnseenBarronWords(masteredWordIds: string[]): Promise<any[]> {
+  const masteredObjIds = masteredWordIds.map((id) => new mongoose.Types.ObjectId(id));
+  const wordDocs = await Word.find({
+    decks: 'barron-333',
+    _id: { $nin: masteredObjIds },
+  }).select('_id').lean();
+
+  if (wordDocs.length > 0) return wordDocs;
+
+  return await VocabWord.find({
+    deckSlug: 'barron-333',
+    _id: { $nin: masteredObjIds },
+  }).select('_id').lean();
 }
 
 export interface SessionResult {
@@ -66,7 +109,7 @@ export async function getOrStartSession(batchSize: number = 7): Promise<{ succes
     const userId = session.user.email.toLowerCase().trim();
     const deckSlug = 'barron-333';
 
-    const totalWords = await VocabWord.countDocuments({ deckSlug });
+    const totalWords = await getTotalBarronWordsCount();
     const masteredProgress = await UserWordProgress.find({ userId, deckSlug }).select('wordId');
     const masteredCount = masteredProgress.length;
     const masteredWordIds = masteredProgress.map((p) => p.wordId.toString());
@@ -79,9 +122,7 @@ export async function getOrStartSession(batchSize: number = 7): Promise<{ succes
     });
 
     if (activeSession) {
-      const words = await VocabWord.find({
-        _id: { $in: activeSession.wordIds },
-      }).lean();
+      const words = await fetchWordsByIds(activeSession.wordIds);
 
       // Preserve exact order from wordIds
       const wordMap = new Map(words.map((w: any) => [w._id.toString(), w]));
@@ -107,10 +148,7 @@ export async function getOrStartSession(batchSize: number = 7): Promise<{ succes
     }
 
     // 2. No active session -> check unseen words
-    const unseenWords = await VocabWord.find({
-      deckSlug,
-      _id: { $nin: masteredWordIds.map((id) => new mongoose.Types.ObjectId(id)) },
-    }).select('_id').lean();
+    const unseenWords = await findUnseenBarronWords(masteredWordIds);
 
     if (unseenWords.length === 0) {
       return {
@@ -144,9 +182,7 @@ export async function getOrStartSession(batchSize: number = 7): Promise<{ succes
       startedAt: new Date(),
     });
 
-    const words = await VocabWord.find({
-      _id: { $in: chosenIds },
-    }).lean();
+    const words = await fetchWordsByIds(chosenIds);
 
     const wordMap = new Map(words.map((w: any) => [w._id.toString(), w]));
     const sortedWords: SerializedVocabWord[] = chosenIds
@@ -298,7 +334,7 @@ export async function getHF333Stats() {
     const userId = session.user.email.toLowerCase().trim();
     const deckSlug = 'barron-333';
 
-    const totalWords = await VocabWord.countDocuments({ deckSlug });
+    const totalWords = await getTotalBarronWordsCount();
     const masteredCount = await UserWordProgress.countDocuments({ userId, deckSlug });
     const activeSession = await LearningSession.findOne({
       userId,
@@ -348,20 +384,31 @@ export async function getMasteredWordsList(search: string = '', page: number = 1
       const q = search.trim().toLowerCase();
       query.$or = [
         { word: { $regex: q, $options: 'i' } },
+        { bangla: { $regex: q, $options: 'i' } },
         { meaningBn: { $regex: q, $options: 'i' } },
         { 'examHistory.exam': { $regex: q, $options: 'i' } },
       ];
     }
 
-    const total = await VocabWord.countDocuments(query);
-    const words = await VocabWord.find(query)
-      .skip((page - 1) * limit)
-      .limit(limit)
-      .lean();
+    const words = await fetchWordsByIds(wordIds);
+    let filteredWords = words;
+    if (search.trim()) {
+      const q = search.trim().toLowerCase();
+      filteredWords = words.filter(
+        (w: any) =>
+          (w.word && w.word.toLowerCase().includes(q)) ||
+          (w.bangla && w.bangla.toLowerCase().includes(q)) ||
+          (w.meaningBn && w.meaningBn.toLowerCase().includes(q)) ||
+          (w.examHistory && w.examHistory.some((e: any) => e.exam?.toLowerCase().includes(q)))
+      );
+    }
+
+    const total = filteredWords.length;
+    const paginated = filteredWords.slice((page - 1) * limit, page * limit);
 
     const completionMap = new Map(masteredRecords.map((r) => [r.wordId.toString(), r.completedAt]));
 
-    const serialized = words.map((w: any) => ({
+    const serialized = paginated.map((w: any) => ({
       ...sanitizeWord(w),
       completedAt: completionMap.get(w._id.toString()) || null,
     }));
@@ -435,18 +482,15 @@ export async function getUserBatchHistory(deckSlug: string = 'barron-333'): Prom
     sessionWordIdSet.forEach((id) => allTargetWordIds.add(id));
     legacyWordIds.forEach((id) => allTargetWordIds.add(id.toString()));
 
-    const vocabDocs = await VocabWord.find({
-      _id: { $in: Array.from(allTargetWordIds).map((id) => new mongoose.Types.ObjectId(id)) },
-    }).lean();
-
-    const vocabMap = new Map(vocabDocs.map((w: any) => [w._id.toString(), sanitizeWord(w)]));
+    const wordDocs = await fetchWordsByIds(Array.from(allTargetWordIds));
+    const wordMap = new Map(wordDocs.map((w: any) => [w._id.toString(), sanitizeWord(w)]));
 
     const batches: UserBatchHistoryItem[] = [];
 
     // Prepend legacy batch if exists
     if (legacyWordIds.length > 0) {
       const legacyWords = legacyWordIds
-        .map((id) => vocabMap.get(id.toString()))
+        .map((id) => wordMap.get(id.toString()))
         .filter(Boolean) as SerializedVocabWord[];
 
       batches.push({
@@ -463,7 +507,7 @@ export async function getUserBatchHistory(deckSlug: string = 'barron-333'): Prom
     // Append completed sessions with sequential batch numbers
     completedSessions.forEach((s: any, idx: number) => {
       const words = (s.wordIds || [])
-        .map((id: any) => vocabMap.get(id.toString()))
+        .map((id: any) => wordMap.get(id.toString()))
         .filter(Boolean) as SerializedVocabWord[];
 
       batches.push({
@@ -494,5 +538,146 @@ export async function getUserBatchHistory(deckSlug: string = 'barron-333'): Prom
       totalMasteredWords: 0,
       totalBatches: 0,
     };
+  }
+}
+
+export async function addWordsToActiveBatch(sessionId: string, count: number = 3) {
+  try {
+    const session = await auth();
+    if (!session?.user?.email) return { success: false, error: 'অনুগ্রহ করে প্রথমে সাইন ইন করুন' };
+
+    await connectDb();
+    const userId = session.user.email.toLowerCase().trim();
+    const deckSlug = 'barron-333';
+
+    const activeSession = await LearningSession.findOne({
+      _id: sessionId,
+      userId,
+      status: 'IN_PROGRESS',
+    });
+
+    if (!activeSession) return { success: false, error: 'কোনো চলমান সেশন পাওয়া যায়নি' };
+
+    const masteredProgress = await UserWordProgress.find({ userId, deckSlug }).select('wordId');
+    const excludedIds = new Set([
+      ...masteredProgress.map((p) => p.wordId.toString()),
+      ...activeSession.wordIds.map((id: any) => id.toString()),
+    ]);
+
+    const numToAdd = Math.max(1, Math.min(Number(count) || 3, 20));
+
+    // Find unseen words not in batch and not mastered
+    const candidateWords = await Word.find({
+      decks: 'barron-333',
+      _id: { $nin: Array.from(excludedIds).map((id) => new mongoose.Types.ObjectId(id)) },
+    }).select('_id').lean();
+
+    const pool = candidateWords.length > 0
+      ? candidateWords
+      : await VocabWord.find({
+          deckSlug: 'barron-333',
+          _id: { $nin: Array.from(excludedIds).map((id) => new mongoose.Types.ObjectId(id)) },
+        }).select('_id').lean();
+
+    if (pool.length === 0) {
+      return { success: false, error: 'যোগ করার মতো নতুন শব্দ আর অবশিষ্ট নেই!' };
+    }
+
+    const shuffled = [...pool].sort(() => Math.random() - 0.5);
+    const chosen = shuffled.slice(0, Math.min(numToAdd, pool.length)).map((w: any) => w._id);
+
+    activeSession.wordIds.push(...chosen);
+    activeSession.batchSize = activeSession.wordIds.length;
+    await activeSession.save();
+
+    const allWordDocs = await fetchWordsByIds(activeSession.wordIds);
+    const wordMap = new Map(allWordDocs.map((w: any) => [w._id.toString(), w]));
+    const sortedWords = activeSession.wordIds
+      .map((id) => wordMap.get(id.toString()))
+      .filter(Boolean)
+      .map(sanitizeWord);
+
+    return {
+      success: true,
+      batchSize: activeSession.batchSize,
+      words: sortedWords,
+      flippedIds: activeSession.flippedIds || [],
+      message: `${chosen.length}টি নতুন শব্দ সফলভাবে ব্যাচে যোগ করা হয়েছে!`,
+    };
+  } catch (err: any) {
+    console.error('addWordsToActiveBatch error:', err);
+    return { success: false, error: err.message || 'শব্দ যোগ করতে ব্যর্থ হয়েছে' };
+  }
+}
+
+export async function excludeWordFromBatch(
+  sessionId: string,
+  wordId: string,
+  isPermanent: boolean = false
+) {
+  try {
+    const session = await auth();
+    if (!session?.user?.email) return { success: false, error: 'অনুগ্রহ করে প্রথমে সাইন ইন করুন' };
+
+    await connectDb();
+    const userId = session.user.email.toLowerCase().trim();
+    const deckSlug = 'barron-333';
+
+    const activeSession = await LearningSession.findOne({
+      _id: sessionId,
+      userId,
+      status: 'IN_PROGRESS',
+    });
+
+    if (!activeSession) return { success: false, error: 'কোনো চলমান সেশন পাওয়া যায়নি' };
+
+    // Remove wordId from wordIds and flippedIds
+    activeSession.wordIds = activeSession.wordIds.filter(
+      (id: any) => id.toString() !== wordId.toString()
+    );
+    activeSession.flippedIds = (activeSession.flippedIds || []).filter(
+      (id: string) => id !== wordId.toString()
+    );
+    activeSession.batchSize = activeSession.wordIds.length;
+
+    // If permanent exclusion, record in UserWordProgress as MASTERED so user never sees it again
+    if (isPermanent) {
+      await UserWordProgress.findOneAndUpdate(
+        { userId, wordId: new mongoose.Types.ObjectId(wordId) },
+        {
+          $setOnInsert: {
+            userId,
+            wordId: new mongoose.Types.ObjectId(wordId),
+            deckSlug,
+            status: 'MASTERED',
+            completedAt: new Date(),
+          },
+        },
+        { upsert: true }
+      );
+    }
+
+    await activeSession.save();
+
+    const allWordDocs = await fetchWordsByIds(activeSession.wordIds);
+    const wordMap = new Map(allWordDocs.map((w: any) => [w._id.toString(), w]));
+    const sortedWords = activeSession.wordIds
+      .map((id) => wordMap.get(id.toString()))
+      .filter(Boolean)
+      .map(sanitizeWord);
+
+    return {
+      success: true,
+      batchSize: activeSession.batchSize,
+      words: sortedWords,
+      flippedIds: activeSession.flippedIds || [],
+      isBatchReadyToFinish: activeSession.wordIds.length > 0 && activeSession.flippedIds.length >= activeSession.wordIds.length,
+      message: isPermanent
+        ? 'শব্দটি চিরতরে আপনার তালিকা থেকে বাদ দেওয়া হয়েছে।'
+        : 'শব্দটি বর্তমান ব্যাচ থেকে সরানো হয়েছে।',
+    };
+  } catch (err: any) {
+    console.error('excludeWordFromBatch error:', err);
+    return { success: false, error: err.message || 'শব্দ বাদ দিতে সমস্যা হয়েছে' };
   }
 }

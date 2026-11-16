@@ -44,9 +44,13 @@ export default function BottomNav() {
             >
               <Icon className={`text-lg mb-0.5 ${isActive ? 'text-emerald-600' : ''}`} />
               <span className="text-[10px] tracking-tight">{item.label}</span>
-              {isActive && (
-                <span className="w-1.5 h-1.5 bg-emerald-600 rounded-full mt-0.5 animate-pulse" />
-              )}
+              <span
+                className={`w-1.5 h-1.5 rounded-full mt-0.5 transition-all duration-200 ${
+                  isActive
+                    ? 'bg-emerald-600 scale-100 shadow-[0_0_8px_rgba(5,150,105,0.7)]'
+                    : 'bg-transparent scale-0'
+                }`}
+              />
             </Link>
           );
         })}

@@ -392,25 +392,27 @@ export default function AIChatBot() {
 
   return (
     <>
-      {/* Floating Trigger Button (Bottom-Right) */}
+      {/* Floating Minimal AI Button (Positioned safely above BottomNav on mobile) */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-40 flex items-center gap-2.5 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 text-white px-4 py-3 rounded-full shadow-2xl hover:shadow-emerald-900/40 hover:scale-105 active:scale-95 transition-all duration-300 font-bold border border-emerald-400/40 group cursor-pointer"
+        className="fixed bottom-20 right-4 md:bottom-6 md:right-6 z-40 flex items-center gap-2 bg-gradient-to-tr from-emerald-600 via-teal-600 to-emerald-700 text-white p-2.5 md:px-3.5 md:py-2.5 rounded-full shadow-[0_8px_25px_rgba(5,150,105,0.35)] hover:shadow-[0_12px_30px_rgba(5,150,105,0.5)] hover:scale-105 active:scale-95 transition-all duration-300 font-bold border border-white/25 group cursor-pointer"
         aria-label={`Open ${siteConfig.bot.name}`}
       >
-        <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center shadow-inner group-hover:rotate-12 transition-transform overflow-hidden p-0.5">
+        <div className="relative w-6 h-6 flex items-center justify-center group-hover:rotate-12 transition-transform">
           <Image
             src="/iconflat.png"
             alt="Owl AI"
-            width={22}
-            height={22}
-            className="object-contain w-full h-full"
+            width={24}
+            height={24}
+            className="object-contain w-full h-full drop-shadow-xs"
           />
+          <span className="absolute -top-1 -right-1 flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-200 opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-300 border border-emerald-800" />
+          </span>
         </div>
-        <span className="text-sm font-black tracking-wide">{siteConfig.bot.name}</span>
-        <span className="relative flex h-2.5 w-2.5">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-75" />
-          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400" />
+        <span className="hidden md:inline text-xs font-black tracking-wide pr-1">
+          {siteConfig.bot.name}
         </span>
       </button>
 

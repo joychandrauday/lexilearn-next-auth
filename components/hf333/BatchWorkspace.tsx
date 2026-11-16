@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Button, Modal } from 'antd';
+import { Button, Modal, Dropdown, MenuProps, message } from 'antd';
 import {
   LeftOutlined,
   RightOutlined,
@@ -10,10 +10,19 @@ import {
   FireFilled,
   TrophyFilled,
   BookOutlined,
+  PlusOutlined,
+  DeleteOutlined,
+  DownOutlined,
+  CloseCircleOutlined,
 } from '@ant-design/icons';
 import FlipCard from './FlipCard';
 import FinishBatchButton from './FinishBatchButton';
-import { SerializedVocabWord, markCardFlipped } from '../../actions/hf333.actions';
+import {
+  SerializedVocabWord,
+  markCardFlipped,
+  addWordsToActiveBatch,
+  excludeWordFromBatch,
+} from '../../actions/hf333.actions';
 
 interface BatchWorkspaceProps {
   sessionId: string;
@@ -26,12 +35,13 @@ interface BatchWorkspaceProps {
 
 export default function BatchWorkspace({
   sessionId,
-  words,
+  words: initialWords,
   initialFlippedIds,
   totalWords,
   masteredCount,
   onBatchCompleted,
 }: BatchWorkspaceProps) {
+  const [words, setWords] = useState<SerializedVocabWord[]>(initialWords);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const [flippedSet, setFlippedSet] = useState<Set<string>>(() => new Set(initialFlippedIds));
@@ -41,7 +51,16 @@ export default function BatchWorkspace({
     mastered: masteredCount,
   });
 
-  const currentWord = words[currentIndex];
+  const [addingWords, setAddingWords] = useState(false);
+  const [excludingWord, setExcludingWord] = useState(false);
+  const [excludeModalOpen, setExcludeModalOpen] = useState(false);
+
+  // Keep words state in sync if prop changes
+  useEffect(() => {
+    setWords(initialWords);
+  }, [initialWords]);
+
+  const currentWord = words[currentIndex] || words[0];
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [touchStartY, setTouchStartY] = useState<number | null>(null);
 
@@ -57,13 +76,10 @@ export default function BatchWorkspace({
     const deltaX = touchEndX - touchStartX;
     const deltaY = touchEndY - touchStartY;
 
-    // Minimum swipe threshold 50px, horizontal > vertical to prevent scroll collision
     if (Math.abs(deltaX) > 50 && Math.abs(deltaX) > Math.abs(deltaY)) {
       if (deltaX < 0) {
-        // Swiped Left -> Next Card
         handleNext();
       } else {
-        // Swiped Right -> Previous Card
         handlePrev();
       }
     }
@@ -97,6 +113,76 @@ export default function BatchWorkspace({
     }
   }, [currentIndex]);
 
+  // Handle Add More Words to Active Batch
+  const handleAddMoreWords = async (count: number = 3) => {
+    setAddingWords(true);
+    try {
+      const res = await addWordsToActiveBatch(sessionId, count);
+      if (res.success && res.words) {
+        setWords(res.words);
+        setFlippedSet(new Set(res.flippedIds || []));
+        message.success(res.message || `${count}টি নতুন শব্দ ব্যাচে যুক্ত হয়েছে!`);
+      } else {
+        message.warning(res.error || 'নতুন শব্দ যোগ করা সম্ভব হয়নি');
+      }
+    } catch {
+      message.error('শব্দ যোগ করতে সমস্যা হয়েছে');
+    } finally {
+      setAddingWords(false);
+    }
+  };
+
+  // Handle Exclude Word (Current Batch vs Permanent)
+  const handleExcludeCurrentWord = async (isPermanent: boolean) => {
+    if (!currentWord) return;
+    setExcludingWord(true);
+    try {
+      const res = await excludeWordFromBatch(sessionId, currentWord._id, isPermanent);
+      if (res.success && res.words) {
+        setWords(res.words);
+        setFlippedSet(new Set(res.flippedIds || []));
+        setExcludeModalOpen(false);
+        setIsFlipped(false);
+
+        if (res.words.length === 0) {
+          message.info('ব্যাচে আর কোনো শব্দ নেই। নতুন সেশন শুরু করা হচ্ছে...');
+          onBatchCompleted();
+          return;
+        }
+
+        if (currentIndex >= res.words.length) {
+          setCurrentIndex(Math.max(0, res.words.length - 1));
+        }
+        message.success(res.message);
+      } else {
+        message.error(res.error || 'শব্দ বাদ দিতে সমস্যা হয়েছে');
+      }
+    } catch {
+      message.error('শব্দ বাদ দিতে সমস্যা হয়েছে');
+    } finally {
+      setExcludingWord(false);
+    }
+  };
+
+  // Add more words dropdown menu
+  const addWordsMenuItems: MenuProps['items'] = [
+    {
+      key: 'add-3',
+      label: '+ ৩টি শব্দ যোগ করুন',
+      onClick: () => handleAddMoreWords(3),
+    },
+    {
+      key: 'add-5',
+      label: '+ ৫টি শব্দ যোগ করুন',
+      onClick: () => handleAddMoreWords(5),
+    },
+    {
+      key: 'add-10',
+      label: '+ ১০টি শব্দ যোগ করুন',
+      onClick: () => handleAddMoreWords(10),
+    },
+  ];
+
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -118,8 +204,23 @@ export default function BatchWorkspace({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleFlipToggle, handleNext, handlePrev]);
 
-  if (!currentWord) {
-    return null;
+  if (!currentWord || words.length === 0) {
+    return (
+      <div className="max-w-md mx-auto py-12 px-4 text-center">
+        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+          <p className="text-gray-600 font-bold mb-4">এই ব্যাচে কোনো সক্রিয় শব্দ নেই।</p>
+          <Button
+            type="primary"
+            onClick={() => handleAddMoreWords(5)}
+            loading={addingWords}
+            icon={<PlusOutlined />}
+            className="bg-emerald-600 hover:!bg-emerald-700 rounded-xl"
+          >
+            শব্দ যোগ করুন
+          </Button>
+        </div>
+      </div>
+    );
   }
 
   const isCurrentFlipped = flippedSet.has(currentWord._id);
@@ -143,7 +244,7 @@ export default function BatchWorkspace({
         </div>
 
         {/* Progress Dots */}
-        <div className="flex items-center gap-1.5 flex-wrap justify-center">
+        <div className="flex items-center gap-1.5 flex-wrap justify-center max-w-sm">
           {words.map((w, idx) => {
             const hasFlipped = flippedSet.has(w._id);
             const isCurrent = idx === currentIndex;
@@ -167,8 +268,29 @@ export default function BatchWorkspace({
           })}
         </div>
 
-        <div className="text-xs font-bold text-gray-500">
-          পর্যালোচিত: <span className="text-emerald-600 font-extrabold">{flippedSet.size}</span>/{words.length}
+        {/* Action Controls: Add More & Exclude */}
+        <div className="flex items-center gap-2">
+          <Dropdown menu={{ items: addWordsMenuItems }} trigger={['click']}>
+            <Button
+              size="small"
+              icon={<PlusOutlined />}
+              loading={addingWords}
+              className="rounded-xl font-bold text-xs text-emerald-700 bg-emerald-50 border-emerald-200 hover:bg-emerald-100"
+            >
+              আরো শব্দ <DownOutlined className="text-[10px]" />
+            </Button>
+          </Dropdown>
+
+          <Button
+            size="small"
+            danger
+            icon={<CloseCircleOutlined />}
+            onClick={() => setExcludeModalOpen(true)}
+            className="rounded-xl font-bold text-xs"
+            title="বর্তমান শব্দ তালিকা থেকে বাদ দিন"
+          >
+            বাদ দিন
+          </Button>
         </div>
       </div>
 
@@ -187,7 +309,7 @@ export default function BatchWorkspace({
 
       {/* Bottom Controls Bar */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-8 bg-white p-4 rounded-2xl border border-gray-100 shadow-sm">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <Button
             size="large"
             disabled={currentIndex === 0}
@@ -241,6 +363,45 @@ export default function BatchWorkspace({
           📱 👈 বামে সোয়াইপে নেক্সট | ডানে সোয়াইপে প্রিভিয়াস 👉
         </span>
       </div>
+
+      {/* Exclude Word Confirmation Modal */}
+      <Modal
+        open={excludeModalOpen}
+        title={<span className="font-bold text-gray-800">শব্দ বাদ দেওয়ার ধরন নির্বাচন করুন</span>}
+        footer={null}
+        onCancel={() => setExcludeModalOpen(false)}
+        centered
+      >
+        <div className="py-3 space-y-4">
+          <p className="text-sm text-gray-600">
+            শব্দ: <strong className="text-emerald-700 capitalize font-mono text-base">{currentWord?.word}</strong>
+          </p>
+
+          <div className="space-y-3">
+            <button
+              onClick={() => handleExcludeCurrentWord(false)}
+              disabled={excludingWord}
+              className="w-full text-left p-3.5 rounded-xl border border-gray-200 hover:border-amber-400 hover:bg-amber-50/50 transition cursor-pointer"
+            >
+              <div className="font-bold text-gray-800 text-sm">১. বর্তমান সেশন থেকে বাদ দিন</div>
+              <div className="text-xs text-gray-500 mt-0.5">
+                শব্দটি শুধু বর্তমান ব্যাচ থেকে বাদ যাবে, ভবিষ্যতে অন্য কোনো ব্যাচে পুনরায় আসতে পারে।
+              </div>
+            </button>
+
+            <button
+              onClick={() => handleExcludeCurrentWord(true)}
+              disabled={excludingWord}
+              className="w-full text-left p-3.5 rounded-xl border border-red-200 hover:border-red-400 hover:bg-red-50/50 transition cursor-pointer"
+            >
+              <div className="font-bold text-red-700 text-sm">২. চিরতরে বাদ দিন (আগে থেকেই জানা শব্দ)</div>
+              <div className="text-xs text-gray-500 mt-0.5">
+                এটি আপনার মাস্টার্ড তালিকায় যুক্ত হবে এবং ব্যারন ৩৩৩ এর কোনো সেশনেই আর কখনো আসবে না।
+              </div>
+            </button>
+          </div>
+        </div>
+      </Modal>
 
       {/* Celebration Modal */}
       <Modal
