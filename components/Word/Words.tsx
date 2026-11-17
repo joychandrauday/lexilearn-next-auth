@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState, useMemo, useRef } from 'react';
+import Link from 'next/link';
 import axios from 'axios';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
@@ -732,6 +733,17 @@ const Words: React.FC = () => {
               <h1 className="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight flex items-center gap-2 m-0">
                 ভোকাবুলারি কোষ ও অনুশীলন
               </h1>
+              <div className="flex items-center gap-2 mt-2">
+                <span className="text-[11px] font-black bg-emerald-800 text-white px-2.5 py-0.5 rounded-md">
+                  ইংরেজি ভোকাবুলারি হাব
+                </span>
+                <Link
+                  href="/bangla/shobdo"
+                  className="text-[11px] font-bold text-gray-600 hover:text-emerald-800 bg-gray-100 hover:bg-emerald-50 px-2.5 py-0.5 rounded-md transition-all flex items-center gap-1 border border-gray-200"
+                >
+                  বাংলা শব্দ উৎস (কোন দেশি শব্দ) ↗
+                </Link>
+              </div>
             </div>
 
             {/* Quick Metrics & Add Word */}
@@ -1151,11 +1163,18 @@ const Words: React.FC = () => {
         centered
         className="font-sans"
       >
-        <p className="text-xs text-gray-500 mb-4 flex items-center gap-1.5">
+        <p className="text-xs text-gray-500 mb-3 flex items-center gap-1.5">
           <BulbOutlined className="text-amber-500" />
           <span>আপনি যে শব্দটি যোগ করবেন, তা পূর্বেই থাকলে সিস্টেম আপনার ডেক ও পরীক্ষার ট্যাগ আপডেট করে
           রিইউজ করবে। ফলে কোনো তথ্য ডুপ্লিকেট হয় না।</span>
         </p>
+
+        <div className="mb-4 text-xs bg-cyan-50 border border-cyan-100 p-2.5 rounded-xl flex items-center justify-between">
+          <span className="text-cyan-900 font-medium">বাংলা শব্দ উৎস (পর্তুগিজ, আরবি, ফারসি...) যোগ করতে চান?</span>
+          <Link href="/add?tab=bangla" className="font-bold text-cyan-700 hover:text-cyan-800 underline shrink-0">
+            বাংলা শব্দ যুক্ত করুন →
+          </Link>
+        </div>
 
         <Form
           form={form}

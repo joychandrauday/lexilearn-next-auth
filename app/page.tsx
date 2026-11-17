@@ -1247,6 +1247,30 @@ export default function LandingPage() {
             </Link>
           </motion.div>
 
+          {/* Feature: Bengali Word Origin */}
+          <motion.div
+            whileHover={{ y: -6 }}
+            className="bg-white p-6 rounded-3xl border border-gray-200 shadow-xs flex flex-col justify-between"
+          >
+            <div>
+              <div className="w-12 h-12 rounded-2xl bg-cyan-600 text-white flex items-center justify-center mb-4 shadow-sm">
+                <Globe className="w-6 h-6" />
+              </div>
+              <Tag color="cyan" className="font-bold text-[10px] rounded-md mb-2">
+                শব্দতত্ত্ব ও ব্যুৎপত্তি
+              </Tag>
+              <h3 className="font-black text-lg text-slate-900 mb-2">১৬০+ বাংলা শব্দ উৎস (কোন দেশি শব্দ)</h3>
+              <p className="text-xs text-gray-600 leading-relaxed font-normal">
+                পর্তুগিজ, আরবি, ফারসি, তুর্কি, ওলন্দাজ, ফরাসি, তৎসম ও তদ্ভব শব্দের উৎস ও বিগত বিসিএস-ব্যাংক পরীক্ষার অথেনটিক প্রশ্নব্যাংক।
+              </p>
+            </div>
+            <Link href="/bangla/shobdo" className="mt-5 block">
+              <span className="text-xs font-black text-cyan-700 hover:text-cyan-800 flex items-center gap-1">
+                শব্দ উৎস ডিরেক্টরি <ArrowRight className="w-3.5 h-3.5" />
+              </span>
+            </Link>
+          </motion.div>
+
           {/* Feature 5 */}
           <motion.div
             whileHover={{ y: -6 }}

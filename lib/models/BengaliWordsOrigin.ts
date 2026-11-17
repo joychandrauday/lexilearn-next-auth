@@ -7,7 +7,10 @@ export interface IWordSourceBengali extends Document {
     userEmail: string;
     banglaWord: string;
     sourceLanguage?: string;
+    meaning?: string;
     exam?: ('primary' | 'bank' | 'bcs' | 'ntrca' | 'others')[];
+    examTags?: string[];
+    frequencyCount?: number;
     createdAt?: Date;
     updatedAt?: Date;
 }
@@ -19,7 +22,7 @@ const wordSourceSchema = new Schema<IWordSourceBengali>(
     {
         userEmail: {
             type: String,
-            required: true,
+            default: 'community@lexilearn.com',
             trim: true,
             lowercase: true,
         },
@@ -28,12 +31,21 @@ const wordSourceSchema = new Schema<IWordSourceBengali>(
             type: String,
             required: true,
             trim: true,
-            unique: true
+            unique: true,
+            index: true,
         },
 
         sourceLanguage: {
             type: String,
-            default: 'others',
+            default: 'অন্যান্য',
+            trim: true,
+            index: true,
+        },
+
+        meaning: {
+            type: String,
+            trim: true,
+            default: '',
         },
 
         // ✅ Multiple exams support
@@ -41,6 +53,16 @@ const wordSourceSchema = new Schema<IWordSourceBengali>(
             type: [String],
             enum: ['primary', 'bank', 'bcs', 'ntrca', 'others'],
             default: ['others'],
+        },
+
+        examTags: {
+            type: [String],
+            default: [],
+        },
+
+        frequencyCount: {
+            type: Number,
+            default: 1,
         },
     },
     {

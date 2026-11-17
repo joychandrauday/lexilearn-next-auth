@@ -22,6 +22,7 @@ import {
   CalendarOutlined,
   UserOutlined,
   LogoutOutlined,
+  GlobalOutlined,
 } from '@ant-design/icons';
 import { siteConfig } from '../lib/config/site';
 
@@ -45,6 +46,7 @@ const drawerSections = [
     links: [
       { key: 'hf-333', label: 'ব্যারন ৩৩৩ ভোকাবুলারি', href: '/high-frequency-333', icon: <FireOutlined className="text-amber-500" /> },
       { key: 'words', label: 'ভোকাবুলারি হাব', href: '/words', icon: <BookOutlined className="text-emerald-600" /> },
+      { key: 'bangla-shobdo', label: 'বাংলা শব্দ উৎস', href: '/bangla/shobdo', icon: <GlobalOutlined className="text-cyan-600" /> },
       { key: 'bangla', label: 'বাংলা হাব ও বাগধারা', href: '/bangla', icon: <BookOutlined className="text-teal-600" /> },
       { key: 'focus-writing', label: 'ব্যাংক ফোকাস রাইটিং', href: '/focus-writing', icon: <BankOutlined className="text-emerald-700" /> },
       { key: 'math', label: 'গণিত প্রস্তুতি', href: '/math', icon: <CalculatorOutlined className="text-blue-600" /> },

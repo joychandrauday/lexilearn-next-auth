@@ -6,6 +6,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const routes = [
     { url: '', priority: 1.0, changeFrequency: 'daily' as const },
+    { url: '/words', priority: 0.95, changeFrequency: 'daily' as const },
+    { url: '/bangla/shobdo', priority: 0.9, changeFrequency: 'daily' as const },
+    { url: '/bangla/baghdhara', priority: 0.9, changeFrequency: 'daily' as const },
+    { url: '/high-frequency-333', priority: 0.9, changeFrequency: 'weekly' as const },
     { url: '/feed', priority: 0.9, changeFrequency: 'hourly' as const },
     { url: '/question-bank', priority: 0.9, changeFrequency: 'daily' as const },
     { url: '/battle', priority: 0.85, changeFrequency: 'always' as const },

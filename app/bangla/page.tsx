@@ -7,6 +7,7 @@ import {
     EditOutlined,
     ReadOutlined,
     ProfileOutlined,
+    GlobalOutlined,
 } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 
@@ -14,9 +15,9 @@ const { Title, Paragraph } = Typography;
 
 const services = [
     {
-        title: "শব্দ",
-        description: "শব্দের অর্থ, প্রকারভেদ ও ব্যবহার শিখুন",
-        icon: <BookOutlined style={{ fontSize: 32 }} />,
+        title: "বাংলা শব্দ উৎস (কোন দেশি শব্দ)",
+        description: "তৎসম, তদ্ভব, দেশি ও বিদেশি শব্দের উৎপত্তি এবং বিগত বিসিএস ও ব্যাংক পরীক্ষার প্রশ্নকোষ",
+        icon: <GlobalOutlined style={{ fontSize: 32 }} />,
         path: "/bangla/shobdo",
     },
     {

@@ -25,6 +25,7 @@ import {
   TrophyOutlined,
   DownOutlined,
   AppstoreOutlined,
+  GlobalOutlined,
 } from '@ant-design/icons';
 import { siteConfig } from '../lib/config/site';
 
@@ -118,6 +119,15 @@ export default function Navbar() {
       label: (
         <Link href="/bangla/baghdhara" className="font-semibold text-gray-700 text-xs py-1 block">
           বাংলা বাগধারা
+        </Link>
+      ),
+    },
+    {
+      key: 'bangla-shobdo',
+      icon: <GlobalOutlined className="text-cyan-600 text-sm" />,
+      label: (
+        <Link href="/bangla/shobdo" className="font-semibold text-gray-700 text-xs py-1 block">
+          বাংলা শব্দ উৎস
         </Link>
       ),
     },
@@ -266,6 +276,7 @@ export default function Navbar() {
         { key: 'translation', label: 'অনুবাদ স্টুডিও', href: '/translation', icon: <ReadOutlined /> },
         { key: 'hf-333', label: 'ব্যারন ৩৩৩ ভোকাবুলারি', href: '/high-frequency-333', icon: <FireOutlined /> },
         { key: 'words', label: 'ভোকাবুলারি হাব', href: '/words', icon: <BookOutlined /> },
+        { key: 'bangla-shobdo', label: 'বাংলা শব্দ উৎস', href: '/bangla/shobdo', icon: <GlobalOutlined /> },
         { key: 'baghdhara', label: 'বাংলা বাগধারা', href: '/bangla/baghdhara', icon: <BookOutlined /> },
       ],
     },
