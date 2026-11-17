@@ -4,11 +4,11 @@ import React, { useEffect, useState, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import axios from 'axios';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { toast } from 'sonner';
 import {
   Table,
   Tag,
   Spin,
-  message,
   Input,
   Select,
   Tooltip,
@@ -139,7 +139,7 @@ const Words: React.FC = () => {
     try {
       const params: any = {
         sort: sortBy,
-        limit: 100,
+        limit: 1000,
       };
 
       if (session?.user?.email) {
@@ -170,7 +170,7 @@ const Words: React.FC = () => {
       }
     } catch (err) {
       console.error(err);
-      message.error('শব্দভাণ্ডার লোড করতে ব্যর্থ হয়েছে');
+      toast.error('শব্দভাণ্ডার লোড করতে ব্যর্থ হয়েছে');
     } finally {
       setLoading(false);
     }
@@ -200,8 +200,9 @@ const Words: React.FC = () => {
   const handleAddWord = async (values: any) => {
     setAdding(true);
     try {
+      const wordClean = values.word.trim();
       const payload = {
-        word: values.word.trim(),
+        word: wordClean,
         intensity: values.intensity || 'medium',
         exam: values.exam || 'bcs',
         examTag: values.examTag?.trim() || undefined,
@@ -213,22 +214,23 @@ const Words: React.FC = () => {
 
       if (res.data.success) {
         if (res.data.reused) {
-          message.success(
-            `"${values.word}" পূর্বেই সংরক্ষিত ছিল! আপনার ডেকে যুক্ত ও ভেরিফিকেশন স্কোর আপডেট হয়েছে।`
+          toast.info(
+            `"${wordClean}" পূর্বেই সংরক্ষিত ছিল! আপনার ডেকে যুক্ত ও ভেরিফিকেশন স্কোর আপডেট হয়েছে।`
           );
         } else {
-          message.success(`"${values.word}" সফলভাবে AI ভেরিফিকেশনসহ যুক্ত হয়েছে!`);
+          toast.success(`"${wordClean}" সফলভাবে AI ভেরিফিকেশনসহ যুক্ত হয়েছে!`);
         }
         form.resetFields();
         setSuggestions([]);
         setAddModalVisible(false);
-        fetchWords();
+        setSearchText(wordClean);
         setCurrentPage(1);
+        await fetchWords();
       } else {
-        message.error(res.data.message || 'শব্দ সংরক্ষণে সমস্যা হয়েছে');
+        toast.error(res.data.message || 'শব্দ সংরক্ষণে সমস্যা হয়েছে');
       }
     } catch (err: any) {
-      message.error(err.response?.data?.message || 'শব্দ সংরক্ষণে ত্রুটি');
+      toast.error(err.response?.data?.message || 'শব্দ সংরক্ষণে ত্রুটি হয়েছে');
     } finally {
       setAdding(false);
     }
@@ -244,7 +246,7 @@ const Words: React.FC = () => {
       if (typeof window !== 'undefined') {
         window.dispatchEvent(new CustomEvent('lexi:request_auth'));
       }
-      message.info('আপনার ব্যক্তিগত ডেকে সেভ করতে অনুগ্রহ করে লগইন বা রেজিস্টার করুন');
+      toast.info('আপনার ব্যক্তিগত ডেকে সেভ করতে অনুগ্রহ করে লগইন বা রেজিস্টার করুন');
       return;
     }
 
@@ -255,7 +257,7 @@ const Words: React.FC = () => {
       });
 
       if (res.data.success) {
-        message.success(res.data.message);
+        toast.success(res.data.message);
         // Optimistic UI update
         setWords((prev) =>
           prev.map((w) => {
@@ -280,7 +282,7 @@ const Words: React.FC = () => {
         }
       }
     } catch {
-      message.error('ডেক আপডেট করতে ব্যর্থ হয়েছে');
+      toast.error('ডেক আপডেট করতে ব্যর্থ হয়েছে');
     }
   };
 
@@ -295,7 +297,7 @@ const Words: React.FC = () => {
       });
 
       if (res.data.success) {
-        message.success(res.data.message);
+        toast.success(res.data.message);
         setWords((prev) =>
           prev.map((w) =>
             w._id === word._id
@@ -318,7 +320,7 @@ const Words: React.FC = () => {
         }
       }
     } catch {
-      message.error('যাচাই স্কোর আপডেটে সমস্যা হয়েছে');
+      toast.error('যাচাই স্কোর আপডেটে সমস্যা হয়েছে');
     }
   };
 
@@ -335,7 +337,7 @@ const Words: React.FC = () => {
       });
 
       if (res.data.success) {
-        message.success(res.data.message);
+        toast.success(res.data.message);
         setWords((prev) =>
           prev.map((w) =>
             w._id === taggingWord._id
@@ -352,7 +354,7 @@ const Words: React.FC = () => {
         setCustomExamTag('');
       }
     } catch {
-      message.error('পরীক্ষার ট্যাগ যুক্ত করতে সমস্যা হয়েছে');
+      toast.error('পরীক্ষার ট্যাগ যুক্ত করতে সমস্যা হয়েছে');
     } finally {
       setTaggingLoading(false);
     }
@@ -376,11 +378,11 @@ const Words: React.FC = () => {
           });
 
           if (res.data.success) {
-            message.success(res.data.message);
+            toast.success(res.data.message);
             fetchWords();
           }
         } catch {
-          message.error('শব্দ সরাতে ব্যর্থ হয়েছে');
+          toast.error('শব্দ সরাতে ব্যর্থ হয়েছে');
         }
       },
     });

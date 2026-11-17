@@ -110,7 +110,7 @@ function AddWordContent() {
         } else {
           toast.success(`"${values.word}" সফলভাবে AI ভেরিফিকেশনসহ সংরক্ষিত হয়েছে!`);
         }
-        router.push('/words');
+        router.push(`/words?search=${encodeURIComponent(values.word.trim())}`);
       } else {
         toast.error('শব্দটি সংরক্ষণ করতে সমস্যা হয়েছে');
       }

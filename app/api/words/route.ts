@@ -17,7 +17,7 @@ export async function GET(req: Request) {
     const deck = url.searchParams.get('deck');
     const filter = url.searchParams.get('filter'); // 'most-repeated' | 'verified' | 'high-yield' | 'barron-333'
     const sort = url.searchParams.get('sort') || 'frequency'; // 'frequency' | 'alphabetical' | 'verification' | 'recent' | 'views'
-    const limit = Math.min(100, Math.max(10, parseInt(url.searchParams.get('limit') || '50')));
+    const limit = Math.min(1000, Math.max(10, parseInt(url.searchParams.get('limit') || '100')));
     const page = Math.max(1, parseInt(url.searchParams.get('page') || '1'));
     const skip = (page - 1) * limit;
 
@@ -219,7 +219,7 @@ export async function POST(req: Request) {
 
     const initialExamTags = [tagToAdd];
     const isSystemOrAdmin = /admin|lexilearn|bot/i.test(currentUser);
-    const initialStatus = isSystemOrAdmin ? 'approved' : 'pending';
+    const initialStatus = 'approved';
 
     const newWord = new Word({
       _id: new mongoose.Types.ObjectId(),
@@ -236,10 +236,10 @@ export async function POST(req: Request) {
       examTags: initialExamTags,
       frequencyCount: 1,
       isMostRepeated: false,
-      verificationScore: isSystemOrAdmin ? 92 : 80,
-      verificationStatus: isSystemOrAdmin ? 'verified' : 'community',
+      verificationScore: aiData ? 92 : 85,
+      verificationStatus: 'verified',
       status: initialStatus,
-      verifiedBy: isSystemOrAdmin ? 'AI মডেল ও বাংলা ডিকশনারি সিন্থেসিস' : 'ইউজার কন্ট্রিবিউশন (Pending)',
+      verifiedBy: 'AI মডেল ও ডিকশনারি সিন্থেসিস',
       upvotes: 1,
       downvotes: 0,
       contributedBy: currentUser,
@@ -255,15 +255,13 @@ export async function POST(req: Request) {
 
     await newWord.save();
 
-    const returnMessage = isSystemOrAdmin
-      ? `"${lower}" সফলভাবে যুক্ত ও ভেরিফাই করা হয়েছে!`
-      : `"${lower}" শব্দটি পর্যালোচনার জন্য জমা নেওয়া হয়েছে! অ্যাডমিন অনুমোদনের পর এটি পাবলিক ডিকশনারিতে লাইভ হবে এবং আপনার প্রোফাইলে +৫০ XP যোগ হবে।`;
+    const returnMessage = `"${lower}" সফলভাবে যুক্ত ও ভেরিফাই করা হয়েছে!`;
 
     return NextResponse.json({
       success: true,
       data: newWord,
       reused: false,
-      isPending: !isSystemOrAdmin,
+      isPending: false,
       message: returnMessage,
     });
   } catch (error: any) {
