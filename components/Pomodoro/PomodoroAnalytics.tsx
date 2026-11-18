@@ -38,7 +38,12 @@ interface PomodoroAnalyticsProps {
   serverStats?: {
     todayMinutes: number;
     totalFocusMinutes: number;
+    streak?: number;
+    longestStreak?: number;
+    xp?: number;
+    level?: number;
     dayByDay: DayBreakdown[];
+    recentSessions?: any[];
   } | null;
 }
 
@@ -135,30 +140,26 @@ export default function PomodoroAnalytics({
     return list;
   }, []);
 
-  // Aggregate sessions day by day (combining local sessions and server stats)
+  // Aggregate sessions day by day (strictly completed sessions only, no double counting)
   const aggregatedDays: DayBreakdown[] = useMemo(() => {
+    // If server provides dayByDay stats, use them directly as the authoritative record
+    if (serverStats?.dayByDay && serverStats.dayByDay.length > 0) {
+      return serverStats.dayByDay;
+    }
+
+    // Fallback for guest mode or offline: aggregate from local completed sessions
     const dayMap = new Map<string, { minutes: number; count: number }>();
     past14Days.forEach((d) => dayMap.set(d, { minutes: 0, count: 0 }));
 
-    // From server if available
-    if (serverStats?.dayByDay) {
-      serverStats.dayByDay.forEach((item) => {
-        if (dayMap.has(item.date)) {
-          const cur = dayMap.get(item.date)!;
-          cur.minutes = Math.max(cur.minutes, item.minutes);
-          cur.count = Math.max(cur.count, item.sessionsCount);
+    sessions
+      .filter((s) => s.completed)
+      .forEach((s) => {
+        if (dayMap.has(s.date)) {
+          const cur = dayMap.get(s.date)!;
+          cur.minutes += s.durationMinutes;
+          cur.count += 1;
         }
       });
-    }
-
-    // Merge local sessions
-    sessions.forEach((s) => {
-      if (dayMap.has(s.date)) {
-        const cur = dayMap.get(s.date)!;
-        cur.minutes += s.durationMinutes;
-        cur.count += 1;
-      }
-    });
 
     return past14Days.map((d) => {
       const entry = dayMap.get(d) || { minutes: 0, count: 0 };
@@ -200,6 +201,8 @@ export default function PomodoroAnalytics({
     }
     return streak;
   }, [aggregatedDays]);
+
+  const streakToDisplay = serverStats?.streak ?? activeStreak;
 
   const maxMinutesInDay = useMemo(() => {
     const max = Math.max(...aggregatedDays.map((d) => d.minutes), 60);
@@ -278,7 +281,7 @@ export default function PomodoroAnalytics({
                 <Flame className="w-3.5 h-3.5 text-amber-400" />
               </div>
               <div className="text-lg sm:text-xl font-black text-amber-400 tracking-tight">
-                {lang === 'bn' ? `${toBnDigits(activeStreak)} দিন` : `${activeStreak} days`}
+                {lang === 'bn' ? `${toBnDigits(streakToDisplay)} দিন` : `${streakToDisplay} days`}
               </div>
               <div className="text-[11px] text-slate-400 mt-1">
                 {lang === 'bn' ? 'ধারাবাহিক প্রচেষ্টা' : 'Active reading streak'}
@@ -442,43 +445,52 @@ export default function PomodoroAnalytics({
             </div>
           </div>
 
-          {/* Recent Individual Session Logs */}
-          {sessions.length > 0 && (
-            <div className="rounded-2xl bg-slate-800/40 border border-slate-800/80 overflow-hidden">
-              <div className="px-5 py-3 border-b border-slate-800/80">
-                <h3 className="text-sm font-semibold text-slate-200 m-0">
-                  {lang === 'bn' ? 'সাম্প্রতিক সেশন হিস্ট্রি' : 'Recent Focus Sessions'}
-                </h3>
-              </div>
-              <div className="divide-y divide-slate-800/60 max-h-48 overflow-y-auto">
-                {sessions.slice(0, 10).map((s, idx) => (
-                  <div
-                    key={s.id || idx}
-                    className="flex items-center justify-between px-5 py-2.5 text-xs hover:bg-slate-800/30 transition-colors"
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                      <div>
-                        <span className="font-medium text-slate-200">
-                          {s.mode === 'short-break'
-                            ? lang === 'bn' ? 'ছোট বিরতি' : 'Short Break'
-                            : s.mode === 'long-break'
-                            ? lang === 'bn' ? 'বড় বিরতি' : 'Long Break'
-                            : lang === 'bn' ? 'পোমোডোরো সেশন' : 'Pomodoro Session'}
-                        </span>
-                        <span className="text-slate-400 ml-2 text-[11px]">
-                          {s.date}
-                        </span>
+          {/* Recent Individual Session Logs (Completed sessions only) */}
+          {(() => {
+            const displayList =
+              serverStats?.recentSessions && serverStats.recentSessions.length > 0
+                ? serverStats.recentSessions
+                : sessions.filter((s) => s.completed);
+
+            if (!displayList || displayList.length === 0) return null;
+
+            return (
+              <div className="rounded-2xl bg-slate-800/40 border border-slate-800/80 overflow-hidden">
+                <div className="px-5 py-3 border-b border-slate-800/80">
+                  <h3 className="text-sm font-semibold text-slate-200 m-0">
+                    {lang === 'bn' ? 'সাম্প্রতিক সেশন হিস্ট্রি' : 'Recent Focus Sessions'}
+                  </h3>
+                </div>
+                <div className="divide-y divide-slate-800/60 max-h-48 overflow-y-auto">
+                  {displayList.slice(0, 10).map((s: any, idx: number) => (
+                    <div
+                      key={s._id || s.id || idx}
+                      className="flex items-center justify-between px-5 py-2.5 text-xs hover:bg-slate-800/30 transition-colors"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                        <div>
+                          <span className="font-medium text-slate-200">
+                            {s.mode === 'short-break'
+                              ? lang === 'bn' ? 'ছোট বিরতি' : 'Short Break'
+                              : s.mode === 'long-break'
+                              ? lang === 'bn' ? 'বড় বিরতি' : 'Long Break'
+                              : lang === 'bn' ? 'পোমোডোরো সেশন' : 'Pomodoro Session'}
+                          </span>
+                          <span className="text-slate-400 ml-2 text-[11px]">
+                            {s.date}
+                          </span>
+                        </div>
                       </div>
+                      <span className="font-bold text-emerald-400">
+                        {formatDuration(s.durationMinutes || Math.round((s.durationSeconds || 0) / 60), lang)}
+                      </span>
                     </div>
-                    <span className="font-bold text-emerald-400">
-                      {formatDuration(s.durationMinutes, lang)}
-                    </span>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            );
+          })()}
         </div>
 
         {/* Footer */}

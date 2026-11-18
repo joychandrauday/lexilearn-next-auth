@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { connectDb } from '../../../../lib/db';
 import UserProgress from '../../../../lib/models/UserProgress';
+import UserProfile from '../../../../lib/models/UserProfile';
 import Word from '../../../../lib/models/Word';
 
 function getTodayString(): string {
@@ -52,6 +53,12 @@ export async function GET(req: NextRequest) {
       if (progress.lastActiveDate && progress.lastActiveDate !== today && progress.lastActiveDate !== yesterday) {
         // Missed one or more days -> streak resets
         progress.streak = 1;
+      }
+
+      // Harmonize with UserProfile if available
+      const userProfile = await UserProfile.findOne({ email }).lean();
+      if (userProfile && (userProfile.streakCount || 0) > progress.streak) {
+        progress.streak = userProfile.streakCount!;
       }
 
       await progress.save();
@@ -135,6 +142,15 @@ export async function POST(req: NextRequest) {
     }
 
     await progress.save();
+
+    // Sync to UserProfile
+    await UserProfile.findOneAndUpdate(
+      { email: userEmail },
+      {
+        $set: { streakCount: progress.streak, lastActiveAt: new Date() },
+        $inc: { contributionPoints: xpEarned },
+      }
+    ).catch(() => {});
 
     return NextResponse.json({ success: true, progress });
   } catch (error: any) {

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { connectDb } from '../../../lib/db';
 import FocusSession from '../../../lib/models/FocusSession';
 import StudyRoutine from '../../../lib/models/StudyRoutine';
-import UserProfile from '../../../lib/models/UserProfile';
+import { recordUserActivityStreakAndXp, getUserStreakAndXp } from '../../../lib/userStreakXp';
 
 export async function GET(req: NextRequest) {
   try {
@@ -25,23 +25,25 @@ export async function GET(req: NextRequest) {
       dateList.push(d.toISOString().split('T')[0]);
     }
 
-    const [sessions, profile] = await Promise.all([
+    // Only query COMPLETED sessions
+    const [sessions, userStats] = await Promise.all([
       FocusSession.find({
         userEmail,
+        completed: true,
         date: { $gte: dateList[0] },
       })
         .sort({ createdAt: -1 })
         .lean(),
-      UserProfile.findOne({ email: userEmail }).lean(),
+      getUserStreakAndXp(userEmail),
     ]);
 
-    // Aggregate by date
+    // Aggregate by date (completed sessions only)
     const dailyMap = new Map<string, { minutes: number; seconds: number; sessionsCount: number }>();
     dateList.forEach((d) => dailyMap.set(d, { minutes: 0, seconds: 0, sessionsCount: 0 }));
 
     sessions.forEach((s) => {
       const current = dailyMap.get(s.date) || { minutes: 0, seconds: 0, sessionsCount: 0 };
-      current.minutes += s.durationMinutes || Math.round(s.durationSeconds / 60);
+      current.minutes += s.durationMinutes || Math.round((s.durationSeconds || 0) / 60);
       current.seconds += s.durationSeconds || 0;
       current.sessionsCount += 1;
       dailyMap.set(s.date, current);
@@ -60,6 +62,7 @@ export async function GET(req: NextRequest) {
 
     const todayData = dailyMap.get(todayStr) || { minutes: 0, seconds: 0, sessionsCount: 0 };
     const totalDaysFocusMinutes = dayByDay.reduce((acc, curr) => acc + curr.minutes, 0);
+    const totalFocusMinutes = Math.max(userStats.totalFocusMinutes, totalDaysFocusMinutes);
 
     return NextResponse.json({
       success: true,
@@ -67,8 +70,12 @@ export async function GET(req: NextRequest) {
       todayMinutes: todayData.minutes,
       todayHours: Math.round((todayData.minutes / 60) * 10) / 10,
       todaySessionsCount: todayData.sessionsCount,
-      totalFocusMinutes: profile?.totalFocusMinutes || totalDaysFocusMinutes,
-      totalFocusHours: Math.round(((profile?.totalFocusMinutes || totalDaysFocusMinutes) / 60) * 10) / 10,
+      totalFocusMinutes,
+      totalFocusHours: Math.round((totalFocusMinutes / 60) * 10) / 10,
+      streak: userStats.streak,
+      longestStreak: userStats.longestStreak,
+      xp: userStats.xp,
+      level: userStats.level,
       dayByDay,
       recentSessions: sessions.slice(0, 20),
     });
@@ -96,6 +103,14 @@ export async function POST(req: NextRequest) {
       userEmail: rawEmail,
     } = body;
 
+    // Reject incomplete sessions - only completed focus sessions count in history and XP
+    if (!completed) {
+      return NextResponse.json(
+        { success: false, message: 'Only completed sessions are recorded' },
+        { status: 200 }
+      );
+    }
+
     const userEmail = (rawEmail || 'community@lexilearn.com').toLowerCase().trim();
     const computedMinutes = durationMinutes > 0 ? durationMinutes : Math.max(1, Math.round(durationSeconds / 60));
 
@@ -106,7 +121,7 @@ export async function POST(req: NextRequest) {
       durationSeconds: durationSeconds || computedMinutes * 60,
       durationMinutes: computedMinutes,
       mode,
-      completed,
+      completed: true,
       notes,
     });
 
@@ -117,24 +132,27 @@ export async function POST(req: NextRequest) {
       { upsert: true, new: true }
     );
 
-    // 3. Update UserProfile with XP & total focus minutes
-    const xpToAdd = Math.max(5, Math.min(50, Math.round(computedMinutes / 2))); // e.g. 25 min = 12 XP
-    const profile = await UserProfile.findOneAndUpdate(
-      { email: userEmail },
-      {
-        $inc: { totalFocusMinutes: computedMinutes, contributionPoints: xpToAdd },
-        $addToSet: { badges: 'ডিপ ফোকাস লার্নার' },
-      },
-      { upsert: true, new: true }
-    );
+    // 3. Atomically synchronize streak, XP, and focus minutes across UserProgress & UserProfile
+    // Award 15 XP for standard 25m session (proportional to minutes: min 10, max 50)
+    const xpToAdd = Math.max(10, Math.min(50, Math.round(computedMinutes * 0.6)));
+    const syncResult = await recordUserActivityStreakAndXp({
+      userEmail,
+      xpEarned: xpToAdd,
+      focusMinutes: computedMinutes,
+      dateStr: date,
+    });
 
     return NextResponse.json({
       success: true,
       session: newSession,
       routineFocusMinutes: routine?.focusMinutes,
-      totalFocusMinutes: profile?.totalFocusMinutes,
+      totalFocusMinutes: syncResult.totalFocusMinutes,
+      streak: syncResult.streak,
+      longestStreak: syncResult.longestStreak,
       xpEarned: xpToAdd,
-      message: `দারুণ! ${computedMinutes} মিনিটের ফোকাস সেশন সফলভাবে সংরক্ষিত হয়েছে (+${xpToAdd} XP)।`,
+      totalXp: syncResult.totalXp,
+      level: syncResult.level,
+      message: `দারুণ! ${computedMinutes} মিনিটের ফোকাস সেশন সফলভাবে সম্পন্ন হয়েছে (+${xpToAdd} XP, স্ট্রিক: ${syncResult.streak} দিন)।`,
     });
   } catch (error: any) {
     console.error('POST /api/focus-session error:', error);

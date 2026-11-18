@@ -18,6 +18,7 @@ import {
   Sparkles,
   Clock,
   ArrowLeft,
+  Flame,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useSession } from 'next-auth/react';
@@ -26,6 +27,7 @@ import PomodoroAnalytics, {
   toBnDigits,
   formatDuration,
 } from './PomodoroAnalytics';
+import PomodoroGuestModal from './PomodoroGuestModal';
 
 // Preset color options
 const COLOR_PRESETS = [
@@ -125,7 +127,7 @@ function playCelebrationSound() {
 }
 
 export default function PomodoroTimer() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   // Core timer state
   const [initialSeconds, setInitialSeconds] = useState<number>(25 * 60);
@@ -140,6 +142,7 @@ export default function PomodoroTimer() {
   const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
   const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
   const [isAnalyticsOpen, setIsAnalyticsOpen] = useState<boolean>(false);
+  const [isGuestModalOpen, setIsGuestModalOpen] = useState<boolean>(false);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
 
   // Tracking & Analytics state
@@ -173,10 +176,34 @@ export default function PomodoroTimer() {
     }
   }, []);
 
+  // Auto-prompt unauthenticated users with guest proposal modal
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      try {
+        const dismissed = sessionStorage.getItem('prepowl_guest_modal_dismissed');
+        if (!dismissed) {
+          const t = setTimeout(() => setIsGuestModalOpen(true), 700);
+          return () => clearTimeout(t);
+        }
+      } catch {}
+    }
+  }, [status]);
+
+  const handleCloseGuestModal = () => {
+    setIsGuestModalOpen(false);
+    try {
+      sessionStorage.setItem('prepowl_guest_modal_dismissed', 'true');
+    } catch {}
+  };
+
   // Fetch server stats
   const fetchServerStats = useCallback(async () => {
+    if (!session?.user?.email) {
+      setServerStats(null);
+      return;
+    }
     try {
-      const emailParam = session?.user?.email ? `?userEmail=${encodeURIComponent(session.user.email)}` : '';
+      const emailParam = `?userEmail=${encodeURIComponent(session.user.email)}`;
       const res = await fetch(`/api/focus-session${emailParam}`);
       const data = await res.json();
       if (data.success) {
@@ -200,11 +227,9 @@ export default function PomodoroTimer() {
     return () => document.removeEventListener('fullscreenchange', handleFsChange);
   }, []);
 
-  // Record a completed or partial session
+  // Record a COMPLETED session only
   const logFocusSession = useCallback(
     async (seconds: number) => {
-      if (seconds < 30) return; // Ignore accidental micro-starts (<30s)
-
       const minutes = Math.max(1, Math.round(seconds / 60));
       const todayStr = new Date().toISOString().split('T')[0];
 
@@ -214,12 +239,12 @@ export default function PomodoroTimer() {
         durationMinutes: minutes,
         durationSeconds: seconds,
         mode: selectedPreset as any,
-        completed: secondsLeft === 0,
+        completed: true,
         timestamp: Date.now(),
         createdAt: new Date().toISOString(),
       };
 
-      // 1. Update local storage
+      // 1. Update local storage (store completed sessions)
       setSessions((prev) => {
         const updated = [newRecord, ...prev];
         try {
@@ -230,32 +255,52 @@ export default function PomodoroTimer() {
         return updated;
       });
 
-      // 2. Sync to Server
-      try {
-        await fetch('/api/focus-session', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            durationSeconds: seconds,
-            durationMinutes: minutes,
-            mode: selectedPreset,
-            date: todayStr,
-            completed: secondsLeft === 0,
-            userEmail: session?.user?.email || 'community@lexilearn.com',
-          }),
-        });
-        fetchServerStats();
-      } catch {
-        // Will sync later
+      // 2. Sync to Server only if user is logged in
+      if (session?.user?.email) {
+        try {
+          const res = await fetch('/api/focus-session', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              durationSeconds: seconds,
+              durationMinutes: minutes,
+              mode: selectedPreset,
+              date: todayStr,
+              completed: true,
+              userEmail: session.user.email,
+            }),
+          });
+          const data = await res.json();
+          if (data.success) {
+            fetchServerStats();
+            // Dispatch event so Navbar flame badge refreshes immediately
+            window.dispatchEvent(new Event('study-progress-updated'));
+
+            const streakText = data.streak
+              ? (lang === 'bn' ? `, স্ট্রিক: ${toBnDigits(data.streak)} দিন 🔥` : `, Streak: ${data.streak}d 🔥`)
+              : '';
+            const xpText = data.xpEarned ? ` (+${data.xpEarned} XP${streakText})` : '';
+
+            const msg =
+              lang === 'bn'
+                ? `দারুণ! ${toBnDigits(minutes)} মিনিটের ফোকাস সেশন সফলভাবে সম্পন্ন হয়েছে!${xpText}`
+                : `Awesome! ${minutes}m focus session completed!${xpText}`;
+            toast.success(msg);
+            return;
+          }
+        } catch {
+          // Network error, keep local
+        }
       }
 
-      const msg =
+      // Guest toast
+      const guestMsg =
         lang === 'bn'
-          ? `দারুণ! ${toBnDigits(minutes)} মিনিটের ফোকাস সেশন সংরক্ষিত হয়েছে (+১০ XP)`
-          : `Awesome! ${minutes}m focus session recorded (+10 XP)`;
-      toast.success(msg);
+          ? `দারুণ! ${toBnDigits(minutes)} মিনিটের ফোকাস সেশন সম্পন্ন হয়েছে!`
+          : `Awesome! ${minutes}m focus session completed!`;
+      toast.success(guestMsg);
     },
-    [secondsLeft, selectedPreset, session, lang, fetchServerStats]
+    [selectedPreset, session, lang, fetchServerStats]
   );
 
   // Main countdown tick effect
@@ -275,11 +320,9 @@ export default function PomodoroTimer() {
               playCelebrationSound();
             }
 
-            // Log full session duration
-            setSecondsStudiedInSession((total) => {
-              logFocusSession(total + 1);
-              return 0;
-            });
+            // Log full completed session duration
+            logFocusSession(initialSeconds);
+            setSecondsStudiedInSession(0);
 
             return 0;
           }
@@ -297,7 +340,7 @@ export default function PomodoroTimer() {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [isRunning, soundEnabled, logFocusSession]);
+  }, [isRunning, soundEnabled, logFocusSession, initialSeconds]);
 
   // Request fullscreen and toggle Start/Pause
   const handleToggleStart = async () => {
@@ -308,33 +351,24 @@ export default function PomodoroTimer() {
         setSecondsStudiedInSession(0);
       }
 
-      // Requirement: "on started the window will be in full screen f11"
       try {
         if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
           await document.documentElement.requestFullscreen();
           setIsFullscreen(true);
         }
       } catch {
-        // Fullscreen request might fail if browser restricts it, gracefully continue
+        // Fallback
       }
 
       setIsRunning(true);
     } else {
-      // Paused
+      // Paused - simply pause without saving incomplete session
       setIsRunning(false);
-      // If user has studied >= 1 minute and paused, log the progress
-      if (secondsStudiedInSession >= 60) {
-        logFocusSession(secondsStudiedInSession);
-        setSecondsStudiedInSession(0);
-      }
     }
   };
 
   // Reset timer
   const handleReset = () => {
-    if (isRunning && secondsStudiedInSession >= 60) {
-      logFocusSession(secondsStudiedInSession);
-    }
     setIsRunning(false);
     setSecondsLeft(initialSeconds);
     setSecondsStudiedInSession(0);
@@ -342,9 +376,6 @@ export default function PomodoroTimer() {
 
   // Change preset
   const handleSelectPreset = (presetKey: string, minutes: number) => {
-    if (isRunning && secondsStudiedInSession >= 60) {
-      logFocusSession(secondsStudiedInSession);
-    }
     setIsRunning(false);
     setSelectedPreset(presetKey);
     const sec = minutes * 60;
@@ -416,15 +447,16 @@ export default function PomodoroTimer() {
     return `${formattedHours}:${formattedMins} ${ampm}`;
   }, [secondsLeft, lang]);
 
-  // Compute Today's Total for Header Pill
+  // Compute Today's Total for Header Pill (strictly completed sessions)
   const todayStr = useMemo(() => new Date().toISOString().split('T')[0], []);
   const todayTotalMinutes = useMemo(() => {
-    const localToday = sessions
-      .filter((s) => s.date === todayStr)
+    if (session?.user?.email && serverStats?.todayMinutes !== undefined) {
+      return serverStats.todayMinutes;
+    }
+    return sessions
+      .filter((s) => s.date === todayStr && s.completed)
       .reduce((acc, s) => acc + s.durationMinutes, 0);
-    const serverToday = serverStats?.todayMinutes || 0;
-    return Math.max(localToday, serverToday);
-  }, [sessions, serverStats, todayStr]);
+  }, [sessions, serverStats, todayStr, session]);
 
   // Dynamic Theme Classes based on isDark
   const textPrimary = isDark ? 'text-white' : 'text-zinc-900';
@@ -481,6 +513,34 @@ export default function PomodoroTimer() {
               </strong>
             </span>
           </button>
+
+          {/* Daily Streak Indicator */}
+          {serverStats?.streak !== undefined && serverStats.streak > 0 && (
+            <div
+              className={`hidden md:flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black border transition-all ${
+                isDark
+                  ? 'bg-amber-500/15 text-amber-300 border-amber-500/30'
+                  : 'bg-amber-50 text-amber-700 border-amber-200'
+              }`}
+            >
+              <Flame className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+              <span>
+                {toBnDigits(serverStats.streak)}{' '}
+                {lang === 'bn' ? 'দিন স্ট্রিক' : 'd streak'}
+              </span>
+            </div>
+          )}
+
+          {/* Guest Login Suggestion Pill */}
+          {status === 'unauthenticated' && (
+            <button
+              onClick={() => setIsGuestModalOpen(true)}
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/30 transition shadow-xs"
+            >
+              <Flame className="w-3.5 h-3.5 text-amber-400" />
+              <span>{lang === 'bn' ? 'লগইন করুন' : 'Sign In'}</span>
+            </button>
+          )}
         </div>
 
         {/* Right: Controls (Color Palette, Language, Fullscreen, Analytics) */}
@@ -755,6 +815,13 @@ export default function PomodoroTimer() {
         lang={lang}
         sessions={sessions}
         serverStats={serverStats}
+      />
+
+      {/* Guest Login Proposal Modal */}
+      <PomodoroGuestModal
+        isOpen={isGuestModalOpen}
+        onClose={handleCloseGuestModal}
+        lang={lang}
       />
     </div>
   );

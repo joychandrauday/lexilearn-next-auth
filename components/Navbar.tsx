@@ -60,16 +60,23 @@ export default function Navbar() {
 
   // Fetch streak if user is logged in
   useEffect(() => {
-    if (session?.user?.email) {
-      fetch(`/api/user/progress?user=${encodeURIComponent(session.user.email)}`)
-        .then((res) => res.json())
-        .then((data) => {
-          if (data?.progress?.streak) {
-            setStreak(data.progress.streak);
-          }
-        })
-        .catch(() => {});
-    }
+    const fetchStreak = () => {
+      if (session?.user?.email) {
+        fetch(`/api/user/progress?user=${encodeURIComponent(session.user.email)}`)
+          .then((res) => res.json())
+          .then((data) => {
+            if (data?.progress?.streak) {
+              setStreak(data.progress.streak);
+            }
+          })
+          .catch(() => {});
+      }
+    };
+
+    fetchStreak();
+
+    window.addEventListener('study-progress-updated', fetchStreak);
+    return () => window.removeEventListener('study-progress-updated', fetchStreak);
   }, [session]);
 
   // Dropdown Items: Preparation / Subject Modules
