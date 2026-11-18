@@ -96,10 +96,6 @@ export default function AIChatBot() {
   const pathname = usePathname();
   const { data: session } = useSession();
 
-  // Hide AI floating assistant on Pomodoro focus mode
-  if (pathname === '/pomodoro') {
-    return null;
-  }
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
   const [messages, setMessages] = useState<Message[]>([DEFAULT_WELCOME_MESSAGE]);
@@ -187,6 +183,12 @@ export default function AIChatBot() {
       window.removeEventListener(siteConfig.bot.legacyEventTrigger, handleAskEvent);
     };
   }, []);
+
+  // Hide AI floating assistant on Pomodoro focus mode
+  // Placed AFTER all hooks to adhere to React Rules of Hooks
+  if (pathname === '/pomodoro') {
+    return null;
+  }
 
   const handleExportNotes = () => {
     if (messages.length <= 1) {

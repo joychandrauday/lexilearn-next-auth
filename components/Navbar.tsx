@@ -39,11 +39,6 @@ export default function Navbar() {
 
   const isLanding = pathname === '/';
 
-  // Completely hide Navbar on Pomodoro focus mode for 100% distraction-free zen session
-  if (pathname === '/pomodoro') {
-    return null;
-  }
-
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -78,6 +73,12 @@ export default function Navbar() {
     window.addEventListener('study-progress-updated', fetchStreak);
     return () => window.removeEventListener('study-progress-updated', fetchStreak);
   }, [session]);
+
+  // Completely hide Navbar on Pomodoro focus mode for 100% distraction-free zen session
+  // Placed AFTER all hooks to adhere to React Rules of Hooks
+  if (pathname === '/pomodoro') {
+    return null;
+  }
 
   // Dropdown Items: Preparation / Subject Modules
   const prepDropdownItems: MenuProps['items'] = [

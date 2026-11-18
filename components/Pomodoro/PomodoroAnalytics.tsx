@@ -125,8 +125,6 @@ export default function PomodoroAnalytics({
   sessions,
   serverStats,
 }: PomodoroAnalyticsProps) {
-  if (!isOpen) return null;
-
   const todayStr = useMemo(() => new Date().toISOString().split('T')[0], []);
 
   // Compute past 14 days calendar list
@@ -208,6 +206,8 @@ export default function PomodoroAnalytics({
     const max = Math.max(...aggregatedDays.map((d) => d.minutes), 60);
     return max;
   }, [aggregatedDays]);
+
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/70 backdrop-blur-md animate-in fade-in duration-200">
