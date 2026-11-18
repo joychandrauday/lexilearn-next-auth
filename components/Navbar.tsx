@@ -39,6 +39,11 @@ export default function Navbar() {
 
   const isLanding = pathname === '/';
 
+  // Completely hide Navbar on Pomodoro focus mode for 100% distraction-free zen session
+  if (pathname === '/pomodoro') {
+    return null;
+  }
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);

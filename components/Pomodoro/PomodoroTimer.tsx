@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import Link from 'next/link';
+import confetti from 'canvas-confetti';
 import {
   Play,
   Pause,
@@ -14,6 +16,8 @@ import {
   Volume2,
   VolumeX,
   Sparkles,
+  Clock,
+  ArrowLeft,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useSession } from 'next-auth/react';
@@ -57,30 +61,66 @@ function isColorDark(hexColor: string): boolean {
   return brightness < 150;
 }
 
-// Play gentle Tibetan singing bowl / focus bell sound using Web Audio API
-function playCompletionBell() {
+// Confetti celebratory burst upon session completion
+function triggerConfetti() {
+  try {
+    const end = Date.now() + 2.5 * 1000;
+    const colors = ['#10b981', '#f59e0b', '#6366f1', '#ec4899', '#3b82f6'];
+
+    (function frame() {
+      confetti({
+        particleCount: 4,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 },
+        colors,
+      });
+      confetti({
+        particleCount: 4,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 },
+        colors,
+      });
+
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    })();
+  } catch {
+    // Graceful fallback
+  }
+}
+
+// Play celebratory melodic 4-note chime (C5 -> E5 -> G5 -> C6) using Web Audio API
+function playCelebrationSound() {
   try {
     const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
     if (!AudioContextClass) return;
     const ctx = new AudioContextClass();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
 
-    osc.type = 'sine';
-    // 528Hz: known as the frequency of transformation / deep focus
-    osc.frequency.setValueAtTime(528, ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 1.8);
+    // 4-note major triad fanfare
+    const notes = [523.25, 659.25, 783.99, 1046.50];
 
-    gain.gain.setValueAtTime(0.3, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 2.0);
+    notes.forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
 
-    osc.connect(gain);
-    gain.connect(ctx.destination);
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, ctx.currentTime + idx * 0.14);
 
-    osc.start();
-    osc.stop(ctx.currentTime + 2.0);
+      gain.gain.setValueAtTime(0.001, ctx.currentTime + idx * 0.14);
+      gain.gain.linearRampToValueAtTime(0.28, ctx.currentTime + idx * 0.14 + 0.04);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + idx * 0.14 + 1.2);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(ctx.currentTime + idx * 0.14);
+      osc.stop(ctx.currentTime + idx * 0.14 + 1.3);
+    });
   } catch {
-    // Graceful fallback if audio context blocked
+    // Graceful fallback
   }
 }
 
@@ -228,8 +268,11 @@ export default function PomodoroTimer() {
             clearInterval(timerRef.current as NodeJS.Timeout);
             setIsRunning(false);
 
+            // Celebrate! Trigger confetti burst & triumphant chime
+            triggerConfetti();
+
             if (soundEnabled) {
-              playCompletionBell();
+              playCelebrationSound();
             }
 
             // Log full session duration
@@ -356,6 +399,23 @@ export default function PomodoroTimer() {
     Math.min(100, Math.round(((initialSeconds - secondsLeft) / initialSeconds) * 100))
   );
 
+  // Dynamic Finish Time: when remaining seconds will end (e.g. 7:25 -> 7:50)
+  const finishTimeDisplay = useMemo(() => {
+    const finishDate = new Date(Date.now() + secondsLeft * 1000);
+    let hours = finishDate.getHours();
+    const minutes = finishDate.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12;
+
+    const formattedMins = String(minutes).padStart(2, '0');
+    const formattedHours = String(hours);
+
+    if (lang === 'bn') {
+      return `${toBnDigits(formattedHours)}:${toBnDigits(formattedMins)} ${ampm}`;
+    }
+    return `${formattedHours}:${formattedMins} ${ampm}`;
+  }, [secondsLeft, lang]);
+
   // Compute Today's Total for Header Pill
   const todayStr = useMemo(() => new Date().toISOString().split('T')[0], []);
   const todayTotalMinutes = useMemo(() => {
@@ -381,7 +441,7 @@ export default function PomodoroTimer() {
     <div
       ref={containerRef}
       style={{ backgroundColor: bgColor }}
-      className={`min-h-screen w-full flex flex-col justify-between transition-colors duration-500 select-none font-sans relative overflow-hidden`}
+      className={`fixed inset-0 z-40 overflow-y-auto flex flex-col justify-between transition-colors duration-500 select-none font-sans`}
     >
       {/* Top Header Bar (fades slightly during countdown for distraction-free zen mode) */}
       <header
@@ -389,8 +449,17 @@ export default function PomodoroTimer() {
           isRunning ? 'opacity-30 hover:opacity-100' : 'opacity-100'
         }`}
       >
-        {/* Left: Mode Title & Today's Progress Pill */}
-        <div className="flex items-center gap-3">
+        {/* Left: Exit/Home button, Mode Title & Today's Progress Pill */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          <Link
+            href="/"
+            className={`flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${btnBase}`}
+            title={lang === 'bn' ? 'প্রস্থান করে হোমে ফিরে যান' : 'Exit to Home'}
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">{lang === 'bn' ? 'হোম' : 'Home'}</span>
+          </Link>
+
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
             <h1 className={`text-sm sm:text-base font-bold tracking-tight m-0 ${textPrimary}`}>
@@ -577,6 +646,21 @@ export default function PomodoroTimer() {
               style={{ width: `${progressPercent}%` }}
               className="h-full bg-emerald-400 rounded-full transition-all duration-500 ease-out"
             />
+          </div>
+
+          {/* Session End Time Indicator (e.g. 7:25 -> 7:50) */}
+          <div className="flex items-center justify-center mt-3">
+            <div
+              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border transition-all ${btnBase}`}
+            >
+              <Clock className="w-3.5 h-3.5 text-emerald-400" />
+              <span>
+                {lang === 'bn' ? 'সমাপ্তি:' : 'Ends at:'}{' '}
+                <strong className={isDark ? 'text-emerald-400 font-bold' : 'text-emerald-700 font-bold'}>
+                  {finishTimeDisplay}
+                </strong>
+              </span>
+            </div>
           </div>
 
           {/* Subtle Status Text */}

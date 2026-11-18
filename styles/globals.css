@@ -48,6 +48,16 @@ body {
   border-radius: 9999px;
 }
 
+/* Hide navigation and headers in Fullscreen (F11) mode */
+:fullscreen header,
+:fullscreen nav,
+:fullscreen .ant-drawer,
+:-webkit-full-screen header,
+:-webkit-full-screen nav,
+:-webkit-full-screen .ant-drawer {
+  display: none !important;
+}
+
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(100, 116, 139, 0.6);
 }

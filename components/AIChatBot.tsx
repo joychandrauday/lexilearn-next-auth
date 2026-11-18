@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import axios from 'axios';
+import { usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -92,7 +93,13 @@ const CATEGORY_PROMPTS = [
 ];
 
 export default function AIChatBot() {
+  const pathname = usePathname();
   const { data: session } = useSession();
+
+  // Hide AI floating assistant on Pomodoro focus mode
+  if (pathname === '/pomodoro') {
+    return null;
+  }
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
   const [messages, setMessages] = useState<Message[]>([DEFAULT_WELCOME_MESSAGE]);

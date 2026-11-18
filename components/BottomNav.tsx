@@ -85,6 +85,11 @@ export default function BottomNav() {
   const { data: session } = useSession();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
+  // Completely hide BottomNav on Pomodoro focus mode
+  if (pathname === '/pomodoro') {
+    return null;
+  }
+
   const toggleDrawer = () => setDrawerOpen((prev) => !prev);
   const closeDrawer = () => setDrawerOpen(false);
 
