@@ -23,6 +23,7 @@ import {
   UserOutlined,
   LogoutOutlined,
   GlobalOutlined,
+  ClockCircleOutlined,
 } from '@ant-design/icons';
 import { siteConfig } from '../lib/config/site';
 
@@ -67,6 +68,7 @@ const drawerSections = [
   {
     title: 'স্টাডি টুলস ও রিসোর্স',
     links: [
+      { key: 'pomodoro', label: 'পোমোডোরো ফোকাস টাইমার', href: '/pomodoro', icon: <ClockCircleOutlined className="text-rose-500" /> },
       { key: 'planner', label: 'স্টাডি প্ল্যানার ও রুটিন', href: '/planner', icon: <CalendarOutlined className="text-emerald-600" /> },
       { key: 'notebook', label: 'প্রস্তুতি নোটবুক', href: '/notebook', icon: <BookOutlined className="text-amber-600" /> },
       { key: 'mistakes', label: 'ভুলের খাতা (Mistake Vault)', href: '/mistakes', icon: <ReadOutlined className="text-rose-500" /> },

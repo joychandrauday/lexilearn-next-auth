@@ -1318,6 +1318,30 @@ export default function LandingPage() {
               </span>
             </Link>
           </motion.div>
+
+          {/* Feature 7: Pomodoro Focus Timer */}
+          <motion.div
+            whileHover={{ y: -6 }}
+            className="bg-white p-6 rounded-3xl border border-gray-200 shadow-xs flex flex-col justify-between"
+          >
+            <div>
+              <div className="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center mb-4 shadow-sm">
+                <Clock className="w-6 h-6 text-emerald-400" />
+              </div>
+              <Tag color="purple" className="font-bold text-[10px] rounded-md mb-2">
+                ডিপ ওয়ার্ক ও জেন মোড
+              </Tag>
+              <h3 className="font-black text-lg text-slate-900 mb-2">পোমোডোরো ফোকাস টাইমার</h3>
+              <p className="text-xs text-gray-600 leading-relaxed font-normal">
+                কাস্টমাইজেবল ব্যাকগ্রাউন্ড, অটো ফুলস্ক্রিন, বাংলা-ইংরেজি ভাষা পরিবর্তন এবং দিনভিত্তিক পড়ার ঘণ্টা ও মিনিটের নির্ভরযোগ্য অ্যানালিটিক্স।
+              </p>
+            </div>
+            <Link href="/pomodoro" className="mt-5 block">
+              <span className="text-xs font-black text-emerald-700 hover:text-emerald-800 flex items-center gap-1">
+                ফোকাস টাইমার খুলুন <ArrowRight className="w-3.5 h-3.5" />
+              </span>
+            </Link>
+          </motion.div>
         </div>
       </section>
 

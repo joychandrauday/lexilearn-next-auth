@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: '/feed', priority: 0.9, changeFrequency: 'hourly' as const },
     { url: '/question-bank', priority: 0.9, changeFrequency: 'daily' as const },
     { url: '/battle', priority: 0.85, changeFrequency: 'always' as const },
+    { url: '/pomodoro', priority: 0.85, changeFrequency: 'weekly' as const },
     { url: '/planner', priority: 0.8, changeFrequency: 'weekly' as const },
     { url: '/notebook', priority: 0.8, changeFrequency: 'daily' as const },
     { url: '/panic-sheet', priority: 0.75, changeFrequency: 'weekly' as const },

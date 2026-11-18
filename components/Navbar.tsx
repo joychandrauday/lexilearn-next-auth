@@ -26,6 +26,7 @@ import {
   DownOutlined,
   AppstoreOutlined,
   GlobalOutlined,
+  ClockCircleOutlined,
 } from '@ant-design/icons';
 import { siteConfig } from '../lib/config/site';
 
@@ -194,6 +195,15 @@ export default function Navbar() {
   // Dropdown Items: Resources & Tools
   const resourceDropdownItems: MenuProps['items'] = [
     {
+      key: 'pomodoro',
+      icon: <ClockCircleOutlined className="text-rose-500 text-sm" />,
+      label: (
+        <Link href="/pomodoro" className="font-semibold text-gray-700 text-xs py-1 block">
+          পোমোডোরো ফোকাস টাইমার
+        </Link>
+      ),
+    },
+    {
       key: 'planner',
       icon: <CalendarOutlined className="text-emerald-600 text-sm" />,
       label: (
@@ -294,6 +304,7 @@ export default function Navbar() {
     {
       title: 'স্টাডি টুলস ও রিসোর্স',
       links: [
+        { key: 'pomodoro', label: 'পোমোডোরো ফোকাস টাইমার', href: '/pomodoro', icon: <ClockCircleOutlined className="text-rose-500" /> },
         { key: 'planner', label: 'স্টাডি প্ল্যানার', href: '/planner', icon: <CalendarOutlined /> },
         { key: 'notebook', label: 'প্রস্তুতি নোটবুক', href: '/notebook', icon: <BookOutlined /> },
         { key: 'news-archive', label: 'পত্রিকা আর্কাইভ', href: '/news-archive', icon: <ReadOutlined /> },
@@ -314,7 +325,7 @@ export default function Navbar() {
   const isPracticeActive = ['/battle', '/quiz', '/flashcards', '/cloze', '/spelling', '/question-bank'].some(
     (p) => pathname === p || pathname.startsWith(p + '/')
   );
-  const isResourcesActive = ['/planner', '/notebook', '/news-archive', '/feed', '/mistakes', '/panic-sheet', '/about'].some(
+  const isResourcesActive = ['/pomodoro', '/planner', '/notebook', '/news-archive', '/feed', '/mistakes', '/panic-sheet', '/about'].some(
     (p) => pathname === p || pathname.startsWith(p + '/')
   );
 

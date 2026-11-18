@@ -646,6 +646,17 @@ export default function StudyPlannerPage() {
                   শর্ট ব্রেক (৫ মি.)
                 </button>
               </div>
+
+              {/* Fullscreen Zen Mode Link */}
+              <div className="pt-2">
+                <Link
+                  href="/pomodoro"
+                  className="flex items-center justify-center gap-1.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300 py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors"
+                >
+                  <span>ফুলস্ক্রিন জেন মোড টাইমার ও অ্যানালিটিক্স</span>
+                  <span>→</span>
+                </Link>
+              </div>
             </div>
 
             {/* 2. 7-Day Accountability Heatmap */}
