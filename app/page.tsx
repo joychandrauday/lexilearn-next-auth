@@ -50,6 +50,7 @@ import {
 } from '@ant-design/icons';
 import axios from 'axios';
 import Footer from '../components/Footer';
+import DynamicExamTeaser from '../components/DynamicExamTeaser';
 import { siteConfig } from '../lib/config/site';
 
 // Sample Live Interactive Demos
@@ -226,9 +227,9 @@ export default function LandingPage() {
   const activeMcq = MCQ_DEMOS[mcqIndex];
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 selection:bg-emerald-500 selection:text-white relative">
+    <div className="min-h-screen bg-slate-950 font-sans text-slate-800 selection:bg-emerald-500 selection:text-white relative">
       {/* 1. HERO SECTION WITH DYNAMIC ENTRANCE & GLOW */}
-      <section className="relative overflow-hidden -mt-16 pt-24 pb-20 md:pt-32 md:pb-32 bg-gradient-to-b from-slate-950 via-slate-900 to-emerald-950 text-white">
+      <section className="relative overflow-hidden -mt-9 md:-mt-[100px] pt-14 md:pt-32 pb-20 md:pb-32 bg-gradient-to-b from-slate-950 via-slate-900 to-emerald-950 text-white">
         {/* Glow backdrop circles */}
         <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[700px] h-[380px] bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 right-4 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -309,52 +310,8 @@ export default function LandingPage() {
             </div>
           </motion.div>
 
-          {/* Interactive Exam Trick Spotlight (Real dopamine teaser) */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="max-w-2xl mx-auto mb-12 bg-slate-900/80 border border-emerald-500/30 rounded-3xl p-5 sm:p-6 backdrop-blur-xl shadow-2xl"
-          >
-            <div className="flex items-center justify-between pb-3 mb-3 border-b border-emerald-500/20">
-              <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-xs font-black uppercase tracking-wider text-emerald-300">
-                  আজকের মোস্ট-রিপিটেড পরীক্ষার ট্রিক (Quick Teaser)
-                </span>
-              </div>
-              <span className="text-[11px] font-mono text-amber-300/90 bg-amber-500/10 px-2.5 py-0.5 rounded-full border border-amber-500/30">
-                BB AD & ৪৪-৪৬তম বিসিএস
-              </span>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
-              <div className="bg-slate-950/70 p-3.5 rounded-2xl border border-slate-800">
-                <div className="flex items-center justify-between text-xs font-bold text-amber-300 mb-1">
-                  <span>📐 ব্যাংক গণিত: ২ বছরের CI ও SI পার্থক্য</span>
-                  <span className="text-[10px] bg-amber-500/20 px-1.5 py-0.5 rounded text-amber-200">৫ সেকেন্ডের ট্রিক</span>
-                </div>
-                <div className="font-mono text-xs text-emerald-300 bg-emerald-950/40 p-2 rounded-lg border border-emerald-500/20 my-1 text-center font-bold">
-                  Diff = P × (r / 100)²
-                </div>
-                <p className="text-[11px] text-gray-300 leading-normal m-0">
-                  পরীক্ষায় সরাসরি আসল (P) বের করতে সমীকরণ সমাধান না করে এই ফর্মুলায় মান বসালেই উত্তর চলে আসে।
-                </p>
-              </div>
-
-              <div className="bg-slate-950/70 p-3.5 rounded-2xl border border-slate-800">
-                <div className="flex items-center justify-between text-xs font-bold text-teal-300 mb-1">
-                  <span>💡 বিসিএস ব্যাকরণ: Subjunctive Mood</span>
-                  <span className="text-[10px] bg-teal-500/20 px-1.5 py-0.5 rounded text-teal-200">বিসিএস ট্র্যাপ</span>
-                </div>
-                <div className="text-xs text-teal-200 bg-teal-950/40 p-2 rounded-lg border border-teal-500/20 my-1 font-semibold text-center">
-                  recommend/demand that + Subject + <span className="underline decoration-amber-400">V1 (Base Form)</span>
-                </div>
-                <p className="text-[11px] text-gray-300 leading-normal m-0">
-                  Subject ৩য় ব্যক্তি একবচন (He/Patient) হলেও Verb-এর সাথে কোনো s/es বা should বসে না!
-                </p>
-              </div>
-            </div>
-          </motion.div>
+          {/* Interactive Dynamic Exam Trick Spotlight (Real dopamine teaser) */}
+          <DynamicExamTeaser />
 
           {/* Floating Pill Highlights */}
           <motion.div

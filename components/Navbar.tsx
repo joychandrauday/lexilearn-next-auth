@@ -29,6 +29,7 @@ import {
   ClockCircleOutlined,
 } from '@ant-design/icons';
 import { siteConfig } from '../lib/config/site';
+import NavbarTicker from './NavbarTicker';
 
 export default function Navbar() {
   const { data: session } = useSession();
@@ -396,15 +397,19 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Top Navbar (Hidden on mobile web view per UX request) */}
+      {/* Top Navbar */}
       <header
-        className={`hidden md:block sticky top-0 z-40 transition-all duration-300 ${
+        className={`sticky top-0 z-40 transition-all duration-300 ${
           isTransparent
             ? 'bg-transparent border-transparent shadow-none'
             : 'bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-xs'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+        {/* Top Transparent Exam News Ticker */}
+        <NavbarTicker isTransparent={isTransparent} />
+
+        {/* Desktop Navbar Row */}
+        <div className="hidden md:flex max-w-7xl mx-auto px-4 h-16 items-center justify-between">
           {/* Left: Mobile hamburger & Brand */}
           <div className="flex items-center gap-3">
             <Button
