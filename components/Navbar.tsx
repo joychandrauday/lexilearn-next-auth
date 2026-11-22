@@ -129,6 +129,15 @@ export default function Navbar() {
       ),
     },
     {
+      key: 'english-idioms',
+      icon: <BookOutlined className="text-blue-600 text-sm" />,
+      label: (
+        <Link href="/english/idioms" className="font-semibold text-gray-700 text-xs py-1 block">
+          ইংরেজি ইডিয়াম ও ফ্রেজ
+        </Link>
+      ),
+    },
+    {
       key: 'baghdhara',
       icon: <BookOutlined className="text-rose-500 text-sm" />,
       label: (

@@ -46,6 +46,7 @@ const drawerSections = [
     title: 'বিষয়ভিত্তিক প্রস্তুতি',
     links: [
       { key: 'hf-333', label: 'ব্যারন ৩৩৩ ভোকাবুলারি', href: '/high-frequency-333', icon: <FireOutlined className="text-amber-500" /> },
+      { key: 'english-idioms', label: 'ইংরেজি ইডিয়াম ও ফ্রেজ', href: '/english/idioms', icon: <BookOutlined className="text-blue-600" /> },
       { key: 'words', label: 'ভোকাবুলারি হাব', href: '/words', icon: <BookOutlined className="text-emerald-600" /> },
       { key: 'bangla-shobdo', label: 'বাংলা শব্দ উৎস', href: '/bangla/shobdo', icon: <GlobalOutlined className="text-cyan-600" /> },
       { key: 'bangla', label: 'বাংলা হাব ও বাগধারা', href: '/bangla', icon: <BookOutlined className="text-teal-600" /> },
