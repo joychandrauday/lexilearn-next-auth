@@ -61,17 +61,17 @@ export default function StudentDashboardPage() {
       : 0;
 
   return (
-    <div className="min-h-screen bg-slate-50/50 py-8 px-4 font-sans">
+    <div className="min-h-screen bg-slate-50/70 py-8 px-4 font-sans text-slate-800">
       <div className="max-w-6xl mx-auto space-y-8">
         {/* Welcome Banner */}
-        <div className="bg-gradient-to-r from-slate-900 via-emerald-950 to-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
+        <div className="bg-slate-900 border border-slate-800 text-white rounded-3xl p-6 sm:p-8 shadow-md relative overflow-hidden">
           <div className="relative z-10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <Tag color="gold" className="font-bold uppercase text-[11px] rounded-full">
                   {student?.role || 'STUDENT'} PORTAL
                 </Tag>
-                <span className="text-xs text-emerald-300 font-medium">
+                <span className="text-xs text-emerald-400 font-semibold">
                   {student?.targetExam || 'বিসিএস ও ব্যাংক প্রস্তুতি'}
                 </span>
               </div>
@@ -84,7 +84,7 @@ export default function StudentDashboardPage() {
             </div>
 
             {/* Streak Counter */}
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl flex items-center gap-3">
+            <div className="bg-white/10 backdrop-blur-md border border-white/15 p-4 rounded-2xl flex items-center gap-3">
               <div className="w-12 h-12 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl font-black">
                 <FireFilled />
               </div>
@@ -106,18 +106,18 @@ export default function StudentDashboardPage() {
         {/* Two Primary Learning Engines */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* ENGINE 1: Barron's High Frequency 333 */}
-          <Card className="rounded-3xl border border-gray-100 shadow-md p-6 bg-white flex flex-col justify-between">
+          <div className="rounded-3xl border border-slate-200/90 shadow-sm p-6 sm:p-7 bg-white flex flex-col justify-between">
             <div>
               <div className="flex justify-between items-center mb-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl">
+                  <div className="w-12 h-12 rounded-2xl bg-amber-50 border border-amber-200/60 text-amber-600 flex items-center justify-center text-2xl">
                     <FireFilled />
                   </div>
                   <div>
-                    <h2 className="text-xl font-black text-gray-900">
+                    <h2 className="text-xl font-black text-slate-900">
                       Barron's High Frequency 333
                     </h2>
-                    <p className="text-xs text-gray-500">স্টেট-লকড নন-রিপিটিং ভোকাবুলারি ইঞ্জিন</p>
+                    <p className="text-xs text-slate-500 font-medium">স্টেট-লকড নন-রিপিটিং ভোকাবুলারি ইঞ্জিন</p>
                   </div>
                 </div>
 
@@ -125,13 +125,13 @@ export default function StudentDashboardPage() {
                   <span className="text-2xl font-black text-emerald-600">
                     {hfStats?.masteredCount || 0}
                   </span>
-                  <span className="text-xs text-gray-400 font-bold"> / {hfStats?.totalWords || 331}</span>
+                  <span className="text-xs text-slate-400 font-bold"> / {hfStats?.totalWords || 331}</span>
                 </div>
               </div>
 
               {/* Progress Bar */}
               <div className="my-5">
-                <div className="flex justify-between text-xs font-bold text-gray-600 mb-1.5">
+                <div className="flex justify-between text-xs font-bold text-slate-600 mb-1.5">
                   <span>কোর্স সমাপ্তি</span>
                   <span className="text-emerald-700">{hfPercent}%</span>
                 </div>
@@ -141,7 +141,7 @@ export default function StudentDashboardPage() {
                   strokeColor={{ '0%': '#10b981', '100%': '#059669' }}
                   className="mb-2"
                 />
-                <div className="flex justify-between text-[11px] text-gray-400">
+                <div className="flex justify-between text-[11px] text-slate-500 font-medium">
                   <span>মাস্টার করা: {hfStats?.masteredCount || 0}</span>
                   <span>বাকি: {hfStats?.remainingCount || 0}</span>
                 </div>
@@ -168,13 +168,13 @@ export default function StudentDashboardPage() {
                   </Link>
                 </div>
               ) : (
-                <div className="bg-gray-50 border border-gray-200/60 rounded-2xl p-4 my-4 text-xs text-gray-600">
+                <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 my-4 text-xs text-slate-600 font-medium">
                   কোনো সক্রিয় ব্যাচ নেই। নতুন ৫, ৭ বা ১০ শব্দের ব্যাচ শুরু করতে প্রস্তুত।
                 </div>
               )}
             </div>
 
-            <div className="flex items-center gap-3 pt-4 border-t border-gray-100 mt-4">
+            <div className="flex items-center gap-3 pt-4 border-t border-slate-100 mt-4">
               <Link href="/high-frequency-333" className="flex-1">
                 <Button
                   type="primary"
@@ -190,27 +190,27 @@ export default function StudentDashboardPage() {
                 <Button
                   size="large"
                   icon={<HistoryOutlined />}
-                  className="h-12 rounded-xl font-bold text-gray-600"
+                  className="h-12 rounded-xl font-bold text-slate-600 border-slate-200 hover:border-slate-300"
                 >
                   হিস্টোরি
                 </Button>
               </Link>
             </div>
-          </Card>
+          </div>
 
           {/* ENGINE 2: Translation Practice Studio */}
-          <Card className="rounded-3xl border border-gray-100 shadow-md p-6 bg-white flex flex-col justify-between">
+          <div className="rounded-3xl border border-slate-200/90 shadow-sm p-6 sm:p-7 bg-white flex flex-col justify-between">
             <div>
               <div className="flex justify-between items-center mb-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl">
+                  <div className="w-12 h-12 rounded-2xl bg-indigo-50 border border-indigo-200/60 text-indigo-600 flex items-center justify-center text-2xl">
                     <SwapOutlined />
                   </div>
                   <div>
-                    <h2 className="text-xl font-black text-gray-900">
+                    <h2 className="text-xl font-black text-slate-900">
                       Translation Practice Studio
                     </h2>
-                    <p className="text-xs text-gray-500">স্প্লিট-স্ক্রিন এডিটর ও এআই পরীক্ষক মূল্যায়ন</p>
+                    <p className="text-xs text-slate-500 font-medium">স্প্লিট-স্ক্রিন এডিটর ও এআই পরীক্ষক মূল্যায়ন</p>
                   </div>
                 </div>
 
@@ -218,38 +218,38 @@ export default function StudentDashboardPage() {
                   <span className="text-2xl font-black text-indigo-600">
                     {transStats?.averageScore || 0}
                   </span>
-                  <span className="text-xs text-gray-400 font-bold"> / 10 স্কোর</span>
+                  <span className="text-xs text-slate-400 font-bold"> / 10 স্কোর</span>
                 </div>
               </div>
 
               {/* Translation Stats Grid */}
               <div className="grid grid-cols-3 gap-3 my-5">
-                <div className="p-3 bg-gray-50 rounded-2xl text-center border border-gray-100">
-                  <div className="text-xs text-gray-500 font-bold">সম্পন্ন</div>
-                  <div className="text-lg font-black text-gray-800 mt-0.5">
+                <div className="p-3 bg-slate-50 rounded-2xl text-center border border-slate-200/70">
+                  <div className="text-xs text-slate-500 font-bold">সম্পন্ন</div>
+                  <div className="text-lg font-black text-slate-800 mt-0.5">
                     {transStats?.completedCount || 0} টি
                   </div>
                 </div>
-                <div className="p-3 bg-gray-50 rounded-2xl text-center border border-gray-100">
-                  <div className="text-xs text-gray-500 font-bold">খসড়া</div>
-                  <div className="text-lg font-black text-gray-800 mt-0.5">
+                <div className="p-3 bg-slate-50 rounded-2xl text-center border border-slate-200/70">
+                  <div className="text-xs text-slate-500 font-bold">খসড়া</div>
+                  <div className="text-lg font-black text-slate-800 mt-0.5">
                     {transStats?.draftCount || 0} টি
                   </div>
                 </div>
-                <div className="p-3 bg-gray-50 rounded-2xl text-center border border-gray-100">
-                  <div className="text-xs text-gray-500 font-bold">মাস্টার্ড</div>
+                <div className="p-3 bg-slate-50 rounded-2xl text-center border border-slate-200/70">
+                  <div className="text-xs text-slate-500 font-bold">মাস্টার্ড</div>
                   <div className="text-lg font-black text-emerald-600 mt-0.5">
                     {transStats?.masteredCount || 0} টি
                   </div>
                 </div>
               </div>
 
-              <div className="bg-indigo-50/70 border border-indigo-100 rounded-2xl p-4 my-4 text-xs text-indigo-900 leading-relaxed">
+              <div className="bg-indigo-50/70 border border-indigo-200/70 rounded-2xl p-4 my-4 text-xs text-indigo-900 leading-relaxed font-medium">
                 💡 <strong>প্রস্তুতি পরামর্শ:</strong> বিসিএস লিখিত ও বাংলাদেশ ব্যাংক এডি পরীক্ষায় প্রতিদিন অন্তত ১টি বাক্য ড্রিল এবং সপ্তাহে ২টি সম্পাদকীয় অনুচ্ছেদ অনুবাদ অনুশীলন করুন।
               </div>
             </div>
 
-            <div className="pt-4 border-t border-gray-100 mt-4">
+            <div className="pt-4 border-t border-slate-100 mt-4">
               <Link href="/translation">
                 <Button
                   type="primary"
@@ -262,11 +262,11 @@ export default function StudentDashboardPage() {
                 </Button>
               </Link>
             </div>
-          </Card>
+          </div>
         </div>
 
         {/* ENGINE 3: Bank Job Focus Writing Studio Spotlight */}
-        <Card className="rounded-3xl border border-blue-100 shadow-md p-6 sm:p-8 bg-linear-to-r from-blue-900 via-indigo-950 to-slate-900 text-white relative overflow-hidden">
+        <div className="rounded-3xl border border-slate-800 shadow-md p-6 sm:p-8 bg-slate-900 text-white relative overflow-hidden">
           <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             <div>
               <div className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-300 bg-blue-500/20 px-3 py-1 rounded-full mb-3 border border-blue-400/30">
@@ -279,14 +279,14 @@ export default function StudentDashboardPage() {
                 বাংলাদেশ ব্যাংকের উপ-পরিচালক প্রবাল চক্রবর্তী নির্দেশিত শীর্ষ ৩৮টি ফোকাস রাইটিং টপিক। মডেল বিশ্লেষণ, অফিশিয়াল উপাত্ত ফ্ল্যাশকার্ড এবং ১৫ মিনিটের রিয়েল-টাইম সিমুলেটর।
               </p>
 
-              <div className="flex flex-wrap items-center gap-4 mt-4 text-xs font-semibold">
-                <span className="bg-white/10 px-3 py-1.5 rounded-xl border border-white/15">
+              <div className="flex flex-wrap items-center gap-3 mt-4 text-xs font-semibold">
+                <span className="bg-white/10 px-3.5 py-1.5 rounded-xl border border-white/15">
                   📚 ৩৮টি টপিক ({focusStats?.completedTopics || 0} সম্পন্ন)
                 </span>
-                <span className="bg-white/10 px-3 py-1.5 rounded-xl border border-white/15">
+                <span className="bg-white/10 px-3.5 py-1.5 rounded-xl border border-white/15">
                   🏆 গড় স্কোর: {focusStats?.averageScore > 0 ? `${focusStats.averageScore}/25` : 'N/A'}
                 </span>
-                <span className="bg-white/10 px-3 py-1.5 rounded-xl border border-white/15">
+                <span className="bg-white/10 px-3.5 py-1.5 rounded-xl border border-white/15">
                   ⚡ ব্যাংক রেডিনেস: {focusStats?.bankReadiness || 0}%
                 </span>
               </div>
@@ -308,26 +308,26 @@ export default function StudentDashboardPage() {
                   type="primary"
                   size="large"
                   icon={<RightOutlined />}
-                  className="bg-blue-500 hover:bg-blue-600 border-none text-white rounded-xl font-black h-12 px-6 w-full sm:w-auto shadow-lg"
+                  className="bg-blue-600 hover:bg-blue-700 border-none text-white rounded-xl font-black h-12 px-6 w-full sm:w-auto shadow-md"
                 >
                   স্টুডিওতে যান
                 </Button>
               </Link>
             </div>
           </div>
-        </Card>
+        </div>
 
         {/* Quick Links Footer */}
-        <div className="bg-white rounded-3xl border border-gray-100 p-6 shadow-sm flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm flex flex-col sm:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">
+            <div className="w-10 h-10 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center justify-center font-bold">
               ✓
             </div>
             <div>
-              <span className="text-xs font-bold text-gray-800 block">
+              <span className="text-xs font-bold text-slate-800 block">
                 জিরো ডেটা লস অটো-সিঙ্ক সক্রিয়
               </span>
-              <span className="text-[11px] text-gray-400">
+              <span className="text-[11px] text-slate-500 font-medium">
                 আপনার লোকাল স্টোরেজ ও ক্লাউড ডেটা পুরোপুরি সমন্বিত রয়েছে
               </span>
             </div>
@@ -335,12 +335,12 @@ export default function StudentDashboardPage() {
 
           <div className="flex items-center gap-3">
             <Link href="/profile">
-              <Button size="small" icon={<UserOutlined />} className="rounded-xl font-bold text-xs">
+              <Button size="small" icon={<UserOutlined />} className="rounded-xl font-bold text-xs text-slate-700 border-slate-200">
                 প্রোফাইল
               </Button>
             </Link>
             <Link href="/words">
-              <Button size="small" icon={<BookOutlined />} className="rounded-xl font-bold text-xs">
+              <Button size="small" icon={<BookOutlined />} className="rounded-xl font-bold text-xs text-slate-700 border-slate-200">
                 সাধারণ ভোকাবুলারি
               </Button>
             </Link>
