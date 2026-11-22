@@ -21,6 +21,7 @@ import { getHF333Stats } from '../../actions/hf333.actions';
 import { getTranslationStats } from '../../actions/translation.actions';
 import { getFocusWritingStats } from '../../actions/focus-writing.actions';
 import { getCurrentStudent } from '../../actions/auth.actions';
+import { ExamSyllabusMatrix } from '@/components/dashboard/ExamSyllabusMatrix';
 
 export default function StudentDashboardPage() {
   const [loading, setLoading] = useState(true);
@@ -98,6 +99,9 @@ export default function StudentDashboardPage() {
             </div>
           </div>
         </div>
+
+        {/* Dynamic Exam & Syllabus Matrix */}
+        <ExamSyllabusMatrix />
 
         {/* Two Primary Learning Engines */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
