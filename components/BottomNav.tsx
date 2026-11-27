@@ -45,6 +45,8 @@ const drawerSections = [
   {
     title: 'বিষয়ভিত্তিক প্রস্তুতি',
     links: [
+      { key: 'bank-ad-routine', label: 'BB AD ৬০ দিনের রুটিন (২৪০ ব্লক)', href: '/bank-ad-60/routine', icon: <CalendarOutlined className="text-emerald-600" /> },
+      { key: 'bank-ad-60', label: 'BB AD মিশন ট্র্যাকার', href: '/bank-ad-60', icon: <CalendarOutlined className="text-teal-600" /> },
       { key: 'hf-333', label: 'ব্যারন ৩৩৩ ভোকাবুলারি', href: '/high-frequency-333', icon: <FireOutlined className="text-amber-500" /> },
       { key: 'english-idioms', label: 'ইংরেজি ইডিয়াম ও ফ্রেজ', href: '/english/idioms', icon: <BookOutlined className="text-blue-600" /> },
       { key: 'words', label: 'ভোকাবুলারি হাব', href: '/words', icon: <BookOutlined className="text-emerald-600" /> },
@@ -89,9 +91,9 @@ export default function BottomNav() {
   const toggleDrawer = () => setDrawerOpen((prev) => !prev);
   const closeDrawer = () => setDrawerOpen(false);
 
-  // Completely hide BottomNav on Pomodoro focus mode
+  // Completely hide BottomNav on Pomodoro focus mode and Bank AD 60-Day suite
   // Placed AFTER all hooks to adhere to React Rules of Hooks
-  if (pathname === '/pomodoro') {
+  if (pathname === '/pomodoro' || pathname?.startsWith('/bank-ad-60')) {
     return null;
   }
 

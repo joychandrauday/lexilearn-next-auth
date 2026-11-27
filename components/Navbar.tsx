@@ -75,14 +75,34 @@ export default function Navbar() {
     return () => window.removeEventListener('study-progress-updated', fetchStreak);
   }, [session]);
 
-  // Completely hide Navbar on Pomodoro focus mode for 100% distraction-free zen session
+  // Completely hide Navbar on Pomodoro focus mode and Bank AD 60-Day Dashboard suite
   // Placed AFTER all hooks to adhere to React Rules of Hooks
-  if (pathname === '/pomodoro') {
+  if (pathname === '/pomodoro' || pathname?.startsWith('/bank-ad-60')) {
     return null;
   }
 
   // Dropdown Items: Preparation / Subject Modules
   const prepDropdownItems: MenuProps['items'] = [
+    {
+      key: 'bank-ad-routine',
+      icon: <CalendarOutlined className="text-emerald-600 text-sm" />,
+      label: (
+        <Link href="/bank-ad-60/routine" className="font-semibold text-gray-700 text-xs py-1 flex items-center justify-between gap-2">
+          <span>BB AD ৬০ দিনের রুটিন</span>
+          <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-full">২৪০ ব্লক</span>
+        </Link>
+      ),
+    },
+    {
+      key: 'bank-ad-60',
+      icon: <CalendarOutlined className="text-teal-600 text-sm" />,
+      label: (
+        <Link href="/bank-ad-60" className="font-semibold text-gray-700 text-xs py-1 flex items-center justify-between gap-2">
+          <span>BB AD মিশন ট্র্যাকার</span>
+          <span className="text-[10px] bg-teal-100 text-teal-800 font-bold px-1.5 py-0.5 rounded-full">২০২৬</span>
+        </Link>
+      ),
+    },
     {
       key: 'focus-writing',
       icon: <BankOutlined className="text-emerald-600 text-sm" />,
@@ -304,6 +324,8 @@ export default function Navbar() {
     {
       title: 'বিষয়ভিত্তিক প্রস্তুতি',
       links: [
+        { key: 'bank-ad-routine', label: 'BB AD ৬০ দিনের রুটিন (২৪০ ব্লক)', href: '/bank-ad-60/routine', icon: <CalendarOutlined className="text-emerald-600" /> },
+        { key: 'bank-ad-60', label: 'BB AD মিশন ট্র্যাকার', href: '/bank-ad-60', icon: <CalendarOutlined className="text-teal-600" /> },
         { key: 'focus-writing', label: 'ব্যাংক ফোকাস রাইটিং', href: '/focus-writing', icon: <BankOutlined /> },
         { key: 'math', label: 'গণিত প্রস্তুতি', href: '/math', icon: <CalculatorOutlined /> },
         { key: 'translation', label: 'অনুবাদ স্টুডিও', href: '/translation', icon: <ReadOutlined /> },
@@ -342,7 +364,7 @@ export default function Navbar() {
   // Active state detectors for desktop navbar
   const isDashboardActive = pathname === '/dashboard' || pathname.startsWith('/dashboard/');
   const isCapsuleActive = pathname === '/daily-capsule' || pathname.startsWith('/daily-capsule/');
-  const isPrepActive = ['/focus-writing', '/math', '/translation', '/high-frequency-333', '/words', '/bangla'].some(
+  const isPrepActive = ['/bank-ad-60', '/focus-writing', '/math', '/translation', '/high-frequency-333', '/words', '/bangla'].some(
     (p) => pathname === p || pathname.startsWith(p + '/')
   );
   const isPracticeActive = ['/battle', '/quiz', '/flashcards', '/cloze', '/spelling', '/question-bank'].some(
